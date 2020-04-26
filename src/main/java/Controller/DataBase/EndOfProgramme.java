@@ -1,6 +1,7 @@
 package Controller.DataBase;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import Model.Account.Boss;
 import Model.Account.Customer;
@@ -35,7 +36,7 @@ public class EndOfProgramme extends DataBase implements Runnable {
     @Override
     protected void updateCustomers() throws IOException {
         String path = "src\\main\\resources\\DataBase\\Customers\\";
-        for (Customer customer : allCustomers) {
+        for (Customer customer : getAllCustomers()) {
             storeObjectInFile(customer, path + customer.getUsername());
         }
     }
@@ -43,7 +44,7 @@ public class EndOfProgramme extends DataBase implements Runnable {
     @Override
     protected void updateBosses() throws IOException {
         String path = "src\\main\\resources\\DataBase\\Bosses\\";
-        for (Boss boss : allBosses) {
+        for (Boss boss : getAllBosses()) {
             storeObjectInFile(boss, path + boss.getUsername());
         }
     }
@@ -51,7 +52,7 @@ public class EndOfProgramme extends DataBase implements Runnable {
     @Override
     protected void updateSalesmen() throws IOException {
         String path = "src\\main\\resources\\DataBase\\Salesmen\\";
-        for (Salesman salesman : allSalesman) {
+        for (Salesman salesman : getAllSalesmen()) {
             storeObjectInFile(salesman, path + salesman.getUsername());
         }
     }
@@ -123,6 +124,17 @@ public class EndOfProgramme extends DataBase implements Runnable {
 
     @Override
     public void run() {
+        try {
+            clearFolder();
+            updateFiles();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            Thread.sleep(TimeUnit.SECONDS.toMillis(10));
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
     }
 }

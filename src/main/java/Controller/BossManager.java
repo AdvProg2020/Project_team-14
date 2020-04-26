@@ -12,8 +12,7 @@ public class BossManager {
         }
         Server.setAnswer("register successful");
         Server.setHasBoss(true);
-        Storage.allAccounts.add(new Boss(information[3], information[4], information[1], information[2], information[6],
-                information[7], information[5]));
+        new Boss(information[3], information[4], information[1], information[2], information[6], information[7], information[5]);
 
     }
     /*

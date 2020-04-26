@@ -57,8 +57,8 @@ public abstract class Account {
         return this.Email;
     }
 
-    public String getRole() {
-        return this.role.name();
+    public Role getRole() {
+        return this.role;
     }
 
     public String getTelephone() {

@@ -10,8 +10,8 @@ public class CustomerManager {
             Server.setAnswer("username has already been taken");
         }
         Server.setAnswer("register successful");
-        Storage.allAccounts.add(new Customer(information[3], information[4], information[1], information[2],
-                information[6], information[7], information[5], 0));
+        new Customer(information[3], information[4], information[1], information[2],
+                information[6], information[7], information[5], 0);
     }
     /*
     private OrderManager orderManager;
