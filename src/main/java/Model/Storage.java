@@ -24,9 +24,6 @@ public class Storage {
     public static ArrayList<BuyLog> allBuyLogs = new ArrayList<>();
     public static ArrayList<Category> allCategories = new ArrayList<>();
     public static ArrayList<Account> allAccounts = new ArrayList<>();
-    public static ArrayList<Boss> allBosses = new ArrayList<>();
-    public static ArrayList<Customer> allCustomers = new ArrayList<>();
-    public static ArrayList<Salesman> allSalesman = new ArrayList<>();
     public static ArrayList<SpecialOffCode> allSpecialOffCodes = new ArrayList<>();
 
     public static boolean isThereAccountWithUsername(String username) {
@@ -40,5 +37,35 @@ public class Storage {
             }
         }
         return null;
+    }
+
+    public static ArrayList<Customer> getAllCustomers() {
+        ArrayList<Customer> arrayList = new ArrayList<>();
+        for (Account account : allAccounts) {
+            if (account instanceof Customer) {
+                arrayList.add((Customer) account);
+            }
+        }
+        return arrayList;
+    }
+
+    public static ArrayList<Boss> getAllBosses() {
+        ArrayList<Boss> arrayList = new ArrayList<>();
+        for (Account account : allAccounts) {
+            if (account instanceof Boss) {
+                arrayList.add((Boss) account);
+            }
+        }
+        return arrayList;
+    }
+
+    public static ArrayList<Salesman> getAllSalesmen() {
+        ArrayList<Salesman> arrayList = new ArrayList<>();
+        for (Account account : allAccounts) {
+            if (account instanceof Salesman) {
+                arrayList.add((Salesman) account);
+            }
+        }
+        return arrayList;
     }
 }

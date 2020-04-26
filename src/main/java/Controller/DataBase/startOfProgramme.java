@@ -18,14 +18,6 @@ import static Model.Storage.*;
 
 public class startOfProgramme extends DataBase {
 
-    public void update() {
-        try {
-            makeDirectories();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     public void startProgramme() throws IOException, ClassNotFoundException {
         makeDirectories();
         updateBosses();
@@ -39,6 +31,8 @@ public class startOfProgramme extends DataBase {
         updateSales();
         updateSalesmen();
         updateSpecialOffCodes();
+        EndOfProgramme endOfProgramme=new EndOfProgramme();
+        endOfProgramme.run();
     }
 
 
@@ -47,10 +41,10 @@ public class startOfProgramme extends DataBase {
         String path = "src\\main\\resources\\DataBase\\Customers";
         File[] files = new File(path).listFiles();
         assert files != null;
-        for (File name : files) {
-            ObjectInputStream in = new ObjectInputStream(new FileInputStream(name.getAbsolutePath()));
+        for (File file : files) {
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream(file.getAbsolutePath()));
             Customer s = (Customer) in.readObject();
-            allCustomers.add(s);
+            allAccounts.add(s);
         }
 
     }
@@ -60,10 +54,10 @@ public class startOfProgramme extends DataBase {
         String path = "src\\main\\resources\\DataBase\\Bosses";
         File[] files = new File(path).listFiles();
         assert files != null;
-        for (File name : files) {
-            ObjectInputStream in = new ObjectInputStream(new FileInputStream(name.getAbsolutePath()));
+        for (File file : files) {
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream(file.getAbsolutePath()));
             Boss s = (Boss) in.readObject();
-            allBosses.add(s);
+            allAccounts.add(s);
         }
     }
 
@@ -72,10 +66,10 @@ public class startOfProgramme extends DataBase {
         String path = "src\\main\\resources\\DataBase\\Salesmen";
         File[] files = new File(path).listFiles();
         assert files != null;
-        for (File name : files) {
-            ObjectInputStream in = new ObjectInputStream(new FileInputStream(name.getAbsolutePath()));
+        for (File file : files) {
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream(file.getAbsolutePath()));
             Salesman s = (Salesman) in.readObject();
-            allSalesman.add(s);
+            allAccounts.add(s);
         }
 
     }
@@ -85,8 +79,8 @@ public class startOfProgramme extends DataBase {
         String path = "src\\main\\resources\\DataBase\\Sales";
         File[] files = new File(path).listFiles();
         assert files != null;
-        for (File name : files) {
-            ObjectInputStream in = new ObjectInputStream(new FileInputStream(name.getAbsolutePath()));
+        for (File file : files) {
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream(file.getAbsolutePath()));
             Category s = (Category) in.readObject();
             allCategories.add(s);
         }
@@ -97,8 +91,8 @@ public class startOfProgramme extends DataBase {
         String path = "src\\main\\resources\\DataBase\\BuyLogs";
         File[] files = new File(path).listFiles();
         assert files != null;
-        for (File name : files) {
-            ObjectInputStream in = new ObjectInputStream(new FileInputStream(name.getAbsolutePath()));
+        for (File file : files) {
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream(file.getAbsolutePath()));
             BuyLog s = (BuyLog) in.readObject();
             allBuyLogs.add(s);
         }
@@ -110,8 +104,8 @@ public class startOfProgramme extends DataBase {
         String path = "src\\main\\resources\\DataBase\\Sales";
         File[] files = new File(path).listFiles();
         assert files != null;
-        for (File name : files) {
-            ObjectInputStream in = new ObjectInputStream(new FileInputStream(name.getAbsolutePath()));
+        for (File file : files) {
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream(file.getAbsolutePath()));
             Sale s = (Sale) in.readObject();
             allSales.add(s);
         }
@@ -122,8 +116,8 @@ public class startOfProgramme extends DataBase {
         String path = "src\\main\\resources\\DataBase\\OffCodes";
         File[] files = new File(path).listFiles();
         assert files != null;
-        for (File name : files) {
-            ObjectInputStream in = new ObjectInputStream(new FileInputStream(name.getAbsolutePath()));
+        for (File file : files) {
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream(file.getAbsolutePath()));
             OffCode s = (OffCode) in.readObject();
             allOffCodes.add(s);
         }
@@ -135,8 +129,8 @@ public class startOfProgramme extends DataBase {
         String path = "src\\main\\resources\\DataBase\\Products";
         File[] files = new File(path).listFiles();
         assert files != null;
-        for (File name : files) {
-            ObjectInputStream in = new ObjectInputStream(new FileInputStream(name.getAbsolutePath()));
+        for (File file : files) {
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream(file.getAbsolutePath()));
             Product s = (Product) in.readObject();
             allProducts.add(s);
         }
@@ -148,8 +142,8 @@ public class startOfProgramme extends DataBase {
         String path = "src\\main\\resources\\DataBase\\Comments";
         File[] files = new File(path).listFiles();
         assert files != null;
-        for (File name : files) {
-            ObjectInputStream in = new ObjectInputStream(new FileInputStream(name.getAbsolutePath()));
+        for (File file : files) {
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream(file.getAbsolutePath()));
             Comment s = (Comment) in.readObject();
             allComments.add(s);
         }
@@ -161,8 +155,8 @@ public class startOfProgramme extends DataBase {
         String path = "src\\main\\resources\\DataBase\\SpecialOffCodes";
         File[] files = new File(path).listFiles();
         assert files != null;
-        for (File name : files) {
-            ObjectInputStream in = new ObjectInputStream(new FileInputStream(name.getAbsolutePath()));
+        for (File file : files) {
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream(file.getAbsolutePath()));
             SpecialOffCode s = (SpecialOffCode) in.readObject();
             allSpecialOffCodes.add(s);
         }
@@ -174,8 +168,8 @@ public class startOfProgramme extends DataBase {
         String path = "src\\main\\resources\\DataBase\\Points";
         File[] files = new File(path).listFiles();
         assert files != null;
-        for (File name : files) {
-            ObjectInputStream in = new ObjectInputStream(new FileInputStream(name.getAbsolutePath()));
+        for (File file : files) {
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream(file.getAbsolutePath()));
             Point s = (Point) in.readObject();
             allPoints.add(s);
         }

@@ -10,8 +10,8 @@ public class SalesmanManager {
             Server.setAnswer("username has already been taken");
         }
         Server.setAnswer("register successful");
-        Storage.allAccounts.add(new Salesman(information[3], information[4], information[1], information[2],
-                information[6], information[7], information[5], information[8], 0));
+        new Salesman(information[3], information[4], information[1], information[2],
+                information[6], information[7], information[5], information[8], 0);
     }
     /*
     private SalesManager salesManager;

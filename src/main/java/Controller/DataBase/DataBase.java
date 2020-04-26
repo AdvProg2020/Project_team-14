@@ -3,7 +3,6 @@ package Controller.DataBase;
 import org.apache.commons.io.FileUtils;
 
 import java.io.*;
-import java.util.ArrayList;
 
 public abstract class DataBase {
 
@@ -29,9 +28,7 @@ public abstract class DataBase {
 
     abstract void updatePoints() throws IOException, ClassNotFoundException;
 
-    public static void makeDirectories() throws IOException {
-
-      //  FileUtils.cleanDirectory(new File("src\\main\\resources\\DataBase"));
+    public static void makeDirectories() {
 
         File file = new File("src\\main\\resources\\DataBase");
         file.mkdirs();
@@ -67,21 +64,8 @@ public abstract class DataBase {
         file.close();
     }
 
-    public static void makeObjectFromFile(String address) throws IOException, ClassNotFoundException {
-
-    }
-
-
-    public static ArrayList<String> listAllFileNamesInDirectory(String directory) {
-        ArrayList<String> results = new ArrayList<>();
-        File[] files = new File(directory).listFiles();
-        assert files != null;
-        for (File file : files) {
-            if (file.isFile()) {
-                results.add(file.getName());
-            }
-        }
-        return results;
+    public static void clearFolder() throws IOException {
+        FileUtils.cleanDirectory(new File("src\\main\\resources\\DataBase"));
     }
 
 }

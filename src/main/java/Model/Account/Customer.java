@@ -17,7 +17,7 @@ public class Customer extends Account implements Serializable {
     public Customer(String username, String password, String firstName, String secondName, String Email, String telephone, String role, int credit) {
         super(username, password, firstName, secondName, Email, telephone, role);
         this.credit = credit;
-        allCustomers.add(this);
+        allAccounts.add(this);
     }
 
     public int getCredit() {
@@ -29,7 +29,7 @@ public class Customer extends Account implements Serializable {
     }
 
     public boolean isThereCustomerWithUsername(String username) {
-        for (Customer customer : allCustomers) {
+        for (Customer customer : getAllCustomers()) {
             if (customer.getUsername().equalsIgnoreCase(username)) {
                 return true;
             }
@@ -41,8 +41,8 @@ public class Customer extends Account implements Serializable {
 
     public static String getRandomUsername() {
         Random random = new Random();
-        int rand = random.nextInt(allCustomers.size());
-        return allCustomers.get(rand).getUsername();
+        int rand = random.nextInt(getAllCustomers().size());
+        return getAllCustomers().get(rand).getUsername();
     }
 
     @Override

@@ -54,8 +54,7 @@ public class Server {
              */
     private Matcher getMatcher(String regex, String command) {
         Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(command);
-        return matcher;
+        return pattern.matcher(command);
     }
 
     public void clientToServer(String command) {
@@ -78,44 +77,27 @@ public class Server {
     }
 
     private boolean checkNameFormat(String name) {
-        if (getMatcher("[a-zA-Z]+", name).matches()) {
-            return true;
-        } else {
-            return false;
-        }
+        return getMatcher("[a-zA-Z]+", name).matches();
     }
 
     private boolean checkUsernameFormat(String input) {
-        if (getMatcher("(\\w+)", input).matches()) {
-            return true;
-        } else {
-            return false;
-        }
+        return getMatcher("(\\w+)", input).matches();
     }
 
     private boolean checkEmailFormat(String mail) {
-        if (getMatcher("((\\w||\\.)+)@(\\w+)\\.(com||ir||io||edu)", mail).matches()) {
-            return true;
-        } else {
-            return false;
-        }
+        return getMatcher("((\\w||\\.)+)@(\\w+)\\.(com||ir||io||edu)", mail).matches();
     }
 
     private boolean checkTelephoneFormat(String number) {
-        if (getMatcher("0(\\d+)", number).matches() && number.length() == 11) {
-            return true;
-        } else {
-            return false;
-        }
+        return getMatcher("0(\\d+)", number).matches() && number.length() == 11;
     }
 
     private boolean checkRoleFormat(String role) {
-        if (role.equals("salesman") || role.equals("boss") || role.equals("customer")) {
-            return true;
-        } else {
-            return false;
-        }
+        return role.equals("salesman") || role.equals("boss") || role.equals("customer");
     }
+
+    //we should make sure that each word doesn't contain any space otherwise
+    //we will reach trouble spiting it with "\\s"
 
     private void register(String input) {
         Server.answer = "";
@@ -145,9 +127,9 @@ public class Server {
             Server.answer += "telephone format is invalid\n";
         }
         if (Server.answer.equals("")) {
-            if (attributes[5].equals("salesman")) {
+            if (attributes[5].equalsIgnoreCase("salesman")) {
                 salesmanManager.register(attributes);
-            } else if (attributes[5].equals("customer")) {
+            } else if (attributes[5].equalsIgnoreCase("customer")) {
                 customerManager.register(attributes);
             } else {
                 if (Server.hasBoss) {
