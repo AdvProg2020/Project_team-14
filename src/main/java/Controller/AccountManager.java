@@ -11,10 +11,11 @@ public class AccountManager {
         if (Storage.isThereAccountWithUsername(username)) {
             Account account = Storage.getUserWithUsername(username);
             if (account.getPassword().equals(password)) {
-                if (account.getRole().equals("salesman")) {
+                if (account.getRole().equals("SALESMAN")) {
                     Salesman salesman = (Salesman) account;
                     if (!salesman.isConfirmed()) {
                         Server.setAnswer("you're not a confirmed salesman");
+                        return;
                     }
                 }
                 Server.setAnswer("login successful as " + account.getRole() + " " + username);
