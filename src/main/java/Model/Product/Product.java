@@ -47,6 +47,10 @@ public class Product extends RandomString implements Serializable {
         allProducts.add(this);
     }
 
+    public void deleteForSalesman(String salesmanUser) {
+        hasBeenDeleted.put(salesmanUser, true);
+    }
+
     public String getName() {
         return name;
     }
@@ -56,12 +60,7 @@ public class Product extends RandomString implements Serializable {
     }
 
     public static String getNameByID(String productID) {
-        for (Product product : allProducts) {
-            if (product.productID.equals(productID)) {
-                return product.getName();
-            }
-        }
-        return null;
+        return Product.getProductWithID(productID).getName();
     }
 
     public String getProductID() {
@@ -84,12 +83,22 @@ public class Product extends RandomString implements Serializable {
         return Point.isTherePointForProduct(this.productID);
     }
 
-    public boolean isThereAnyComment() {
+    public boolean isThereComment() {
         return Comment.isThereAnyCommentForProduct(this.productID);
     }
 
     public ArrayList<String> getComments() {
         return Comment.getCommentsForProductWithID(this.productID);
+    }
+
+    public void addSalesman(String salesmanID, int remainder, int price) {
+        this.remainder.put(salesmanID, remainder);
+        this.confirmationState.put(salesmanID, Confirmation.CHECKING);
+        this.hasBeenDeleted.put(salesmanID, false);
+        this.isOnSale.put(salesmanID, false);
+        this.salesmanIDs.add(salesmanID);
+        this.price.put(salesmanID, price);
+
     }
 
     private boolean isConfirmedForSalesmanWithUsername(String username) {
@@ -106,8 +115,13 @@ public class Product extends RandomString implements Serializable {
     //we should first check the method doesSalesmanSellProductWithUsername() and then
     //call method below to make sure that the salesman sell it first
     //then checking whether they have remainder or not
+
     public boolean isAvailableBySalesmanWithUsername(String username) {
         return remainder.get(username) > 0;
+    }
+
+    public static boolean isThereProductWithID(String productID) {
+        return getProductWithID(productID) != null;
     }
 
     public static Product getProductWithID(String productID) {
@@ -117,10 +131,6 @@ public class Product extends RandomString implements Serializable {
             }
         }
         return null;
-    }
-
-    public static boolean isThereProductWithID(String productID) {
-        return getProductWithID(productID) != null;
     }
 
     public String toStringForCustomerView() {
@@ -134,7 +144,7 @@ public class Product extends RandomString implements Serializable {
                 continue;
             }
             result.append("Salesman: ").append(salesmanID);
-            result = new StringBuilder(" Price: " + price.get(salesmanID) + "\n");
+            result.append(" Price: ").append(price.get(salesmanID)).append("\n");
         }
         return result.toString();
     }

@@ -50,6 +50,18 @@ public class Comment extends RandomString implements Serializable {
         return list;
     }
 
+    public static String getCommentsForProductStringFormatted(String productID) {
+        /*StringBuilder result = new StringBuilder();
+        ArrayList<String> comments = getCommentsForProductWithID(productID);
+        for (String commentID : comments) {
+            Comment comment = getCommentByID(commentID);
+            assert comment != null;
+            result.append(comment.toStringForCheckingProduct()).append("\n");
+        }
+         */
+        return null;
+    }
+
     //in the boss menu when the boss wants to check request one part is check comments
     //that are not still accepted nor denied, so with method below we get not checked commentIDs
 
