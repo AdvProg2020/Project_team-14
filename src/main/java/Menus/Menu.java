@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class Menu {
+    static protected String username;
     static protected Server server;
     private String menuName;
     protected boolean logoutType;

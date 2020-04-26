@@ -64,7 +64,13 @@ public class Server {
             this.login(matcher);
         } else if (command.startsWith("register ")) {
             this.register(command);
+        } else if (command.startsWith("logout ")) {
+            this.logout(command);
         }
+    }
+
+    private void logout(String command) {
+        accountManager.logout(command.split("\\s")[1]);
     }
 
     private void login(Matcher matcher) {

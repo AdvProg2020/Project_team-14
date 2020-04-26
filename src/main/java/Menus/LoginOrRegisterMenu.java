@@ -23,7 +23,12 @@ public class LoginOrRegisterMenu extends Menu {
     }
 
     private void Logout() {
-        server.clientToServer("logout");
+        server.clientToServer("logout " + Menu.username);
+        String answer = server.serverToClient();
+        System.out.println(answer);
+        if (answer.equals("logout successful")) {
+            Menu.setIsUserLogin(false);
+        }
         fatherMenu.execute();
     }
 
@@ -123,6 +128,7 @@ public class LoginOrRegisterMenu extends Menu {
                     } else {
                         Menu.setUserType("salesman");
                     }
+                    Menu.username = serverAnswer.split("\\s")[4];
                     fatherMenu.fatherMenu.execute();
                 } else {
                     this.execute();

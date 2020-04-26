@@ -17,7 +17,7 @@ public class AccountManager {
                         Server.setAnswer("you're not a confirmed salesman");
                     }
                 }
-                Server.setAnswer("login successful as " + account.getRole());
+                Server.setAnswer("login successful as " + account.getRole() + " " + username);
                 account.setOnline(true);
             } else {
                 Server.setAnswer("incorrect password");
@@ -25,5 +25,11 @@ public class AccountManager {
         } else {
             Server.setAnswer("incorrect username");
         }
+    }
+
+    public void logout(String username) {
+        Account account = Storage.getUserWithUsername(username);
+        account.setOnline(false);
+        Server.setAnswer("logout successful");
     }
 }
