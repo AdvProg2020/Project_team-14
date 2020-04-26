@@ -3,6 +3,7 @@ package Model.Account;
 import static Model.Storage.*;
 
 public abstract class Account {
+    private boolean isOnline;
     private String username;
     private String password;
     private String firstName;
@@ -11,29 +12,41 @@ public abstract class Account {
     private String telephone;
     private Role role;
 
-    public Account(String username, String password, String firstName, String secondName, String Email, String telephone, String role){
-        this.username=username;
-        this.password=password;
-        this.firstName=firstName;
-        this.secondName=secondName;
-        this.Email=Email;
-        this.telephone=telephone;
+    public Account(String username, String password, String firstName, String secondName, String Email, String telephone, String role) {
+        this.username = username;
+        this.password = password;
+        this.firstName = firstName;
+        this.secondName = secondName;
+        this.Email = Email;
+        this.telephone = telephone;
         allAccounts.add(this);
-        if(role.equalsIgnoreCase("boss")){
-            this.role=Role.BOSS;
-        } else if (role.equalsIgnoreCase("customer")){
-            this.role=Role.CUSTOMER;
-        } else if (role.equalsIgnoreCase("salesman")){
-            this.role=Role.SALESMAN;
+        if (role.equalsIgnoreCase("boss")) {
+            this.role = Role.BOSS;
+        } else if (role.equalsIgnoreCase("customer")) {
+            this.role = Role.CUSTOMER;
+        } else if (role.equalsIgnoreCase("salesman")) {
+            this.role = Role.SALESMAN;
         }
     }
 
+    public boolean isOnline() {
+        return this.isOnline;
+    }
+
+    public void setOnline(boolean online) {
+        this.isOnline = online;
+    }
+
+    public String getPassword() {
+        return this.password;
+    }
+
     public String getFirstName() {
-        return firstName;
+        return this.firstName;
     }
 
     public String getSecondName() {
-        return secondName;
+        return this.secondName;
     }
 
     public String getUsername() {
@@ -41,36 +54,15 @@ public abstract class Account {
     }
 
     public String getEmail() {
-        return Email;
+        return this.Email;
     }
 
     public String getRole() {
-        return role.name();
+        return this.role.name();
     }
 
     public String getTelephone() {
-        return telephone;
-    }
-
-    public static boolean isThereAccountWithUsername(String username) {
-        return getUserWithUsername(username) == null;
-    }
-
-    public static boolean isEmailAuthentic(String Email) {
-        return Email.contains("@");
-    }
-
-    public static boolean isTelephoneAuthentic(String telephone) {
-        return telephone.length() == 11;
-    }
-
-    public static Account getUserWithUsername(String username) {
-        for (Account account : allAccounts) {
-            if (account.getUsername().equalsIgnoreCase(username)) {
-                return account;
-            }
-        }
-        return null;
+        return this.telephone;
     }
 
     public String toString() {

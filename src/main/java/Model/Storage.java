@@ -28,4 +28,17 @@ public class Storage {
     public static ArrayList<Customer> allCustomers = new ArrayList<>();
     public static ArrayList<Salesman> allSalesman = new ArrayList<>();
     public static ArrayList<SpecialOffCode> allSpecialOffCodes = new ArrayList<>();
+
+    public static boolean isThereAccountWithUsername(String username) {
+        return getUserWithUsername(username) != null;
+    }
+
+    public static Account getUserWithUsername(String username) {
+        for (Account account : allAccounts) {
+            if (account.getUsername().equalsIgnoreCase(username)) {
+                return account;
+            }
+        }
+        return null;
+    }
 }
