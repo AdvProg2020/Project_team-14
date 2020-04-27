@@ -45,6 +45,10 @@ public abstract class Account {
         return this.firstName;
     }
 
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
     public String getSecondName() {
         return this.secondName;
     }

@@ -122,11 +122,11 @@ public class LoginOrRegisterMenu extends Menu {
                 if (serverAnswer.startsWith("login successful ")) {
                     Menu.setIsUserLogin(true);
                     if (serverAnswer.contains("BOSS")) {
-                        Menu.setUserType("boss");
+                        Menu.setUserType("BOSS");
                     } else if (serverAnswer.contains("CUSTOMER")) {
-                        Menu.setUserType("customer");
+                        Menu.setUserType("CUSTOMER");
                     } else {
-                        Menu.setUserType("salesman");
+                        Menu.setUserType("SALESMAN");
                     }
                     Menu.username = serverAnswer.split("\\s")[4];
                     fatherMenu.fatherMenu.execute();
@@ -141,7 +141,22 @@ public class LoginOrRegisterMenu extends Menu {
         return new Menu(this, "Forgot Password Menu") {
             @Override
             public void execute() {
-                super.execute();
+                System.out.println("forgot password menu:");
+                System.out.println("if you input back we will go back");
+                System.out.println("please input your username:");
+                String username;
+                username = scanner.nextLine();
+                if (username.equals("back")) {
+                    fatherMenu.execute();
+                }
+                server.clientToServer("forgot password " + username);
+                String answer = server.serverToClient();
+                System.out.println(answer);
+                if (answer.contains("here is your password: ")) {
+                    fatherMenu.execute();
+                } else {
+                    this.execute();
+                }
             }
         };
     }

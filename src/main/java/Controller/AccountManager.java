@@ -35,4 +35,24 @@ public class AccountManager {
         account.setOnline(false);
         Server.setAnswer("logout successful");
     }
+
+    public void forgotPassword(String username) {
+        if (Storage.isThereAccountWithUsername(username)) {
+            Account account = Storage.getUserWithUsername(username);
+            Server.setAnswer("here is your password: " + account.getPassword());
+        } else {
+            Server.setAnswer("logout successful");
+        }
+    }
+
+    public void viewAccountInformation(String username) {
+        Account account = Storage.getUserWithUsername(username);
+        Server.setAnswer(account.toString());
+    }
+
+    public void editFirstName(String username, String name) {
+        Server.setAnswer("edit successful");
+        Account account = Storage.getUserWithUsername(username);
+        account.setFirstName(name);
+    }
 }

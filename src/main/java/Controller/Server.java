@@ -65,7 +65,33 @@ public class Server {
             this.register(command);
         } else if (command.startsWith("logout ")) {
             this.logout(command);
+        } else if (command.startsWith("forgot password ")) {
+            this.forgotPassword(command);
+        } else if (command.startsWith("show personal info ")) {
+            this.showPersonalInfo(command);
+        } else if (command.startsWith("edit personal info ")) {
+            this.editPersonalInfo(command);
         }
+    }
+
+    private void editPersonalInfo(String command) {
+        String[] input = command.split("\\s");
+        if (input[3].equals("firstName")) {
+            if (checkNameFormat(input[4])) {
+                accountManager.editFirstName(input[5], input[4]);
+            } else {
+                answer = "invalid first name type";
+            }
+        }
+    }
+
+    private void showPersonalInfo(String command) {
+        String[] input = command.split("\\s");
+        accountManager.viewAccountInformation(input[4]);
+    }
+
+    private void forgotPassword(String command) {
+        accountManager.forgotPassword(command.split("\\s")[2]);
     }
 
     private void logout(String command) {
@@ -93,7 +119,7 @@ public class Server {
     }
 
     private boolean checkRoleFormat(String role) {
-        return role.equals("salesman") || role.equals("boss") || role.equals("customer");
+        return role.equalsIgnoreCase("salesman") || role.equalsIgnoreCase("boss") || role.equalsIgnoreCase("customer");
     }
 
     //we should make sure that each word doesn't contain any space otherwise

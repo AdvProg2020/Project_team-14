@@ -1,5 +1,6 @@
 package Menus;
 
+import Controller.AccountManager;
 import Controller.Server;
 
 import java.util.HashMap;
@@ -7,11 +8,12 @@ import java.util.Scanner;
 
 public class Menu {
     static protected String username;
+    static protected boolean backFromAccountMenu = false;
     static protected Server server;
-    private String menuName;
+    protected String menuName;
     protected boolean logoutType;
     protected Menu fatherMenu;
-    private HashMap<Integer, Menu> subMenus;
+    protected HashMap<Integer, Menu> subMenus;
     static protected boolean isUserLogin;
     static protected String userType;
     static protected Scanner scanner;
@@ -19,6 +21,10 @@ public class Menu {
     public Menu(Menu fatherMenu, String menuName) {
         this.fatherMenu = fatherMenu;
         this.menuName = menuName;
+    }
+
+    public int getWhereItHasBeenCalled() {
+        return 0;
     }
 
     public static void setIsUserLogin(boolean isUserLogin) {
@@ -37,7 +43,7 @@ public class Menu {
         Menu.server = server;
     }
 
-    public void setSubMenus(HashMap<Integer, Menu> subMenus) {
+    public void setSubMenus(HashMap subMenus) {
         this.subMenus = subMenus;
     }
 
@@ -45,7 +51,7 @@ public class Menu {
         return this.menuName;
     }
 
-    private void show() {
+    protected void show() {
         System.out.println(this.menuName + ":");
         for (Integer menuNum : subMenus.keySet()) {
             System.out.println(menuNum + ". " + subMenus.get(menuNum).getMenuName());
@@ -59,6 +65,9 @@ public class Menu {
 
     public void execute() {
         if (isUserLogin == false && logoutType == false) {
+            if (fatherMenu instanceof AccountMenu) {
+                Menu.backFromAccountMenu = true;
+            }
             fatherMenu.execute();
         }
         this.show();
@@ -68,6 +77,9 @@ public class Menu {
             if (this.fatherMenu == null) {
                 System.exit(1);
             } else {
+                if (fatherMenu instanceof AccountMenu) {
+                    Menu.backFromAccountMenu = true;
+                }
                 nextMenu = this.fatherMenu;
             }
         } else if (input > 0 && input <= subMenus.size()) {

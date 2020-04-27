@@ -79,10 +79,10 @@ public class ProductManager {
         return null;
     }
 
-    public boolean doesSalesmanSellProduct(String salesmanUserName, String productID) {
+    /*public boolean doesSalesmanSellProduct(String salesmanUserName, String productID) {
         Product product = Product.getProductWithID(productID);
         assert product != null;
         product.doesSalesmanSellProductWithUsername(salesmanUserName);
 
-    }
+    }*/
 }
