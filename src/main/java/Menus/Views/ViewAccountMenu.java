@@ -1,18 +1,15 @@
 package Menus.Views;
 
-import Menus.AccountMenu;
-import Menus.BossMenu;
+import Menus.*;
 import Menus.Edits.EditAccountMenu;
-import Menus.LoginOrRegisterMenu;
-import Menus.Menu;
+import Model.Account.Customer;
 
 import java.util.HashMap;
 
 public class ViewAccountMenu extends Menu {
     private int whereItHasBeenCalled;
 
-    private void BossPersonalInfoSubMenus(HashMap subMenus) {
-        this.whereItHasBeenCalled = 1;
+    private void PersonalInfoSubMenus(HashMap subMenus) {
         subMenus.put(1, new EditAccountMenu(this, "Edit Personal Info Menu"));
         subMenus.put(2, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
     }
@@ -22,7 +19,11 @@ public class ViewAccountMenu extends Menu {
         this.logoutType = false;
         HashMap<Integer, Menu> subMenus = new HashMap<Integer, Menu>();
         if (fatherMenu instanceof BossMenu) {
-            BossPersonalInfoSubMenus(subMenus);
+            whereItHasBeenCalled = 1;
+            PersonalInfoSubMenus(subMenus);
+        } else if (fatherMenu instanceof CustomerMenu) {
+            whereItHasBeenCalled = 2;
+            PersonalInfoSubMenus(subMenus);
         }
         this.setSubMenus(subMenus);
     }
