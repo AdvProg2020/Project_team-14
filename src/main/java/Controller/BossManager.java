@@ -22,19 +22,12 @@ public class BossManager {
     public void showAccounts(String username) {
         ArrayList<Account> accounts = Storage.getAllAccounts();
         StringBuilder answer = new StringBuilder("");
-        System.out.println(accounts.size());
-        /*for (int i = 0; i < accounts.size(); i++) {
-            Account account = accounts.get(i);
-            if (account.getRole().equals(Role.BOSS)) {
-                accounts.remove(account);
-                i--;
-            }
-        }*/
         if (accounts.size() == 0) {
             Server.setAnswer("nothing found");
         } else {
             for (Account account : accounts) {
-                answer.append(account.toStringForBoss() + "\n");
+                if (!account.getUsername().equals(username))
+                    answer.append(account.toStringForBoss() + "\n");
             }
             answer.append("here are what we found");
             String ans = answer.toString();

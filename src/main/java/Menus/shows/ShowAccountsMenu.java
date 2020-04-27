@@ -18,7 +18,7 @@ public class ShowAccountsMenu extends ShowsMenu {
     }
 
     private void getInfo() {
-        server.clientToServer("show accounts");
+        server.clientToServer("show accounts " + username);
         String serverAnswer = server.serverToClient();
         System.out.println(serverAnswer);
     }
