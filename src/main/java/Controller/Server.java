@@ -71,7 +71,14 @@ public class Server {
             this.viewPersonalInfo(command);
         } else if (command.startsWith("edit personal info ")) {
             this.editPersonalInfo(command);
+        } else if (command.startsWith("show accounts")) {
+            this.showAccounts(command);
         }
+    }
+
+    private void showAccounts(String command) {
+        String[] input = command.split("\\s");
+        bossManager.showAccounts(input[2]);
     }
 
     private void editPersonalInfo(String command) {

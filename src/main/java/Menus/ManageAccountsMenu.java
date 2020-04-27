@@ -11,5 +11,6 @@ public class ManageAccountsMenu extends Menu {
         HashMap<Integer, Menu> subMenus = new HashMap<Integer, Menu>();
         subMenus.put(1, new ShowAccountsMenu(this, "Show Accounts Menu"));
         subMenus.put(2, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
+        this.setSubMenus(subMenus);
     }
 }

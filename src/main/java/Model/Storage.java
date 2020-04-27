@@ -39,6 +39,10 @@ public class Storage {
         return null;
     }
 
+    public static ArrayList<Account> getAllAccounts() {
+        return allAccounts;
+    }
+
     public static ArrayList<Customer> getAllCustomers() {
         ArrayList<Customer> arrayList = new ArrayList<>();
         for (Account account : allAccounts) {

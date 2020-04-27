@@ -89,6 +89,10 @@ public abstract class Account {
         this.telephone = telephone;
     }
 
+    public String toStringForBoss() {
+        return "Username: " + this.getUsername() + " Role: " + this.getRole();
+    }
+
     public String toString() {
         String result = "";
         result = result + "Username: " + this.getUsername() + "\n";
