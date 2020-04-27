@@ -24,6 +24,10 @@ public class Customer extends Account implements Serializable {
         return credit;
     }
 
+    public void setCredit(int credit) {
+        this.credit = credit;
+    }
+
     public static boolean isCreditEnoughAccordingToCart() {
         return false;
     }

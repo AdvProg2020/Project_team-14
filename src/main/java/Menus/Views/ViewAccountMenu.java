@@ -3,6 +3,7 @@ package Menus.Views;
 import Menus.*;
 import Menus.Edits.EditAccountMenu;
 import Model.Account.Customer;
+import Model.Account.Salesman;
 
 import java.util.HashMap;
 
@@ -24,6 +25,9 @@ public class ViewAccountMenu extends Menu {
         } else if (fatherMenu instanceof CustomerMenu) {
             whereItHasBeenCalled = 2;
             PersonalInfoSubMenus(subMenus);
+        } else if (fatherMenu instanceof SalesmanMenu) {
+            whereItHasBeenCalled = 3;
+            PersonalInfoSubMenus(subMenus);
         }
         this.setSubMenus(subMenus);
     }
@@ -34,8 +38,8 @@ public class ViewAccountMenu extends Menu {
     }
 
     private void getInfo() {
-        if (fatherMenu instanceof BossMenu) {
-            server.clientToServer("view personal info BOSS " + username);
+        if (fatherMenu instanceof BossMenu || fatherMenu instanceof CustomerMenu || fatherMenu instanceof SalesmanMenu) {
+            server.clientToServer("view personal info " + username);
         }
         String serverAnswer;
         serverAnswer = server.serverToClient();

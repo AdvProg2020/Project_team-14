@@ -28,6 +28,10 @@ public class Salesman extends Account implements Serializable {
         return credit;
     }
 
+    public void setCredit(int credit) {
+        this.credit = credit;
+    }
+
     public boolean isConfirmed() {
         return confirmationState.equals(Confirmation.ACCEPTED);
     }

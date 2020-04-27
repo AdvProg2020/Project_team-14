@@ -68,7 +68,7 @@ public class Server {
         } else if (command.startsWith("forgot password ")) {
             this.forgotPassword(command);
         } else if (command.startsWith("view personal info ")) {
-            this.showPersonalInfo(command);
+            this.viewPersonalInfo(command);
         } else if (command.startsWith("edit personal info ")) {
             this.editPersonalInfo(command);
         }
@@ -116,12 +116,18 @@ public class Server {
             } else {
                 answer = "invalid password type";
             }
+        } else if (input[3].equals("money")) {
+            if (checkMoneyFormat(input[4])) {
+                accountManager.editMoney(input[5], input[4]);
+            } else {
+                answer = "invalid money type";
+            }
         }
     }
 
-    private void showPersonalInfo(String command) {
+    private void viewPersonalInfo(String command) {
         String[] input = command.split("\\s");
-        accountManager.viewAccountInformation(input[4]);
+        accountManager.viewAccountInformation(input[3]);
     }
 
     private void forgotPassword(String command) {
@@ -134,6 +140,10 @@ public class Server {
 
     private void login(Matcher matcher) {
         accountManager.login(matcher.group(1), matcher.group(2));
+    }
+
+    private boolean checkMoneyFormat(String money) {
+        return getMatcher("(\\d)+", money).matches();
     }
 
     private boolean checkNameFormat(String name) {

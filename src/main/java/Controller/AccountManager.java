@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.Account.Account;
+import Model.Account.Customer;
 import Model.Account.Role;
 import Model.Account.Salesman;
 import Model.Storage;
@@ -90,6 +91,19 @@ public class AccountManager {
             Server.setAnswer("edit successful");
         } else {
             Server.setAnswer("wrong old password");
+        }
+    }
+
+    public void editMoney(String username, String money) {
+        if (money.length() <= 8) {
+            Account account = Storage.getAccountWithUsername(username);
+            if (account instanceof Customer) {
+                ((Customer) account).setCredit(((Customer) account).getCredit() + Integer.parseInt(money));
+            } else if (account instanceof Salesman) {
+                ((Salesman) account).setCredit(((Salesman) account).getCredit() + Integer.parseInt(money));
+            }
+        } else {
+            Server.setAnswer("money more than limits");
         }
     }
 }

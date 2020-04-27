@@ -20,6 +20,11 @@ public class EditAccountMenu extends Menu {
         HashMap<Integer, Menu> subMenus = new HashMap<Integer, Menu>();
         if (fatherMenu.getWhereItHasBeenCalled() == 1) {
             EditPersonalInfoSubMenus(subMenus);
+        } else if (fatherMenu.getWhereItHasBeenCalled() == 2) {
+            EditPersonalInfoSubMenus(subMenus);
+            subMenus.put(7, getEditInfoMenu("money"));
+        } else if (fatherMenu.getWhereItHasBeenCalled() == 3) {
+            EditPersonalInfoSubMenus(subMenus);
         }
         this.setSubMenus(subMenus);
     }
@@ -33,8 +38,10 @@ public class EditAccountMenu extends Menu {
             return "Username";
         } else if (menuName.equals("Email")) {
             return "Email";
-        } else {
+        } else if (menuName.equals("telephone")) {
             return "Telephone";
+        } else {
+            return "Money";
         }
     }
 
