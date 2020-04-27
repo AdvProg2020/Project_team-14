@@ -47,6 +47,10 @@ public class Product extends RandomString implements Serializable {
         allProducts.add(this);
     }
 
+    public int getSeenCount() {
+        return seenCount;
+    }
+
     public void setBrand(String brand) {
         this.brand = brand;
     }
@@ -61,6 +65,10 @@ public class Product extends RandomString implements Serializable {
 
     public void deleteForSalesman(String salesmanUser) {
         hasBeenDeleted.put(salesmanUser, true);
+    }
+
+    public String getBrand() {
+        return brand;
     }
 
     public String getName() {
@@ -129,7 +137,7 @@ public class Product extends RandomString implements Serializable {
     //then checking whether they have remainder or not
 
     public boolean isAvailableBySalesmanWithUsername(String username) {
-        return remainder.get(username) > 0;
+        return remainder.get(username) <= 0;
     }
 
 
@@ -153,7 +161,7 @@ public class Product extends RandomString implements Serializable {
         result.append("Description: ").append(this.description).append("\n");
         result.append("Sellers: " + "\n");
         for (String salesmanID : salesmanIDs) {
-            if (!doesSalesmanSellProductWithUsername(salesmanID) || !isAvailableBySalesmanWithUsername(salesmanID)) {
+            if (!doesSalesmanSellProductWithUsername(salesmanID) || isAvailableBySalesmanWithUsername(salesmanID)) {
                 continue;
             }
             result.append("Salesman: ").append(salesmanID);
@@ -162,23 +170,25 @@ public class Product extends RandomString implements Serializable {
         return result.toString();
     }
 
-    public String toStringForSalesmanView(String salesmanUser){
+    public String toStringForSalesmanView(String salesmanUser) {
         StringBuilder result = new StringBuilder();
         result.append("Name: ").append(this.name).append("\n");
         result.append("Brand: ").append(this.brand).append("\n");
         result.append("Description: ").append(this.description).append("\n");
         result.append("Sellers: " + "\n");
         for (String salesmanID : salesmanIDs) {
-            if (!doesSalesmanSellProductWithUsername(salesmanID) || !isAvailableBySalesmanWithUsername(salesmanID)) {
+            if (!doesSalesmanSellProductWithUsername(salesmanID) || isAvailableBySalesmanWithUsername(salesmanID)) {
                 continue;
             }
             result.append("Salesman: ").append(salesmanID);
             result.append(" Price: ").append(price.get(salesmanID)).append("\n");
         }
-        result.append("confirmation state for you: ").append(confirmationState.get(salesmanUser).name()).append("\n");
-        result.append("your remainder: ").append(remainder.get(salesmanUser)).append("\n");
-        if(isOnSale.get(salesmanUser)){
-           // result.append("the product is on sale with percantage").append()
+        result.append("Confirmation state for you: ").append(confirmationState.get(salesmanUser).name()).append("\n");
+        result.append("Your remainder: ").append(remainder.get(salesmanUser)).append("\n");
+        if (isOnSale.get(salesmanUser)) {
+            result.append("The product is on sale").append("\n");
+        } else {
+            result.append("The product isn't on sale").append("\n");
         }
         return result.toString();
     }

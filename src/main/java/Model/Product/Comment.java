@@ -43,7 +43,7 @@ public class Comment extends RandomString implements Serializable {
     public static ArrayList<String> getCommentsForProductWithID(String productID) {
         ArrayList<String> list = new ArrayList<>();
         for (Comment comment : allComments) {
-            if (comment.isConfirmed() && comment.getCommentID().equals(productID)) {
+            if (comment.isConfirmed() && comment.getProductID().equals(productID)) {
                 list.add(comment.commentID);
             }
         }
@@ -51,15 +51,13 @@ public class Comment extends RandomString implements Serializable {
     }
 
     public static String getCommentsForProductStringFormatted(String productID) {
-        /*StringBuilder result = new StringBuilder();
-        ArrayList<String> comments = getCommentsForProductWithID(productID);
-        for (String commentID : comments) {
-            Comment comment = getCommentByID(commentID);
+        StringBuilder result = new StringBuilder();
+        for (String commentID : getCommentsForProductWithID(productID)) {
+            Comment comment = Comment.getCommentByID(commentID);
             assert comment != null;
-            result.append(comment.toStringForCheckingProduct()).append("\n");
+            result.append(comment.toStringForProductView());
         }
-         */
-        return null;
+        return result.toString();
     }
 
     //in the boss menu when the boss wants to check request one part is check comments
@@ -109,6 +107,9 @@ public class Comment extends RandomString implements Serializable {
         return commentID;
     }
 
+    public String getProductID() {
+        return productID;
+    }
 
     public boolean isConfirmed() {
         return confirmationState.equals(Confirmation.ACCEPTED);
