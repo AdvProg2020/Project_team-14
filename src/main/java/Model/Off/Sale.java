@@ -105,6 +105,11 @@ public class Sale extends Off implements Serializable {
         return arrayList;
     }
 
+    public static int getSalePercentageForProduct(){
+       // if
+        return 0;
+    }
+
     public String toString() {
         StringBuilder result = new StringBuilder(super.toString());
         result.append("Products: " + "\n");
