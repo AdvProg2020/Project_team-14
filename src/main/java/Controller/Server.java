@@ -94,6 +94,18 @@ public class Server {
             } else {
                 answer = "invalid username type";
             }
+        } else if (input[3].equals("Email")) {
+            if (checkEmailFormat(input[4])) {
+                accountManager.editEmail(input[5], input[4]);
+            } else {
+                answer = "invalid Email type";
+            }
+        } else if (input[3].equals("telephone")) {
+            if (checkTelephoneFormat(input[4])) {
+                accountManager.editTelephone(input[5], input[4]);
+            } else {
+                answer = "invalid Telephone type";
+            }
         }
     }
 

@@ -5,10 +5,12 @@ import Menus.Menu;
 import java.util.HashMap;
 
 public class EditAccountMenu extends Menu {
-    private void BossEditPersonalInfoSubMenus(HashMap subMenus) {
+    private void EditPersonalInfoSubMenus(HashMap subMenus) {
         subMenus.put(1, getEditNameMenu("firstName"));
         subMenus.put(2, getEditNameMenu("lastName"));
         subMenus.put(3, getEditNameMenu("username"));
+        subMenus.put(4, getEditNameMenu("Email"));
+        subMenus.put(5, getEditNameMenu("telephone"));
     }
 
     public EditAccountMenu(Menu fatherMenu, String menuName) {
@@ -16,7 +18,7 @@ public class EditAccountMenu extends Menu {
         this.logoutType = false;
         HashMap<Integer, Menu> subMenus = new HashMap<Integer, Menu>();
         if (fatherMenu.getWhereItHasBeenCalled() == 1) {
-            BossEditPersonalInfoSubMenus(subMenus);
+            EditPersonalInfoSubMenus(subMenus);
         }
         this.setSubMenus(subMenus);
     }
@@ -26,8 +28,12 @@ public class EditAccountMenu extends Menu {
             return "First Name";
         } else if (menuName.equals("lastName")) {
             return "Last Name";
-        } else {
+        } else if (menuName.equals("username")) {
             return "Username";
+        } else if (menuName.equals("Email")) {
+            return "Email";
+        } else {
+            return "Telephone";
         }
     }
 

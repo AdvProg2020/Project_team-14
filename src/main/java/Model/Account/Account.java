@@ -41,6 +41,10 @@ public abstract class Account {
         return this.password;
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public String getFirstName() {
         return this.firstName;
     }
@@ -69,12 +73,20 @@ public abstract class Account {
         return this.Email;
     }
 
+    public void setEmail(String email) {
+        Email = email;
+    }
+
     public Role getRole() {
         return this.role;
     }
 
     public String getTelephone() {
         return this.telephone;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
     }
 
     public String toString() {
