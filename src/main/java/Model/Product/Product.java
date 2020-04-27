@@ -47,6 +47,18 @@ public class Product extends RandomString implements Serializable {
         allProducts.add(this);
     }
 
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public void setRemainderForSalesman(int remainder, String salesmanUser) {
+        this.remainder.put(salesmanUser, remainder);
+    }
+
+    public void setPriceForSalesman(int price, String salesmanUser) {
+        this.price.put(salesmanUser, price);
+    }
+
     public void deleteForSalesman(String salesmanUser) {
         hasBeenDeleted.put(salesmanUser, true);
     }
@@ -120,13 +132,14 @@ public class Product extends RandomString implements Serializable {
         return remainder.get(username) > 0;
     }
 
+
     public static boolean isThereProductWithID(String productID) {
         return getProductWithID(productID) != null;
     }
 
     public static Product getProductWithID(String productID) {
         for (Product product : allProducts) {
-            if (product.productID.equals(productID)) {
+            if (product.getProductID().equals(productID)) {
                 return product;
             }
         }
@@ -145,6 +158,27 @@ public class Product extends RandomString implements Serializable {
             }
             result.append("Salesman: ").append(salesmanID);
             result.append(" Price: ").append(price.get(salesmanID)).append("\n");
+        }
+        return result.toString();
+    }
+
+    public String toStringForSalesmanView(String salesmanUser){
+        StringBuilder result = new StringBuilder();
+        result.append("Name: ").append(this.name).append("\n");
+        result.append("Brand: ").append(this.brand).append("\n");
+        result.append("Description: ").append(this.description).append("\n");
+        result.append("Sellers: " + "\n");
+        for (String salesmanID : salesmanIDs) {
+            if (!doesSalesmanSellProductWithUsername(salesmanID) || !isAvailableBySalesmanWithUsername(salesmanID)) {
+                continue;
+            }
+            result.append("Salesman: ").append(salesmanID);
+            result.append(" Price: ").append(price.get(salesmanID)).append("\n");
+        }
+        result.append("confirmation state for you: ").append(confirmationState.get(salesmanUser).name()).append("\n");
+        result.append("your remainder: ").append(remainder.get(salesmanUser)).append("\n");
+        if(isOnSale.get(salesmanUser)){
+           // result.append("the product is on sale with percantage").append()
         }
         return result.toString();
     }
