@@ -55,4 +55,20 @@ public class AccountManager {
         Account account = Storage.getUserWithUsername(username);
         account.setFirstName(name);
     }
+
+    public void editLastName(String username, String name) {
+        Server.setAnswer("edit successful");
+        Account account = Storage.getUserWithUsername(username);
+        account.setSecondName(name);
+    }
+
+    public void editUsername(String oldUsername, String newUsername) {
+        if (Storage.isThereAccountWithUsername(newUsername)) {
+            Server.setAnswer("username has already been taken");
+        } else {
+            Server.setAnswer("edit successful");
+            Account account = Storage.getUserWithUsername(oldUsername);
+            account.setUsername(newUsername);
+        }
+    }
 }

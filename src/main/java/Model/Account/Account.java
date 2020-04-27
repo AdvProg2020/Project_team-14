@@ -53,8 +53,16 @@ public abstract class Account {
         return this.secondName;
     }
 
+    public void setSecondName(String secondName) {
+        this.secondName = secondName;
+    }
+
     public String getUsername() {
         return this.username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getEmail() {
