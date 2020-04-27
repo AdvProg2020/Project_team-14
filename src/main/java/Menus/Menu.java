@@ -71,7 +71,7 @@ public class Menu {
             fatherMenu.execute();
         }
         this.show();
-        Menu nextMenu = null;
+        Menu nextMenu = this;
         int input = Integer.parseInt(scanner.nextLine());
         if (input == subMenus.size() + 1) {
             if (this.fatherMenu == null) {

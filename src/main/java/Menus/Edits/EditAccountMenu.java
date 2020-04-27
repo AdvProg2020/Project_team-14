@@ -25,6 +25,8 @@ public class EditAccountMenu extends Menu {
             subMenus.put(7, getEditInfoMenu("money"));
         } else if (fatherMenu.getWhereItHasBeenCalled() == 3) {
             EditPersonalInfoSubMenus(subMenus);
+            subMenus.put(7, getEditInfoMenu("money"));
+            subMenus.put(8, getEditInfoMenu("company"));
         }
         this.setSubMenus(subMenus);
     }
@@ -40,8 +42,10 @@ public class EditAccountMenu extends Menu {
             return "Email";
         } else if (menuName.equals("telephone")) {
             return "Telephone";
-        } else {
+        } else if (menuName.equals("money")) {
             return "Money";
+        } else {
+            return "Company";
         }
     }
 

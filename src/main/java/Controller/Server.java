@@ -122,6 +122,8 @@ public class Server {
             } else {
                 answer = "invalid money type";
             }
+        } else if (input[3].equals("company")) {
+            accountManager.editCompany(input[5], input[4]);
         }
     }
 

@@ -24,6 +24,10 @@ public class Salesman extends Account implements Serializable {
         return company;
     }
 
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
     public int getCredit() {
         return credit;
     }

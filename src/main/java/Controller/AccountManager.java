@@ -4,6 +4,7 @@ import Model.Account.Account;
 import Model.Account.Customer;
 import Model.Account.Role;
 import Model.Account.Salesman;
+import Model.Off.Sale;
 import Model.Storage;
 
 public class AccountManager {
@@ -41,7 +42,7 @@ public class AccountManager {
             Account account = Storage.getAccountWithUsername(username);
             Server.setAnswer("here is your password: " + account.getPassword());
         } else {
-            Server.setAnswer("logout successful");
+            Server.setAnswer("incorrect username");
         }
     }
 
@@ -102,8 +103,17 @@ public class AccountManager {
             } else if (account instanceof Salesman) {
                 ((Salesman) account).setCredit(((Salesman) account).getCredit() + Integer.parseInt(money));
             }
+            Server.setAnswer("edit successful");
         } else {
             Server.setAnswer("money more than limits");
+        }
+    }
+
+    public void editCompany(String username, String company) {
+        Account account = Storage.getAccountWithUsername(username);
+        if (account instanceof Salesman) {
+            ((Salesman) account).setCompany(company);
+            Server.setAnswer("edit successful");
         }
     }
 }
