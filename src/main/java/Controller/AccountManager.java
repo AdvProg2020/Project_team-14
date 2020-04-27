@@ -82,4 +82,14 @@ public class AccountManager {
         account.setTelephone(telephone);
         Server.setAnswer("edit successful");
     }
+
+    public void editPassword(String username, String oldPassword, String newPassword) {
+        Account account = Storage.getAccountWithUsername(username);
+        if (account.getPassword().equals(oldPassword)) {
+            account.setPassword(newPassword);
+            Server.setAnswer("edit successful");
+        } else {
+            Server.setAnswer("wrong old password");
+        }
+    }
 }

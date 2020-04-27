@@ -106,6 +106,16 @@ public class Server {
             } else {
                 answer = "invalid Telephone type";
             }
+        } else if (input[3].equals("password")) {
+            if (checkUsernameFormat(input[5])) {
+                if (input[6].equals(input[5])) {
+                    accountManager.editPassword(input[7], input[4], input[5]);
+                } else {
+                    answer = "your new password differs from resubmit of your password";
+                }
+            } else {
+                answer = "invalid password type";
+            }
         }
     }
 
