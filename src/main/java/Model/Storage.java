@@ -27,10 +27,10 @@ public class Storage {
     public static ArrayList<SpecialOffCode> allSpecialOffCodes = new ArrayList<>();
 
     public static boolean isThereAccountWithUsername(String username) {
-        return getUserWithUsername(username) != null;
+        return getAccountWithUsername(username) != null;
     }
 
-    public static Account getUserWithUsername(String username) {
+    public static Account getAccountWithUsername(String username) {
         for (Account account : allAccounts) {
             if (account.getUsername().equalsIgnoreCase(username)) {
                 return account;

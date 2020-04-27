@@ -67,7 +67,7 @@ public class Server {
             this.logout(command);
         } else if (command.startsWith("forgot password ")) {
             this.forgotPassword(command);
-        } else if (command.startsWith("show personal info ")) {
+        } else if (command.startsWith("view personal info ")) {
             this.showPersonalInfo(command);
         } else if (command.startsWith("edit personal info ")) {
             this.editPersonalInfo(command);
@@ -81,6 +81,30 @@ public class Server {
                 accountManager.editFirstName(input[5], input[4]);
             } else {
                 answer = "invalid first name type";
+            }
+        } else if (input[3].equals("lastName")) {
+            if (checkNameFormat(input[4])) {
+                accountManager.editLastName(input[5], input[4]);
+            } else {
+                answer = "invalid last name type";
+            }
+        } else if (input[3].equals("username")) {
+            if (checkUsernameFormat(input[4])) {
+                accountManager.editUsername(input[5], input[4]);
+            } else {
+                answer = "invalid username type";
+            }
+        } else if (input[3].equals("Email")) {
+            if (checkEmailFormat(input[4])) {
+                accountManager.editEmail(input[5], input[4]);
+            } else {
+                answer = "invalid Email type";
+            }
+        } else if (input[3].equals("telephone")) {
+            if (checkTelephoneFormat(input[4])) {
+                accountManager.editTelephone(input[5], input[4]);
+            } else {
+                answer = "invalid Telephone type";
             }
         }
     }

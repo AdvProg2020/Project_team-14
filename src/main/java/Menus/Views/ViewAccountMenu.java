@@ -34,7 +34,7 @@ public class ViewAccountMenu extends Menu {
 
     private void getInfo() {
         if (fatherMenu instanceof BossMenu) {
-            server.clientToServer("show personal info BOSS " + username);
+            server.clientToServer("view personal info BOSS " + username);
         }
         String serverAnswer;
         serverAnswer = server.serverToClient();

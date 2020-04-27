@@ -41,6 +41,10 @@ public abstract class Account {
         return this.password;
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public String getFirstName() {
         return this.firstName;
     }
@@ -53,12 +57,24 @@ public abstract class Account {
         return this.secondName;
     }
 
+    public void setSecondName(String secondName) {
+        this.secondName = secondName;
+    }
+
     public String getUsername() {
         return this.username;
     }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public String getEmail() {
         return this.Email;
+    }
+
+    public void setEmail(String email) {
+        Email = email;
     }
 
     public Role getRole() {
@@ -67,6 +83,10 @@ public abstract class Account {
 
     public String getTelephone() {
         return this.telephone;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
     }
 
     public String toString() {
