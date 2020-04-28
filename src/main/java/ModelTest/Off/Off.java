@@ -1,6 +1,6 @@
-package Model.Off;
+package ModelTest.Off;
 
-import Model.RandomString;
+import ModelTest.RandomString;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

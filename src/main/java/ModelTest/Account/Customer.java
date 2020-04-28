@@ -1,14 +1,10 @@
-package Model.Account;
-
-import Model.RandomString;
+package ModelTest.Account;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Set;
-import java.util.TreeSet;
 
-import static Model.Storage.*;
+import static ModelTest.Storage.*;
 
 public class Customer extends Account implements Serializable {
     private int credit;
@@ -28,11 +24,9 @@ public class Customer extends Account implements Serializable {
         this.credit = credit;
     }
 
-    public static boolean isCreditEnoughAccordingToCart() {
-        return false;
-    }
+   // public static boolean isCreditEnoughAccordingToCart() {return false;}
 
-    public boolean isThereCustomerWithUsername(String username) {
+    public static boolean isThereCustomerWithUsername(String username) {
         for (Customer customer : getAllCustomers()) {
             if (customer.getUsername().equalsIgnoreCase(username)) {
                 return true;
@@ -51,7 +45,7 @@ public class Customer extends Account implements Serializable {
 
     @Override
     public String toString() {
-        return super.toString() + "Credit: " + this.getCredit();
+        return super.toString() + "Credit: " + this.getCredit() + "\n";
     }
 
 }

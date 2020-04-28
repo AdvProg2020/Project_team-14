@@ -64,7 +64,7 @@ public class Menu {
 
 
     public void execute() {
-        if (isUserLogin == false && logoutType == false) {
+        if (!isUserLogin && !logoutType) {
             if (fatherMenu instanceof AccountMenu) {
                 Menu.backFromAccountMenu = true;
             }

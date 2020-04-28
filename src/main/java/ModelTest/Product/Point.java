@@ -1,10 +1,10 @@
-package Model.Product;
+package ModelTest.Product;
 
-import Model.RandomString;
+import ModelTest.RandomString;
 
 import java.io.Serializable;
 
-import static Model.Storage.*;
+import static ModelTest.Storage.*;
 
 public class Point extends RandomString implements Serializable {
     private String pointID;

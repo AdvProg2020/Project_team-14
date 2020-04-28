@@ -1,14 +1,14 @@
-package Model.Off;
+package ModelTest.Off;
 
-import Model.Confirmation;
-import Model.Product.Product;
-import Model.RandomString;
+import ModelTest.Confirmation;
+import ModelTest.Product.Product;
+import ModelTest.RandomString;
 
 import java.io.Serializable;
 import java.text.ParseException;
 import java.util.ArrayList;
 
-import static Model.Storage.*;
+import static ModelTest.Storage.*;
 
 public class Sale extends Off implements Serializable {
     private ArrayList<String> productIDs;

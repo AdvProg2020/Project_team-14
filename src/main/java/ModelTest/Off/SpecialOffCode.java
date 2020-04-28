@@ -1,6 +1,6 @@
-package Model.Off;
+package ModelTest.Off;
 
-import Model.Account.Customer;
+import ModelTest.Account.Customer;
 
 import java.io.Serializable;
 import java.text.ParseException;
@@ -11,10 +11,9 @@ import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.concurrent.TimeUnit;
 
-import Model.RandomString;
-import Model.Storage;
+import ModelTest.RandomString;
 
-import static Model.Storage.*;
+import static ModelTest.Storage.*;
 
 public class SpecialOffCode extends RandomString implements Runnable, Serializable {
 

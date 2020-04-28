@@ -1,14 +1,14 @@
-package Model.Product;
+package ModelTest.Product;
 
-import Model.Category.Category;
-import Model.Confirmation;
-import Model.RandomString;
+import ModelTest.Category.Category;
+import ModelTest.Confirmation;
+import ModelTest.RandomString;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static Model.Storage.*;
+import static ModelTest.Storage.*;
 
 public class Product extends RandomString implements Serializable {
     private ArrayList<String> salesmanIDs = new ArrayList<>();

@@ -1,8 +1,8 @@
-package Model.Account;
+package ModelTest.Account;
 
 import java.io.*;
 
-import static Model.Storage.*;
+import static ModelTest.Storage.*;
 
 public class Boss extends Account implements Serializable {
 
@@ -11,7 +11,7 @@ public class Boss extends Account implements Serializable {
         allAccounts.add(this);
     }
 
-    public boolean isThereBoss() { return !getAllBosses().isEmpty(); }
+    public static boolean isThereBoss() { return !getAllBosses().isEmpty(); }
 
     public String toString() {
         return super.toString();

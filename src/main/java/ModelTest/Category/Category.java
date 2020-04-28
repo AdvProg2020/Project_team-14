@@ -1,12 +1,12 @@
-package Model.Category;
+package ModelTest.Category;
 
-import Model.Product.Product;
-import Model.RandomString;
+import ModelTest.Product.Product;
+import ModelTest.RandomString;
 
 import java.util.ArrayList;
 import java.io.*;
 
-import static Model.Storage.*;
+import static ModelTest.Storage.*;
 
 public class Category extends RandomString implements Serializable {
 
@@ -40,7 +40,7 @@ public class Category extends RandomString implements Serializable {
         this.allProductIDs.add(productID);
     }
 
-    public boolean isThereCategoryWithName(String categoryName) {
+    public static boolean isThereCategoryWithName(String categoryName) {
         return getCategoryByName(categoryName) != null;
     }
 
@@ -48,7 +48,7 @@ public class Category extends RandomString implements Serializable {
         this.subCategoryNames.add(categoryName);
     }
 
-    public Category getCategoryByName(String categoryName) {
+    public static Category getCategoryByName(String categoryName) {
         for (Category category : allCategories) {
             if (category.categoryName.equals(categoryName)) {
                 return category;

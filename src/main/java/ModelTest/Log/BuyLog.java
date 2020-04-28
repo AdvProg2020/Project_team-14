@@ -1,9 +1,8 @@
-package Model.Log;
+package ModelTest.Log;
 
-import Model.Product.Product;
-import Model.RandomString;
+import ModelTest.Product.Product;
+import ModelTest.RandomString;
 
-import java.io.*;
 import java.util.HashMap;
 
 public class BuyLog extends Log {

@@ -1,8 +1,7 @@
 package Controller;
 
-import Model.Account.Boss;
-import Model.Account.Salesman;
-import Model.Storage;
+import ModelTest.Account.Salesman;
+import ModelTest.Storage;
 
 public class SalesmanManager {
     public void register(String[] information) {

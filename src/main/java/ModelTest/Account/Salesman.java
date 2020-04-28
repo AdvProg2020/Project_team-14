@@ -1,10 +1,10 @@
-package Model.Account;
+package ModelTest.Account;
 
-import Model.Confirmation;
+import ModelTest.Confirmation;
 
 import java.io.*;
 
-import static Model.Storage.*;
+import static ModelTest.Storage.*;
 
 public class Salesman extends Account implements Serializable {
     private String company;

@@ -1,4 +1,4 @@
-package Model;
+package ModelTest;
 
 public abstract class RandomString {
     public static String getRandomString(int n) {

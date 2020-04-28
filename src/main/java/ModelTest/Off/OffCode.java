@@ -1,10 +1,10 @@
-package Model.Off;
+package ModelTest.Off;
 
 import java.io.Serializable;
 import java.text.ParseException;
 import java.util.ArrayList;
 
-import static Model.Storage.*;
+import static ModelTest.Storage.*;
 
 public class OffCode extends Off implements Serializable {
     private int ceiling;

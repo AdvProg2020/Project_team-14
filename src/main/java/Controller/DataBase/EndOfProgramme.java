@@ -3,19 +3,19 @@ package Controller.DataBase;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
-import Model.Account.Boss;
-import Model.Account.Customer;
-import Model.Account.Salesman;
-import Model.Category.Category;
-import Model.Log.BuyLog;
-import Model.Off.OffCode;
-import Model.Off.Sale;
-import Model.Off.SpecialOffCode;
-import Model.Product.Comment;
-import Model.Product.Point;
-import Model.Product.Product;
+import ModelTest.Account.Boss;
+import ModelTest.Account.Customer;
+import ModelTest.Account.Salesman;
+import ModelTest.Category.Category;
+import ModelTest.Log.BuyLog;
+import ModelTest.Off.OffCode;
+import ModelTest.Off.Sale;
+import ModelTest.Off.SpecialOffCode;
+import ModelTest.Product.Comment;
+import ModelTest.Product.Point;
+import ModelTest.Product.Product;
 
-import static Model.Storage.*;
+import static ModelTest.Storage.*;
 
 public class EndOfProgramme extends DataBase implements Runnable {
 

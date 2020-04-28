@@ -1,8 +1,7 @@
 package Controller;
 
-import Model.Account.Account;
-import Model.Account.Boss;
-import Model.Storage;
+import ModelTest.Account.Boss;
+import ModelTest.Storage;
 
 public class BossManager {
 

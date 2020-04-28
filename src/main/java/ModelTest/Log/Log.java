@@ -1,6 +1,6 @@
-package Model.Log;
+package ModelTest.Log;
 
-import Model.RandomString;
+import ModelTest.RandomString;
 
 import java.io.Serializable;
 import java.util.Date;

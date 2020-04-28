@@ -1,13 +1,13 @@
-package Model.Product;
+package ModelTest.Product;
 
-import Model.Confirmation;
-import Model.RandomString;
+import ModelTest.Confirmation;
+import ModelTest.RandomString;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
-import static Model.Storage.*;
+import static ModelTest.Storage.*;
 
 public class Comment extends RandomString implements Serializable {
     private String commentID;
