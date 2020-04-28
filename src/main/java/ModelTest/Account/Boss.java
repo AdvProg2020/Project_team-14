@@ -8,7 +8,6 @@ public class Boss extends Account implements Serializable {
 
     public Boss(String username, String password, String firstName, String secondName, String Email, String telephone, String role) {
         super(username, password, firstName, secondName, Email, telephone, role);
-        allAccounts.add(this);
     }
 
     public static boolean isThereBoss() { return !getAllBosses().isEmpty(); }

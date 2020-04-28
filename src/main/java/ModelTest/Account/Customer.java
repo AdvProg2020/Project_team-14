@@ -13,7 +13,6 @@ public class Customer extends Account implements Serializable {
     public Customer(String username, String password, String firstName, String secondName, String Email, String telephone, String role, int credit) {
         super(username, password, firstName, secondName, Email, telephone, role);
         this.credit = credit;
-        allAccounts.add(this);
     }
 
     public int getCredit() {

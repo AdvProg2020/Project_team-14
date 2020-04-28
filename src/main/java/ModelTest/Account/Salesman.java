@@ -16,8 +16,6 @@ public class Salesman extends Account implements Serializable {
         this.company = company;
         this.credit = credit;
         confirmationState = Confirmation.CHECKING;
-        allAccounts.add(this);
-
     }
 
     public String getCompany() {
