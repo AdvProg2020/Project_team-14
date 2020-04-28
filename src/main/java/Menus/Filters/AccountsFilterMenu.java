@@ -3,14 +3,20 @@ package Menus.Filters;
 import Menus.LoginOrRegisterMenu;
 import Menus.Menu;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class AccountsFilterMenu extends FiltersMenu {
-    String role;
+    private void makeFilters() {
+        filters.add("role");
+        filters.add(new String());
+        filters.set(1, null);
+    }
 
     public AccountsFilterMenu(Menu fatherMenu, String menuName) {
         super(fatherMenu, menuName);
-        this.role = null;
+        filters = new ArrayList<Object>();
+        makeFilters();
         HashMap<Integer, Menu> subMenus = new HashMap<Integer, Menu>();
         subMenus.put(1, getChangeRoleMenu());
         subMenus.put(2, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
@@ -18,8 +24,8 @@ public class AccountsFilterMenu extends FiltersMenu {
     }
 
     public String getRole() {
-        if (this.role != null) {
-            return this.role;
+        if (filters.get(1) != null) {
+            return (String) filters.get(1);
         } else {
             return "none";
         }
@@ -27,12 +33,12 @@ public class AccountsFilterMenu extends FiltersMenu {
 
     public void setRole(String role) {
         if (role.equals("clear")) {
-            this.role = null;
+            filters.set(1, null);
         } else {
-            if (this.role == null) {
-                this.role = "role";
+            if (this.filters.get(1) == null) {
+                filters.set(1, role);
             } else {
-                this.role += ",role";
+                filters.set(1, filters.get(1) + "," + role);
             }
         }
     }
@@ -51,7 +57,8 @@ public class AccountsFilterMenu extends FiltersMenu {
                         fatherMenu.execute();
                     } else {
                         if (input.equalsIgnoreCase("boss") || input.equalsIgnoreCase("customer")
-                                || input.equalsIgnoreCase("salesman")) {
+                                || input.equalsIgnoreCase("salesman") || input.equalsIgnoreCase
+                                ("clear")) {
                             setRole(input);
                         } else {
                             System.out.println("not a valid role");

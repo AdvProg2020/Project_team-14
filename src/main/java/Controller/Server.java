@@ -71,12 +71,38 @@ public class Server {
             this.viewPersonalInfo(command);
         } else if (command.startsWith("edit personal info ")) {
             this.editPersonalInfo(command);
-        } else if (command.startsWith("show accounts")) {
+        } else if (command.startsWith("show accounts ")) {
             this.showAccounts(command);
         }
     }
 
+    private int getWordCount(String input) {
+        int count = 0;
+        Matcher matcher = getMatcher("(\\S+)", input);
+        while (matcher.find()) {
+            count++;
+        }
+        return count;
+    }
+
+    private ArrayList<Object> getFilters(String command) {
+        ArrayList<Object> filters = new ArrayList<Object>();
+        String[] input = command.split("\\s");
+        if (command.contains("filter")) {
+            for (int i = 4; i < getWordCount(command); i += 2) {
+                if (input[i].equalsIgnoreCase("sort")) {
+                    break;
+                }
+                filters.add(input[i]);
+                filters.add(input[i + 1]);
+            }
+        }
+        return filters;
+    }
+
     private void showAccounts(String command) {
+        ArrayList<Object> filters;
+        filters = getFilters(command);
         String[] input = command.split("\\s");
         bossManager.showAccounts(input[2]);
     }
