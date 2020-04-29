@@ -8,21 +8,15 @@ import java.util.ArrayList;
 
 public class CommentTest {
 
-    Salesman salesman = new Salesman("salesmanUser", "password", "firstname",
-            "secondName", "h.hafezi2000@gmail.com", "09333805288",
-            "SALESMAN", "company", 0);
+    Salesman salesman = new Salesman("salesmanUser", "password", "firstname", "secondName",
+            "h.hafezi2000@gmail.com", "09333805288", "SALESMAN", "company", 0);
 
-    Product product = new Product("name", salesman.getUsername(), "brand", "description",
-            1000, 100);
+    Customer customer = new Customer("customerUser", "password", "firstname", "secondName",
+            "h.hafezi2000@yahoo.com", "09333805288", "CUSTOMER", 1000);
 
-    Product product2 = new Product("name2", salesman.getUsername(), "brand2", "description2",
-            1000, 100);
+    Product product = new Product("name", salesman.getUsername(), "brand", "description", 10, 10);
 
-
-    Customer customer = new Customer("customerUser", "password", "firstname",
-            "secondName", "h.hafezi2000@yahoo.com",
-            "09333805288", "CUSTOMER", 1000);
-
+    Product product2 = new Product("name2", salesman.getUsername(), "brand2", "description2", 10, 10);
 
     @Test
     public void getComment1() {
