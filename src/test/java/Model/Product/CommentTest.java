@@ -4,6 +4,7 @@ import Model.Account.Customer;
 import Model.Account.Salesman;
 import org.junit.Assert;
 import org.junit.Test;
+
 import java.util.ArrayList;
 
 public class CommentTest {
@@ -19,14 +20,10 @@ public class CommentTest {
     Product product2 = new Product("name2", salesman.getUsername(), "brand2", "description2", 10, 10);
 
     @Test
-    public void getComment1() {
-        Assert.assertNull(Comment.getCommentByID("aaaaaaaaaaaa"));
-    }
-
-    @Test
     public void getComment2() {
         Comment comment = new Comment("text", customer.getUsername(), product.getProductID());
         Assert.assertTrue(comment.isChecking());
+        Assert.assertNull(Comment.getCommentByID("aaaaaaaaaaaa"));
         Assert.assertNotNull(Comment.getCommentByID(comment.getCommentID()));
     }
 
