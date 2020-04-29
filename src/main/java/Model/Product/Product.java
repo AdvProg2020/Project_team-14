@@ -16,7 +16,7 @@ public class Product extends RandomString implements Serializable {
     private String brand;
     private String description;
     private int seenCount;
-    private Category category;
+    private String categoryName;
 
     //the first argument is salesmanID and the second one is whether is's on sale by that salesman
     private HashMap<String, Boolean> isOnSale = new HashMap<>();
@@ -36,7 +36,7 @@ public class Product extends RandomString implements Serializable {
         this.description = description;
         this.productID = createID();
         this.seenCount = 0;
-        this.category = null;
+        this.categoryName = null;
         this.remainder.put(salesmanID, remainder);
         this.confirmationState.put(salesmanID, Confirmation.CHECKING);
         this.hasBeenDeleted.put(salesmanID, false);
@@ -58,6 +58,10 @@ public class Product extends RandomString implements Serializable {
         this.brand = brand;
     }
 
+    public String getCategoryName() {
+        return categoryName;
+    }
+
     public void setRemainderForSalesman(int remainder, String salesmanUser) {
         this.remainder.put(salesmanUser, remainder);
     }
@@ -74,8 +78,8 @@ public class Product extends RandomString implements Serializable {
         return brand;
     }
 
-    public void setIsOnSale(String salesmanID,boolean isOnSale){
-        this.isOnSale.put(salesmanID,isOnSale);
+    public void setIsOnSale(String salesmanID, boolean isOnSale) {
+        this.isOnSale.put(salesmanID, isOnSale);
     }
 
     public String getName() {
@@ -87,14 +91,16 @@ public class Product extends RandomString implements Serializable {
     }
 
     public static String getNameByID(String productID) {
-        return Product.getProductWithID(productID).getName();
+        return Objects.requireNonNull(Product.getProductWithID(productID)).getName();
     }
 
     public String getProductID() {
         return productID;
     }
 
-    public double getAveragePoint() { return Point.getAveragePointForProduct(this.productID); }
+    public double getAveragePoint() {
+        return Point.getAveragePointForProduct(this.productID);
+    }
 
     public int getNumberOfPeopleVoted() {
         return Point.getNumberOfPeopleVotedForProduct(this.productID);
@@ -113,7 +119,7 @@ public class Product extends RandomString implements Serializable {
     }
 
     public void addSalesman(String salesmanID, int remainder, int price) {
-        Set<String> set=new HashSet<>(salesmanIDs);
+        Set<String> set = new HashSet<>(salesmanIDs);
         set.add(salesmanID);
         this.salesmanIDs.clear();
         this.salesmanIDs.addAll(set);

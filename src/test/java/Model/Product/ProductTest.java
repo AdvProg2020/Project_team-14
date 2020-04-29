@@ -32,6 +32,7 @@ public class ProductTest {
         product.increaseSeenCount();
         product.increaseSeenCount();
         Assert.assertEquals(product.getSeenCount(), 3);
+        Assert.assertNull(product.getCategoryName());
     }
 
     @Test
@@ -73,8 +74,10 @@ public class ProductTest {
     public void getNameByID() {
         Assert.assertEquals(Product.getNameByID(product.getProductID()), "name");
         Assert.assertEquals(Product.getProductWithID(product.getProductID()), product);
+        Assert.assertEquals(Product.getProductWithID(product2.getProductID()), product2);
         Assert.assertNull(Product.getProductWithID("fake ID"));
         Assert.assertFalse(Product.isThereProductWithID("fake ID"));
+
     }
 
     @Test
@@ -100,6 +103,7 @@ public class ProductTest {
     public void toStringForCustomerView() {
         product.addSalesman(salesman2.getUsername(), 10, 100);
         product.addSalesman(salesman3.getUsername(), 10, 100);
+        product.deleteForSalesman(salesman3.getUsername());
         product.setConfirmationState(salesman2.getUsername(), "ACCEPTED");
         product.setConfirmationState(salesman1.getUsername(), "ACCEPTED");
         String result = "Name: name" + "\n";
@@ -117,6 +121,7 @@ public class ProductTest {
     public void toStringForSalesmanView() {
         product.addSalesman(salesman2.getUsername(), 10, 100);
         product.addSalesman(salesman3.getUsername(), 10, 100);
+        product.deleteForSalesman(salesman3.getUsername());
         product.setConfirmationState(salesman2.getUsername(), "ACCEPTED");
         product.setConfirmationState(salesman1.getUsername(), "ACCEPTED");
         String result = "Name: name" + "\n";
