@@ -1,7 +1,7 @@
 package Controller;
 
-import ModelTest.Account.Customer;
-import ModelTest.Storage;
+import Model.Account.Customer;
+import Model.Storage;
 
 public class CustomerManager {
     public void register(String[] information) {

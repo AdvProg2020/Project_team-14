@@ -1,8 +1,8 @@
 package Controller;
 
-import ModelTest.Product.Comment;
-import ModelTest.Product.Product;
-import ModelTest.Storage;
+import Model.Product.Comment;
+import Model.Product.Product;
+import Model.Storage;
 
 import java.util.ArrayList;
 import java.util.Comparator;
