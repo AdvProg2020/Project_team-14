@@ -48,12 +48,18 @@ public class OffCode extends Off implements Serializable {
 
     //this method receives an integer and return the amount of final price after using offCode on that
 
-    public int getFinalPrice(int price) {
+    private int getFinalPrice(int price) {
         if ((price * percentage) / 100 > ceiling) {
             return price - ceiling;
         } else {
             return (price * percentage) / 100;
         }
+    }
+
+    public  static int getFinalPrice(int price, String offCodeID) {
+        OffCode offCode = OffCode.getOffCodeByID(offCodeID);
+        assert offCode != null;
+        return offCode.getFinalPrice(price);
     }
 
 

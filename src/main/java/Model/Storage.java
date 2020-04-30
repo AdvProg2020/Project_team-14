@@ -4,6 +4,7 @@ import Model.Account.Account;
 import Model.Account.Boss;
 import Model.Account.Customer;
 import Model.Account.Salesman;
+import Model.Cart.Cart;
 import Model.Category.Category;
 import Model.Log.BuyLog;
 import Model.Off.OffCode;
@@ -25,6 +26,7 @@ public class Storage {
     public static ArrayList<Category> allCategories = new ArrayList<>();
     public static ArrayList<Account> allAccounts = new ArrayList<>();
     public static ArrayList<SpecialOffCode> allSpecialOffCodes = new ArrayList<>();
+    public static ArrayList<Cart> allCarts = new ArrayList<>();
 
     public static boolean isThereAccountWithUsername(String username) {
         return getAccountWithUsername(username) != null;
