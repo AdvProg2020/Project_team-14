@@ -20,6 +20,20 @@ public abstract class Off extends RandomString {
         this.percentage = percentage;
     }
 
+    public void setEnd(String end) throws ParseException {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH-mm-ss");
+        this.end = formatter.parse(end);
+    }
+
+    public void setStart(String start) throws ParseException {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH-mm-ss");
+        this.start = formatter.parse(start);
+    }
+
+    public void setPercentage(String percentage) {
+        this.percentage = Integer.parseInt(percentage);
+    }
+
     public boolean isAuthenticAccordingToDate() {
         Date now = new Date();
         return now.before(end) && now.after(start);

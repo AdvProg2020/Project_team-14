@@ -46,6 +46,14 @@ public class Product extends RandomString implements Serializable {
         allProducts.add(this);
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public int getSeenCount() {
         return seenCount;
     }
@@ -147,15 +155,11 @@ public class Product extends RandomString implements Serializable {
     //then checking whether they have remainder or not
 
     public boolean isAvailableBySalesmanWithUsername(String username) {
-        return remainder.get(username) > 1;
+        return remainder.get(username) >= 1;
     }
 
-    public void setConfirmationState(String salesmanID, String confirmationState) {
-        if (confirmationState.equalsIgnoreCase("ACCEPTED")) {
-            this.confirmationState.put(salesmanID, Confirmation.ACCEPTED);
-        } else if (confirmationState.equalsIgnoreCase("DENIED")) {
-            this.confirmationState.put(salesmanID, Confirmation.DENIED);
-        }
+    public void setConfirmationState(String salesmanID, Confirmation confirmationState) {
+        this.confirmationState.put(salesmanID, confirmationState);
     }
 
     public static boolean isThereProductWithID(String productID) {

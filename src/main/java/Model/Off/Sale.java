@@ -24,6 +24,10 @@ public class Sale extends Off implements Serializable {
         allSales.add(this);
     }
 
+    public void setConfirmationState(Confirmation confirmationState) {
+        this.confirmationState = confirmationState;
+    }
+
     public void addProductToSale(String productID) {
         productIDs.add(productID);
     }
@@ -50,6 +54,14 @@ public class Sale extends Off implements Serializable {
 
     public ArrayList<String> listProducts() {
         return productIDs;
+    }
+
+    public void addToProducts(String productID){
+        productIDs.add(productID);
+    }
+
+    public void removeFromProducts(String productID){
+        productIDs.remove(productID);
     }
 
     // the method below return the best price of a product with specific salesman

@@ -13,6 +13,7 @@ import Model.Off.SpecialOffCode;
 import Model.Product.Comment;
 import Model.Product.Point;
 import Model.Product.Product;
+import Model.Request.Request;
 
 import java.util.ArrayList;
 
@@ -27,6 +28,7 @@ public class Storage {
     public static ArrayList<Account> allAccounts = new ArrayList<>();
     public static ArrayList<SpecialOffCode> allSpecialOffCodes = new ArrayList<>();
     public static ArrayList<Cart> allCarts = new ArrayList<>();
+    public static ArrayList<Request> allRequest = new ArrayList<>();
 
     public static boolean isThereAccountWithUsername(String username) {
         return getAccountWithUsername(username) != null;
