@@ -20,12 +20,17 @@ public class Sale extends Off implements Serializable {
         super(start, end, percentage);
         this.saleID = createID();
         this.salesmanID = salesmanID;
+        productIDs = new ArrayList<>();
         confirmationState = Confirmation.CHECKING;
         allSales.add(this);
     }
 
     public void addProductToSale(String productID) {
         productIDs.add(productID);
+    }
+
+    public void removeProductFromSale(String productID) {
+        productIDs.remove(productID);
     }
 
     public boolean isConfirmed() {
@@ -41,7 +46,7 @@ public class Sale extends Off implements Serializable {
     }
 
     public boolean doesContainProduct(String productID) {
-        return productID.contains(productID);
+        return productIDs.contains(productID);
     }
 
     public String getSaleID() {

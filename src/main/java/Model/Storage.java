@@ -74,4 +74,15 @@ public class Storage {
         }
         return arrayList;
     }
+
+    public static ArrayList<Sale> getAllSales() {
+        return allSales;
+    }
+
+    public static  Sale getSaleByID (String saleID) {
+        for (Sale sale : allSales) {
+            if (sale.getSaleID().equals(saleID)) return sale;
+        }
+        return null;
+    }
 }
