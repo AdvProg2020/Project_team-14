@@ -18,7 +18,7 @@ public class Sale extends Off implements Serializable {
 
     public Sale(String start, String end, int percentage, String salesmanID) throws ParseException {
         super(start, end, percentage);
-        this.saleID = createID();
+        this.saleID = RandomString.createID("Sale");
         this.salesmanID = salesmanID;
         productIDs = new ArrayList<>();
         confirmationState = Confirmation.CHECKING;
@@ -118,10 +118,4 @@ public class Sale extends Off implements Serializable {
         }
         return result.toString();
     }
-
-    public String createID() {
-        return RandomString.createID("Sale");
-    }
-
-
 }

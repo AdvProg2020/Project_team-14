@@ -1,8 +1,10 @@
 package Controller;
 
 import Model.Off.Sale;
+import Model.Request;
 import Model.Storage;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 
 public class SalesManager {
@@ -31,10 +33,26 @@ public class SalesManager {
     }
 
     public void editSale (String saleID, String attribute, String updatedInfo) {
-        // need request class be implemented
+        String ans = "your request to update Sale info has been sent to manager";
+        Sale selectedSale = Storage.getSaleByID(saleID);
+        if (attribute.equals("startDate")) {
+            new Request("editSale", saleID, attribute, updatedInfo);
+        } else if (attribute.equals("endDate")) {
+            new Request("editSale", saleID, attribute,updatedInfo);
+        } else if (attribute.equals("addProduct")) {
+            new Request("editSale", saleID, attribute, updatedInfo);
+        } else if (attribute.equals("removeProduct")) {
+            new Request("editSale", saleID, attribute, updatedInfo);
+        } else if (attribute.equals("percentage")) {
+            new Request("editSale", saleID, attribute, updatedInfo);
+        } else {
+            ans = "sales do not have property like want you want";
+        }
+        Server.setAnswer(ans);
     }
 
-    public void addSale (ArrayList<String> info) {
-        //
+    public void addSale (ArrayList<String> info) throws ParseException {
+        Sale newSale = new Sale(info.get(0), info.get(1), Integer.parseInt(info.get(2)), info.get(3));
+        new Request("addSale", newSale.getSaleID());
     }
 }

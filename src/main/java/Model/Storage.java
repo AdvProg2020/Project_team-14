@@ -27,6 +27,7 @@ public class Storage {
     public static ArrayList<Account> allAccounts = new ArrayList<>();
     public static ArrayList<SpecialOffCode> allSpecialOffCodes = new ArrayList<>();
     public static ArrayList<Cart> allCarts = new ArrayList<>();
+    public static ArrayList<Request> allRequests = new ArrayList<>();
 
     public static boolean isThereAccountWithUsername(String username) {
         return getAccountWithUsername(username) != null;
