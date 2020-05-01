@@ -1,5 +1,6 @@
 package Controller;
 
+
 import Model.Account.Salesman;
 import Model.Storage;
 
@@ -12,14 +13,16 @@ public class SalesmanManager {
         new Salesman(information[3], information[4], information[1], information[2],
                 information[6], information[7], information[5], information[8], 0);
     }
-    /*
-    private SalesManager salesManager;
-    private ProductManager productManager;
 
-    public SalesmanManager() {
-        salesManager = new SalesManager();
-        productManager = new ProductManager();
+    public void showCompanyInfo (String salesmanID) {
+        Salesman salesman = (Salesman) Storage.getAccountWithUsername(salesmanID);
+        Server.setAnswer(salesman.getCompany());
     }
 
-     */
+    public void showSalesHistory (String salesmanID) {
+        Salesman salesman = (Salesman) Storage.getAccountWithUsername(salesmanID);
+        /*
+         * log class has work yet :)
+         */
+    }
 }
