@@ -1,8 +1,6 @@
 package Controller;
 
-import Model.Account.Account;
-import Model.Account.Boss;
-import Model.Account.Role;
+import Model.Account.*;
 import Model.Storage;
 
 import java.util.ArrayList;
@@ -31,10 +29,58 @@ public class BossManager {
         }
     }
 
+    private boolean checkMinCreditFilter(Account account, String filter) {
+        if (account instanceof Boss) {
+            return true;
+        } else if (account instanceof Customer) {
+            if (((Customer) account).getCredit() >= Integer.parseInt(filter)) {
+                return true;
+            } else {
+                return false;
+            }
+        } else if (account instanceof Salesman) {
+            if (((Salesman) account).getCredit() >= Integer.parseInt(filter)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        return false;
+    }
+
+    private boolean checkMaxCreditFilter(Account account, String filter) {
+        if (account instanceof Boss) {
+            return true;
+        } else if (account instanceof Customer) {
+            if (((Customer) account).getCredit() <= Integer.parseInt(filter)) {
+                return true;
+            } else {
+                return false;
+            }
+        } else if (account instanceof Salesman) {
+            if (((Salesman) account).getCredit() <= Integer.parseInt(filter)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        return false;
+    }
+
     private boolean isAccountInFilter(Account account, ArrayList<Object> filters) {
         for (int i = 0; i < filters.size(); i += 2) {
             if (((String) filters.get(i)).equalsIgnoreCase("role")) {
                 if (checkRoleFilter(account, (String) filters.get(i + 1)) == false) {
+                    return false;
+                }
+            }
+            if (((String) filters.get(i)).equalsIgnoreCase("minCredit")) {
+                if (checkMinCreditFilter(account, (String) filters.get(i + 1)) == false) {
+                    return false;
+                }
+            }
+            if (((String) filters.get(i)).equalsIgnoreCase("maxCredit")) {
+                if (checkMaxCreditFilter(account, (String) filters.get(i + 1)) == false) {
                     return false;
                 }
             }

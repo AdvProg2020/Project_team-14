@@ -12,9 +12,11 @@ public class AccountsFilterMenu extends FiltersMenu {
         filters.add(new String());
         filters.set(1, null);
         filters.add("minCredit");
-        filters.add(-1);
+        filters.add(new String());
+        filters.set(3, null);
         filters.add("maxCredit");
-        filters.add(-1);
+        filters.add(new String());
+        filters.set(5, null);
     }
 
     public AccountsFilterMenu(Menu fatherMenu, String menuName) {
@@ -30,10 +32,34 @@ public class AccountsFilterMenu extends FiltersMenu {
     }
 
     public String getMinLimit() {
-        if ((Integer) filters.get(3) == -1) {
+        if (filters.get(3) == null) {
             return "none";
         } else {
             return (String) filters.get(3);
+        }
+    }
+
+    public void setMinCredit(String credit) {
+        if (credit.equals("none")) {
+            filters.set(3, null);
+        } else {
+            filters.set(3, credit);
+        }
+    }
+
+    public String getMaxLimit() {
+        if (filters.get(5) == null) {
+            return "none";
+        } else {
+            return (String) filters.get(5);
+        }
+    }
+
+    public void setMaxCredit(String credit) {
+        if (credit.equals("none")) {
+            filters.set(5, null);
+        } else {
+            filters.set(5, credit);
         }
     }
 
@@ -65,7 +91,35 @@ public class AccountsFilterMenu extends FiltersMenu {
                 System.out.println("if you input back we will go back");
                 while (true) {
                     if (type.equals("min")) {
-                        System.out.println("your current " + type + " Credit Limit is:" + getMinLimit());
+                        System.out.println("your current " + type + " Credit Limit is: " + getMinLimit());
+                    } else {
+                        System.out.println("your current " + type + " Credit Limit is: " + getMaxLimit());
+                    }
+                    System.out.println("please insert your new " + type + " Credit Limit or clear " +
+                            "for clearing current filter");
+                    String input = scanner.nextLine();
+                    if (input.equals("back")) {
+                        fatherMenu.execute();
+                    } else if (input.equals("clear")) {
+                        if (type.equals("min")) {
+                            setMinCredit("clear");
+                        } else {
+                            setMaxCredit("clear");
+                        }
+                    } else {
+                        if (input.matches("(\\d+)")) {
+                            if (input.length() > 8) {
+                                System.out.println("out of limit number for credit");
+                            } else {
+                                if (type.equals("min")) {
+                                    setMinCredit(input);
+                                } else {
+                                    setMaxCredit(input);
+                                }
+                            }
+                        } else {
+                            System.out.println("input should be number or clear or back");
+                        }
                     }
                 }
             }
@@ -80,7 +134,7 @@ public class AccountsFilterMenu extends FiltersMenu {
                 System.out.println("if you input back we will go back");
                 while (true) {
                     System.out.println("your current role(s) is: " + getRole());
-                    System.out.println("please insert you new added role or clear for clearing current filter");
+                    System.out.println("please insert your new added role or clear for clearing current filter");
                     String input = scanner.nextLine();
                     if (input.equals("back")) {
                         fatherMenu.execute();
