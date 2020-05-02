@@ -8,12 +8,12 @@ import java.util.ArrayList;
 
 public class SalesManager {
 
-    public void listSales (String sortFactor) {
+    /*public void listSales (String sortFactor) {
         StringBuilder ans = new StringBuilder();
         ArrayList<Sale> allSales = Storage.getAllSales();
-        /*
+
          * what are the sort factor??
-         */
+
         for (Sale sale : allSales) {
             ans.append(sale.toString());
         }
@@ -53,5 +53,5 @@ public class SalesManager {
     public void addSale (ArrayList<String> info) throws ParseException {
         Sale newSale = new Sale(info.get(0), info.get(1), Integer.parseInt(info.get(2)), info.get(3));
         new Request("addSale", newSale.getSaleID());
-    }
+    }*/
 }

@@ -19,17 +19,47 @@ public class BossManager {
 
     }
 
-    public void showAccounts(String username) {
+    private boolean checkRoleFilter(Account account, String filter) {
+        if (filter.contains("boss") && account.getRole().equals(Role.BOSS)) {
+            return true;
+        } else if (filter.contains("customer") && account.getRole().equals(Role.CUSTOMER)) {
+            return true;
+        } else if (filter.contains("salesman") && account.getRole().equals(Role.SALESMAN)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private boolean isAccountInFilter(Account account, ArrayList<Object> filters) {
+        for (int i = 0; i < filters.size(); i += 2) {
+            if (((String) filters.get(i)).equalsIgnoreCase("role")) {
+                if (checkRoleFilter(account, (String) filters.get(i + 1)) == false) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public void showAccounts(String username, ArrayList<Object> filters) {
+        int count = 0;
         ArrayList<Account> accounts = Storage.getAllAccounts();
         StringBuilder answer = new StringBuilder("");
         if (accounts.size() == 0) {
             Server.setAnswer("nothing found");
         } else {
             for (Account account : accounts) {
-                if (!account.getUsername().equals(username))
+                if (!account.getUsername().equals(username) && isAccountInFilter(account, filters)) {
                     answer.append(account.toStringForBoss() + "\n");
+                    count++;
+                }
             }
-            answer.append("here are what we found");
+            if (count == 0) {
+                answer = new StringBuilder("nothing found");
+            } else {
+                answer.append("here are what we found");
+            }
             String ans = answer.toString();
             Server.setAnswer(ans);
         }

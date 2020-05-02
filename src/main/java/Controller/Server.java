@@ -100,7 +100,7 @@ public class Server {
         ArrayList<Object> filters;
         filters = getFilters(command);
         String[] input = command.split("\\s");
-        bossManager.showAccounts(input[2]);
+        bossManager.showAccounts(input[2], filters);
     }
 
     private void editPersonalInfo(String command) {
