@@ -6,6 +6,12 @@ import org.junit.Test;
 public class BossTest {
 
     @Test
+    public void customer(){
+        Assert.assertNull(Customer.getRandomUsername());
+    }
+
+
+    @Test
     public void isThereBoss1(){
         Assert.assertFalse(Boss.isThereBoss());
     }
