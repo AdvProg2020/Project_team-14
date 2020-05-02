@@ -2,6 +2,7 @@ package Model.Product;
 
 import Model.Account.Customer;
 import Model.Account.Salesman;
+import Model.Confirmation;
 import org.junit.Assert;
 import org.junit.Test;
 import java.util.ArrayList;
@@ -89,9 +90,9 @@ public class ProductTest {
         Assert.assertFalse(product.isAvailableBySalesmanWithUsername(salesman2.getUsername()));
         Assert.assertEquals(product.getPriceBySalesmanID(salesman3.getUsername()), 100);
         Assert.assertFalse(product.doesSalesmanSellProductWithUsername(salesman1.getUsername()));
-        product.setConfirmationState(salesman1.getUsername(), "accepted");
-        product.setConfirmationState(salesman2.getUsername(), "denied");
-        product.setConfirmationState(salesman3.getUsername(), "accepted");
+        product.setConfirmationState(salesman1.getUsername(), Confirmation.ACCEPTED);
+        product.setConfirmationState(salesman2.getUsername(), Confirmation.DENIED);
+        product.setConfirmationState(salesman3.getUsername(), Confirmation.ACCEPTED);
         product.deleteForSalesman(salesman3.getUsername());
         Assert.assertFalse(product.doesSalesmanSellProductWithUsername(salesman3.getUsername()));
         Assert.assertFalse(product.doesSalesmanSellProductWithUsername(salesman2.getUsername()));
@@ -104,8 +105,8 @@ public class ProductTest {
         product.addSalesman(salesman2.getUsername(), 10, 100);
         product.addSalesman(salesman3.getUsername(), 10, 100);
         product.deleteForSalesman(salesman3.getUsername());
-        product.setConfirmationState(salesman2.getUsername(), "ACCEPTED");
-        product.setConfirmationState(salesman1.getUsername(), "ACCEPTED");
+        product.setConfirmationState(salesman2.getUsername(), Confirmation.ACCEPTED);
+        product.setConfirmationState(salesman1.getUsername(), Confirmation.ACCEPTED);
         String result = "Name: name" + "\n";
         result += "Brand: brand" + "\n";
         result += "Description: description" + "\n";
@@ -122,8 +123,8 @@ public class ProductTest {
         product.addSalesman(salesman2.getUsername(), 10, 100);
         product.addSalesman(salesman3.getUsername(), 10, 100);
         product.deleteForSalesman(salesman3.getUsername());
-        product.setConfirmationState(salesman2.getUsername(), "ACCEPTED");
-        product.setConfirmationState(salesman1.getUsername(), "ACCEPTED");
+        product.setConfirmationState(salesman2.getUsername(), Confirmation.ACCEPTED);
+        product.setConfirmationState(salesman1.getUsername(), Confirmation.ACCEPTED);
         String result = "Name: name" + "\n";
         result += "Brand: brand" + "\n";
         result += "Description: description" + "\n";

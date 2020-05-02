@@ -39,21 +39,9 @@ public abstract class Off extends RandomString {
         return now.before(end) && now.after(start);
     }
 
-    public void setStart(Date start) {
-        this.start = start;
-    }
-
-    public void setEnd(Date end) {
-        this.end = end;
-    }
-
-    public void setPercentage(int percentage) {
-        this.percentage = percentage;
-    }
-
     public String toString() {
         String result = "";
-        result += "Sale Percentage: " + percentage + "\n";
+        result += "Percentage: " + percentage + "\n";
         result += "Start Date: " + start.toString() + "\n";
         result += "End Date: " + end.toString() + "\n";
         return result;

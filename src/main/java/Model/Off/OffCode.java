@@ -23,7 +23,7 @@ public class OffCode extends Off implements Serializable {
         offCodeID = createID("OffCode");
     }
 
-    private boolean canCustomerUseItWithUsername(String username) {
+    public boolean canCustomerUseItWithUsername(String username) {
         return userNamesCanUseIt.contains(username);
     }
 
@@ -52,11 +52,11 @@ public class OffCode extends Off implements Serializable {
         if ((price * percentage) / 100 > ceiling) {
             return price - ceiling;
         } else {
-            return (price * percentage) / 100;
+            return price - (price * percentage) / 100;
         }
     }
 
-    public  static int getFinalPrice(int price, String offCodeID) {
+    public static int getFinalPrice(int price, String offCodeID) {
         OffCode offCode = OffCode.getOffCodeByID(offCodeID);
         assert offCode != null;
         return offCode.getFinalPrice(price);
@@ -67,7 +67,9 @@ public class OffCode extends Off implements Serializable {
         if (getOffCodeByID(offCodeID) == null) {
             return false;
         }
-        return getOffCodeByID(offCodeID).isAuthentic();
+        OffCode offCode = getOffCodeByID(offCodeID);
+        assert offCode != null;
+        return offCode.isAuthentic();
     }
 
     public static OffCode getOffCodeByID(String offCodeID) {

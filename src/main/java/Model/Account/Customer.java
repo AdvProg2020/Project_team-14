@@ -46,8 +46,12 @@ public class Customer extends Account implements Serializable {
 
     public static String getRandomUsername() {
         Random random = new Random();
-        int rand = random.nextInt(getAllCustomers().size());
-        return getAllCustomers().get(rand).getUsername();
+        if (getAllCustomers().size() == 0) {
+            return getAllCustomers().get(0).getUsername();
+        } else {
+            int rand = random.nextInt(getAllCustomers().size());
+            return getAllCustomers().get(rand).getUsername();
+        }
     }
 
     @Override

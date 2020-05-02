@@ -17,13 +17,13 @@ import static Model.Storage.*;
 
 public class SpecialOffCode extends RandomString implements Runnable, Serializable {
 
-    //for example now every 60 minutes one OffCode is given to a user
-    private int timeInMinute = 60;
+    //for example now every 3600 seconds one OffCode is given to a user
+    private int timeInSeconds = 3600;
     private String specialOffCodeID;
     //it means for example now the OffCode given now is authentic for 24 hours
     private int durationInHour = 24;
     private int ceiling = 10000;
-    private boolean activeness = true;
+    private boolean activeness = false;
     private int percentage = 20;
     private int numberOfTimesItCanBeUsed = 1;
 
@@ -41,12 +41,8 @@ public class SpecialOffCode extends RandomString implements Runnable, Serializab
         activeness = false;
     }
 
-    public void setActiveness(boolean activeness) {
-        this.activeness = activeness;
-    }
-
-    public void setTimeInMinute(int timeInMinute) {
-        this.timeInMinute = timeInMinute;
+    public void setTimeInSeconds(int timeInSeconds) {
+        this.timeInSeconds = timeInSeconds;
     }
 
     public String getSpecialOffCodeID() {
@@ -76,17 +72,19 @@ public class SpecialOffCode extends RandomString implements Runnable, Serializab
         }
         Date nowDate = new Date();
         Date tomorrowDate = new Date(nowDate.getTime() + TimeUnit.HOURS.toMillis(durationInHour)); // Adds 24 hours
-        Format formatter = new SimpleDateFormat("dd-MMM-yy hh-MM-ss");
+        Format formatter = new SimpleDateFormat("dd-MM-yyyy HH-mm-ss");
         String today = formatter.format(nowDate);
         String tomorrow = formatter.format(tomorrowDate);
         try {
-            new OffCode(today, tomorrow, percentage, ceiling, numberOfTimesItCanBeUsed,
-                    new ArrayList<>(Collections.singleton(Customer.getRandomUsername())));
+            if (Customer.getRandomUsername() != null) {
+                new OffCode(today, tomorrow, percentage, ceiling, numberOfTimesItCanBeUsed,
+                        new ArrayList<>(Collections.singleton(Customer.getRandomUsername())));
+            }
         } catch (ParseException e) {
             e.printStackTrace();
         }
         try {
-            Thread.sleep(TimeUnit.MINUTES.toMillis(timeInMinute));
+            Thread.sleep(TimeUnit.SECONDS.toMillis(timeInSeconds));
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

@@ -7,6 +7,7 @@ import Model.RandomString;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import static Model.Storage.*;
 
@@ -29,19 +30,11 @@ public class Sale extends Off implements Serializable {
         this.confirmationState = confirmationState;
     }
 
-    public void addProductToSale(String productID) {
-        productIDs.add(productID);
-    }
-
-    public void removeProductFromSale(String productID) {
-        productIDs.remove(productID);
-    }
-
     public boolean isConfirmed() {
         return confirmationState.equals(Confirmation.ACCEPTED);
     }
 
-    public boolean isChecking(){
+    public boolean isChecking() {
         return confirmationState.equals(Confirmation.CHECKING);
     }
 
@@ -61,11 +54,11 @@ public class Sale extends Off implements Serializable {
         return productIDs;
     }
 
-    public void addToProducts(String productID){
+    public void addToProducts(String productID) {
         productIDs.add(productID);
     }
 
-    public void removeFromProducts(String productID){
+    public void removeFromProducts(String productID) {
         productIDs.remove(productID);
     }
 
@@ -73,15 +66,15 @@ public class Sale extends Off implements Serializable {
     //after all possible sales
 
     public static int getPriceAfterSale(String productID, String salesmanID) {
-        int price = Product.getProductWithID(productID).getPriceBySalesmanID(salesmanID);
+        int price = Objects.requireNonNull(Product.getProductWithID(productID)).getPriceBySalesmanID(salesmanID);
         if (isProductInSaleWithID(productID, salesmanID)) {
-            return price * getMaxSalePercentage(productID, salesmanID) / 100;
+            return price - price * getMaxSalePercentage(productID, salesmanID) / 100;
         } else {
             return price;
         }
     }
 
-    public Sale getSaleByID(String saleID) {
+    public static Sale getSaleByID(String saleID) {
         for (Sale sale : allSales) {
             if (sale.saleID.equals(saleID)) {
                 return sale;
