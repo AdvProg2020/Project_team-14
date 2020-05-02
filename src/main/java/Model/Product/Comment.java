@@ -78,23 +78,23 @@ public class Comment extends RandomString implements Serializable {
     public String toStringForProductView() {
         String result = "";
         result += "Sender: " + this.senderUsername + "\n";
-        result += "message: " + this.text + "\n";
+        result += "Message: " + this.text + "\n";
         result += "Date: " + this.date.toString() + "\n";
         return result;
     }
 
     //it gives us boss view for a product
 
-    public String toStringForCheckingProduct() {
+    public String toStringForChecking() {
         String result = "";
         result += "Product Name: " + Product.getProductWithID(productID).getName();
         result += "Sender: " + this.senderUsername + "\n";
-        result += "message: " + this.text + "\n";
+        result += "Message: " + this.text + "\n";
         result += "Date: " + this.date.toString() + "\n";
         return result;
     }
 
-    public static boolean isThereAnyCommentForProduct(String productID) {
+    public static boolean isThereCommentForProduct(String productID) {
         for (Comment comment : allComments) {
             if (comment.isConfirmed() && comment.productID.equals(productID)) {
                 return true;
@@ -119,7 +119,15 @@ public class Comment extends RandomString implements Serializable {
         return confirmationState.equals(Confirmation.CHECKING);
     }
 
-    public String createID() {
+    String createID() {
         return RandomString.createID("Comment");
+    }
+
+    public void setConfirmationState(String confirmationState) {
+        if (confirmationState.equals("ACCEPTED")) {
+            this.confirmationState = Confirmation.ACCEPTED;
+        } else if (confirmationState.equals("DENIED")) {
+            this.confirmationState = Confirmation.DENIED;
+        }
     }
 }

@@ -3,7 +3,7 @@ package Model.Account;
 import static Model.Storage.*;
 
 public abstract class Account {
-    private boolean isOnline;
+    private transient boolean isOnline;
     private String username;
     private String password;
     private String firstName;
@@ -27,6 +27,7 @@ public abstract class Account {
         } else if (role.equalsIgnoreCase("salesman")) {
             this.role = Role.SALESMAN;
         }
+        isOnline = false;
     }
 
     public boolean isOnline() {
@@ -89,9 +90,7 @@ public abstract class Account {
         this.telephone = telephone;
     }
 
-    public String toStringForBoss() {
-        return "Username: " + this.getUsername() + " Role: " + this.getRole();
-    }
+    public String toStringForBoss() {return "Username: " + this.getUsername() + " Role: " + this.getRole(); }
 
     public String toString() {
         String result = "";

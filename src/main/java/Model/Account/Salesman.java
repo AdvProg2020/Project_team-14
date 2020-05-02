@@ -4,8 +4,6 @@ import Model.Confirmation;
 
 import java.io.*;
 
-import static Model.Storage.*;
-
 public class Salesman extends Account implements Serializable {
     private String company;
     private Confirmation confirmationState;
@@ -16,6 +14,10 @@ public class Salesman extends Account implements Serializable {
         this.company = company;
         this.credit = credit;
         confirmationState = Confirmation.CHECKING;
+    }
+
+    public void setConfirmationState(Confirmation confirmationState) {
+        this.confirmationState = confirmationState;
     }
 
     public String getCompany() {

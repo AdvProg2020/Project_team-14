@@ -3,7 +3,6 @@ package Model.Log;
 import Model.Product.Product;
 import Model.RandomString;
 
-import java.io.*;
 import java.util.HashMap;
 
 public class BuyLog extends Log {

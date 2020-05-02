@@ -18,14 +18,23 @@ public class Sale extends Off implements Serializable {
 
     public Sale(String start, String end, int percentage, String salesmanID) throws ParseException {
         super(start, end, percentage);
-        this.saleID = createID();
+        this.saleID = RandomString.createID("Sale");
         this.salesmanID = salesmanID;
+        productIDs = new ArrayList<>();
         confirmationState = Confirmation.CHECKING;
         allSales.add(this);
     }
 
+    public void setConfirmationState(Confirmation confirmationState) {
+        this.confirmationState = confirmationState;
+    }
+
     public void addProductToSale(String productID) {
         productIDs.add(productID);
+    }
+
+    public void removeProductFromSale(String productID) {
+        productIDs.remove(productID);
     }
 
     public boolean isConfirmed() {
@@ -41,7 +50,7 @@ public class Sale extends Off implements Serializable {
     }
 
     public boolean doesContainProduct(String productID) {
-        return productID.contains(productID);
+        return productIDs.contains(productID);
     }
 
     public String getSaleID() {
@@ -50,6 +59,14 @@ public class Sale extends Off implements Serializable {
 
     public ArrayList<String> listProducts() {
         return productIDs;
+    }
+
+    public void addToProducts(String productID){
+        productIDs.add(productID);
+    }
+
+    public void removeFromProducts(String productID){
+        productIDs.remove(productID);
     }
 
     // the method below return the best price of a product with specific salesman
@@ -95,21 +112,6 @@ public class Sale extends Off implements Serializable {
         return percentage;
     }
 
-    public static ArrayList<String> getCheckingSales(){
-        ArrayList<String> arrayList = new ArrayList<>();
-        for(Sale sale :allSales){
-            if(sale.isChecking()){
-                arrayList.add(sale.saleID);
-            }
-        }
-        return arrayList;
-    }
-
-    public static int getSalePercentageForProduct(){
-       // if
-        return 0;
-    }
-
     public String toString() {
         StringBuilder result = new StringBuilder(super.toString());
         result.append("Products: " + "\n");
@@ -118,10 +120,4 @@ public class Sale extends Off implements Serializable {
         }
         return result.toString();
     }
-
-    public String createID() {
-        return RandomString.createID("Sale");
-    }
-
-
 }

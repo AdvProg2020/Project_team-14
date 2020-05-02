@@ -5,8 +5,7 @@ import Model.Confirmation;
 import Model.RandomString;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 
 import static Model.Storage.*;
 
@@ -17,14 +16,14 @@ public class Product extends RandomString implements Serializable {
     private String brand;
     private String description;
     private int seenCount;
-    private Category category;
+    private String categoryName;
 
     //the first argument is salesmanID and the second one is whether is's on sale by that salesman
     private HashMap<String, Boolean> isOnSale = new HashMap<>();
     //the first argument is salesmanID and the second onw is whether it has been deleted by the salesman
     private HashMap<String, Boolean> hasBeenDeleted = new HashMap<>();
     //the first argument is salesmanID and the second onw is whether it has been confirmed by the boss for the salesman
-    private HashMap<String, Confirmation> confirmationState = new HashMap();
+    private HashMap<String, Confirmation> confirmationState = new HashMap<>();
     //the first argument is salesmanID and the second onw is the remainder number of product by the salesman
     private HashMap<String, Integer> remainder = new HashMap<>();
     //the first argument is salesmanID and the second onw is the price by salesman
@@ -37,7 +36,7 @@ public class Product extends RandomString implements Serializable {
         this.description = description;
         this.productID = createID();
         this.seenCount = 0;
-        this.category = null;
+        this.categoryName = null;
         this.remainder.put(salesmanID, remainder);
         this.confirmationState.put(salesmanID, Confirmation.CHECKING);
         this.hasBeenDeleted.put(salesmanID, false);
@@ -47,12 +46,28 @@ public class Product extends RandomString implements Serializable {
         allProducts.add(this);
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public int getSeenCount() {
         return seenCount;
     }
 
+    public void increaseSeenCount() {
+        seenCount++;
+    }
+
     public void setBrand(String brand) {
         this.brand = brand;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
     }
 
     public void setRemainderForSalesman(int remainder, String salesmanUser) {
@@ -71,6 +86,10 @@ public class Product extends RandomString implements Serializable {
         return brand;
     }
 
+    public void setIsOnSale(String salesmanID, boolean isOnSale) {
+        this.isOnSale.put(salesmanID, isOnSale);
+    }
+
     public String getName() {
         return name;
     }
@@ -80,18 +99,14 @@ public class Product extends RandomString implements Serializable {
     }
 
     public static String getNameByID(String productID) {
-        return Product.getProductWithID(productID).getName();
+        return Objects.requireNonNull(Product.getProductWithID(productID)).getName();
     }
 
     public String getProductID() {
         return productID;
     }
 
-    public static ArrayList<Product> getAllProducts() {
-        return allProducts;
-    }
-
-    public float getAveragePoint() {
+    public double getAveragePoint() {
         return Point.getAveragePointForProduct(this.productID);
     }
 
@@ -104,7 +119,7 @@ public class Product extends RandomString implements Serializable {
     }
 
     public boolean isThereComment() {
-        return Comment.isThereAnyCommentForProduct(this.productID);
+        return Comment.isThereCommentForProduct(this.productID);
     }
 
     public ArrayList<String> getComments() {
@@ -112,13 +127,16 @@ public class Product extends RandomString implements Serializable {
     }
 
     public void addSalesman(String salesmanID, int remainder, int price) {
+        Set<String> set = new HashSet<>(salesmanIDs);
+        set.add(salesmanID);
+        this.salesmanIDs.clear();
+        this.salesmanIDs.addAll(set);
+        salesmanIDs.sort(String::compareTo);
         this.remainder.put(salesmanID, remainder);
         this.confirmationState.put(salesmanID, Confirmation.CHECKING);
         this.hasBeenDeleted.put(salesmanID, false);
         this.isOnSale.put(salesmanID, false);
-        this.salesmanIDs.add(salesmanID);
         this.price.put(salesmanID, price);
-
     }
 
     private boolean isConfirmedForSalesmanWithUsername(String username) {
@@ -137,9 +155,12 @@ public class Product extends RandomString implements Serializable {
     //then checking whether they have remainder or not
 
     public boolean isAvailableBySalesmanWithUsername(String username) {
-        return remainder.get(username) <= 0;
+        return remainder.get(username) >= 1;
     }
 
+    public void setConfirmationState(String salesmanID, Confirmation confirmationState) {
+        this.confirmationState.put(salesmanID, confirmationState);
+    }
 
     public static boolean isThereProductWithID(String productID) {
         return getProductWithID(productID) != null;
@@ -161,7 +182,7 @@ public class Product extends RandomString implements Serializable {
         result.append("Description: ").append(this.description).append("\n");
         result.append("Sellers: " + "\n");
         for (String salesmanID : salesmanIDs) {
-            if (!doesSalesmanSellProductWithUsername(salesmanID) || isAvailableBySalesmanWithUsername(salesmanID)) {
+            if (!doesSalesmanSellProductWithUsername(salesmanID) || !isAvailableBySalesmanWithUsername(salesmanID)) {
                 continue;
             }
             result.append("Salesman: ").append(salesmanID);
@@ -177,13 +198,13 @@ public class Product extends RandomString implements Serializable {
         result.append("Description: ").append(this.description).append("\n");
         result.append("Sellers: " + "\n");
         for (String salesmanID : salesmanIDs) {
-            if (!doesSalesmanSellProductWithUsername(salesmanID) || isAvailableBySalesmanWithUsername(salesmanID)) {
+            if (!doesSalesmanSellProductWithUsername(salesmanID) || !isAvailableBySalesmanWithUsername(salesmanID)) {
                 continue;
             }
             result.append("Salesman: ").append(salesmanID);
             result.append(" Price: ").append(price.get(salesmanID)).append("\n");
         }
-        result.append("Confirmation state for you: ").append(confirmationState.get(salesmanUser).name()).append("\n");
+        result.append("Confirmation state for you: ").append(confirmationState.get(salesmanUser)).append("\n");
         result.append("Your remainder: ").append(remainder.get(salesmanUser)).append("\n");
         if (isOnSale.get(salesmanUser)) {
             result.append("The product is on sale").append("\n");

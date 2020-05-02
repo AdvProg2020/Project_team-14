@@ -40,7 +40,7 @@ public class Category extends RandomString implements Serializable {
         this.allProductIDs.add(productID);
     }
 
-    public boolean isThereCategoryWithName(String categoryName) {
+    public static boolean isThereCategoryWithName(String categoryName) {
         return getCategoryByName(categoryName) != null;
     }
 
@@ -48,13 +48,17 @@ public class Category extends RandomString implements Serializable {
         this.subCategoryNames.add(categoryName);
     }
 
-    public Category getCategoryByName(String categoryName) {
+    public static Category getCategoryByName(String categoryName) {
         for (Category category : allCategories) {
             if (category.categoryName.equals(categoryName)) {
                 return category;
             }
         }
         return null;
+    }
+
+    public boolean containsProduct(String productID) {
+        return allProductIDs.contains(productID);
     }
 
     private StringBuilder toStringSubCategory() {
@@ -77,7 +81,7 @@ public class Category extends RandomString implements Serializable {
 
     private StringBuilder toStringParentCategory() {
         StringBuilder result = new StringBuilder();
-        if (parentCategoryName == null) {
+        if (this.parentCategoryName == null) {
             result.append("The category doesn't have parent category" + "\n");
         } else {
             result.append("Parent Category: ").append(parentCategoryName).append("\n");
@@ -86,11 +90,11 @@ public class Category extends RandomString implements Serializable {
     }
 
     public String toString() {
-        return "Category Name:" + this.categoryName + "\n" +
+        return "Category Name: " + this.categoryName + "\n" +
                 "Category Attribute: " + this.attribute + "\n" +
                 toStringParentCategory() +
                 toStringSubCategory() +
-                toStringProducts() + "\n";
+                toStringProducts();
     }
 
 }

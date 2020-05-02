@@ -4,7 +4,6 @@ import Model.Product.Comment;
 import Model.Product.Product;
 import Model.Storage;
 
-import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.Comparator;
 

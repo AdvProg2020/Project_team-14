@@ -10,7 +10,7 @@ public class Boss extends Account implements Serializable {
         super(username, password, firstName, secondName, Email, telephone, role);
     }
 
-    public boolean isThereBoss() { return !getAllBosses().isEmpty(); }
+    public static boolean isThereBoss() { return !getAllBosses().isEmpty(); }
 
     public String toString() {
         return super.toString();

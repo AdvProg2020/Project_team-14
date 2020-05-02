@@ -1,9 +1,5 @@
 package Controller;
 
-import Model.Account.Account;
-import Model.Account.Customer;
-import Model.Product.Product;
-
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

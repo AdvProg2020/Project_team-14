@@ -37,7 +37,7 @@ public class Point extends RandomString implements Serializable {
         return getAveragePointForProduct(productID) != -1;
     }
 
-    public static float getAveragePointForProduct(String productID) {
+    public static double getAveragePointForProduct(String productID) {
         if (getNumberOfPeopleVotedForProduct(productID) == 0) {
             return -1;
         }
@@ -47,7 +47,7 @@ public class Point extends RandomString implements Serializable {
                 sum += point.point;
             }
         }
-        return (float) sum / (float) getNumberOfPeopleVotedForProduct(productID);
+        return (double) sum / (double) getNumberOfPeopleVotedForProduct(productID);
     }
 
     public static int getNumberOfPeopleVotedForProduct(String productID) {

@@ -2,8 +2,6 @@ package Menus.Views;
 
 import Menus.*;
 import Menus.Edits.EditAccountMenu;
-import Model.Account.Customer;
-import Model.Account.Salesman;
 
 import java.util.HashMap;
 

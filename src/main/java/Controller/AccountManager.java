@@ -4,7 +4,6 @@ import Model.Account.Account;
 import Model.Account.Customer;
 import Model.Account.Role;
 import Model.Account.Salesman;
-import Model.Off.Sale;
 import Model.Storage;
 
 public class AccountManager {
