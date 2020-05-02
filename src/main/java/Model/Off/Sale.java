@@ -112,16 +112,6 @@ public class Sale extends Off implements Serializable {
         return percentage;
     }
 
-    public static ArrayList<String> getCheckingSales(){
-        ArrayList<String> arrayList = new ArrayList<>();
-        for(Sale sale :allSales){
-            if(sale.isChecking()){
-                arrayList.add(sale.saleID);
-            }
-        }
-        return arrayList;
-    }
-
     public String toString() {
         StringBuilder result = new StringBuilder(super.toString());
         result.append("Products: " + "\n");

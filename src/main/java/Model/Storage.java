@@ -17,7 +17,7 @@ import Model.Request.Request;
 
 import java.util.ArrayList;
 
-public class Storage {
+public class Storage implements Runnable {
     public static ArrayList<Comment> allComments = new ArrayList<>();
     public static ArrayList<Point> allPoints = new ArrayList<>();
     public static ArrayList<Product> allProducts = new ArrayList<>();
@@ -75,5 +75,44 @@ public class Storage {
             }
         }
         return arrayList;
+    }
+
+    public void garbageCollector() {
+        garbageCollectorComments();
+        garbageCollectorRequests();
+        garbageCollectorSales();
+        garbageCollectorSalesmen();
+        garbageCollectorProducts();
+    }
+
+    public void garbageCollectorComments() {
+
+    }
+
+    public void garbageCollectorRequests() {
+
+    }
+
+    public void garbageCollectorSales() {
+
+    }
+
+    public void garbageCollectorSalesmen() {
+
+    }
+
+    public void garbageCollectorProducts() {
+
+    }
+
+    @Override
+    public void run() {
+        garbageCollector();
+        System.gc();
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }
