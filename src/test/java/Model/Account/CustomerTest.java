@@ -94,8 +94,9 @@ public class CustomerTest {
         Assert.assertFalse(Customer.isThereCustomerWithUsername(random));
     }
 
+
     @Test
-    public void getRandomUsername() {
+    public void getRandomUsername2() {
         Assert.assertEquals(Customer.getRandomUsername(), customer.getUsername());
     }
 }
