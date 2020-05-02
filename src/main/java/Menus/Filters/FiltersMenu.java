@@ -15,7 +15,7 @@ public class FiltersMenu extends Menu {
     public String getFilters() {
         String filter = new String("");
         for (int i = 0; i < filters.size(); i += 2) {
-            if(filters.get(i+1)!=null) {
+            if (filters.get(i + 1) != null) {
                 filter += " ";
                 filter += filters.get(i);
                 filter += " ";

@@ -11,6 +11,10 @@ public class AccountsFilterMenu extends FiltersMenu {
         filters.add("role");
         filters.add(new String());
         filters.set(1, null);
+        filters.add("minCredit");
+        filters.add(-1);
+        filters.add("maxCredit");
+        filters.add(-1);
     }
 
     public AccountsFilterMenu(Menu fatherMenu, String menuName) {
@@ -19,8 +23,18 @@ public class AccountsFilterMenu extends FiltersMenu {
         makeFilters();
         HashMap<Integer, Menu> subMenus = new HashMap<Integer, Menu>();
         subMenus.put(1, getChangeRoleMenu());
-        subMenus.put(2, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
+        subMenus.put(2, getChangeCreditLimitMenu("min"));
+        subMenus.put(3, getChangeCreditLimitMenu("max"));
+        subMenus.put(4, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
         this.setSubMenus(subMenus);
+    }
+
+    public String getMinLimit() {
+        if ((Integer) filters.get(3) == -1) {
+            return "none";
+        } else {
+            return (String) filters.get(3);
+        }
     }
 
     public String getRole() {
@@ -41,6 +55,21 @@ public class AccountsFilterMenu extends FiltersMenu {
                 filters.set(1, filters.get(1) + "," + role);
             }
         }
+    }
+
+    private Menu getChangeCreditLimitMenu(String type) {
+        return new Menu(this, "Change " + type + " Credit Limit Menu") {
+            @Override
+            public void execute() {
+                System.out.println(menuName);
+                System.out.println("if you input back we will go back");
+                while (true) {
+                    if (type.equals("min")) {
+                        System.out.println("your current " + type + " Credit Limit is:" + getMinLimit());
+                    }
+                }
+            }
+        };
     }
 
     private Menu getChangeRoleMenu() {
