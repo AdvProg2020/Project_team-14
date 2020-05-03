@@ -1,9 +1,6 @@
 package Controller;
 
-import Model.Account.Account;
-import Model.Account.Customer;
-import Model.Account.Role;
-import Model.Account.Salesman;
+import Model.Account.*;
 import Model.Storage;
 
 public class AccountManager {
@@ -17,6 +14,7 @@ public class AccountManager {
                     Salesman salesman = (Salesman) account;
                     if (!salesman.isConfirmed()) {
                         Server.setAnswer("you're not a confirmed salesman");
+                        return;
                     }
                 }
                 Server.setAnswer("login successful as " + account.getRole() + " " + username);
@@ -114,5 +112,14 @@ public class AccountManager {
             ((Salesman) account).setCompany(company);
             Server.setAnswer("edit successful");
         }
+    }
+
+    public void deleteAccount(String bossUsername, String username) {
+        Account account = Storage.getAccountWithUsername(username);
+        if (account instanceof Boss) {
+            BossManager.changeFathers(bossUsername, username);
+        }
+        Storage.getAllAccounts().remove(account);
+        Server.setAnswer("deleted successfully");
     }
 }

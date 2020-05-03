@@ -139,6 +139,14 @@ public class BossManager {
             }
         }
     }
+
+    public static void changeFathers(String bossAccount, String username) {
+        for (Account account : Storage.getAllAccounts()) {
+            if (((Boss) account).getFatherBoss().equals(username)) {
+                ((Boss) account).setFatherBoss(bossAccount);
+            }
+        }
+    }
     /*
     private CategoryManager categoryManager;
     private OffCodeManager offCodeManager;

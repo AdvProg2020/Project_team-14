@@ -38,7 +38,7 @@ public class ShowAccountsMenu extends ShowsMenu {
             @Override
             public void execute() {
                 System.out.println(menuName);
-                System.out.println("");
+                System.out.println("if you input back we will go back");
                 System.out.println("select one of accounts above by inserting username");
                 String username = scanner.nextLine();
                 if (username.equalsIgnoreCase("back")) {
