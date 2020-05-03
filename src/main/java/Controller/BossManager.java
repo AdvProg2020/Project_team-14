@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.Account.*;
+import Model.Request.Request;
 import Model.Storage;
 
 import java.rmi.ServerError;
@@ -152,6 +153,27 @@ public class BossManager {
             if (((Boss) account).getFatherBoss().equals(username)) {
                 ((Boss) account).setFatherBoss(bossAccount);
             }
+        }
+    }
+
+    public void showRequest(String username) {
+        int count = 0;
+        ArrayList<Request> requests = Storage.getAllRequests();
+        StringBuilder answer = new StringBuilder("");
+        if (requests.size() == 0) {
+            Server.setAnswer("nothing found");
+        } else {
+            for (Request request : requests) {
+                answer.append(request.toStringForBoss() + "\n");
+                count++;
+            }
+            if (count == 0) {
+                answer = new StringBuilder("nothing found");
+            } else {
+                answer.append("here are what we found");
+            }
+            String ans = answer.toString();
+            Server.setAnswer(ans);
         }
     }
     /*

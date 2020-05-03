@@ -17,6 +17,7 @@ enum RequestType {
 
 public class Request extends RandomString implements Serializable {
     protected String requestID;
+    protected String acceptingBoss;
     protected String salesmanID;
     protected Object object;
     protected RequestType requestType;
@@ -35,7 +36,7 @@ public class Request extends RandomString implements Serializable {
         } else if (type.equalsIgnoreCase(String.valueOf(RequestType.ADD_NEW_PRODUCT))) {
             requestType = RequestType.ADD_NEW_PRODUCT;
         }
-        Storage.allRequest.add(this);
+        Storage.allRequests.add(this);
         this.confirmation = Confirmation.CHECKING;
     }
 
@@ -52,7 +53,7 @@ public class Request extends RandomString implements Serializable {
         } else if (type.equalsIgnoreCase(String.valueOf(RequestType.ADD_NEW_SALE))) {
             requestType = RequestType.ADD_NEW_SALE;
         }
-        Storage.allRequest.add(this);
+        Storage.allRequests.add(this);
         this.confirmation = Confirmation.CHECKING;
     }
 
@@ -63,13 +64,13 @@ public class Request extends RandomString implements Serializable {
         this.salesmanID = salesmanID;
         this.object = null;
         this.requestType = RequestType.REGISTER_SALESMAN;
-        Storage.allRequest.add(this);
+        Storage.allRequests.add(this);
         this.confirmation = Confirmation.CHECKING;
     }
 
     public ArrayList<Request> getCheckingRequests() {
         ArrayList<Request> result = new ArrayList<>();
-        for (Request request : Storage.allRequest) {
+        for (Request request : Storage.allRequests) {
             if (request.confirmation.equals(Confirmation.CHECKING)) {
                 result.add(request);
             }
@@ -146,5 +147,9 @@ public class Request extends RandomString implements Serializable {
             salesman.setConfirmationState(Confirmation.DENIED);
         }
 
+    }
+
+    public String toStringForBoss() {
+        return "Request ID: " + this.requestID + " Confirmation state: " + this.confirmation;
     }
 }

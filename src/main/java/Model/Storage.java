@@ -28,7 +28,7 @@ public class Storage implements Runnable {
     private static ArrayList<Account> allAccounts = new ArrayList<>();
     public static ArrayList<SpecialOffCode> allSpecialOffCodes = new ArrayList<>();
     public static ArrayList<Cart> allCarts = new ArrayList<>();
-    public static ArrayList<Request> allRequest = new ArrayList<>();
+    public static ArrayList<Request> allRequests = new ArrayList<>();
 
     public static boolean isThereAccountWithUsername(String username) {
         return getAccountWithUsername(username) != null;
@@ -45,6 +45,10 @@ public class Storage implements Runnable {
 
     public static ArrayList<Account> getAllAccounts() {
         return allAccounts;
+    }
+
+    public static ArrayList<Request> getAllRequests() {
+        return allRequests;
     }
 
     public static ArrayList<Customer> getAllCustomers() {

@@ -77,7 +77,14 @@ public class Server {
             this.deleteAccount(command);
         } else if (command.startsWith("search account ")) {
             this.searchAccount(command);
+        } else if (command.startsWith("show requests ")) {
+            this.showRequests(command);
         }
+    }
+
+    private void showRequests(String command) {
+        String[] input = command.split("\\s");
+        bossManager.showRequest(input[2]);
     }
 
     private void searchAccount(String command) {

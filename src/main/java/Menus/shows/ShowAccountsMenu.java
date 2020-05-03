@@ -22,8 +22,6 @@ public class ShowAccountsMenu extends ShowsMenu {
 
     private Menu getSelectMenu() {
         return new Menu(this, "Select Menu") {
-
-
             private boolean isThereAccountWithUsernameInList(String list, String username) {
                 int wordCount = Menu.wordCount(list);
                 String[] lists = list.split("\\s");
