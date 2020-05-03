@@ -5,6 +5,8 @@ import Controller.Server;
 
 import java.util.HashMap;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Menu {
     static protected String username;
@@ -25,6 +27,20 @@ public class Menu {
 
     public int getWhereItHasBeenCalled() {
         return 0;
+    }
+
+    public Menu getFatherMenu() {
+        return fatherMenu;
+    }
+
+    public static int wordCount(String input) {
+        Pattern pattern = Pattern.compile("(\\S+)");
+        Matcher matcher = pattern.matcher(input);
+        int cnt = 0;
+        while (matcher.find()) {
+            cnt++;
+        }
+        return cnt;
     }
 
     public static void setIsUserLogin(boolean isUserLogin) {

@@ -3,6 +3,7 @@ package Controller;
 import Model.Account.*;
 import Model.Storage;
 
+import java.rmi.ServerError;
 import java.util.ArrayList;
 
 public class BossManager {
@@ -13,8 +14,8 @@ public class BossManager {
         }
         Server.setAnswer("register successful");
         Server.setHasBoss(true);
-        new Boss(information[3], information[4], information[1], information[2], information[6], information[7], information[5]);
-
+        new Boss(information[3], information[4], information[1], information[2], information[6], information[7],
+                information[5]).setFatherBoss(null);
     }
 
     private boolean checkRoleFilter(Account account, String filter) {
@@ -67,6 +68,12 @@ public class BossManager {
         return false;
     }
 
+    public void viewAccount(String bossUsername, String username) {
+        Account boss = Storage.getAccountWithUsername(bossUsername);
+        Account account = Storage.getAccountWithUsername(username);
+        Server.setAnswer(account.toString());
+    }
+
     private boolean isAccountInFilter(Account account, ArrayList<Object> filters) {
         for (int i = 0; i < filters.size(); i += 2) {
             if (((String) filters.get(i)).equalsIgnoreCase("role")) {
@@ -108,6 +115,28 @@ public class BossManager {
             }
             String ans = answer.toString();
             Server.setAnswer(ans);
+        }
+    }
+
+    public void seeAuthorization(String bossUsername, String username) {
+        Account account = Storage.getAccountWithUsername(username);
+        if (account instanceof Salesman) {
+            Server.setAnswer("salesman");
+        } else if (account instanceof Customer) {
+            Server.setAnswer("customer");
+        } else {
+            while (true) {
+                String fatherBoss = ((Boss) account).getFatherBoss();
+                if (fatherBoss == null) {
+                    Server.setAnswer("boss no");
+                    break;
+                }
+                if (fatherBoss.equals(bossUsername)) {
+                    Server.setAnswer("boss yes");
+                    break;
+                }
+                account = Storage.getAccountWithUsername(fatherBoss);
+            }
         }
     }
     /*

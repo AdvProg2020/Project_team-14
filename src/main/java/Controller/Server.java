@@ -69,7 +69,23 @@ public class Server {
             this.editPersonalInfo(command);
         } else if (command.startsWith("show accounts ")) {
             this.showAccounts(command);
+        } else if (command.startsWith("view account info ")) {
+            this.viewAccountInfo(command);
+        } else if (command.startsWith("see authorization ")) {
+            this.seeAuthorization(command);
+        } else if (command.startsWith("delete account ")) {
+
         }
+    }
+
+    private void seeAuthorization(String command) {
+        String[] input = command.split("\\s");
+        bossManager.seeAuthorization(input[2], input[3]);
+    }
+
+    private void viewAccountInfo(String command) {
+        String[] input = command.split("\\s");
+        bossManager.viewAccount(input[3], input[4]);
     }
 
     private int getWordCount(String input) {
