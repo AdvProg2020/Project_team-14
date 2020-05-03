@@ -2,7 +2,10 @@ package Controller;
 
 import Model.Account.Customer;
 import Model.Cart.Cart;
+import Model.Log.BuyLog;
+import Model.Off.Off;
 import Model.Off.OffCode;
+import Model.Product.Point;
 import Model.Storage;
 
 import java.util.ArrayList;
@@ -56,4 +59,55 @@ public class CustomerManager {
         Server.setAnswer("" + ((Customer) Storage.getAccountWithUsername(username)).getCart().getTotalPrice(null));
     }
 
+    //order part, still is here, we can make a new class for it [not recommended (:]
+
+    public void showAllOrders(String username, String sortFactor) {
+        ArrayList<BuyLog> customerBuyLog = BuyLog.getUserBuyLogs(username);
+        StringBuilder ans = new StringBuilder("");
+        for (BuyLog buyLog : customerBuyLog) {
+            ans.append(buyLog.getBuyLogID() + "\n");
+        }
+        Server.setAnswer(ans.toString());
+    }
+
+    public void showSingleOrder(String buyLogID) {
+        BuyLog buyLog = BuyLog.getBuyLogByID(buyLogID);
+        Server.setAnswer(buyLog.toString());
+    }
+
+    public void rateProduct(String username, String productID, int point) {
+        new Point(username, productID, point);
+        Server.setAnswer("successful, your point added");
+    }
+
+    //purchase part, still is here, we can make a new class for it :)
+
+    //public void createLog();          ->      doesn't match this logic
+    //public void setInfoOfLog();       ->      doesn't match this logic
+
+    public void setOffCode(String username, String offCodeID) {
+        StringBuilder ans = new StringBuilder("");
+        OffCode offCode = OffCode.getOffCodeByID(offCodeID);
+        if (offCodeID != null) {
+            if (offCode == null) {
+                Server.setAnswer("error, offCode doesn't exist.");
+                return;
+            } else if (!offCode.canCustomerUseItWithUsername(username)){
+                Server.setAnswer("error, you do not have permission to use this offCode.");
+                return;
+            }
+        }
+        Customer customer = (Customer) Storage.getAccountWithUsername(username);
+        Server.setAnswer("Final Price:\n" + customer.getCart().getTotalPrice(offCodeID));
+    }
+
+    public void buy(String username, String offCodeID) {
+        Customer customer = (Customer) Storage.getAccountWithUsername(username);
+        if (customer.getCart().buy(offCodeID)) {
+            Server.setAnswer("successful, your purchase completed");
+            new BuyLog(customer.getCart(), offCodeID);
+        } else {
+            Server.setAnswer("error, you don't have enough credit to purchase");
+        }
+    }
 }

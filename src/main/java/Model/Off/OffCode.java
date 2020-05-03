@@ -34,6 +34,15 @@ public class OffCode extends Off implements Serializable {
         return customerOffCodes;
     }
 
+    public static OffCode getOffCodeByID(String offCodeID) {
+        for (OffCode offCode : allOffCodes) {
+            if (offCode.offCodeID.equals(offCodeID)) {
+                return offCode;
+            }
+        }
+        return null;
+    }
+
     public boolean canCustomerUseItWithUsername(String username) {
         return userNamesCanUseIt.contains(username);
     }
@@ -81,15 +90,6 @@ public class OffCode extends Off implements Serializable {
         OffCode offCode = getOffCodeByID(offCodeID);
         assert offCode != null;
         return offCode.isAuthentic();
-    }
-
-    public static OffCode getOffCodeByID(String offCodeID) {
-        for (OffCode offCode : allOffCodes) {
-            if (offCode.offCodeID.equals(offCodeID)) {
-                return offCode;
-            }
-        }
-        return null;
     }
 
     //the method is boolean and if number of times that can be used is a positive number reduces that

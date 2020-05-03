@@ -30,7 +30,7 @@ public class Cart implements Serializable {
     //in sell log which is call in constructor of buy log
     //Buy --> creating BuyLog --> creating SellLog --> giving the salesman their money
 
-    public boolean Buy(String offCode) {
+    public boolean buy(String offCode) {
         Customer customer = (Customer) Storage.getAccountWithUsername(username);
         assert customer != null;
         if(customer.isCreditEnoughAccordingToCartWithOffCode(offCode)) {

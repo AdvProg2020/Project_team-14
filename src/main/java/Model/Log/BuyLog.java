@@ -97,6 +97,13 @@ public class BuyLog extends Log {
         return arrayList;
     }
 
+    public static BuyLog getBuyLogByID(String buyLogID) {
+        for (BuyLog buyLog : Storage.allBuyLogs) {
+            if (buyLog.getBuyLogID().equals(buyLogID)) return buyLog;
+        }
+        return null;
+    }
+
     private StringBuilder toStringSingleProduct(String productID) {
         StringBuilder result = new StringBuilder();
         result.append("Product Name:").append(Product.getNameByID(productID)).append("\n");
