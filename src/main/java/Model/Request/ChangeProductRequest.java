@@ -2,7 +2,7 @@ package Model.Request;
 
 import Model.Off.Sale;
 import Model.Product.Product;
-import Model.Request.Enum.ProductAttributes;
+import Model.Request.Enum.*;
 
 import java.text.ParseException;
 
@@ -26,7 +26,6 @@ public class ChangeProductRequest extends Request {
         this.updatedInfo = updatedInfo;
     }
 
-    @Override
     public void updateAttributeWithUpdatedInfo() throws ParseException {
         Product product = (Product) object;
         if (attribute.equals(ProductAttributes.BRAND)) {

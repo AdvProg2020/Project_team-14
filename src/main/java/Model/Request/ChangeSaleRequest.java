@@ -2,7 +2,7 @@ package Model.Request;
 
 import Model.Off.Sale;
 import Model.Product.Product;
-import Model.Request.Enum.SaleAttributes;
+import Model.Request.Enum.*;
 
 import java.text.ParseException;
 
@@ -22,7 +22,6 @@ public class ChangeSaleRequest extends Request {
         this.updatedInfo = updatedInfo;
     }
 
-    @Override
     public void updateAttributeWithUpdatedInfo() throws ParseException {
         Sale sale = (Sale) object;
         if (attribute.equals(SaleAttributes.END_DATE)) {

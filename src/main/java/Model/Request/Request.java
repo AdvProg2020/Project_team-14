@@ -5,7 +5,7 @@ import Model.Confirmation;
 import Model.Off.Off;
 import Model.Off.Sale;
 import Model.Product.Product;
-import Model.RandomString;
+
 import Model.Request.Enum.RequestType;
 import Model.Storage;
 
@@ -13,7 +13,9 @@ import java.io.Serializable;
 import java.text.ParseException;
 import java.util.ArrayList;
 
-public abstract class Request extends RandomString implements Serializable {
+import static Model.RandomString.createID;
+
+public class Request implements Serializable {
     protected String requestID;
     protected String salesmanID;
     protected Object object;
@@ -199,7 +201,5 @@ public abstract class Request extends RandomString implements Serializable {
         }
         return null;
     }
-
-    public abstract void updateAttributeWithUpdatedInfo() throws ParseException;
 
 }
