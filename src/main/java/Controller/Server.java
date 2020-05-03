@@ -75,7 +75,14 @@ public class Server {
             this.seeAuthorization(command);
         } else if (command.startsWith("delete account ")) {
             this.deleteAccount(command);
+        } else if (command.startsWith("search account ")) {
+            this.searchAccount(command);
         }
+    }
+
+    private void searchAccount(String command) {
+        String[] input = command.split("\\s");
+        bossManager.searchAccount(input[3]);
     }
 
     private void deleteAccount(String command) {

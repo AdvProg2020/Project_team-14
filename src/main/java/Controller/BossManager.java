@@ -69,9 +69,16 @@ public class BossManager {
     }
 
     public void viewAccount(String bossUsername, String username) {
-        Account boss = Storage.getAccountWithUsername(bossUsername);
         Account account = Storage.getAccountWithUsername(username);
         Server.setAnswer(account.toString());
+    }
+
+    public void searchAccount(String username) {
+        if (Storage.isThereAccountWithUsername(username)) {
+            Server.setAnswer("search completed");
+        } else {
+            Server.setAnswer("no account exist with this username");
+        }
     }
 
     private boolean isAccountInFilter(Account account, ArrayList<Object> filters) {
