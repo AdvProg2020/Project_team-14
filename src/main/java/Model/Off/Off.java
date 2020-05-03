@@ -34,6 +34,10 @@ public abstract class Off extends RandomString {
         this.percentage = Integer.parseInt(percentage);
     }
 
+    public int getPercentage() {
+        return percentage;
+    }
+
     public boolean isAuthenticAccordingToDate() {
         Date now = new Date();
         return now.before(end) && now.after(start);

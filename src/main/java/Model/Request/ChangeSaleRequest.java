@@ -1,6 +1,7 @@
 package Model.Request;
 
 import Model.Off.Sale;
+import Model.Product.Product;
 
 import java.text.ParseException;
 
@@ -24,14 +25,23 @@ public class ChangeSaleRequest extends Request {
         this.updatedInfo = updatedInfo;
     }
 
-    public void updateAttributeWithUpdateInfo() throws ParseException {
+    @Override
+    public void updateAttributeWithUpdatedInfo() throws ParseException {
         Sale sale = (Sale) object;
         if (attribute.equals(SaleAttributes.END_DATE)) {
             sale.setEnd(updatedInfo);
         } else if (attribute.equals(SaleAttributes.START_DATE)) {
             sale.setStart(updatedInfo);
-        } else if (attribute.equals(SaleAttributes.PERCENTAGE)){
+        } else if (attribute.equals(SaleAttributes.PERCENTAGE)) {
             sale.setPercentage(updatedInfo);
         }
     }
+
+    public String toStringChangeSale() {
+        return "Salesman username: " + salesmanID + "\n" +
+                "Attribute to change: " + attribute.name().toLowerCase() + "\n"
+                + "New attribute value: " + updatedInfo
+                + "Confirmation State: " + confirmation.name() + "\n";
+    }
+
 }

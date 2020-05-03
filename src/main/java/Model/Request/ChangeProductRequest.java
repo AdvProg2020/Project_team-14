@@ -15,7 +15,7 @@ public class ChangeProductRequest extends Request {
 
     //update info for "is on sale" must be "true / false"
 
-    public ChangeProductRequest(String salesmanID, Product product, String attribute,String updatedInfo) {
+    public ChangeProductRequest(String salesmanID, Product product, String attribute, String updatedInfo) {
         super(salesmanID, product, RequestType.CHANGE_PRODUCT.name());
         if (attribute.equalsIgnoreCase("brand")) {
             this.attribute = ProductAttributes.BRAND;
@@ -29,17 +29,27 @@ public class ChangeProductRequest extends Request {
         this.updatedInfo = updatedInfo;
     }
 
-
-    public void updateAttributeWithUpdateInfo() throws ParseException {
+    @Override
+    public void updateAttributeWithUpdatedInfo() throws ParseException {
         Product product = (Product) object;
         if (attribute.equals(ProductAttributes.BRAND)) {
             product.setBrand(updatedInfo);
         } else if (attribute.equals(ProductAttributes.NAME)) {
             product.setName(updatedInfo);
-        } else if (attribute.equals(ProductAttributes.DESCRIPTION)){
+        } else if (attribute.equals(ProductAttributes.DESCRIPTION)) {
             product.setDescription(updatedInfo);
-        } else if (attribute.equals(ProductAttributes.IS_ON_SALE)){
-            product.setIsOnSale(salesmanID,Boolean.parseBoolean(updatedInfo));
+        } else if (attribute.equals(ProductAttributes.IS_ON_SALE)) {
+            product.setIsOnSale(salesmanID, Boolean.parseBoolean(updatedInfo));
         }
     }
+
+    public String toStringChangeProduct() {
+        Product product = (Product) object;
+        return "Product Name:" + product.getName() + "\n" +
+                "Attribute to change: " + attribute.name().toLowerCase() + "\n"
+                + "New attribute value: " + updatedInfo
+                + "Confirmation State: " + confirmation.name() + "\n";
+
+    }
+
 }

@@ -175,6 +175,12 @@ public class Product extends RandomString implements Serializable {
         return null;
     }
 
+    public String toStringForBossView() {
+        return "Name: " + this.name + "\n" +
+                "Brand: " + this.brand + "\n" +
+                "Description: " + this.description + "\n";
+    }
+
     public String toStringForCustomerView() {
         StringBuilder result = new StringBuilder();
         result.append("Name: ").append(this.name).append("\n");

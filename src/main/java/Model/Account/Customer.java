@@ -1,22 +1,29 @@
 package Model.Account;
 
 import Model.Cart.Cart;
+import Model.Off.Sale;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 import static Model.Storage.*;
 
 public class Customer extends Account implements Serializable {
     private int credit;
-    private ArrayList<String> cartItems = new ArrayList<>();    //only contains productIDs
     private Cart cart;
 
-    public Customer(String username, String password, String firstName, String secondName, String Email, String telephone, String role, int credit) {
+    public Customer(String username, String password, String firstName, String secondName, String Email, String telephone,
+                    String role, int credit, HashMap<String, String> productsAlreadyInCart) {
         super(username, password, firstName, secondName, Email, telephone, role);
         this.credit = credit;
         cart = new Cart(username);
+        if (productsAlreadyInCart != null) {
+            for (String productID : productsAlreadyInCart.keySet()) {
+                cart.addProductToCart(productID, productsAlreadyInCart.get(productID), cart.getCartID());
+            }
+        }
     }
 
     public int getCredit() {
@@ -25,6 +32,10 @@ public class Customer extends Account implements Serializable {
 
     public void setCredit(int credit) {
         this.credit = credit;
+    }
+
+    public boolean isCreditEnoughAccordingToCartWithOffCode(String offCode) {
+        return (credit > cart.getTotalPrice(offCode));
     }
 
     public Cart getCart() {

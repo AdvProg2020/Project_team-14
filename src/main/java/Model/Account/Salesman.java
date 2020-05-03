@@ -9,10 +9,10 @@ public class Salesman extends Account implements Serializable {
     private Confirmation confirmationState;
     private int credit;
 
-    public Salesman(String username, String password, String firstName, String secondName, String Email, String telephone, String role, String company, int credit) {
+    public Salesman(String username, String password, String firstName, String secondName, String Email, String telephone, String role, String company) {
         super(username, password, firstName, secondName, Email, telephone, role);
         this.company = company;
-        this.credit = credit;
+        this.credit = 0;
         confirmationState = Confirmation.CHECKING;
     }
 
@@ -43,7 +43,6 @@ public class Salesman extends Account implements Serializable {
     public String toString() {
         String result = super.toString();
         result += "Company: " + this.getCompany() + "\n";
-        result += "Credit: " + this.getCredit() + "\n";
         result += "Confirmation State: " + this.confirmationState.toString() + "\n";
         return result;
     }

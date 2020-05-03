@@ -25,7 +25,7 @@ public class Storage implements Runnable {
     public static ArrayList<Sale> allSales = new ArrayList<>();
     public static ArrayList<BuyLog> allBuyLogs = new ArrayList<>();
     public static ArrayList<Category> allCategories = new ArrayList<>();
-    private static ArrayList<Account> allAccounts = new ArrayList<>();
+    public static ArrayList<Account> allAccounts = new ArrayList<>();
     public static ArrayList<SpecialOffCode> allSpecialOffCodes = new ArrayList<>();
     public static ArrayList<Cart> allCarts = new ArrayList<>();
     public static ArrayList<Request> allRequests = new ArrayList<>();

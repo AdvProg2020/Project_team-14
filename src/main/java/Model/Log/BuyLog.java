@@ -1,42 +1,78 @@
 package Model.Log;
 
+import Model.Cart.Cart;
+import Model.Off.OffCode;
 import Model.Product.Product;
 import Model.RandomString;
+import Model.Storage;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class BuyLog extends Log {
 
     //the first argument is productID and the second one is salesmanID
-    private HashMap<String, String> products = new HashMap<>();
+    private HashMap<String, String> products;
 
     //the first argument is productID and the second one is the prices with consideration of possible sales
-    private HashMap<String, String> prices = new HashMap<>();
+    private HashMap<String, Integer> prices;
 
-    //the first argument is productID and the second one is sale percentage and it's zero for those that are not on sale
-    private HashMap<String, Integer> salePercentage = new HashMap<>();
-
+    //the first argument is productID and the second one is the prices with consideration of possible sales
+    private HashMap<String, Integer> pricesAfterSale = new HashMap<>();
 
     private String customerUsername;
     private String buyLogID;
     private String offCodeID;
-    private int payAmount;
-    private int offAmount;
+    private int totalAmountWithOutOffCode;
+    private int totalAmountWithOffCode;
     private Delivery deliveryState;
     private boolean wasOffCodeUsed;
-    private int offCodePercentage;
 
-    public BuyLog(HashMap<String, String> products, HashMap<String, String> prices, HashMap<String, Integer> salePercentage, String customerUsername, String offCodeID) {
-        this.products = products;
-        this.prices = prices;
-        this.salePercentage = salePercentage;
-        this.customerUsername = customerUsername;
-        this.offCodeID = this.offCodeID;
+    //mark we should make sure that the offCode is authentic before passing it to BuyLog
+
+    public BuyLog(Cart cart, String offCodeID) {
+        super();
+        this.products = cart.getProductIDs();
+        this.prices = cart.getPricesAfterSale();
+        this.pricesAfterSale = cart.getPricesAfterSale();
+        this.customerUsername = cart.getUsername();
+        this.totalAmountWithOutOffCode = cart.getTotalPrice(null);
+        this.totalAmountWithOffCode = cart.getTotalPrice(offCodeID);
+        this.offCodeID = offCodeID;
         if (offCodeID.isEmpty()) {
             wasOffCodeUsed = false;
+        } else {
+            this.offCodeID = offCodeID;
+            wasOffCodeUsed = true;
+            OffCode offCode = OffCode.getOffCodeByID(offCodeID);
+            assert offCode != null;
         }
         deliveryState = Delivery.PROCESSING;
         this.buyLogID = createID();
+        Storage.allBuyLogs.add(this);
+        for (String productID : products.keySet()) {
+            new SellLog(this, productID, products.get(productID));
+        }
+    }
+
+    public HashMap<String, Integer> getPrices() {
+        return prices;
+    }
+
+    public Delivery getDeliveryState() {
+        return deliveryState;
+    }
+
+    public HashMap<String, Integer> getPricesAfterSale() {
+        return pricesAfterSale;
+    }
+
+    public HashMap<String, String> getProducts() {
+        return products;
+    }
+
+    public String getCustomerUsername() {
+        return customerUsername;
     }
 
     public String createID() {
@@ -47,15 +83,29 @@ public class BuyLog extends Log {
         return buyLogID;
     }
 
+    public boolean containProduct(String productID) {
+        return products.containsKey(productID);
+    }
+
+    public static ArrayList<BuyLog> getUserBuyLogs(String customerUsername) {
+        ArrayList<BuyLog> arrayList = new ArrayList<>();
+        for (BuyLog buyLog : Storage.allBuyLogs) {
+            if (buyLog.customerUsername.equals(customerUsername)) {
+                arrayList.add(buyLog);
+            }
+        }
+        return arrayList;
+    }
+
     private StringBuilder toStringSingleProduct(String productID) {
         StringBuilder result = new StringBuilder();
         result.append("Product Name:").append(Product.getNameByID(productID)).append("\n");
         result.append("Salesman: ").append(products.get(productID)).append("\n");
         result.append("Price: ").append(prices.get(productID)).append("\n");
-        if (salePercentage.get(productID) == 0) {
+        if (pricesAfterSale.get(productID).equals(prices.get(productID))) {
             result.append("The product wasn't on sale." + "\n");
         } else {
-            result.append("The product was on sale with percentage: ").append(salePercentage.get(productID)).append("\n");
+            result.append("The price after sale: ").append(pricesAfterSale.get(productID)).append("\n");
         }
         result.append("------------------------------------------").append("\n");
         return result;
@@ -74,15 +124,14 @@ public class BuyLog extends Log {
         if (wasOffCodeUsed) {
             return "No offCode was used." + "\n";
         } else {
-            return "OffCode was used with discount percentage: " + offCodePercentage + "\n";
+            return "Price after using OffCode: " + totalAmountWithOffCode + "\n";
         }
     }
 
     @Override
     public String toString() {
         return "Customer: " + customerUsername + "\n" +
-                "Pay Amount: " + payAmount + "\n" +
-                "Off Amount: " + offAmount + "\n" +
+                "Amount without OffCode: " + totalAmountWithOutOffCode + "\n" +
                 "Delivery State: " + deliveryState + "\n" +
                 toStringOffCodeUsage() + toStringProducts() +
                 super.toString();

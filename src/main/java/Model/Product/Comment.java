@@ -1,6 +1,7 @@
 package Model.Product;
 
 import Model.Confirmation;
+import Model.Log.Log;
 import Model.RandomString;
 
 import java.io.Serializable;
@@ -36,6 +37,11 @@ public class Comment extends RandomString implements Serializable {
         }
         return null;
     }
+
+    public static boolean canUserCommentForProduct(String username, String productID) {
+        return Log.hasCustomerBoughtProduct(username, productID);
+    }
+
 
     //  when we need get comments for a product for customer view we use the method below
     //and it return all commentIDs that have the property we want
