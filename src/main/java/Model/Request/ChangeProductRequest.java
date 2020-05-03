@@ -2,12 +2,9 @@ package Model.Request;
 
 import Model.Off.Sale;
 import Model.Product.Product;
+import Model.Request.Enum.ProductAttributes;
 
 import java.text.ParseException;
-
-enum ProductAttributes {
-    BRAND, NAME, DESCRIPTION, IS_ON_SALE;
-}
 
 public class ChangeProductRequest extends Request {
     ProductAttributes attribute;

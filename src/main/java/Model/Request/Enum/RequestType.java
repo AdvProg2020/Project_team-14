@@ -1,0 +1,6 @@
+package Model.Request.Enum;
+
+public enum RequestType {
+    REGISTER_SALESMAN, ADD_NEW_PRODUCT, CHANGE_PRODUCT, ADD_NEW_SALE, CHANGE_SALE, DELETE_PRODUCT, DELETE_SALE;
+}
+

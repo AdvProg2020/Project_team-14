@@ -2,12 +2,9 @@ package Model.Request;
 
 import Model.Off.Sale;
 import Model.Product.Product;
+import Model.Request.Enum.SaleAttributes;
 
 import java.text.ParseException;
-
-enum SaleAttributes {
-    START_DATE, END_DATE, PERCENTAGE;
-}
 
 public class ChangeSaleRequest extends Request {
     SaleAttributes attribute;

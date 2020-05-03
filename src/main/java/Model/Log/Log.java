@@ -8,7 +8,7 @@ import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public abstract class Log extends RandomString implements Serializable {
+public abstract class Log implements Serializable {
     private Date date;
 
     public Log() {

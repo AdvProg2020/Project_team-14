@@ -6,7 +6,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public abstract class Off extends RandomString {
+public abstract class Off {
     protected Date start;
     protected Date end;
     protected int percentage;

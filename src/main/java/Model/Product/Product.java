@@ -9,7 +9,7 @@ import java.util.*;
 
 import static Model.Storage.*;
 
-public class Product extends RandomString implements Serializable {
+public class Product implements Serializable {
     private ArrayList<String> salesmanIDs = new ArrayList<>();
     private String productID;
     private String name;

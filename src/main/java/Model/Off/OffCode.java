@@ -1,5 +1,7 @@
 package Model.Off;
 
+import Model.RandomString;
+
 import java.io.Serializable;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -20,7 +22,7 @@ public class OffCode extends Off implements Serializable {
         allOffCodes.add(this);
 
         //because IDs are generally too long I decided to to make the length the random String 5 in order for more comfort
-        offCodeID = createID("OffCode");
+        offCodeID = RandomString.createID("OffCode");
     }
 
     public boolean canCustomerUseItWithUsername(String username) {
@@ -84,12 +86,9 @@ public class OffCode extends Off implements Serializable {
     //the method is boolean and if number of times that can be used is a positive number reduces that
     //by one and then return true otherwise doesn't do anything and just return false
 
-    public boolean reduceNumberOfTimesItCanBeUsed() {
+    public void reduceNumberOfTimesItCanBeUsed() {
         if (numberOfTimesCanBeUsed > 0) {
             numberOfTimesCanBeUsed--;
-            return true;
-        } else {
-            return false;
         }
     }
 
