@@ -24,17 +24,23 @@ public class Cart implements Serializable {
         Storage.allCarts.add(this);
     }
 
-    //before calling this method we shall call method "isCreditEnoughAccordingToCart"
-    //to make sure that the customer's credit is enough and then with calling method below
+    //if it return true it means that the credit was enough and the purchase process is done
+    //otherwise it return false which means credit isn't enough
     //the buy log will be created and the money is received from the customer and the money is given to salesman
     //in sell log which is call in constructor of buy log
     //Buy --> creating BuyLog --> creating SellLog --> giving the salesman their money
 
-    public void Buy(String offCode) {
-        new BuyLog(this, offCode);
+    public boolean Buy(String offCode) {
         Customer customer = (Customer) Storage.getAccountWithUsername(username);
         assert customer != null;
-        customer.setCredit(customer.getCredit() - getTotalPrice(offCode));
+        if(customer.isCreditEnoughAccordingToCartWithOffCode(offCode)) {
+            new BuyLog(this, offCode);
+            customer.setCredit(customer.getCredit() - getTotalPrice(offCode));
+            clearCart();
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public boolean isAlreadyInCart(String productID) {
