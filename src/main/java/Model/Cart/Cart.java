@@ -126,6 +126,10 @@ public class Cart implements Serializable {
         productIDs.put(productID, salesmanID);
     }
 
+    public void removeProductFromCart(String productID) {
+        productIDs.remove(productID);
+    }
+
     private String toStringSingleProduct(String productID, String salesmanID) {
         Product product = Product.getProductWithID(productID);
         assert product != null;
