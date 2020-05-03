@@ -29,8 +29,8 @@ public class ChangeProductRequest extends Request {
         this.updatedInfo = updatedInfo;
     }
 
-
-    public void updateAttributeWithUpdateInfo() throws ParseException {
+    @Override
+    public void updateAttributeWithUpdatedInfo() throws ParseException {
         Product product = (Product) object;
         if (attribute.equals(ProductAttributes.BRAND)) {
             product.setBrand(updatedInfo);

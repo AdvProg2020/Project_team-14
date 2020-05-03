@@ -7,6 +7,7 @@ import Model.Account.Salesman;
 import Model.Cart.Cart;
 import Model.Category.Category;
 import Model.Log.BuyLog;
+import Model.Log.SellLog;
 import Model.Off.OffCode;
 import Model.Off.Sale;
 import Model.Off.SpecialOffCode;
@@ -29,6 +30,7 @@ public class Storage implements Runnable {
     public static ArrayList<SpecialOffCode> allSpecialOffCodes = new ArrayList<>();
     public static ArrayList<Cart> allCarts = new ArrayList<>();
     public static ArrayList<Request> allRequest = new ArrayList<>();
+    public static ArrayList<SellLog> allSellLogs = new ArrayList<>();
 
     public static boolean isThereAccountWithUsername(String username) {
         return getAccountWithUsername(username) != null;

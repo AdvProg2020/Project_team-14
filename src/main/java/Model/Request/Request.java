@@ -83,7 +83,7 @@ public abstract class Request extends RandomString implements Serializable {
         if (this.requestType.equals(RequestType.CHANGE_SALE)) {
             this.confirmation = Confirmation.ACCEPTED;
             if (this instanceof ChangeSaleRequest) {
-                ((ChangeSaleRequest) this).updateAttributeWithUpdateInfo();
+                ((ChangeSaleRequest) this).updateAttributeWithUpdatedInfo();
             }
         } else if (this.requestType.equals(RequestType.DELETE_SALE)) {
             Sale sale = (Sale) object;
@@ -104,7 +104,7 @@ public abstract class Request extends RandomString implements Serializable {
         } else if (this.requestType.equals(RequestType.CHANGE_PRODUCT)) {
             this.confirmation = Confirmation.ACCEPTED;
             if (this instanceof ChangeProductRequest) {
-                ((ChangeProductRequest) this).updateAttributeWithUpdateInfo();
+                ((ChangeProductRequest) this).updateAttributeWithUpdatedInfo();
             }
         } else if (this.requestType.equals(RequestType.REGISTER_SALESMAN)) {
             this.confirmation = Confirmation.ACCEPTED;
@@ -147,4 +147,7 @@ public abstract class Request extends RandomString implements Serializable {
         }
 
     }
+
+    public abstract void updateAttributeWithUpdatedInfo() throws ParseException;
+
 }

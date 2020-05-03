@@ -1,8 +1,11 @@
 package Model.Log;
 
 import Model.RandomString;
+import Model.Storage;
 
 import java.io.Serializable;
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public abstract class Log extends RandomString implements Serializable {
@@ -20,5 +23,12 @@ public abstract class Log extends RandomString implements Serializable {
         return "Date: "+getDate().toString();
     };
 
-
+    public static boolean hasCustomerBoughtProduct(String username,String productID){
+        for(BuyLog buyLog: BuyLog.getUserBuyLogs(username)){
+            if(buyLog.containProduct(productID)){
+                return true;
+            }
+        }
+        return false;
+    }
 }

@@ -24,7 +24,8 @@ public class ChangeSaleRequest extends Request {
         this.updatedInfo = updatedInfo;
     }
 
-    public void updateAttributeWithUpdateInfo() throws ParseException {
+    @Override
+    public void updateAttributeWithUpdatedInfo() throws ParseException {
         Sale sale = (Sale) object;
         if (attribute.equals(SaleAttributes.END_DATE)) {
             sale.setEnd(updatedInfo);

@@ -1,6 +1,8 @@
 package Model.Cart;
 
 import Model.Account.Customer;
+import Model.Log.BuyLog;
+import Model.Log.Log;
 import Model.Off.OffCode;
 import Model.Off.Sale;
 import Model.Product.Product;
@@ -20,6 +22,60 @@ public class Cart implements Serializable {
         this.username = username;
         cartID = RandomString.createID("cartID");
         Storage.allCarts.add(this);
+    }
+
+    //before calling this method we shall call method "isCreditEnoughAccordingToCart"
+    //to make sure that the customer's credit is enough and then with calling method below
+    //the buy log will be created and the money is received from the customer and the money is given to salesman
+    //in sell log which is call in constructor of buy log
+    //Buy --> creating BuyLog --> creating SellLog --> giving the salesman their money
+
+    public void Buy(String offCode) {
+        new BuyLog(this, offCode);
+        Customer customer = (Customer) Storage.getAccountWithUsername(username);
+        assert customer != null;
+        customer.setCredit(customer.getCredit() - getTotalPrice(offCode));
+    }
+
+    public boolean isAlreadyInCart(String productID) {
+        return this.productIDs.containsKey(productID);
+    }
+
+
+    public HashMap<String, String> getProductIDs() {
+        return productIDs;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getCartID() {
+        return cartID;
+    }
+
+    public void clearCart() {
+        productIDs.clear();
+    }
+
+    public HashMap<String, Integer> getPrices() {
+        HashMap<String, Integer> prices = new HashMap<>();
+        for (String productID : productIDs.keySet()) {
+            Product product = Product.getProductWithID(productID);
+            assert product != null;
+            prices.put(productID, product.getPriceBySalesmanID(productIDs.get(productID)));
+        }
+        return prices;
+    }
+
+    public HashMap<String, Integer> getPricesAfterSale() {
+        HashMap<String, Integer> prices = new HashMap<>();
+        for (String productID : productIDs.keySet()) {
+            Product product = Product.getProductWithID(productID);
+            assert product != null;
+            prices.put(productID, Sale.getPriceAfterSale(productID, productIDs.get(productID)));
+        }
+        return prices;
     }
 
     private int getTotalPrice() {
@@ -54,23 +110,6 @@ public class Cart implements Serializable {
         return customer.getCart();
     }
 
-    public static void updateUsernameCart(String customerUser, String cartID) {
-        Cart fromCart = getCartWithID(cartID);
-        Cart toCart = getCartBasedOnUsername(customerUser);
-        toCart.clearCart();
-        assert fromCart != null;
-        toCart.productIDs = fromCart.productIDs;
-        Storage.allCarts.remove(fromCart);
-    }
-
-    public String getCartID() {
-        return cartID;
-    }
-
-    public void clearCart() {
-        productIDs.clear();
-    }
-
     public void addProductToCart(String productID, String salesmanID, String cartID) {
         Cart cart = getCartWithID(cartID);
         assert cart != null;
@@ -97,7 +136,7 @@ public class Cart implements Serializable {
             result.append(toStringSingleProduct(productID, productIDs.get(productID)));
         }
         result.append("---------------------------------");
-        result.append("Total price WithOut: ").append(this.getTotalPrice());
+        result.append("Total price WithOut Using OffCode: ").append(this.getTotalPrice());
         return result.toString();
     }
 }
