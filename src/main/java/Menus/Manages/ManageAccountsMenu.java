@@ -1,5 +1,7 @@
-package Menus;
+package Menus.Manages;
 
+import Menus.LoginOrRegisterMenu;
+import Menus.Menu;
 import Menus.Views.ViewAccountMenu;
 import Menus.shows.ShowAccountsMenu;
 
