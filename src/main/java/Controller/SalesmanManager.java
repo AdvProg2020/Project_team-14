@@ -2,6 +2,7 @@ package Controller;
 
 
 import Model.Account.Salesman;
+import Model.Request.Request;
 import Model.Storage;
 
 public class SalesmanManager {
@@ -12,14 +13,15 @@ public class SalesmanManager {
         Server.setAnswer("register successful");
         new Salesman(information[3], information[4], information[1], information[2],
                 information[6], information[7], information[5], information[8], 0);
+        new Request(information[3]);
     }
 
-    public void showCompanyInfo (String salesmanID) {
+    public void showCompanyInfo(String salesmanID) {
         Salesman salesman = (Salesman) Storage.getAccountWithUsername(salesmanID);
         Server.setAnswer(salesman.getCompany());
     }
 
-    public void showSalesHistory (String salesmanID) {
+    public void showSalesHistory(String salesmanID) {
         Salesman salesman = (Salesman) Storage.getAccountWithUsername(salesmanID);
         /*
          * log class has work yet :)

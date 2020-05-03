@@ -11,6 +11,7 @@ import Model.Off.SpecialOffCode;
 import Model.Product.Comment;
 import Model.Product.Point;
 import Model.Product.Product;
+import Model.Storage;
 
 import java.io.*;
 
@@ -44,7 +45,7 @@ public class startOfProgramme extends DataBase {
         for (File file : files) {
             ObjectInputStream in = new ObjectInputStream(new FileInputStream(file.getAbsolutePath()));
             Customer s = (Customer) in.readObject();
-            allAccounts.add(s);
+            Storage.getAllAccounts().add(s);
         }
 
     }
@@ -57,7 +58,7 @@ public class startOfProgramme extends DataBase {
         for (File file : files) {
             ObjectInputStream in = new ObjectInputStream(new FileInputStream(file.getAbsolutePath()));
             Boss s = (Boss) in.readObject();
-            allAccounts.add(s);
+            Storage.getAllAccounts().add(s);
         }
     }
 
@@ -69,7 +70,7 @@ public class startOfProgramme extends DataBase {
         for (File file : files) {
             ObjectInputStream in = new ObjectInputStream(new FileInputStream(file.getAbsolutePath()));
             Salesman s = (Salesman) in.readObject();
-            allAccounts.add(s);
+            Storage.getAllAccounts().add(s);
         }
 
     }

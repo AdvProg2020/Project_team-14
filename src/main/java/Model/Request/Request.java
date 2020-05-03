@@ -15,7 +15,7 @@ enum RequestType {
     REGISTER_SALESMAN, ADD_NEW_PRODUCT, CHANGE_PRODUCT, ADD_NEW_SALE, CHANGE_SALE, DELETE_PRODUCT, DELETE_SALE;
 }
 
-public abstract class Request extends RandomString implements Serializable {
+public class Request extends RandomString implements Serializable {
     protected String requestID;
     protected String salesmanID;
     protected Object object;

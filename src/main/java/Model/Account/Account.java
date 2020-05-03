@@ -1,5 +1,7 @@
 package Model.Account;
 
+import Model.Storage;
+
 import static Model.Storage.*;
 
 public abstract class Account {
@@ -19,7 +21,7 @@ public abstract class Account {
         this.secondName = secondName;
         this.Email = Email;
         this.telephone = telephone;
-        allAccounts.add(this);
+        Storage.getAllAccounts().add(this);
         if (role.equalsIgnoreCase("boss")) {
             this.role = Role.BOSS;
         } else if (role.equalsIgnoreCase("customer")) {
