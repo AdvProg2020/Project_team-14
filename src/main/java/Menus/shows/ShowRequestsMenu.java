@@ -1,6 +1,5 @@
 package Menus.shows;
 
-import Menus.Filters.AccountsFilterMenu;
 import Menus.Filters.RequestsFilterMenu;
 import Menus.LoginOrRegisterMenu;
 import Menus.Menu;
