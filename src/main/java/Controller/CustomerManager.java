@@ -10,6 +10,6 @@ public class CustomerManager {
         }
         Server.setAnswer("register successful");
         new Customer(information[3], information[4], information[1], information[2],
-                information[6], information[7], information[5], 0);
+                information[6], information[7], information[5], 0,null);
     }
 }

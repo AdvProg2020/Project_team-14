@@ -30,6 +30,10 @@ public abstract class Off {
         this.start = formatter.parse(start);
     }
 
+    public Date getEnd() {
+        return end;
+    }
+
     public void setPercentage(String percentage) {
         this.percentage = Integer.parseInt(percentage);
     }

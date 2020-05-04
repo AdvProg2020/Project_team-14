@@ -98,6 +98,16 @@ public class Product implements Serializable {
         return price.get(salesmanID);
     }
 
+    public int getMinimumPrice() {
+        int result = 1000000000;
+        for (String salesmanID : salesmanIDs) {
+            if (result > getPriceBySalesmanID(salesmanID)) {
+                result = getPriceBySalesmanID(salesmanID);
+            }
+        }
+        return result;
+    }
+
     public static String getNameByID(String productID) {
         return Objects.requireNonNull(Product.getProductWithID(productID)).getName();
     }

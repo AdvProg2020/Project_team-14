@@ -113,4 +113,14 @@ public class Sale extends Off implements Serializable {
         }
         return result.toString();
     }
+
+    public static ArrayList<Sale> getAllAuthenticSales() {
+        ArrayList<Sale> sales = new ArrayList<>();
+        for (Sale sale : allSales) {
+            if (sale.isAuthentic()) {
+                sales.add(sale);
+            }
+        }
+        return sales;
+    }
 }

@@ -1,6 +1,4 @@
 package Model.Request;
-
-import Model.Off.Sale;
 import Model.Product.Product;
 import Model.Request.Enum.*;
 

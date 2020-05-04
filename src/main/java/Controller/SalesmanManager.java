@@ -2,6 +2,7 @@ package Controller;
 
 
 import Model.Account.Salesman;
+import Model.Log.SellLog;
 import Model.Storage;
 
 public class SalesmanManager {
@@ -11,18 +12,17 @@ public class SalesmanManager {
         }
         Server.setAnswer("register successful");
         new Salesman(information[3], information[4], information[1], information[2],
-                information[6], information[7], information[5], information[8], 0);
+                information[6], information[7], information[5], information[8]);
     }
 
     public void showCompanyInfo (String salesmanID) {
         Salesman salesman = (Salesman) Storage.getAccountWithUsername(salesmanID);
+        assert salesman != null;
         Server.setAnswer(salesman.getCompany());
     }
 
-    public void showSalesHistory (String salesmanID) {
+    public String getSalesHistory (String salesmanID) {
         Salesman salesman = (Salesman) Storage.getAccountWithUsername(salesmanID);
-        /*
-         * log class has work yet :)
-         */
+        return SellLog.getSalesmanSellLogs_StringFormatted(salesmanID);
     }
 }

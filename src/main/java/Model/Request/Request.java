@@ -4,6 +4,7 @@ import Model.Account.Salesman;
 import Model.Confirmation;
 import Model.Off.Off;
 import Model.Off.Sale;
+import Model.Product.Comment;
 import Model.Product.Product;
 
 import Model.Request.Enum.RequestType;
@@ -67,6 +68,14 @@ public class Request implements Serializable {
         this.confirmation = Confirmation.CHECKING;
     }
 
+    public Request(Comment comment) {
+        this.requestID = createID("Request");
+        this.object = comment;
+        this.requestType = RequestType.COMMENT_CONFIRMATION;
+        Storage.allRequest.add(this);
+        this.confirmation = Confirmation.CHECKING;
+    }
+
     public ArrayList<Request> getCheckingRequests() {
         ArrayList<Request> result = new ArrayList<>();
         for (Request request : Storage.allRequest) {
@@ -111,6 +120,10 @@ public class Request implements Serializable {
             Salesman salesman = (Salesman) Storage.getAccountWithUsername(salesmanID);
             assert salesman != null;
             salesman.setConfirmationState(Confirmation.ACCEPTED);
+        } else if (this.requestType.equals(RequestType.COMMENT_CONFIRMATION)) {
+            this.confirmation = Confirmation.ACCEPTED;
+            Comment comment = (Comment) object;
+            comment.setConfirmationState(Confirmation.ACCEPTED);
         }
 
     }
@@ -143,6 +156,10 @@ public class Request implements Serializable {
             Salesman salesman = (Salesman) Storage.getAccountWithUsername(salesmanID);
             assert salesman != null;
             salesman.setConfirmationState(Confirmation.DENIED);
+        } else if (this.requestType.equals(RequestType.COMMENT_CONFIRMATION)) {
+            this.confirmation = Confirmation.DENIED;
+            Comment comment = (Comment) object;
+            comment.setConfirmationState(Confirmation.DENIED);
         }
     }
 
@@ -180,6 +197,12 @@ public class Request implements Serializable {
                 + product.toStringForBossView() + "\n";
     }
 
+    private String toStringCommentConfirmation() {
+        Comment comment = (Comment) object;
+        return comment.toStringForChecking();
+    }
+
+
     public String toString() {
         String result = "Type: " + this.requestType.name().toLowerCase() + "\n";
         if (requestType.equals(RequestType.CHANGE_PRODUCT)) {
@@ -198,6 +221,8 @@ public class Request implements Serializable {
             return result + toStringDeleteSale();
         } else if (requestType.equals(RequestType.REGISTER_SALESMAN)) {
             return result + toStringRegisterSalesman();
+        } else if (requestType.equals(RequestType.COMMENT_CONFIRMATION)) {
+            return result + toStringCommentConfirmation();
         }
         return null;
     }

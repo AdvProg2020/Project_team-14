@@ -126,15 +126,11 @@ public class Comment implements Serializable {
         return confirmationState.equals(Confirmation.CHECKING);
     }
 
-    String createID() {
-        return RandomString.createID("Comment");
+    public void setConfirmationState(Confirmation confirmation) {
+        this.confirmationState = confirmation;
     }
 
-    public void setConfirmationState(String confirmationState) {
-        if (confirmationState.equals("ACCEPTED")) {
-            this.confirmationState = Confirmation.ACCEPTED;
-        } else if (confirmationState.equals("DENIED")) {
-            this.confirmationState = Confirmation.DENIED;
-        }
+    String createID() {
+        return RandomString.createID("Comment");
     }
 }
