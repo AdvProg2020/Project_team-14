@@ -36,7 +36,7 @@ public class Request implements Serializable {
         } else if (type.equalsIgnoreCase(String.valueOf(RequestType.ADD_NEW_PRODUCT))) {
             requestType = RequestType.ADD_NEW_PRODUCT;
         }
-        Storage.allRequest.add(this);
+        Storage.allRequests.add(this);
         this.confirmation = Confirmation.CHECKING;
     }
 
@@ -53,7 +53,7 @@ public class Request implements Serializable {
         } else if (type.equalsIgnoreCase(String.valueOf(RequestType.ADD_NEW_SALE))) {
             requestType = RequestType.ADD_NEW_SALE;
         }
-        Storage.allRequest.add(this);
+        Storage.allRequests.add(this);
         this.confirmation = Confirmation.CHECKING;
     }
 
@@ -64,7 +64,7 @@ public class Request implements Serializable {
         this.salesmanID = salesmanID;
         this.object = null;
         this.requestType = RequestType.REGISTER_SALESMAN;
-        Storage.allRequest.add(this);
+        Storage.allRequests.add(this);
         this.confirmation = Confirmation.CHECKING;
     }
 
@@ -72,13 +72,13 @@ public class Request implements Serializable {
         this.requestID = createID("Request");
         this.object = comment;
         this.requestType = RequestType.COMMENT_CONFIRMATION;
-        Storage.allRequest.add(this);
+        Storage.allRequests.add(this);
         this.confirmation = Confirmation.CHECKING;
     }
 
     public ArrayList<Request> getCheckingRequests() {
         ArrayList<Request> result = new ArrayList<>();
-        for (Request request : Storage.allRequest) {
+        for (Request request : Storage.allRequests) {
             if (request.confirmation.equals(Confirmation.CHECKING)) {
                 result.add(request);
             }
