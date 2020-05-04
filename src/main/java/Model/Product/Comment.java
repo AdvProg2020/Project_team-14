@@ -7,10 +7,11 @@ import Model.RandomString;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Objects;
 
 import static Model.Storage.*;
 
-public class Comment extends RandomString implements Serializable {
+public class Comment implements Serializable {
     private String commentID;
     private String text;
     private String senderUsername;
@@ -93,7 +94,7 @@ public class Comment extends RandomString implements Serializable {
 
     public String toStringForChecking() {
         String result = "";
-        result += "Product Name: " + Product.getProductWithID(productID).getName();
+        result += "Product Name: " + Objects.requireNonNull(Product.getProductWithID(productID)).getName();
         result += "Sender: " + this.senderUsername + "\n";
         result += "Message: " + this.text + "\n";
         result += "Date: " + this.date.toString() + "\n";
@@ -125,15 +126,11 @@ public class Comment extends RandomString implements Serializable {
         return confirmationState.equals(Confirmation.CHECKING);
     }
 
-    String createID() {
-        return RandomString.createID("Comment");
+    public void setConfirmationState(Confirmation confirmation) {
+        this.confirmationState = confirmation;
     }
 
-    public void setConfirmationState(String confirmationState) {
-        if (confirmationState.equals("ACCEPTED")) {
-            this.confirmationState = Confirmation.ACCEPTED;
-        } else if (confirmationState.equals("DENIED")) {
-            this.confirmationState = Confirmation.DENIED;
-        }
+    String createID() {
+        return RandomString.createID("Comment");
     }
 }

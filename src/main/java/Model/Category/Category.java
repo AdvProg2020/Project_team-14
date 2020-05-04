@@ -8,7 +8,7 @@ import java.io.*;
 
 import static Model.Storage.*;
 
-public class Category extends RandomString implements Serializable {
+public class Category implements Serializable {
 
     //note that the name of each category must be unique so we can get the name
     //we should check to ensure that there's no previous category with this name
@@ -23,7 +23,9 @@ public class Category extends RandomString implements Serializable {
         this.parentCategoryName = parentCategoryName;
         this.categoryName = categoryName;
         if (parentCategoryName != null) {
-            getCategoryByName(parentCategoryName).addSubCategory(categoryName);
+            Category category=getCategoryByName(parentCategoryName);
+            assert category != null;
+            category.addSubCategory(categoryName);
         }
         allCategories.add(this);
     }

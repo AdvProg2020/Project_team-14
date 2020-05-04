@@ -33,7 +33,7 @@ public class SellLog {
         return buyLog.getDeliveryState().name();
     }
 
-    public ArrayList<SellLog> getSalesmanSellLogs(String salesmanID) {
+    public static ArrayList<SellLog> getSalesmanSellLogs(String salesmanID) {
         ArrayList<SellLog> arrayList = new ArrayList<>();
         for (SellLog sellLog : Storage.allSellLogs) {
             if (sellLog.salesmanID.equals(salesmanID)) {
@@ -41,6 +41,10 @@ public class SellLog {
             }
         }
         return arrayList;
+    }
+
+    public static boolean hasSalesmanAnySellLog(String salesmanID) {
+        return getSalesmanSellLogs(salesmanID).size() != 0;
     }
 
     private String toStringSingleSellLogs() {
@@ -59,7 +63,10 @@ public class SellLog {
         return result;
     }
 
-    public String getSalesmanSellLogs_StringFormatted(String salesmanID) {
+    public static String getSalesmanSellLogs_StringFormatted(String salesmanID) {
+        if(!hasSalesmanAnySellLog(salesmanID)){
+            return "no sell log yet!";
+        }
         StringBuilder result = new StringBuilder("Sell logs of salesman: " + salesmanID + "\n");
         for (SellLog sellLog : getSalesmanSellLogs(salesmanID)) {
             result.append(sellLog.toStringSingleSellLogs());

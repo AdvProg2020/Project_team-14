@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 import static Model.Storage.*;
 
-public class Point extends RandomString implements Serializable {
+public class Point implements Serializable {
     private String pointID;
     private String username;
     private String productID;

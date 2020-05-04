@@ -9,7 +9,7 @@ import java.util.*;
 
 import static Model.Storage.*;
 
-public class Product extends RandomString implements Serializable {
+public class Product implements Serializable {
     private ArrayList<String> salesmanIDs = new ArrayList<>();
     private String productID;
     private String name;
@@ -96,6 +96,16 @@ public class Product extends RandomString implements Serializable {
 
     public int getPriceBySalesmanID(String salesmanID) {
         return price.get(salesmanID);
+    }
+
+    public int getMinimumPrice() {
+        int result = 1000000000;
+        for (String salesmanID : salesmanIDs) {
+            if (result > getPriceBySalesmanID(salesmanID)) {
+                result = getPriceBySalesmanID(salesmanID);
+            }
+        }
+        return result;
     }
 
     public static String getNameByID(String productID) {

@@ -4,21 +4,20 @@ import Model.Account.Salesman;
 import Model.Confirmation;
 import Model.Off.Off;
 import Model.Off.Sale;
+import Model.Product.Comment;
 import Model.Product.Product;
-import Model.RandomString;
+
+import Model.Request.Enum.RequestType;
 import Model.Storage;
 
 import java.io.Serializable;
 import java.text.ParseException;
 import java.util.ArrayList;
 
-enum RequestType {
-    REGISTER_SALESMAN, ADD_NEW_PRODUCT, CHANGE_PRODUCT, ADD_NEW_SALE, CHANGE_SALE, DELETE_PRODUCT, DELETE_SALE;
-}
+import static Model.RandomString.createID;
 
-public abstract class Request extends RandomString implements Serializable {
+public class Request implements Serializable {
     protected String requestID;
-    protected String acceptingBoss;
     protected String salesmanID;
     protected Object object;
     protected RequestType requestType;
@@ -37,11 +36,11 @@ public abstract class Request extends RandomString implements Serializable {
         } else if (type.equalsIgnoreCase(String.valueOf(RequestType.ADD_NEW_PRODUCT))) {
             requestType = RequestType.ADD_NEW_PRODUCT;
         }
-        Storage.allRequests.add(this);
+        Storage.allRequest.add(this);
         this.confirmation = Confirmation.CHECKING;
     }
 
-    //request for making/adding a sale, note for changing a sale we shall us ChangeSaleRequest class instead
+    //request for making/adding a sale, note for changing a sale we shall use ChangeSaleRequest class instead
 
     public Request(String salesmanID, Sale sale, String type) {
         this.requestID = createID("Request");
@@ -54,7 +53,7 @@ public abstract class Request extends RandomString implements Serializable {
         } else if (type.equalsIgnoreCase(String.valueOf(RequestType.ADD_NEW_SALE))) {
             requestType = RequestType.ADD_NEW_SALE;
         }
-        Storage.allRequests.add(this);
+        Storage.allRequest.add(this);
         this.confirmation = Confirmation.CHECKING;
     }
 
@@ -65,13 +64,21 @@ public abstract class Request extends RandomString implements Serializable {
         this.salesmanID = salesmanID;
         this.object = null;
         this.requestType = RequestType.REGISTER_SALESMAN;
-        Storage.allRequests.add(this);
+        Storage.allRequest.add(this);
+        this.confirmation = Confirmation.CHECKING;
+    }
+
+    public Request(Comment comment) {
+        this.requestID = createID("Request");
+        this.object = comment;
+        this.requestType = RequestType.COMMENT_CONFIRMATION;
+        Storage.allRequest.add(this);
         this.confirmation = Confirmation.CHECKING;
     }
 
     public ArrayList<Request> getCheckingRequests() {
         ArrayList<Request> result = new ArrayList<>();
-        for (Request request : Storage.allRequests) {
+        for (Request request : Storage.allRequest) {
             if (request.confirmation.equals(Confirmation.CHECKING)) {
                 result.add(request);
             }
@@ -85,7 +92,7 @@ public abstract class Request extends RandomString implements Serializable {
         if (this.requestType.equals(RequestType.CHANGE_SALE)) {
             this.confirmation = Confirmation.ACCEPTED;
             if (this instanceof ChangeSaleRequest) {
-                ((ChangeSaleRequest) this).updateAttributeWithUpdateInfo();
+                ((ChangeSaleRequest) this).updateAttributeWithUpdatedInfo();
             }
         } else if (this.requestType.equals(RequestType.DELETE_SALE)) {
             Sale sale = (Sale) object;
@@ -106,13 +113,17 @@ public abstract class Request extends RandomString implements Serializable {
         } else if (this.requestType.equals(RequestType.CHANGE_PRODUCT)) {
             this.confirmation = Confirmation.ACCEPTED;
             if (this instanceof ChangeProductRequest) {
-                ((ChangeProductRequest) this).updateAttributeWithUpdateInfo();
+                ((ChangeProductRequest) this).updateAttributeWithUpdatedInfo();
             }
         } else if (this.requestType.equals(RequestType.REGISTER_SALESMAN)) {
             this.confirmation = Confirmation.ACCEPTED;
             Salesman salesman = (Salesman) Storage.getAccountWithUsername(salesmanID);
             assert salesman != null;
             salesman.setConfirmationState(Confirmation.ACCEPTED);
+        } else if (this.requestType.equals(RequestType.COMMENT_CONFIRMATION)) {
+            this.confirmation = Confirmation.ACCEPTED;
+            Comment comment = (Comment) object;
+            comment.setConfirmationState(Confirmation.ACCEPTED);
         }
 
     }
@@ -124,7 +135,6 @@ public abstract class Request extends RandomString implements Serializable {
 
 
     public void deny() {
-
         if (this.requestType.equals(RequestType.CHANGE_SALE)) {
             this.confirmation = Confirmation.DENIED;
         } else if (this.requestType.equals(RequestType.DELETE_SALE)) {
@@ -146,8 +156,11 @@ public abstract class Request extends RandomString implements Serializable {
             Salesman salesman = (Salesman) Storage.getAccountWithUsername(salesmanID);
             assert salesman != null;
             salesman.setConfirmationState(Confirmation.DENIED);
+        } else if (this.requestType.equals(RequestType.COMMENT_CONFIRMATION)) {
+            this.confirmation = Confirmation.DENIED;
+            Comment comment = (Comment) object;
+            comment.setConfirmationState(Confirmation.DENIED);
         }
-
     }
 
     private String toStringRegisterSalesman() {
@@ -184,6 +197,12 @@ public abstract class Request extends RandomString implements Serializable {
                 + product.toStringForBossView() + "\n";
     }
 
+    private String toStringCommentConfirmation() {
+        Comment comment = (Comment) object;
+        return comment.toStringForChecking();
+    }
+
+
     public String toString() {
         String result = "Type: " + this.requestType.name().toLowerCase() + "\n";
         if (requestType.equals(RequestType.CHANGE_PRODUCT)) {
@@ -202,13 +221,10 @@ public abstract class Request extends RandomString implements Serializable {
             return result + toStringDeleteSale();
         } else if (requestType.equals(RequestType.REGISTER_SALESMAN)) {
             return result + toStringRegisterSalesman();
+        } else if (requestType.equals(RequestType.COMMENT_CONFIRMATION)) {
+            return result + toStringCommentConfirmation();
         }
         return null;
     }
 
-    public abstract void updateAttributeWithUpdatedInfo() throws ParseException;
-
-    public String toStringForBoss() {
-        return "Request ID: " + this.requestID + " Confirmation state: " + this.confirmation;
-    }
 }

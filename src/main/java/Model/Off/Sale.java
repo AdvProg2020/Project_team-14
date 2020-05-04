@@ -3,6 +3,7 @@ package Model.Off;
 import Model.Confirmation;
 import Model.Product.Product;
 import Model.RandomString;
+import Model.Storage;
 
 import java.io.Serializable;
 import java.text.ParseException;
@@ -24,6 +25,18 @@ public class Sale extends Off implements Serializable {
         productIDs = new ArrayList<>();
         confirmationState = Confirmation.CHECKING;
         allSales.add(this);
+    }
+
+    public String getSalesmanID() {
+        return salesmanID;
+    }
+
+    public static ArrayList<Sale> getAllSaleBySalesmanID(String salesmanID) {
+        ArrayList<Sale> salesmanSale = new ArrayList<>();
+        for (Sale sale : allSales) {
+            if (sale.getSaleID().equals(salesmanID)) salesmanSale.add(sale);
+        }
+        return salesmanSale;
     }
 
     public void setConfirmationState(Confirmation confirmationState) {
@@ -112,5 +125,15 @@ public class Sale extends Off implements Serializable {
             result.append(Product.getNameByID(ID)).append("\n");
         }
         return result.toString();
+    }
+
+    public static ArrayList<Sale> getAllAuthenticSales() {
+        ArrayList<Sale> sales = new ArrayList<>();
+        for (Sale sale : allSales) {
+            if (sale.isAuthentic()) {
+                sales.add(sale);
+            }
+        }
+        return sales;
     }
 }

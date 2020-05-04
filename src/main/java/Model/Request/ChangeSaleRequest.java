@@ -2,12 +2,9 @@ package Model.Request;
 
 import Model.Off.Sale;
 import Model.Product.Product;
+import Model.Request.Enum.*;
 
 import java.text.ParseException;
-
-enum SaleAttributes {
-    START_DATE, END_DATE, PERCENTAGE;
-}
 
 public class ChangeSaleRequest extends Request {
     SaleAttributes attribute;
@@ -25,7 +22,6 @@ public class ChangeSaleRequest extends Request {
         this.updatedInfo = updatedInfo;
     }
 
-    @Override
     public void updateAttributeWithUpdatedInfo() throws ParseException {
         Sale sale = (Sale) object;
         if (attribute.equals(SaleAttributes.END_DATE)) {
