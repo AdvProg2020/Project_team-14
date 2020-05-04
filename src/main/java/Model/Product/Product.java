@@ -54,6 +54,10 @@ public class Product implements Serializable {
         this.description = description;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
     public int getSeenCount() {
         return seenCount;
     }

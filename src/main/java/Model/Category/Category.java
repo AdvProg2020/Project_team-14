@@ -38,6 +38,10 @@ public class Category implements Serializable {
         return categoryName;
     }
 
+    public ArrayList<String> getAllProductIDs() {
+        return allProductIDs;
+    }
+
     public void addProductToCategory(String productID) {
         this.allProductIDs.add(productID);
     }
