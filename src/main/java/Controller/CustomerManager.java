@@ -64,16 +64,16 @@ public class CustomerManager {
 
     public void showAllOrders(String username, String sortFactor) {
         ArrayList<BuyLog> customerBuyLog = BuyLog.getUserBuyLogs(username);
-        StringBuilder ans = new StringBuilder("");
+        StringBuilder ans = new StringBuilder("Here are All of your orders:");
         for (BuyLog buyLog : customerBuyLog) {
-            ans.append(buyLog.getBuyLogID() + "\n");
+            ans.append("\n" + buyLog.getBuyLogID());
         }
         Server.setAnswer(ans.toString());
     }
 
     public void showSingleOrder(String buyLogID) {
         BuyLog buyLog = BuyLog.getBuyLogByID(buyLogID);
-        Server.setAnswer(buyLog.toString());
+        Server.setAnswer("Your BuyLog detail:\n" + buyLog.toString());
     }
 
     public void rateProduct(String username, String productID, int point) {
