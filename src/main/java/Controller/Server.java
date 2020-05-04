@@ -1,6 +1,7 @@
 package Controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -11,6 +12,11 @@ public class Server {
     private SalesmanManager salesmanManager;
     private CustomerManager customerManager;
 
+    /*still server answer just single customer, we can change a little things to handle more than one customer
+     * we change this HashMap to HashMap<String, HashMap>
+     */
+    private HashMap<String, String> abstractCart;
+
     static private String answer;
 
     public Server() {
@@ -19,6 +25,7 @@ public class Server {
         this.bossManager = new BossManager();
         this.customerManager = new CustomerManager();
         this.salesmanManager = new SalesmanManager();
+        abstractCart = new HashMap<>();
     }
 
     public static void setAnswer(String answer) {
@@ -29,25 +36,10 @@ public class Server {
         Server.hasBoss = hasBoss;
     }
 
-    /*
-            private ArrayList<Account> loginUsers;
-            private LoginManager loginManager;
-            private PageManager pageManager;
-            private ProductPageManager productPageManager;
-            private ArrayList<Product> abstractCart;
+    public HashMap<String, String> getAbstractCart() {
+        return abstractCart;
+    }
 
-            public Server() {
-                loginUsers = new ArrayList<>();
-                loginManager = new LoginManager();
-                bossManager = new BossManager();
-                customerManager = new CustomerManager();
-                salesmanManager = new SalesmanManager();
-                pageManager = new PageManager();
-                productPageManager = new ProductPageManager();
-                abstractCart = new ArrayList<>();
-            }
-
-             */
     private Matcher getMatcher(String regex, String command) {
         Pattern pattern = Pattern.compile(regex);
         return pattern.matcher(command);

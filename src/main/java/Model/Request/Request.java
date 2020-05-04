@@ -40,7 +40,7 @@ public class Request implements Serializable {
         this.confirmation = Confirmation.CHECKING;
     }
 
-    //request for making/adding a sale, note for changing a sale we shall us ChangeSaleRequest class instead
+    //request for making/adding a sale, note for changing a sale we shall use ChangeSaleRequest class instead
 
     public Request(String salesmanID, Sale sale, String type) {
         this.requestID = createID("Request");
