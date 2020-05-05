@@ -53,7 +53,7 @@ public class ProductPageManager {
         Server.setAnswer(ans.toString());
     }
 
-    public void showCommentAnsPointOfProduct(String productID) {
+    public void showCommentAndPointOfProduct(String productID) {
         Product product = Product.getProductWithID(productID);
         if (product == null) {
             Server.setAnswer("error, product doesn't exist");
