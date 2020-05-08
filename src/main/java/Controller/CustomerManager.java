@@ -3,6 +3,7 @@ package Controller;
 import Model.Account.Customer;
 import Model.Cart.Cart;
 import Model.Log.BuyLog;
+import Model.Log.SellLog;
 import Model.Off.Off;
 import Model.Off.OffCode;
 import Model.Product.Point;
@@ -105,7 +106,10 @@ public class CustomerManager {
         Customer customer = (Customer) Storage.getAccountWithUsername(username);
         if (customer.getCart().buy(offCodeID)) {
             Server.setAnswer("successful, your purchase completed");
-            new BuyLog(customer.getCart(), offCodeID);
+            BuyLog buyLog = new BuyLog(customer.getCart(), offCodeID);
+            for (String productID : customer.getCart().getProductIDs().keySet()) {
+                new SellLog(buyLog, productID, customer.getCart().getProductIDs().get(productID));
+            }
         } else {
             Server.setAnswer("error, you don't have enough credit to purchase");
         }

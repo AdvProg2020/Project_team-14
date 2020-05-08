@@ -4,6 +4,7 @@ import Controller.SortFactorEnum.ListSalesSortFactor;
 import Controller.SortFactorEnum.listProductSortFactor;
 import Model.Off.Sale;
 import Model.Product.Product;
+import Model.Request.ChangeSaleRequest;
 import Model.Request.Request;
 import Model.Storage;
 
@@ -48,20 +49,17 @@ public class SalesManager {
     public void editSale(String saleID, String attribute, String updatedInfo) {
         String ans = "your request to update Sale info has been sent to manager";
         Sale selectedSale = Sale.getSaleByID(saleID);
-        if (attribute.equals("startDate")) {
-            //
-        } else if (attribute.equals("endDate")) {
-            //   new Request("editSale", saleID, attribute,updatedInfo);
-        } else if (attribute.equals("percentage")) {
-            //   new Request("editSale", saleID, attribute, updatedInfo);
+        if (selectedSale == null) {
+            ans = "error, sale doesn't exist.";
         } else {
-            ans = "sales do not have property like want you want";
+            new ChangeSaleRequest(selectedSale.getSalesmanID(), selectedSale, attribute, updatedInfo);
         }
         Server.setAnswer(ans);
     }
 
+    //order of info : 0 -> [start time] , 1 -> [end time] , 2 -> [percentage] , 3 -> [salesmanID]
     public void addSale(ArrayList<String> info) throws ParseException {
         Sale newSale = new Sale(info.get(0), info.get(1), Integer.parseInt(info.get(2)), info.get(3));
-        //new Request();
+        new Request(info.get(3), newSale, "ADD_NEW_SALE");
     }
 }
