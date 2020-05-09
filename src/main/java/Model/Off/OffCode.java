@@ -43,6 +43,14 @@ public class OffCode extends Off implements Serializable {
         return null;
     }
 
+    public void setCeiling(int ceiling) {
+        this.ceiling = ceiling;
+    }
+
+    public void setNumberOfTimesCanBeUsed(int numberOfTimesCanBeUsed) {
+        this.numberOfTimesCanBeUsed = numberOfTimesCanBeUsed;
+    }
+
     public boolean canCustomerUseItWithUsername(String username) {
         return userNamesCanUseIt.contains(username);
     }
