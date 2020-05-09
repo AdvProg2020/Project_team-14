@@ -27,19 +27,15 @@ public class CustomerManager {
         /*
          * sort ArrayList
          */
-        StringBuilder ans = new StringBuilder("");
+        StringBuilder ans = new StringBuilder("Here are all of your Discount code:");
         for (OffCode offCode : userOffCodes) {
-            ans.append(offCode.toString());
+            ans.append("\nOffCodeID: " + offCode.getOffCodeID() + ", Percentage: " + offCode.getPercentage());
         }
         Server.setAnswer(ans.toString());
     }
 
     public void showAllProductsInCart (String username, String sortFactor) {
         Server.setAnswer(((Customer)Storage.getAccountWithUsername(username)).getCart().toString());
-    }
-
-    public void showSingleProductInCart(String username, String productID, String salesmanID) {
-        //
     }
 
     public void addOrRemoveProductToCart (String type, String username, String productID, String salesmanID) {
@@ -57,7 +53,7 @@ public class CustomerManager {
     }
 
     public void showTotalPrice (String username) {
-        Server.setAnswer("" + ((Customer) Storage.getAccountWithUsername(username)).getCart().getTotalPrice(null));
+        Server.setAnswer("Total Price:\n" + ((Customer) Storage.getAccountWithUsername(username)).getCart().getTotalPrice(null));
     }
 
     //order part, still is here, we can make a new class for it [not recommended (:]
