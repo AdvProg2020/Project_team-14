@@ -14,6 +14,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class CustomerManager {
+    /*
+     * this is account apart
+     */
 
     public void register(String[] information) {
         if (Storage.isThereAccountWithUsername(information[3])) {
@@ -37,6 +40,10 @@ public class CustomerManager {
         }
         Server.setAnswer(ans.toString());
     }
+
+    /*
+     * this is cart part
+     */
 
     public void showAllProductsInCart (String username, String sortFactor) {
         Server.setAnswer(((Customer)Storage.getAccountWithUsername(username)).getCart().toString());
