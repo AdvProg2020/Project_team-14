@@ -8,7 +8,7 @@ public class SalesmanTest {
 
     Salesman salesman = new Salesman("username", "password", "firstName",
             "secondName", "h.hafezi2000@gmail.com", "09333805288",
-            "SALESMAN", "company", 1000);
+            "SALESMAN", "company");
 
 
     @Test
