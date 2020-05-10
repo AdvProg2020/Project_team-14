@@ -2,6 +2,7 @@ package Controller;
 
 import Controller.SortFactorEnum.ViewBuyersOfProductSortFactor;
 import Controller.SortFactorEnum.listProductSortFactor;
+import Exception.*;
 import Model.Log.Log;
 import Model.Product.Comment;
 import Model.Product.Product;
@@ -17,6 +18,7 @@ import static java.lang.String.valueOf;
 public class ProductManager {
 
     //the order is 0-->name  1-->salesmanID  2-->brand  3-->description  4-->price  5-->remainder
+
     public void addNewProduct(String productID, ArrayList<String> information) {
         Product p = new Product(information.get(0), information.get(1), information.get(2), information.get(3),
                 Integer.parseInt(information.get(4)), Integer.parseInt(information.get(5)));
@@ -36,7 +38,7 @@ public class ProductManager {
     //I didn't actually know for what reason this method was going to be used but I designed this
     //for salesman to view their product with the sort factor they want
 
-    public String listProductsForSalesman(String salesmanUser, String sortFactor) {
+    public String listProductsForSalesman(String salesmanUser, String sortFactor) throws SortFactorNotAvailableException {
         StringBuilder result = new StringBuilder();
         ArrayList<Product> products = new ArrayList<>(getProductsOfSalesman(salesmanUser));
         if (sortFactor.equalsIgnoreCase(valueOf(listProductSortFactor.ALPHABETICALLY))) {
@@ -49,6 +51,9 @@ public class ProductManager {
             products.sort((Comparator.comparingDouble(Product::getAveragePoint)));
         } else if (sortFactor.equals("")) {
             products.sort((Comparator.comparingInt(Product::getSeenCount)));
+        } else {
+            throw new SortFactorNotAvailableException("the sort factor isn't authentic " + "\n" +
+                    "the available sort factors: " + listProductSortFactor.getValues() + "\n");
         }
         for (Product product : products) {
             result.append(product.toStringForSalesmanView(salesmanUser));
@@ -56,7 +61,7 @@ public class ProductManager {
         return result.toString();
     }
 
-    public String listProductsForCustomer(String sortFactor, ArrayList<String> productIDs) {
+    public String listProductsForCustomer(String sortFactor, ArrayList<String> productIDs) throws SortFactorNotAvailableException {
         StringBuilder result = new StringBuilder();
         ArrayList<Product> products = new ArrayList<>(getArrayListOfProductsFromArrayListOfProductIDs(productIDs));
         if (sortFactor.equalsIgnoreCase(valueOf(listProductSortFactor.ALPHABETICALLY))) {
@@ -67,6 +72,11 @@ public class ProductManager {
             products.sort((Comparator.comparingInt(Product::getSeenCount)));
         } else if (sortFactor.equals("")) {
             products.sort((Comparator.comparingInt(Product::getSeenCount)));
+        } else if (sortFactor.equalsIgnoreCase(valueOf(listProductSortFactor.HIGHEST_POINT))) {
+            products.sort((Comparator.comparingDouble(Product::getAveragePoint)));
+        } else {
+            throw new SortFactorNotAvailableException("the sort factor isn't authentic " + "\n" +
+                    "the available sort factors: " + listProductSortFactor.getValues() + "\n");
         }
         for (Product product : products) {
             result.append(product.getName()).append("\n");
@@ -82,12 +92,15 @@ public class ProductManager {
     }
 
 
-    //we should complete log first
-    public String viewBuyersOfProduct(String productID, String sortFactor) {
+    public String viewBuyersOfProduct(String productID, String sortFactor) throws SortFactorNotAvailableException {
         StringBuilder result = new StringBuilder();
         ArrayList<String> buyers = new ArrayList<>(Log.getBuyerOfProduct(productID));
         if (sortFactor.equalsIgnoreCase(String.valueOf(ViewBuyersOfProductSortFactor.ALPHABETICALLY))) {
             buyers.sort(String::compareTo);
+        } else {
+            throw new SortFactorNotAvailableException("the sort factor isn't authentic " + "\n" +
+                    "the available sort factors: " + ViewBuyersOfProductSortFactor.getValues() + "\n");
+
         }
         for (String buyer : buyers) {
             result.append(buyer).append("\n");

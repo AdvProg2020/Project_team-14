@@ -5,18 +5,23 @@ import Model.Product.Comment;
 import Model.Product.Product;
 
 import java.util.ArrayList;
+import java.util.Properties;
 
 public class ProductPageManager {
 
     //filter factor: 0 -> [category name] , 1-> [be in sale:boolean] ,
     public void showProducts(String sortFactor, ArrayList<String> filterFactor) {
-        ArrayList<String> allProductIDs = Category.getCategoryByName(filterFactor.get(0)).getAllProductIDs();
+        Category category = Category.getCategoryByName(filterFactor.get(0));
+        assert category != null;
+        ArrayList<String> allProductIDs = category.getAllProductIDs();
         StringBuilder ans = new StringBuilder("All Products in [" + filterFactor.get(0) + "] category:");
         /*
          * sort array
          */
         for (String productID : allProductIDs) {
-            ans.append("\n" + Product.getProductWithID(productID).getName());
+            Product product = Product.getProductWithID(productID);
+            assert product != null;
+            ans.append("\n").append(product.getName());
         }
         Server.setAnswer(ans.toString());
     }
@@ -32,7 +37,9 @@ public class ProductPageManager {
     //----------------------------------------------------------------------------------
 
     public void showProductDigest(String productID) {
-        Server.setAnswer(Product.getProductWithID(productID).toStringForCustomerView());
+        Product product = Product.getProductWithID(productID);
+        assert product != null;
+        Server.setAnswer(product.toStringForCustomerView());
     }
 
     //public void addProductToCart(String productID)
@@ -44,13 +51,11 @@ public class ProductPageManager {
             Server.setAnswer("error, one of the products doesn't exist");
             return;
         }
-        StringBuilder ans = new StringBuilder("Comparision [" + productID1 + " VS " + productID2 + "] :");
-        ans.append("Name:\t\t" + product1.getName() + "\t\t\t\t\t\t" + product2.getName());
-        ans.append("Brand:\t\t" + product1.getBrand() + "\t\t\t\t\t\t" + product2.getBrand());
-        ans.append("Description:\t\t" + product1.getDescription() + "\t\t\t\t\t\t" + product2.getDescription());
-        ans.append("Min Price:\t\t" + product1.getMinimumPrice() + "\t\t\t\t\t\t" + product2.getMinimumPrice());
-
-        Server.setAnswer(ans.toString());
+        String ans = "Comparision [" + productID1 + " VS " + productID2 + "] :" + "Name:\t\t" + product1.getName() + "\t\t\t\t\t\t" + product2.getName() +
+                "Brand:\t\t" + product1.getBrand() + "\t\t\t\t\t\t" + product2.getBrand() +
+                "Description:\t\t" + product1.getDescription() + "\t\t\t\t\t\t" + product2.getDescription() +
+                "Min Price:\t\t" + product1.getMinimumPrice() + "\t\t\t\t\t\t" + product2.getMinimumPrice();
+        Server.setAnswer(ans);
     }
 
     public void showCommentAndPointOfProduct(String productID) {
@@ -60,7 +65,7 @@ public class ProductPageManager {
             return;
         }
         StringBuilder ans = new StringBuilder("Average point of this product : " + product.getAveragePoint());
-        ans.append("\nComments:\n" + Comment.getCommentsForProductStringFormatted(productID));
+        ans.append("\nComments:\n").append(Comment.getCommentsForProductStringFormatted(productID));
     }
 
     public void addComment(String comment, String username, String productID) {

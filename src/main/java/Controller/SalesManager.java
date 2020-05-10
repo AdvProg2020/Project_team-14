@@ -30,7 +30,7 @@ public class SalesManager {
             sales.sort(Comparator.comparingInt(Sale::getPercentage));
         }
         for (Sale sale : sales) {
-            result.append("\n" + sale.getSaleID()); //assume we list just IDs, then if user chose one, we show detail
+            result.append("\n").append(sale.getSaleID()); //assume we list just IDs, then if user chose one, we show detail
         }
         Server.setAnswer(result.toString());
     }

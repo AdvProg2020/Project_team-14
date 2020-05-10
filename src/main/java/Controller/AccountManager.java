@@ -39,6 +39,7 @@ public class AccountManager {
     public void forgotPassword(String username) {
         if (Storage.isThereAccountWithUsername(username)) {
             Account account = Storage.getAccountWithUsername(username);
+            assert account != null;
             Server.setAnswer("here is your password: " + account.getPassword());
         } else {
             Server.setAnswer("incorrect username");
@@ -47,18 +48,21 @@ public class AccountManager {
 
     public void viewAccountInformation(String username) {
         Account account = Storage.getAccountWithUsername(username);
+        assert account != null;
         Server.setAnswer(account.toString());
     }
 
     public void editFirstName(String username, String name) {
         Server.setAnswer("edit successful");
         Account account = Storage.getAccountWithUsername(username);
+        assert account != null;
         account.setFirstName(name);
     }
 
     public void editLastName(String username, String name) {
         Server.setAnswer("edit successful");
         Account account = Storage.getAccountWithUsername(username);
+        assert account != null;
         account.setSecondName(name);
     }
 
@@ -68,24 +72,28 @@ public class AccountManager {
         } else {
             Server.setAnswer("edit successful");
             Account account = Storage.getAccountWithUsername(oldUsername);
+            assert account != null;
             account.setUsername(newUsername);
         }
     }
 
     public void editEmail(String username, String mail) {
         Account account = Storage.getAccountWithUsername(username);
+        assert account != null;
         account.setEmail(mail);
         Server.setAnswer("edit successful");
     }
 
     public void editTelephone(String username, String telephone) {
         Account account = Storage.getAccountWithUsername(username);
+        assert account != null;
         account.setTelephone(telephone);
         Server.setAnswer("edit successful");
     }
 
     public void editPassword(String username, String oldPassword, String newPassword) {
         Account account = Storage.getAccountWithUsername(username);
+        assert account != null;
         if (account.getPassword().equals(oldPassword)) {
             account.setPassword(newPassword);
             Server.setAnswer("edit successful");

@@ -97,54 +97,63 @@ public class Server {
 
     private void editPersonalInfo(String command) {
         String[] input = command.split("\\s");
-        if (input[3].equals("firstName")) {
-            if (checkNameFormat(input[4])) {
-                accountManager.editFirstName(input[5], input[4]);
-            } else {
-                answer = "invalid first name type";
-            }
-        } else if (input[3].equals("lastName")) {
-            if (checkNameFormat(input[4])) {
-                accountManager.editLastName(input[5], input[4]);
-            } else {
-                answer = "invalid last name type";
-            }
-        } else if (input[3].equals("username")) {
-            if (checkUsernameFormat(input[4])) {
-                accountManager.editUsername(input[5], input[4]);
-            } else {
-                answer = "invalid username type";
-            }
-        } else if (input[3].equals("Email")) {
-            if (checkEmailFormat(input[4])) {
-                accountManager.editEmail(input[5], input[4]);
-            } else {
-                answer = "invalid Email type";
-            }
-        } else if (input[3].equals("telephone")) {
-            if (checkTelephoneFormat(input[4])) {
-                accountManager.editTelephone(input[5], input[4]);
-            } else {
-                answer = "invalid Telephone type";
-            }
-        } else if (input[3].equals("password")) {
-            if (checkUsernameFormat(input[5])) {
-                if (input[6].equals(input[5])) {
-                    accountManager.editPassword(input[7], input[4], input[5]);
+        switch (input[3]) {
+            case "firstName":
+                if (checkNameFormat(input[4])) {
+                    accountManager.editFirstName(input[5], input[4]);
                 } else {
-                    answer = "your new password differs from resubmit of your password";
+                    answer = "invalid first name type";
                 }
-            } else {
-                answer = "invalid password type";
-            }
-        } else if (input[3].equals("money")) {
-            if (checkMoneyFormat(input[4])) {
-                accountManager.editMoney(input[5], input[4]);
-            } else {
-                answer = "invalid money type";
-            }
-        } else if (input[3].equals("company")) {
-            accountManager.editCompany(input[5], input[4]);
+                break;
+            case "lastName":
+                if (checkNameFormat(input[4])) {
+                    accountManager.editLastName(input[5], input[4]);
+                } else {
+                    answer = "invalid last name type";
+                }
+                break;
+            case "username":
+                if (checkUsernameFormat(input[4])) {
+                    accountManager.editUsername(input[5], input[4]);
+                } else {
+                    answer = "invalid username type";
+                }
+                break;
+            case "Email":
+                if (checkEmailFormat(input[4])) {
+                    accountManager.editEmail(input[5], input[4]);
+                } else {
+                    answer = "invalid Email type";
+                }
+                break;
+            case "telephone":
+                if (checkTelephoneFormat(input[4])) {
+                    accountManager.editTelephone(input[5], input[4]);
+                } else {
+                    answer = "invalid Telephone type";
+                }
+                break;
+            case "password":
+                if (checkUsernameFormat(input[5])) {
+                    if (input[6].equals(input[5])) {
+                        accountManager.editPassword(input[7], input[4], input[5]);
+                    } else {
+                        answer = "your new password differs from resubmit of your password";
+                    }
+                } else {
+                    answer = "invalid password type";
+                }
+                break;
+            case "money":
+                if (checkMoneyFormat(input[4])) {
+                    accountManager.editMoney(input[5], input[4]);
+                } else {
+                    answer = "invalid money type";
+                }
+                break;
+            case "company":
+                accountManager.editCompany(input[5], input[4]);
+                break;
         }
     }
 

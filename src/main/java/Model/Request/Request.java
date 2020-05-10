@@ -68,6 +68,8 @@ public class Request implements Serializable {
         this.confirmation = Confirmation.CHECKING;
     }
 
+    //request for adding a comment
+
     public Request(Comment comment) {
         this.requestID = createID("Request");
         this.object = comment;

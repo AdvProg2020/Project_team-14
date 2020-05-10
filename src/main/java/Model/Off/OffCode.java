@@ -67,6 +67,14 @@ public class OffCode extends Off implements Serializable {
         return offCodeID;
     }
 
+    public int getNumberOfTimesCanBeUsed() {
+        return numberOfTimesCanBeUsed;
+    }
+
+    public int getCeiling() {
+        return ceiling;
+    }
+
     //it checks whether the code is authentic or not by checking both date and number of times used
     //but before using this method we have to make sure that the codeID is even valid
 

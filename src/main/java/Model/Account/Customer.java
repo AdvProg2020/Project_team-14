@@ -65,6 +65,10 @@ public class Customer extends Account implements Serializable {
         }
     }
 
+    public boolean isCartEmpty() {
+        return cart.isCartEmpty();
+    }
+
     @Override
     public String toString() {
         return super.toString() + "Credit: " + this.getCredit() + "\n";
