@@ -1,6 +1,5 @@
 package Menus;
 
-import Controller.AccountManager;
 import Controller.Server;
 
 import java.util.HashMap;

@@ -179,7 +179,7 @@ public class BossManager {
             Server.setAnswer("nothing found");
         } else {
             for (Request request : requests) {
-                answer.append(request.toStringForBoss() + "\n");
+                //answer.append(request.toStringForBoss() + "\n");
                 count++;
             }
             if (count == 0) {
@@ -187,13 +187,12 @@ public class BossManager {
             } else {
                 answer.append("here are what we found");
             }
-                if (!account.getUsername().equals(username))
-                    answer.append("Username: ").append(account.getUsername());    //just list users IDs, then he will select one
-            }
-            answer.append("here are what we found").append("\n");
-            String ans = answer.toString();
-            Server.setAnswer(ans);
+            //if (!account.getUsername().equals(username))
+                //answer.append("Username: ").append(account.getUsername());    //just list users IDs, then he will select one
         }
+        answer.append("here are what we found").append("\n");
+        String ans = answer.toString();
+        Server.setAnswer(ans);
     }
 
     //can be handel in AccountManager(this class has the same method)
@@ -209,7 +208,7 @@ public class BossManager {
         if (Storage.getAccountWithUsername(username) == null) {
             Server.setAnswer("error, there isn't any user with this username, try another username");
         } else {
-            Storage.allAccounts.remove(Storage.getAccountWithUsername(username));
+            //Storage.allAccounts.remove(Storage.getAccountWithUsername(username));
             Server.setAnswer("user successfully removed");
         }
     }
@@ -343,16 +342,16 @@ public class BossManager {
         Server.setAnswer(ans.toString());
     }
 
-    public void viewRequest(String requestID) {
+    /*public void viewRequest(String requestID) {
         Request request = Request.getRequestByID(requestID);
         if (request == null) {
             Server.setAnswer("request doesn't exist with this ID");
         } else {
             Server.setAnswer(request.toString());
         }
-    }
+    }*/
 
-    public void acceptRequest(String requestID) throws ParseException {
+    /*public void acceptRequest(String requestID) throws ParseException {
         Request request = Request.getRequestByID(requestID);
         if (request == null) {
             Server.setAnswer("request doesn't exist");
@@ -360,9 +359,9 @@ public class BossManager {
             request.accept();
             Server.setAnswer("you accepted request with [" + requestID + "] ID, which was a [" + request.getRequestType() + "] request");
         }
-    }
+    }*/
 
-    public void declineRequest(String requestID) {
+    /*public void declineRequest(String requestID) {
         Request request = Request.getRequestByID(requestID);
         if (request == null) {
             Server.setAnswer("request doesn't exist");
@@ -370,7 +369,7 @@ public class BossManager {
             request.decline();
             Server.setAnswer("you just declined request with [" + requestID + "] ID, which was a [" + request.getRequestType() + "] request");
         }
-    }
+    }*/
 
     /*
      * this is category part

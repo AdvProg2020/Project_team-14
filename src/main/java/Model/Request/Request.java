@@ -88,12 +88,12 @@ public class Request implements Serializable {
         return result;
     }
 
-    public static Request getRequestByID(String requestID) {
+    /*public static Request getRequestByID(String requestID) {
         for (Request request : Storage.allRequest) {
             if (request.getRequestID().equals(requestID)) return request;
         }
         return null;
-    }
+    }*/
 
     public String getRequestID() {
         return requestID;

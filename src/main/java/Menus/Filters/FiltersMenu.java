@@ -12,6 +12,12 @@ public class FiltersMenu extends Menu {
         this.logoutType = false;
     }
 
+    public void resetFilters() {
+        for (int i = 1; i < filters.size(); i += 2) {
+            filters.set(i, null);
+        }
+    }
+
     public String getFilters() {
         String filter = new String("");
         for (int i = 0; i < filters.size(); i += 2) {

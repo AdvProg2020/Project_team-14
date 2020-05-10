@@ -22,6 +22,8 @@ public class ShowAccountsMenu extends ShowsMenu {
 
     private Menu getSelectMenu() {
         return new Menu(this, "Select Menu") {
+            boolean hasBeenCalled = true;
+
             private boolean isThereAccountWithUsernameInList(String list, String username) {
                 int wordCount = Menu.wordCount(list);
                 String[] lists = list.split("\\s");
@@ -33,8 +35,19 @@ public class ShowAccountsMenu extends ShowsMenu {
                 return false;
             }
 
+            private void resetFilters() {
+                filter.resetFilters();
+            }
+
             @Override
             public void execute() {
+                if (hasBeenCalled) {
+                    hasBeenCalled = false;
+                } else {
+                    hasBeenCalled = true;
+                    this.resetFilters();
+                    fatherMenu.execute();
+                }
                 System.out.println(menuName);
                 System.out.println("if you input back we will go back");
                 System.out.println("select one of accounts above by inserting username");

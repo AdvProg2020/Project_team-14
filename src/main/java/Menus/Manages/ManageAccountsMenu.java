@@ -20,8 +20,16 @@ public class ManageAccountsMenu extends Menu {
 
     private Menu getSearchAccountMenu() {
         return new Menu(this, "Search Account Menu") {
+            boolean hasBeenCalled = true;
+
             @Override
             public void execute() {
+                if (hasBeenCalled) {
+                    hasBeenCalled = false;
+                } else {
+                    hasBeenCalled = true;
+                    fatherMenu.execute();
+                }
                 System.out.println(menuName);
                 System.out.println("if you input back we will go back");
                 System.out.println("please input the username");
