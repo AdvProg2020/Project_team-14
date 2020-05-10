@@ -68,6 +68,10 @@ public class Customer extends Account implements Serializable {
         }
     }
 
+    public boolean isCartEmpty() {
+        return cart.isCartEmpty();
+    }
+
     public HashMap<String, Integer> getOffCodesUsage() {
         return offCodesUsage;
     }

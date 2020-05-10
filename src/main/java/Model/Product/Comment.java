@@ -3,6 +3,7 @@ package Model.Product;
 import Model.Confirmation;
 import Model.Log.Log;
 import Model.RandomString;
+import Model.Request.Request;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ public class Comment implements Serializable {
         this.commentID = createID();
         this.date = new Date();
         allComments.add(this);
+        new Request(this);
     }
 
     public static Comment getCommentByID(String commentID) {

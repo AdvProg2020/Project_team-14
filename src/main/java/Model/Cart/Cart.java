@@ -32,7 +32,7 @@ public class Cart implements Serializable {
     public boolean buy(String offCode) {
         Customer customer = (Customer) Storage.getAccountWithUsername(username);
         assert customer != null;
-        if(customer.isCreditEnoughAccordingToCartWithOffCode(offCode)) {
+        if (customer.isCreditEnoughAccordingToCartWithOffCode(offCode)) {
             new BuyLog(this, offCode);
             customer.setCredit(customer.getCredit() - getTotalPrice(offCode));
             customer.useOffCode(offCode);
@@ -41,6 +41,10 @@ public class Cart implements Serializable {
         } else {
             return false;
         }
+    }
+
+    public boolean isCartEmpty() {
+        return productIDs.isEmpty();
     }
 
     public boolean isAlreadyInCart(String productID) {
