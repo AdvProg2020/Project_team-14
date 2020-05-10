@@ -30,6 +30,10 @@ public class Category implements Serializable {
         allCategories.add(this);
     }
 
+    public void setAttribute(String attribute) {
+        this.attribute = attribute;
+    }
+
     public boolean hasParentCategory() {
         return (this.parentCategoryName != null);
     }
@@ -44,6 +48,12 @@ public class Category implements Serializable {
 
     public void addProductToCategory(String productID) {
         this.allProductIDs.add(productID);
+        Product.getProductWithID(productID).setCategoryName(this.categoryName);
+    }
+
+    public void deleteProductFromCategory(String productID) {
+        this.allProductIDs.remove(productID);
+        Product.getProductWithID(productID).setCategoryName(null);
     }
 
     public static boolean isThereCategoryWithName(String categoryName) {

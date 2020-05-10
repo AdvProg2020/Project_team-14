@@ -50,6 +50,10 @@ public class Product implements Serializable {
         this.name = name;
     }
 
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
     public void setDescription(String description) {
         this.description = description;
     }

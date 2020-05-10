@@ -185,11 +185,31 @@ public class BossManager {
 
     public void editCategory(String categoryName, String attribute, String updatedInfo) {
         Category category = Category.getCategoryByName(categoryName);
+        if (category == null) {
+            Server.setAnswer("error, there isn't exist any category with this name");
+        } else {
+            if (attribute.equals("attribute")) {
+                category.setAttribute(updatedInfo);
+            } else if (attribute.equals("addProduct")) {
+                category.addProductToCategory(updatedInfo);
+            } else if (attribute.equals("removeProduct")) {
+                category.deleteProductFromCategory(updatedInfo);
+            }
+            Server.setAnswer("your changes updated successfully");
+        }
     }
 
     public void removeCategory(String categoryName) {
-        Storage.allCategories.remove(Category.getCategoryByName(categoryName));
-        Server.setAnswer("category deleted successfully");
+        Category category = Category.getCategoryByName(categoryName);
+        if (category == null) {
+            Server.setAnswer("there isn't any category with this name exist");
+        } else {
+            Storage.allCategories.remove(category);
+            for (String productID : category.getAllProductIDs()) {
+                category.deleteProductFromCategory(productID);
+            }
+            Server.setAnswer("category deleted successfully");
+        }
     }
 
 }
