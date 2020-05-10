@@ -1,27 +1,41 @@
 package Controller;
 
+import Controller.SortFactorEnum.listProductSortFactor;
 import Model.Category.Category;
 import Model.Product.Comment;
 import Model.Product.Product;
+import Exception.*;
 
 import java.util.ArrayList;
-import java.util.Properties;
+import java.util.Comparator;
+
+import static java.lang.String.valueOf;
 
 public class ProductPageManager {
 
     //filter factor: 0 -> [category name] , 1-> [be in sale:boolean] ,
-    public void showProducts(String sortFactor, ArrayList<String> filterFactor) {
+    public void showProducts(String sortFactor, ArrayList<String> filterFactor) throws SortFactorNotAvailableException {
         Category category = Category.getCategoryByName(filterFactor.get(0));
         assert category != null;
-        ArrayList<String> allProductIDs = category.getAllProductIDs();
+        ArrayList<Product> products = ProductManager.getArrayListOfProductsFromArrayListOfProductIDs(category.getAllProductIDs());
         StringBuilder ans = new StringBuilder("All Products in [" + filterFactor.get(0) + "] category:");
-        /*
-         * sort array
-         */
-        for (String productID : allProductIDs) {
-            Product product = Product.getProductWithID(productID);
-            assert product != null;
-            ans.append("\n").append(product.getName());
+        if (sortFactor.equalsIgnoreCase(valueOf(listProductSortFactor.ALPHABETICALLY))) {
+            products.sort(Comparator.comparing(Product::getName));
+        } else if (sortFactor.equalsIgnoreCase(valueOf(listProductSortFactor.PRICE))) {
+            products.sort(Comparator.comparingInt(Product::getMinimumPrice));
+        } else if (sortFactor.equalsIgnoreCase(valueOf(listProductSortFactor.SEEN_COUNT))) {
+            products.sort((Comparator.comparingInt(Product::getSeenCount)));
+        } else if (sortFactor.equals("")) {
+            products.sort((Comparator.comparingInt(Product::getSeenCount)));
+        } else if (sortFactor.equalsIgnoreCase(valueOf(listProductSortFactor.HIGHEST_POINT))) {
+            products.sort((Comparator.comparingDouble(Product::getAveragePoint)));
+        } else {
+            throw new SortFactorNotAvailableException("the sort factor isn't authentic " + "\n" +
+                    "the available sort factors: " + listProductSortFactor.getValues() + "\n");
+        }
+
+        for (Product product : products) {
+            ans.append("\n").append(product.toStringForCustomerView());
         }
         Server.setAnswer(ans.toString());
     }
@@ -33,8 +47,6 @@ public class ProductPageManager {
             Server.setAnswer("successful");
         }
     }
-
-    //----------------------------------------------------------------------------------
 
     public void showProductDigest(String productID) {
         Product product = Product.getProductWithID(productID);

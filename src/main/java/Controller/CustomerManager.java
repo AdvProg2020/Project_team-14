@@ -64,7 +64,7 @@ public class CustomerManager {
 
     //order part, still is here, we can make a new class for it [not recommended (:]
 
-    public void showAllOrders(String username, String sortFactor) {
+    public void showAllBuyLogs(String username, String sortFactor) {
         ArrayList<BuyLog> customerBuyLog = BuyLog.getUserBuyLogs(username);
         StringBuilder ans = new StringBuilder("Here are All of your orders:");
         for (BuyLog buyLog : customerBuyLog) {
@@ -76,7 +76,7 @@ public class CustomerManager {
     public void showSingleOrder(String buyLogID) {
         BuyLog buyLog = BuyLog.getBuyLogByID(buyLogID);
         assert buyLog != null;
-        Server.setAnswer("Your BuyLog detail:\n" + buyLog.toString());
+        Server.setAnswer("Your BuyLog detail:" + "\n" + buyLog.toString());
     }
 
     public void rateProduct(String username, String productID, int point) {
@@ -116,7 +116,7 @@ public class CustomerManager {
                 new SellLog(buyLog, productID, customer.getCart().getProductIDs().get(productID));
             }
         } else {
-            Server.setAnswer("error, you don't have enough credit to purchase"+"\n");
+            Server.setAnswer("error, you don't have enough credit to purchase" + "\n");
         }
     }
 }

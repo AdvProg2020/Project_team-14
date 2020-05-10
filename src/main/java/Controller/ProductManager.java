@@ -171,7 +171,7 @@ public class ProductManager {
         return product.doesSalesmanSellProductWithUsername(salesmanUserName);
     }
 
-    public ArrayList<Product> getArrayListOfProductsFromArrayListOfProductIDs(ArrayList<String> productIDs) {
+    public static ArrayList<Product> getArrayListOfProductsFromArrayListOfProductIDs(ArrayList<String> productIDs) {
         ArrayList<Product> arrayList = new ArrayList<>();
         for (String productID : productIDs) {
             arrayList.add(Product.getProductWithID(productID));
