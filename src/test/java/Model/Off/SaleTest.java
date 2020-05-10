@@ -15,10 +15,10 @@ import java.util.Date;
 
 public class SaleTest {
     Salesman salesman1 = new Salesman("salesmanUser1", "password", "firstname", "secondName",
-            "h.hafezi2000@gmail.com", "09333805288", "SALESMAN", "company", 0);
+            "h.hafezi2000@gmail.com", "09333805288", "SALESMAN", "company");
 
     Customer customer = new Customer("customerUser", "password", "firstname", "secondName",
-            "h.hafezi2000@yahoo.com", "09333805288", "CUSTOMER", 1000);
+            "h.hafezi2000@yahoo.com", "09333805288", "CUSTOMER", 1000,null);
 
     Product product = new Product("name", salesman1.getUsername(), "brand", "description", 10, 10);
     Product product2 = new Product("name2", salesman1.getUsername(), "brand2", "description2", 10, 10);

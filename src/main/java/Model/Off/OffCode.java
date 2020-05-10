@@ -43,6 +43,14 @@ public class OffCode extends Off implements Serializable {
         return null;
     }
 
+    public void setCeiling(int ceiling) {
+        this.ceiling = ceiling;
+    }
+
+    public void setNumberOfTimesCanBeUsed(int numberOfTimesCanBeUsed) {
+        this.numberOfTimesCanBeUsed = numberOfTimesCanBeUsed;
+    }
+
     public boolean canCustomerUseItWithUsername(String username) {
         return userNamesCanUseIt.contains(username);
     }
@@ -57,6 +65,14 @@ public class OffCode extends Off implements Serializable {
 
     public String getOffCodeID() {
         return offCodeID;
+    }
+
+    public int getNumberOfTimesCanBeUsed() {
+        return numberOfTimesCanBeUsed;
+    }
+
+    public int getCeiling() {
+        return ceiling;
     }
 
     //it checks whether the code is authentic or not by checking both date and number of times used

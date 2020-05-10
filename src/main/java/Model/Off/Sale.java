@@ -127,10 +127,10 @@ public class Sale extends Off implements Serializable {
         return result.toString();
     }
 
-    public static ArrayList<Sale> getAllAuthenticSales() {
+    public static ArrayList<Sale> getAllAuthenticSales(String salesmanID) {
         ArrayList<Sale> sales = new ArrayList<>();
         for (Sale sale : allSales) {
-            if (sale.isAuthentic()) {
+            if (sale.isAuthentic() & sale.getSalesmanID().equals(salesmanID)) {
                 sales.add(sale);
             }
         }

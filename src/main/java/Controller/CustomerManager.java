@@ -22,58 +22,61 @@ public class CustomerManager {
                 information[6], information[7], information[5], 0, null);
     }
 
-    public void viewDiscountCode (String username, String sortFactor) {
+    public void viewDiscountCode(String username, String sortFactor) {
         ArrayList<OffCode> userOffCodes = OffCode.getAllCustomerOffCodesByUsername(username);
         /*
          * sort ArrayList
          */
-        StringBuilder ans = new StringBuilder("");
+        StringBuilder ans = new StringBuilder("Here are all of your Discount code:").append("\n");
         for (OffCode offCode : userOffCodes) {
-            ans.append(offCode.toString());
+            ans.append("OffCodeID: ").append(offCode.getOffCodeID()).append(", Percentage: ").append(offCode.getPercentage()).append("\n");
         }
         Server.setAnswer(ans.toString());
     }
 
-    public void showAllProductsInCart (String username, String sortFactor) {
-        Server.setAnswer(((Customer)Storage.getAccountWithUsername(username)).getCart().toString());
+    public void showAllProductsInCart(String username, String sortFactor) {
+        Customer customer = (Customer) Storage.getAccountWithUsername(username);
+        assert customer != null;
+        Server.setAnswer(customer.getCart().toString());
     }
 
-    public void showSingleProductInCart(String username, String productID, String salesmanID) {
-        //
-    }
-
-    public void addOrRemoveProductToCart (String type, String username, String productID, String salesmanID) {
+    public void addOrRemoveProductToCart(String type, String username, String productID, String salesmanID) {
         //assume productID ans salesmanID are valid
         StringBuilder ans = new StringBuilder("your product ");
-        Cart customerCart = ((Customer)Storage.getAccountWithUsername(username)).getCart();
-        if (type.equals("add")) {
+        Customer customer = (Customer) Storage.getAccountWithUsername(username);
+        assert customer != null;
+        Cart customerCart = (customer.getCart());
+        if (type.equalsIgnoreCase("add")) {
             ans.append("added to cart successfully");
             customerCart.addProductToCart(productID, salesmanID, customerCart.getCartID());
-        } else if (type.equals("remove")) {
+        } else if (type.equalsIgnoreCase("remove")) {
             ans.append("removed from cart successfully");
             customerCart.removeProductFromCart(productID);
         }
         Server.setAnswer(ans.toString());
     }
 
-    public void showTotalPrice (String username) {
-        Server.setAnswer("" + ((Customer) Storage.getAccountWithUsername(username)).getCart().getTotalPrice(null));
+    public void showTotalPrice(String username) {
+        Customer customer = (Customer) Storage.getAccountWithUsername(username);
+        assert customer != null;
+        Server.setAnswer("Total Price:" + "\n" + customer.getCart().getTotalPrice(null));
     }
 
     //order part, still is here, we can make a new class for it [not recommended (:]
 
-    public void showAllOrders(String username, String sortFactor) {
+    public void showAllBuyLogs(String username, String sortFactor) {
         ArrayList<BuyLog> customerBuyLog = BuyLog.getUserBuyLogs(username);
-        StringBuilder ans = new StringBuilder("");
+        StringBuilder ans = new StringBuilder("Here are All of your orders:");
         for (BuyLog buyLog : customerBuyLog) {
-            ans.append(buyLog.getBuyLogID() + "\n");
+            ans.append("\n").append(buyLog.getBuyLogID());
         }
         Server.setAnswer(ans.toString());
     }
 
     public void showSingleOrder(String buyLogID) {
         BuyLog buyLog = BuyLog.getBuyLogByID(buyLogID);
-        Server.setAnswer(buyLog.toString());
+        assert buyLog != null;
+        Server.setAnswer("Your BuyLog detail:" + "\n" + buyLog.toString());
     }
 
     public void rateProduct(String username, String productID, int point) {
@@ -93,17 +96,19 @@ public class CustomerManager {
             if (offCode == null) {
                 Server.setAnswer("error, offCode doesn't exist.");
                 return;
-            } else if (!offCode.canCustomerUseItWithUsername(username)){
+            } else if (!offCode.canCustomerUseItWithUsername(username)) {
                 Server.setAnswer("error, you do not have permission to use this offCode.");
                 return;
             }
         }
         Customer customer = (Customer) Storage.getAccountWithUsername(username);
-        Server.setAnswer("Final Price:\n" + customer.getCart().getTotalPrice(offCodeID));
+        assert customer != null;
+        Server.setAnswer("Final Price:" + "\n" + customer.getCart().getTotalPrice(offCodeID));
     }
 
     public void buy(String username, String offCodeID) {
         Customer customer = (Customer) Storage.getAccountWithUsername(username);
+        assert customer != null;
         if (customer.getCart().buy(offCodeID)) {
             Server.setAnswer("successful, your purchase completed");
             BuyLog buyLog = new BuyLog(customer.getCart(), offCodeID);
@@ -111,7 +116,7 @@ public class CustomerManager {
                 new SellLog(buyLog, productID, customer.getCart().getProductIDs().get(productID));
             }
         } else {
-            Server.setAnswer("error, you don't have enough credit to purchase");
+            Server.setAnswer("error, you don't have enough credit to purchase" + "\n");
         }
     }
 }

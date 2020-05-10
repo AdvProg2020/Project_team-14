@@ -68,6 +68,8 @@ public class Request implements Serializable {
         this.confirmation = Confirmation.CHECKING;
     }
 
+    //request for adding a comment
+
     public Request(Comment comment) {
         this.requestID = createID("Request");
         this.object = comment;
@@ -76,7 +78,7 @@ public class Request implements Serializable {
         this.confirmation = Confirmation.CHECKING;
     }
 
-    public ArrayList<Request> getCheckingRequests() {
+    public static ArrayList<Request> getCheckingRequests() {
         ArrayList<Request> result = new ArrayList<>();
         for (Request request : Storage.allRequests) {
             if (request.confirmation.equals(Confirmation.CHECKING)) {
@@ -84,6 +86,21 @@ public class Request implements Serializable {
             }
         }
         return result;
+    }
+
+    public static Request getRequestByID(String requestID) {
+        for (Request request : Storage.allRequest) {
+            if (request.getRequestID().equals(requestID)) return request;
+        }
+        return null;
+    }
+
+    public String getRequestID() {
+        return requestID;
+    }
+
+    public RequestType getRequestType() {
+        return requestType;
     }
 
     //it accepts the request and makes the needed changes in objects as desired
@@ -134,7 +151,7 @@ public class Request implements Serializable {
     //when registering new salesman is denied it means that we set the confirmation state DENIED
 
 
-    public void deny() {
+    public void decline() {
         if (this.requestType.equals(RequestType.CHANGE_SALE)) {
             this.confirmation = Confirmation.DENIED;
         } else if (this.requestType.equals(RequestType.DELETE_SALE)) {

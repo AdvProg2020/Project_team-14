@@ -6,7 +6,7 @@ import org.junit.Test;
 
 public class CustomerTest {
     Customer customer = new Customer("username", "password", "firstName"
-            , "secondName", "h.hafezi2000@gmail.com", "09333805288", "CUSTOMER", 1000);
+            , "secondName", "h.hafezi2000@gmail.com", "09333805288", "CUSTOMER", 1000,null);
 
     @Test
     public void toStringTest() {

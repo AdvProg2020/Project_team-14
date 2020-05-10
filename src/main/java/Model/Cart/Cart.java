@@ -33,7 +33,7 @@ public class Cart implements Serializable {
     public boolean buy(String offCode) {
         Customer customer = (Customer) Storage.getAccountWithUsername(username);
         assert customer != null;
-        if(customer.isCreditEnoughAccordingToCartWithOffCode(offCode)) {
+        if (customer.isCreditEnoughAccordingToCartWithOffCode(offCode)) {
             new BuyLog(this, offCode);
             customer.setCredit(customer.getCredit() - getTotalPrice(offCode));
             clearCart();
@@ -43,10 +43,13 @@ public class Cart implements Serializable {
         }
     }
 
+    public boolean isCartEmpty() {
+        return productIDs.isEmpty();
+    }
+
     public boolean isAlreadyInCart(String productID) {
         return this.productIDs.containsKey(productID);
     }
-
 
     public HashMap<String, String> getProductIDs() {
         return productIDs;

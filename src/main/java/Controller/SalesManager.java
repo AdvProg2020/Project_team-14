@@ -19,9 +19,9 @@ public class SalesManager {
 
     //default sort factor is percentage
 
-    public void listSales(String sortFactor) {
-        StringBuilder result = new StringBuilder();
-        ArrayList<Sale> sales = new ArrayList<>(Sale.getAllAuthenticSales());
+    public void listSales(String salesmanID ,String sortFactor) {
+        StringBuilder result = new StringBuilder("Here are All of your Sales:");
+        ArrayList<Sale> sales = new ArrayList<>(Sale.getAllAuthenticSales(salesmanID));
         if (sortFactor.equalsIgnoreCase(valueOf(ListSalesSortFactor.PERCENTAGE))) {
             sales.sort(Comparator.comparingInt(Sale::getPercentage));
         }  else if (sortFactor.equalsIgnoreCase(valueOf(ListSalesSortFactor.END_DATE))) {
@@ -30,7 +30,7 @@ public class SalesManager {
             sales.sort(Comparator.comparingInt(Sale::getPercentage));
         }
         for (Sale sale : sales) {
-            result.append(sale.toString());
+            result.append("\n").append(sale.getSaleID()); //assume we list just IDs, then if user chose one, we show detail
         }
         Server.setAnswer(result.toString());
     }

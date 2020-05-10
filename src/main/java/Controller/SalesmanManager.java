@@ -17,6 +17,7 @@ public class SalesmanManager {
 
     public void showCompanyInfo (String salesmanID) {
         Salesman salesman = (Salesman) Storage.getAccountWithUsername(salesmanID);
+        assert salesman != null;
         Server.setAnswer("Salesman Company Info : " + salesman.getCompany());
     }
 
