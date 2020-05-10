@@ -1,6 +1,7 @@
 package Model.Account;
 
 import Model.Cart.Cart;
+import Model.Off.OffCode;
 import Model.Off.Sale;
 
 import java.io.*;
@@ -13,6 +14,7 @@ import static Model.Storage.*;
 public class Customer extends Account implements Serializable {
     private int credit;
     private Cart cart;
+    private HashMap<String, Integer> offCodesUsage;
 
     public Customer(String username, String password, String firstName, String secondName, String Email, String telephone,
                     String role, int credit, HashMap<String, String> productsAlreadyInCart) {
@@ -24,6 +26,7 @@ public class Customer extends Account implements Serializable {
                 cart.addProductToCart(productID, productsAlreadyInCart.get(productID), cart.getCartID());
             }
         }
+        offCodesUsage = new HashMap<>();
     }
 
     public int getCredit() {
@@ -63,6 +66,22 @@ public class Customer extends Account implements Serializable {
             int rand = random.nextInt(getAllCustomers().size());
             return getAllCustomers().get(rand).getUsername();
         }
+    }
+
+    public HashMap<String, Integer> getOffCodesUsage() {
+        return offCodesUsage;
+    }
+
+    public void useOffCode(String offCodeID) {
+        int count = offCodesUsage.get(offCodeID);
+        offCodesUsage.replace(offCodeID, count, count - 1);
+        if (offCodesUsage.get(offCodeID) == 0) {
+            offCodesUsage.remove(offCodeID);
+        }
+    }
+
+    public void addOffCode(OffCode offCode) {
+        offCodesUsage.put(offCode.getOffCodeID(), offCode.getNumberOfTimesCanBeUsed());
     }
 
     @Override

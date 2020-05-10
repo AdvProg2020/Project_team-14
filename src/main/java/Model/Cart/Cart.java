@@ -36,6 +36,7 @@ public class Cart implements Serializable {
         if(customer.isCreditEnoughAccordingToCartWithOffCode(offCode)) {
             new BuyLog(this, offCode);
             customer.setCredit(customer.getCredit() - getTotalPrice(offCode));
+            customer.useOffCode(offCode);
             clearCart();
             return true;
         } else {
@@ -46,7 +47,6 @@ public class Cart implements Serializable {
     public boolean isAlreadyInCart(String productID) {
         return this.productIDs.containsKey(productID);
     }
-
 
     public HashMap<String, String> getProductIDs() {
         return productIDs;

@@ -10,6 +10,7 @@ import Model.Product.Point;
 import Model.Storage;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class CustomerManager {
 
@@ -22,14 +23,16 @@ public class CustomerManager {
                 information[6], information[7], information[5], 0, null);
     }
 
-    public void viewDiscountCode (String username, String sortFactor) {
-        ArrayList<OffCode> userOffCodes = OffCode.getAllCustomerOffCodesByUsername(username);
+    public void viewDiscountCodes (String username, String sortFactor) {
+        Customer customer = (Customer)Storage.getAccountWithUsername(username);
+        HashMap<String, Integer> userOffCodes = customer.getOffCodesUsage();
         /*
          * sort ArrayList
          */
         StringBuilder ans = new StringBuilder("Here are all of your Discount code:");
-        for (OffCode offCode : userOffCodes) {
-            ans.append("\nOffCodeID: " + offCode.getOffCodeID() + ", Percentage: " + offCode.getPercentage());
+        for (String offCodeID : userOffCodes.keySet()) {
+            ans.append("\nOffCode ID: " + offCodeID + ", Percentage: " + OffCode.getOffCodeByID(offCodeID).getPercentage() +
+                    ", Remaining time of use: " + userOffCodes.get(offCodeID));
         }
         Server.setAnswer(ans.toString());
     }
@@ -102,10 +105,6 @@ public class CustomerManager {
         Customer customer = (Customer) Storage.getAccountWithUsername(username);
         if (customer.getCart().buy(offCodeID)) {
             Server.setAnswer("successful, your purchase completed");
-            BuyLog buyLog = new BuyLog(customer.getCart(), offCodeID);
-            for (String productID : customer.getCart().getProductIDs().keySet()) {
-                new SellLog(buyLog, productID, customer.getCart().getProductIDs().get(productID));
-            }
         } else {
             Server.setAnswer("error, you don't have enough credit to purchase");
         }
