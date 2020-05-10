@@ -2,7 +2,6 @@ package Model.Cart;
 
 import Model.Account.Customer;
 import Model.Log.BuyLog;
-import Model.Log.Log;
 import Model.Off.OffCode;
 import Model.Off.Sale;
 import Model.Product.Product;
@@ -61,6 +60,9 @@ public class Cart implements Serializable {
     }
 
     public void clearCart() {
+        for (String productID : productIDs.keySet()) {
+            Product.getProductWithID(productID).decreaseProductRemaining(productIDs.get(productID));
+        }
         productIDs.clear();
     }
 
@@ -116,10 +118,14 @@ public class Cart implements Serializable {
         return customer.getCart();
     }
 
-    public void addProductToCart(String productID, String salesmanID, String cartID) {
+    public boolean addProductToCart(String productID, String salesmanID, String cartID) {
         Cart cart = getCartWithID(cartID);
         assert cart != null;
-        cart.addProductToCart(productID, salesmanID);
+        if (Product.getProductWithID(productID).isAvailableBySalesmanWithUsername(salesmanID)) {
+            cart.addProductToCart(productID, salesmanID);
+            return true;
+        }
+        return false;
     }
 
     private void addProductToCart(String productID, String salesmanID) {

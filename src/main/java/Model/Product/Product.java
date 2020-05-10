@@ -180,6 +180,10 @@ public class Product implements Serializable {
         this.confirmationState.put(salesmanID, confirmationState);
     }
 
+    public void decreaseProductRemaining(String salesmanID) {
+        remainder.replace(salesmanID, remainder.get(salesmanID) - 1);
+    }
+
     public static boolean isThereProductWithID(String productID) {
         return getProductWithID(productID) != null;
     }

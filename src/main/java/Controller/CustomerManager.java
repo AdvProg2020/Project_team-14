@@ -7,6 +7,7 @@ import Model.Log.SellLog;
 import Model.Off.Off;
 import Model.Off.OffCode;
 import Model.Product.Point;
+import Model.Product.Product;
 import Model.Storage;
 
 import java.util.ArrayList;
@@ -46,8 +47,11 @@ public class CustomerManager {
         StringBuilder ans = new StringBuilder("your product ");
         Cart customerCart = ((Customer)Storage.getAccountWithUsername(username)).getCart();
         if (type.equals("add")) {
-            ans.append("added to cart successfully");
-            customerCart.addProductToCart(productID, salesmanID, customerCart.getCartID());
+            if (customerCart.addProductToCart(productID, salesmanID, customerCart.getCartID())) {
+                ans.append("added to cart successfully");
+            } else {
+                ans.append("couldn't added to cart, because no product remains");
+            }
         } else if (type.equals("remove")) {
             ans.append("removed from cart successfully");
             customerCart.removeProductFromCart(productID);
@@ -59,7 +63,9 @@ public class CustomerManager {
         Server.setAnswer("Total Price:\n" + ((Customer) Storage.getAccountWithUsername(username)).getCart().getTotalPrice(null));
     }
 
-    //order part, still is here, we can make a new class for it [not recommended (:]
+    /*
+     * this is order part
+     */
 
     public void showAllOrders(String username, String sortFactor) {
         ArrayList<BuyLog> customerBuyLog = BuyLog.getUserBuyLogs(username);
@@ -80,10 +86,33 @@ public class CustomerManager {
         Server.setAnswer("successful, your point added");
     }
 
-    //purchase part, still is here, we can make a new class for it :)
+    /*
+     * this is purchase part
+     */
 
     //public void createLog();          ->      doesn't match this logic
     //public void setInfoOfLog();       ->      doesn't match this logic
+
+    public void canUserContinuePurchase(String username) {
+        HashMap<String, String> errorProductIDs = new HashMap<>();
+        Customer customer = (Customer) Storage.getAccountWithUsername(username);
+        //find errors
+        for (String productID : customer.getCart().getProductIDs().keySet()) {
+            String salesmanID = customer.getCart().getProductIDs().get(productID);
+            if (!Product.getProductWithID(productID).isAvailableBySalesmanWithUsername(salesmanID)) {
+                errorProductIDs.put(productID, salesmanID);
+            }
+        }
+        //set answer to server
+        if (errorProductIDs.size() == 0) {
+            Server.setAnswer("you can continue your purchase");
+        } else {
+            StringBuilder error = new StringBuilder("error, some products are not available, remove them from your cart and then continue");
+            for (String productID : errorProductIDs.keySet()) {
+                error.append("\n product [" + productID + "] is not available by [" + errorProductIDs.get(productID) + "]");
+            }
+        }
+    }
 
     public void setOffCode(String username, String offCodeID) {
         StringBuilder ans = new StringBuilder("");
