@@ -14,6 +14,7 @@ import static Model.Storage.*;
 
 public class Comment implements Serializable {
     private String commentID;
+    private String title;
     private String text;
     private String senderUsername;
     private String productID;
@@ -21,7 +22,8 @@ public class Comment implements Serializable {
     private Date date;
 
 
-    public Comment(String text, String senderUsername, String productID) {
+    public Comment(String title, String text, String senderUsername, String productID) {
+        this.title = title;
         this.text = text;
         this.senderUsername = senderUsername;
         this.productID = productID;
@@ -87,6 +89,7 @@ public class Comment implements Serializable {
     public String toStringForProductView() {
         String result = "";
         result += "Sender: " + this.senderUsername + "\n";
+        result += "Title: " + this.title + "\n";
         result += "Message: " + this.text + "\n";
         result += "Date: " + this.date.toString() + "\n";
         return result;
@@ -98,6 +101,7 @@ public class Comment implements Serializable {
         String result = "";
         result += "Product Name: " + Objects.requireNonNull(Product.getProductWithID(productID)).getName();
         result += "Sender: " + this.senderUsername + "\n";
+        result += "Title: " + this.title + "\n";
         result += "Message: " + this.text + "\n";
         result += "Date: " + this.date.toString() + "\n";
         return result;

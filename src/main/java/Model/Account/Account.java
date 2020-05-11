@@ -95,6 +95,9 @@ public abstract class Account {
     public String toStringForBoss() {
         return "Username: " + this.getUsername() + " Role: " + this.getRole();
     }
+    public abstract int getCredit();
+
+    public String toStringForBoss() {return "Username: " + this.getUsername() + " Role: " + this.getRole(); }
 
     public String toString() {
         String result = "";

@@ -1,8 +1,10 @@
 package Model.Off;
 
+import Model.Account.Customer;
 import Model.RandomString;
 import Model.Storage;
 
+import java.awt.*;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -20,6 +22,9 @@ public class OffCode extends Off implements Serializable {
         this.ceiling = ceiling;
         this.numberOfTimesCanBeUsed = numberOfTimesCanBeUsed;
         this.userNamesCanUseIt.addAll(userNamesCanUseIt);
+        for (String username : userNamesCanUseIt) {
+            ((Customer) Storage.getAccountWithUsername(username)).addOffCode(this);
+        }
         allOffCodes.add(this);
 
         //because IDs are generally too long I decided to to make the length the random String 5 in order for more comfort
@@ -51,6 +56,10 @@ public class OffCode extends Off implements Serializable {
         this.numberOfTimesCanBeUsed = numberOfTimesCanBeUsed;
     }
 
+    public int getNumberOfTimesCanBeUsed() {
+        return numberOfTimesCanBeUsed;
+    }
+
     public boolean canCustomerUseItWithUsername(String username) {
         return userNamesCanUseIt.contains(username);
     }
@@ -65,10 +74,6 @@ public class OffCode extends Off implements Serializable {
 
     public String getOffCodeID() {
         return offCodeID;
-    }
-
-    public int getNumberOfTimesCanBeUsed() {
-        return numberOfTimesCanBeUsed;
     }
 
     public int getCeiling() {
@@ -97,7 +102,6 @@ public class OffCode extends Off implements Serializable {
         assert offCode != null;
         return offCode.getFinalPrice(price);
     }
-
 
     public static boolean isOffCodeAuthenticWithID(String offCodeID) {
         if (getOffCodeByID(offCodeID) == null) {

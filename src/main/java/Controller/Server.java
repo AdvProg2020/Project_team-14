@@ -1,9 +1,15 @@
 package Controller;
 
+import Model.Cart.Cart;
+import Model.Category.Category;
+import Model.Storage;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import Exception.*;
 
 public class Server {
     static private boolean hasBoss;
@@ -12,10 +18,8 @@ public class Server {
     private SalesmanManager salesmanManager;
     private CustomerManager customerManager;
 
-    /*still server answer just single customer, we can change a little things to handle more than one customer
-     * we change this HashMap to HashMap<String, HashMap>
-     */
-    private HashMap<String, String> abstractCart;
+    //first is username, second is a cart
+    private HashMap<String, Cart> abstractCarts;
 
     static private String answer;
 
@@ -25,7 +29,7 @@ public class Server {
         this.bossManager = new BossManager();
         this.customerManager = new CustomerManager();
         this.salesmanManager = new SalesmanManager();
-        abstractCart = new HashMap<>();
+        abstractCarts = new HashMap<>();
     }
 
     public static void setAnswer(String answer) {
@@ -36,16 +40,13 @@ public class Server {
         Server.hasBoss = hasBoss;
     }
 
-    public HashMap<String, String> getAbstractCart() {
-        return abstractCart;
-    }
-
     private Matcher getMatcher(String regex, String command) {
         Pattern pattern = Pattern.compile(regex);
         return pattern.matcher(command);
     }
 
-    public void clientToServer(String command) {
+    public void clientToServer(String command) throws UsernameAlreadyExistException, MoreMoneyThanLimitsException,
+            IncorrectPasswordException, InvalidUserNameException, BossAlreadyExistException, SalesmanNotConfirmedYetException {
         Matcher matcher;
         if ((matcher = getMatcher("login (\\w+) (\\w+)", command)).find()) {
             this.login(matcher);
@@ -123,14 +124,14 @@ public class Server {
         return filters;
     }
 
-    private void showAccounts(String command) {
+    private void showAccounts(String command) throws InvalidUserNameException {
         ArrayList<Object> filters;
         filters = getFilters(command);
         String[] input = command.split("\\s");
         bossManager.showAccounts(input[2], filters);
     }
 
-    private void editPersonalInfo(String command) {
+    private void editPersonalInfo(String command) throws UsernameAlreadyExistException, IncorrectPasswordException, MoreMoneyThanLimitsException {
         String[] input = command.split("\\s");
         switch (input[3]) {
             case "firstName":
@@ -197,7 +198,7 @@ public class Server {
         accountManager.viewAccountInformation(input[3]);
     }
 
-    private void forgotPassword(String command) {
+    private void forgotPassword(String command) throws InvalidUserNameException {
         accountManager.forgotPassword(command.split("\\s")[2]);
     }
 
@@ -205,7 +206,7 @@ public class Server {
         accountManager.logout(command.split("\\s")[1]);
     }
 
-    private void login(Matcher matcher) {
+    private void login(Matcher matcher) throws SalesmanNotConfirmedYetException, IncorrectPasswordException, InvalidUserNameException {
         accountManager.login(matcher.group(1), matcher.group(2));
     }
 
@@ -236,32 +237,32 @@ public class Server {
     //we should make sure that each word doesn't contain any space otherwise
     //we will reach trouble spiting it with "\\s"
 
-    private void register(String input) {
+    private void register(String input) throws UsernameAlreadyExistException, BossAlreadyExistException {
         Server.answer = "";
         String[] attributes = input.split("\\s");
         if (!checkNameFormat(attributes[1])) {
-            Server.answer += "first name format is invalid\n";
+            Server.answer += "first name format is invalid" + "\n";
         }
         if (!checkNameFormat(attributes[2])) {
-            Server.answer += "last name format is invalid\n";
+            Server.answer += "last name format is invalid" + "\n";
         }
         if (!checkUsernameFormat(attributes[3])) {
-            Server.answer += "username format is invalid\n";
+            Server.answer += "username format is invalid" + "\n";
         }
         if (!checkUsernameFormat(attributes[4])) {
-            Server.answer += "password format is invalid\n";
+            Server.answer += "password format is invalid" + "\n";
         }
         if (attributes[4].length() < 8) {
-            Server.answer += "password length is not enough\n";
+            Server.answer += "password length is not enough" + "\n";
         }
         if (!checkRoleFormat(attributes[5])) {
-            Server.answer += "role is undefined\n";
+            Server.answer += "role is undefined" + "\n";
         }
         if (!checkEmailFormat(attributes[6])) {
-            Server.answer += "Email format is invalid\n";
+            Server.answer += "Email format is invalid" + "\n";
         }
         if (!checkTelephoneFormat(attributes[7])) {
-            Server.answer += "telephone format is invalid\n";
+            Server.answer += "telephone format is invalid" + "\n";
         }
         if (Server.answer.equals("")) {
             if (attributes[5].equalsIgnoreCase("salesman")) {
@@ -270,7 +271,7 @@ public class Server {
                 customerManager.register(attributes);
             } else {
                 if (Server.hasBoss) {
-                    Server.answer = "a boss has already been registered";
+                    throw new BossAlreadyExistException("a boss has already registered!");
                 } else {
                     bossManager.register(attributes);
                 }
@@ -281,4 +282,23 @@ public class Server {
     public String serverToClient() {
         return Server.answer;
     }
+
+    /*
+     * ---------[ here are common parts, server handel this by itself, no manager required ]--------
+     */
+
+    public void showBalance(String username) {
+        Server.setAnswer("Your Balance is : " + Storage.getAccountWithUsername(username).getCredit());
+    }
+
+    public void listCategories(String sortFactor) {
+        StringBuilder ans = new StringBuilder("Here are all Categories name:");
+        for (Category category : Storage.allCategories) {
+            ans.append("\n").append(category.getCategoryName());
+        }
+        Server.setAnswer(ans.toString());
+    }
+
+
+
 }

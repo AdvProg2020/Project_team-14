@@ -172,12 +172,24 @@ public class Product implements Serializable {
     //call method below to make sure that the salesman sell it first
     //then checking whether they have remainder or not
 
-    public boolean isAvailableBySalesmanWithUsername(String username) {
-        return remainder.get(username) >= 1;
+    public boolean isAvailableBySalesmanWithUsername(String username, int wantedAmount) {
+        return remainder.get(username) >= 1 & remainder.get(username) >= wantedAmount;
+    }
+
+    public ArrayList<String> getSeller() {
+        ArrayList<String> sellers = new ArrayList<>();
+        for (String salesmanID : confirmationState.keySet()) {
+            if (confirmationState.get(salesmanID).equals(Confirmation.ACCEPTED)) sellers.add(salesmanID);
+        }
+        return sellers;
     }
 
     public void setConfirmationState(String salesmanID, Confirmation confirmationState) {
         this.confirmationState.put(salesmanID, confirmationState);
+    }
+
+    public void decreaseProductRemaining(String salesmanID, int wantedAmount) {
+        remainder.replace(salesmanID, remainder.get(salesmanID) - wantedAmount);
     }
 
     public static boolean isThereProductWithID(String productID) {
@@ -209,7 +221,7 @@ public class Product implements Serializable {
         result.append("Description: ").append(this.description).append("\n");
         result.append("Sellers: " + "\n");
         for (String salesmanID : salesmanIDs) {
-            if (!doesSalesmanSellProductWithUsername(salesmanID) || !isAvailableBySalesmanWithUsername(salesmanID)) {
+            if (!doesSalesmanSellProductWithUsername(salesmanID) || !isAvailableBySalesmanWithUsername(salesmanID, 1)) {
                 continue;
             }
             result.append("Salesman: ").append(salesmanID);
@@ -225,7 +237,7 @@ public class Product implements Serializable {
         result.append("Description: ").append(this.description).append("\n");
         result.append("Sellers: " + "\n");
         for (String salesmanID : salesmanIDs) {
-            if (!doesSalesmanSellProductWithUsername(salesmanID) || !isAvailableBySalesmanWithUsername(salesmanID)) {
+            if (!doesSalesmanSellProductWithUsername(salesmanID) || !isAvailableBySalesmanWithUsername(salesmanID, 1)) {
                 continue;
             }
             result.append("Salesman: ").append(salesmanID);
