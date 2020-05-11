@@ -33,7 +33,7 @@ public class BuyLog extends Log {
     public BuyLog(Cart cart, String offCodeID) {
         super();
         this.products = cart.getProductIDs();
-        this.prices = cart.getPricesAfterSale();
+        this.prices = cart.getPrices();
         this.pricesAfterSale = cart.getPricesAfterSale();
         this.customerUsername = cart.getUsername();
         this.totalAmountWithOutOffCode = cart.getTotalPrice(null);

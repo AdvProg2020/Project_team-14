@@ -43,6 +43,13 @@ public class Cart implements Serializable {
         }
     }
 
+    public void clearCart() {
+        for (String productID : productIDs.keySet()) {
+            Product.getProductWithID(productID).decreaseProductRemaining(productIDs.get(productID));
+        }
+        productIDs.clear();
+    }
+
     public boolean isCartEmpty() {
         return productIDs.isEmpty();
     }
@@ -61,13 +68,6 @@ public class Cart implements Serializable {
 
     public String getCartID() {
         return cartID;
-    }
-
-    public void clearCart() {
-        for (String productID : productIDs.keySet()) {
-            Product.getProductWithID(productID).decreaseProductRemaining(productIDs.get(productID));
-        }
-        productIDs.clear();
     }
 
     public HashMap<String, Integer> getPrices() {

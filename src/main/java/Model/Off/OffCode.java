@@ -76,10 +76,6 @@ public class OffCode extends Off implements Serializable {
         return offCodeID;
     }
 
-    public int getNumberOfTimesCanBeUsed() {
-        return numberOfTimesCanBeUsed;
-    }
-
     public int getCeiling() {
         return ceiling;
     }
@@ -106,7 +102,6 @@ public class OffCode extends Off implements Serializable {
         assert offCode != null;
         return offCode.getFinalPrice(price);
     }
-
 
     public static boolean isOffCodeAuthenticWithID(String offCodeID) {
         if (getOffCodeByID(offCodeID) == null) {
