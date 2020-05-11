@@ -12,6 +12,7 @@ import Model.Request.ChangeProductRequest;
 import Model.Request.ChangeSaleRequest;
 import Model.Request.Request;
 import Model.Storage;
+import Exception.*;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -24,22 +25,22 @@ public class SalesmanManager {
      * this is AccountManager part
      */
 
-    public void register(String[] information) {
+    public void register(String[] information) throws UsernameAlreadyExistException {
         if (Storage.isThereAccountWithUsername(information[3])) {
-            Server.setAnswer("username has already been taken");
+            throw new UsernameAlreadyExistException("user name is already taken, try something else");
         }
         Server.setAnswer("register successful");
         new Salesman(information[3], information[4], information[1], information[2],
                 information[6], information[7], information[5], information[8]);
     }
 
-    public void showCompanyInfo (String salesmanID) {
+    public void showCompanyInfo(String salesmanID) {
         Salesman salesman = (Salesman) Storage.getAccountWithUsername(salesmanID);
         assert salesman != null;
         Server.setAnswer("Salesman Company Info : " + salesman.getCompany());
     }
 
-    public String getSalesHistory (String salesmanID) {
+    public String getSalesHistory(String salesmanID) {
         Salesman salesman = (Salesman) Storage.getAccountWithUsername(salesmanID);
         return SellLog.getSalesmanSellLogs_StringFormatted(salesmanID);
     }
