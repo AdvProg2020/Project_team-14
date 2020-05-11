@@ -1,7 +1,7 @@
 package Controller;
 
 import Controller.SortFactorEnum.ListOffCodesSortFactor;
-import Controller.SortFactorEnum.listProductSortFactor;
+import Controller.SortFactorEnum.ListProductSortFactor;
 import Model.Account.Account;
 import Model.Account.Boss;
 import Model.Category.Category;
@@ -21,9 +21,9 @@ public class BossManager {
      * this is Account part
      */
 
-    public void register(String[] information) {
+    public void register(String[] information) throws UsernameAlreadyExistException {
         if (Storage.isThereAccountWithUsername(information[3])) {
-            Server.setAnswer("username has already been taken");
+            throw new UsernameAlreadyExistException("the username is already take, try something else");
         }
         Server.setAnswer("register successful");
         Server.setHasBoss(true);
@@ -31,11 +31,11 @@ public class BossManager {
 
     }
 
-    public void showAccounts(String username) {
+    public void showAccounts(String username) throws InvalidUserNameException {
         ArrayList<Account> accounts = Storage.getAllAccounts();
         StringBuilder answer = new StringBuilder("All Accounts Username:").append("\n");
         if (accounts.size() == 0) {
-            Server.setAnswer("nothing found");
+            throw new InvalidUserNameException("no user found with this username");
         } else {
             for (Account account : accounts) {
                 if (!account.getUsername().equals(username))
@@ -69,18 +69,7 @@ public class BossManager {
 
     public void listAllProducts(String sortFactor) throws SortFactorNotAvailableException {
         ArrayList<Product> products = new ArrayList<>(Storage.allProducts);
-        if (sortFactor.equals(listProductSortFactor.ALPHABETICALLY.name())) {
-            products.sort(Comparator.comparing(Product::getName));
-        } else if (sortFactor.equals(listProductSortFactor.HIGHEST_POINT.name())) {
-            products.sort(Comparator.comparingDouble(Product::getAveragePoint));
-        } else if (sortFactor.equals(listProductSortFactor.PRICE.name())) {
-            products.sort(Comparator.comparingInt(Product::getMinimumPrice));
-        } else if (sortFactor.equals(listProductSortFactor.SEEN_COUNT.name())) {
-            products.sort(Comparator.comparingInt(Product::getSeenCount));
-        } else if (!sortFactor.isEmpty()) {
-            throw new SortFactorNotAvailableException("the sort factor isn't authentic " + "\n" +
-                    "the available sort factors: " + getSortFactorsForListingAllProducts() + "\n");
-        }
+        ListProductSortFactor.sort(sortFactor, products);
         StringBuilder ans = new StringBuilder("Here are All products:").append("\n");
         for (Product product : products) {
             ans.append(product.toStringForBossView());
@@ -91,7 +80,7 @@ public class BossManager {
     //it gets us possible sort factors
 
     public String getSortFactorsForListingAllProducts() {
-        return listProductSortFactor.getValues();
+        return ListProductSortFactor.getValues();
     }
 
     public void deleteProduct(String productID) {
@@ -109,7 +98,6 @@ public class BossManager {
 
     //info: 0 -> start, 1 -> end, 2 -> percentage, 3 -> ceiling, 4 -> numberOfTimeCanBeUsed
 
-
     public void createDiscountCode(String[] info, ArrayList<String> usernameCanUse) throws ParseException {
         new OffCode(info[0], info[1], Integer.parseInt(info[2]), Integer.parseInt(info[3]), Integer.parseInt(info[4]), usernameCanUse);
         Server.setAnswer("offCode created successfully");
@@ -117,42 +105,31 @@ public class BossManager {
 
     public void listAllOffCodes(String sortFactor) throws SortFactorNotAvailableException {
         ArrayList<OffCode> offCodes = new ArrayList<>(Storage.allOffCodes);
-        if (sortFactor.equals(ListOffCodesSortFactor.END_DATE.name())) {
-            offCodes.sort(Comparator.comparing(OffCode::getEnd));
-        } else if (sortFactor.equals(ListOffCodesSortFactor.NUMBER_OF_TIMES_IT_CAN_BE_STILL_USED.name())) {
-            offCodes.sort(Comparator.comparingInt(OffCode::getNumberOfTimesCanBeUsed));
-        } else if (sortFactor.equals(ListOffCodesSortFactor.CEILING.name())) {
-            offCodes.sort(Comparator.comparingInt(OffCode::getCeiling));
-        } else if (sortFactor.equals(ListOffCodesSortFactor.PERCENTAGE.name())) {
-            offCodes.sort(Comparator.comparingInt(OffCode::getPercentage));
-        } else if (!sortFactor.isEmpty()) {
-            throw new SortFactorNotAvailableException("the sort factor isn't authentic " + "\n" +
-                    "the available sort factors: " + getSortFactorsForListingOffCodes());
-        }
         StringBuilder ans = new StringBuilder("Here are All OffCodes:").append("\n");
+        ListOffCodesSortFactor.sort(sortFactor, offCodes);
         for (OffCode offCode : offCodes) {
             ans.append(offCode.toString());
         }
         Server.setAnswer(ans.toString());
     }
 
-    public String getSortFactorsForListingOffCodes() {
+    public static String getSortFactorsForListingOffCodes() {
         return ListOffCodesSortFactor.getValues();
     }
 
-    public void viewOffCode(String offCodeID) {
+    public void viewOffCode(String offCodeID) throws InvalidOffCodeException {
         OffCode offCode = OffCode.getOffCodeByID(offCodeID);
         if (offCode == null) {
-            Server.setAnswer("error, there isn't exist any offCode with this ID" + "\n");
+            throw new InvalidOffCodeException("off code ID is not authentic");
         } else {
             Server.setAnswer("OffCode detail: " + "\n" + offCode.toString());
         }
     }
 
-    public void editOffCode(String offCodeID, String attribute, String updatedInfo) throws ParseException {
+    public void editOffCode(String offCodeID, String attribute, String updatedInfo) throws ParseException, InvalidOffCodeException {
         OffCode offCode = OffCode.getOffCodeByID(offCodeID);
         if (offCode == null) {
-            Server.setAnswer("error, there isn't exist any offCode whit this ID");
+            throw new InvalidOffCodeException("off code ID is not authentic");
         } else {
             switch (attribute) {
                 case "end":
@@ -172,9 +149,9 @@ public class BossManager {
         }
     }
 
-    public void removeOffCode(String offCodeID) {
+    public void removeOffCode(String offCodeID) throws InvalidOffCodeException {
         if (OffCode.getOffCodeByID(offCodeID) == null) {
-            Server.setAnswer("error, offCode doesn't exist");
+            throw new InvalidOffCodeException("off code ID is not authentic");
         } else {
             Storage.allOffCodes.remove(OffCode.getOffCodeByID(offCodeID));
             Server.setAnswer("offCode with ID [" + offCodeID + "] removed successfully");
@@ -185,8 +162,7 @@ public class BossManager {
      * this is request part
      */
 
-    //sort isn't complete
-    public void listAllRequests(String sortFactor) {
+    public void listAllRequests() {
         StringBuilder ans = new StringBuilder("Here are All Requests:").append("\n");
         for (Request request : Request.getCheckingRequests()) {
             ans.append("Request ID: ").append(request.getRequestID()).append(", Request Type: ").append(request.getRequestType());
@@ -194,29 +170,29 @@ public class BossManager {
         Server.setAnswer(ans.toString());
     }
 
-    public void viewRequest(String requestID) {
+    public void viewRequest(String requestID) throws InvalidRequestIDException {
         Request request = Request.getRequestByID(requestID);
         if (request == null) {
-            Server.setAnswer("request doesn't exist with this ID");
+            throw new InvalidRequestIDException("Request ID is not authentic");
         } else {
             Server.setAnswer(request.toString());
         }
     }
 
-    public void acceptRequest(String requestID) throws ParseException {
+    public void acceptRequest(String requestID) throws ParseException, InvalidRequestIDException {
         Request request = Request.getRequestByID(requestID);
         if (request == null) {
-            Server.setAnswer("request doesn't exist");
+            throw new InvalidRequestIDException("Request ID is not authentic");
         } else {
             request.accept();
             Server.setAnswer("you accepted request with [" + requestID + "] ID, which was a [" + request.getRequestType() + "] request");
         }
     }
 
-    public void declineRequest(String requestID) {
+    public void declineRequest(String requestID) throws InvalidRequestIDException {
         Request request = Request.getRequestByID(requestID);
         if (request == null) {
-            Server.setAnswer("request doesn't exist");
+            throw new InvalidRequestIDException("Request ID is not authentic");
         } else {
             request.decline();
             Server.setAnswer("you just declined request with [" + requestID + "] ID, which was a [" + request.getRequestType() + "] request");
@@ -228,14 +204,15 @@ public class BossManager {
      */
 
     //info: 0 -> attribute, 1 -> parent category name, 2 -> category name
+
     public void addCategory(String[] info) {
         new Category(info[0], info[1], info[2]);
     }
 
-    public void editCategory(String categoryName, String attribute, String updatedInfo) {
+    public void editCategory(String categoryName, String attribute, String updatedInfo) throws InvalidCategoryNameException {
         Category category = Category.getCategoryByName(categoryName);
         if (category == null) {
-            Server.setAnswer("error, there isn't exist any category with this name");
+            throw new InvalidCategoryNameException("there's no category with this name");
         } else {
             switch (attribute) {
                 case "attribute":
@@ -252,10 +229,10 @@ public class BossManager {
         }
     }
 
-    public void removeCategory(String categoryName) {
+    public void removeCategory(String categoryName) throws InvalidCategoryNameException {
         Category category = Category.getCategoryByName(categoryName);
         if (category == null) {
-            Server.setAnswer("there isn't any category with this name exist");
+            throw new InvalidCategoryNameException("there's no category with this name");
         } else {
             Storage.allCategories.remove(category);
             for (String productID : category.getAllProductIDs()) {

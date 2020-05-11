@@ -1,14 +1,10 @@
 package Controller;
 
 import Controller.SortFactorEnum.ListSalesSortFactor;
-import Controller.SortFactorEnum.listProductSortFactor;
 import Model.Off.Sale;
-import Model.Product.Product;
 import Model.Request.ChangeSaleRequest;
 import Model.Request.Request;
-import Model.Storage;
 
-import java.awt.image.AreaAveragingScaleFilter;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -22,13 +18,6 @@ public class SalesManager {
     public void listSales(String salesmanID ,String sortFactor) {
         StringBuilder result = new StringBuilder("Here are All of your Sales:");
         ArrayList<Sale> sales = new ArrayList<>(Sale.getAllAuthenticSales(salesmanID));
-        if (sortFactor.equalsIgnoreCase(valueOf(ListSalesSortFactor.PERCENTAGE))) {
-            sales.sort(Comparator.comparingInt(Sale::getPercentage));
-        }  else if (sortFactor.equalsIgnoreCase(valueOf(ListSalesSortFactor.END_DATE))) {
-            sales.sort(Comparator.comparing(Sale::getEnd));
-        } else if (sortFactor.equals("")) {
-            sales.sort(Comparator.comparingInt(Sale::getPercentage));
-        }
         for (Sale sale : sales) {
             result.append("\n").append(sale.getSaleID()); //assume we list just IDs, then if user chose one, we show detail
         }
@@ -58,6 +47,7 @@ public class SalesManager {
     }
 
     //order of info : 0 -> [start time] , 1 -> [end time] , 2 -> [percentage] , 3 -> [salesmanID]
+
     public void addSale(ArrayList<String> info) throws ParseException {
         Sale newSale = new Sale(info.get(0), info.get(1), Integer.parseInt(info.get(2)), info.get(3));
         new Request(info.get(3), newSale, "ADD_NEW_SALE");

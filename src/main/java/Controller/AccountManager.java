@@ -5,10 +5,11 @@ import Model.Account.Customer;
 import Model.Account.Role;
 import Model.Account.Salesman;
 import Model.Storage;
+import Exception.*;
 
 public class AccountManager {
 
-    public void login(String username, String password) {
+    public void login(String username, String password) throws SalesmanNotConfirmedYetException, IncorrectPasswordException, InvalidUserNameException {
         if (Storage.isThereAccountWithUsername(username)) {
             Account account = Storage.getAccountWithUsername(username);
             assert account != null;
@@ -16,16 +17,16 @@ public class AccountManager {
                 if (account.getRole().equals(Role.SALESMAN)) {
                     Salesman salesman = (Salesman) account;
                     if (!salesman.isConfirmed()) {
-                        Server.setAnswer("you're not a confirmed salesman");
+                        throw new SalesmanNotConfirmedYetException("you're not confirmed yet");
                     }
                 }
                 Server.setAnswer("login successful as " + account.getRole() + " " + username);
                 account.setOnline(true);
             } else {
-                Server.setAnswer("incorrect password");
+                throw new IncorrectPasswordException("your password is incorrect");
             }
         } else {
-            Server.setAnswer("incorrect username");
+            throw new InvalidUserNameException("the username doesn't exists");
         }
     }
 
@@ -36,13 +37,13 @@ public class AccountManager {
         Server.setAnswer("logout successful");
     }
 
-    public void forgotPassword(String username) {
+    public void forgotPassword(String username) throws InvalidUserNameException {
         if (Storage.isThereAccountWithUsername(username)) {
             Account account = Storage.getAccountWithUsername(username);
             assert account != null;
             Server.setAnswer("here is your password: " + account.getPassword());
         } else {
-            Server.setAnswer("incorrect username");
+            throw new InvalidUserNameException("the username doesn't exists");
         }
     }
 
@@ -66,9 +67,9 @@ public class AccountManager {
         account.setSecondName(name);
     }
 
-    public void editUsername(String oldUsername, String newUsername) {
+    public void editUsername(String oldUsername, String newUsername) throws UsernameAlreadyExistException {
         if (Storage.isThereAccountWithUsername(newUsername)) {
-            Server.setAnswer("username has already been taken");
+            throw new UsernameAlreadyExistException("username already exists, choose another one!");
         } else {
             Server.setAnswer("edit successful");
             Account account = Storage.getAccountWithUsername(oldUsername);
@@ -91,18 +92,18 @@ public class AccountManager {
         Server.setAnswer("edit successful");
     }
 
-    public void editPassword(String username, String oldPassword, String newPassword) {
+    public void editPassword(String username, String oldPassword, String newPassword) throws IncorrectPasswordException {
         Account account = Storage.getAccountWithUsername(username);
         assert account != null;
         if (account.getPassword().equals(oldPassword)) {
             account.setPassword(newPassword);
             Server.setAnswer("edit successful");
         } else {
-            Server.setAnswer("wrong old password");
+            throw new IncorrectPasswordException("your previous password isn't correct");
         }
     }
 
-    public void editMoney(String username, String money) {
+    public void editMoney(String username, String money) throws MoreMoneyThanLimitsException {
         if (money.length() <= 8) {
             Account account = Storage.getAccountWithUsername(username);
             if (account instanceof Customer) {
@@ -112,7 +113,7 @@ public class AccountManager {
             }
             Server.setAnswer("edit successful");
         } else {
-            Server.setAnswer("money more than limits");
+            throw new MoreMoneyThanLimitsException("that's too much money, less money perhaps");
         }
     }
 

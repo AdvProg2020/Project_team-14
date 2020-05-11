@@ -1,10 +1,11 @@
 package Controller;
 
+import Controller.SortFactorEnum.ListOffCodesSortFactor;
 import Model.Account.Customer;
 import Model.Cart.Cart;
 import Model.Log.BuyLog;
 import Model.Log.SellLog;
-import Model.Off.Off;
+import Exception.*;
 import Model.Off.OffCode;
 import Model.Product.Point;
 import Model.Storage;
@@ -13,20 +14,18 @@ import java.util.ArrayList;
 
 public class CustomerManager {
 
-    public void register(String[] information) {
+    public void register(String[] information) throws UsernameAlreadyExistException {
         if (Storage.isThereAccountWithUsername(information[3])) {
-            Server.setAnswer("username has already been taken");
+            throw new UsernameAlreadyExistException("the username already exists, try something else");
         }
         Server.setAnswer("register successful");
         new Customer(information[3], information[4], information[1], information[2],
                 information[6], information[7], information[5], 0, null);
     }
 
-    public void viewDiscountCode(String username, String sortFactor) {
+    public void viewOffCode(String username, String sortFactor) throws SortFactorNotAvailableException {
         ArrayList<OffCode> userOffCodes = OffCode.getAllCustomerOffCodesByUsername(username);
-        /*
-         * sort ArrayList
-         */
+        ListOffCodesSortFactor.sort(sortFactor, userOffCodes);
         StringBuilder ans = new StringBuilder("Here are all of your Discount code:").append("\n");
         for (OffCode offCode : userOffCodes) {
             ans.append("OffCodeID: ").append(offCode.getOffCodeID()).append(", Percentage: ").append(offCode.getPercentage()).append("\n");
@@ -89,16 +88,14 @@ public class CustomerManager {
     //public void createLog();          ->      doesn't match this logic
     //public void setInfoOfLog();       ->      doesn't match this logic
 
-    public void setOffCode(String username, String offCodeID) {
+    public void setOffCode(String username, String offCodeID) throws InvalidOffCodeException, CannotUseOffCodeException {
         StringBuilder ans = new StringBuilder("");
         OffCode offCode = OffCode.getOffCodeByID(offCodeID);
         if (offCodeID != null) {
             if (offCode == null) {
-                Server.setAnswer("error, offCode doesn't exist.");
-                return;
+                throw new InvalidOffCodeException("off code isn't valid");
             } else if (!offCode.canCustomerUseItWithUsername(username)) {
-                Server.setAnswer("error, you do not have permission to use this offCode.");
-                return;
+                throw new CannotUseOffCodeException("error, you do not have permission to use this offCode.");
             }
         }
         Customer customer = (Customer) Storage.getAccountWithUsername(username);
@@ -106,7 +103,7 @@ public class CustomerManager {
         Server.setAnswer("Final Price:" + "\n" + customer.getCart().getTotalPrice(offCodeID));
     }
 
-    public void buy(String username, String offCodeID) {
+    public void buy(String username, String offCodeID) throws NotEnoughCreditException {
         Customer customer = (Customer) Storage.getAccountWithUsername(username);
         assert customer != null;
         if (customer.getCart().buy(offCodeID)) {
@@ -116,7 +113,7 @@ public class CustomerManager {
                 new SellLog(buyLog, productID, customer.getCart().getProductIDs().get(productID));
             }
         } else {
-            Server.setAnswer("error, you don't have enough credit to purchase" + "\n");
+            throw new NotEnoughCreditException("you haven't got enough credit");
         }
     }
 }
