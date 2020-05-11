@@ -1,7 +1,6 @@
 package Controller;
 
 import Controller.SortFactorEnum.ListProductSortFactor;
-import Controller.SortFactorEnum.listProductSortFactor;
 import Model.Cart.Cart;
 import Model.Category.Category;
 import Model.Product.Comment;
