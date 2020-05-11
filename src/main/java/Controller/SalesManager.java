@@ -16,9 +16,11 @@ import java.util.Comparator;
 import static java.lang.String.valueOf;
 
 public class SalesManager {
+    /*
+     * ------------------[this method (all of them) has been copied to SalesmanManager]--------------------------
+     */
 
     //default sort factor is percentage
-
     public void listSales(String salesmanID ,String sortFactor) {
         StringBuilder result = new StringBuilder("Here are All of your Sales:");
         ArrayList<Sale> sales = new ArrayList<>(Sale.getAllAuthenticSales(salesmanID));

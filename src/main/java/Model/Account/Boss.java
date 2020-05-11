@@ -12,6 +12,10 @@ public class Boss extends Account implements Serializable {
 
     public static boolean isThereBoss() { return !getAllBosses().isEmpty(); }
 
+    public int getCredit() {
+        return 0;
+    }
+
     public String toString() {
         return super.toString();
     }

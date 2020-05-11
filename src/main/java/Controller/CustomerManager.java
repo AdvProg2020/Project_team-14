@@ -54,7 +54,7 @@ public class CustomerManager {
     public void addOrRemoveProductToCart(String type, String username, String productID, String salesmanID) {
         //assume productID ans salesmanID are valid
         StringBuilder ans = new StringBuilder("your product ");
-        Cart customerCart = ((Customer)Storage.getAccountWithUsername(username)).getCart();
+        Cart customerCart = Cart.getCartBasedOnUsername(username);
         if (type.equals("add")) {
             if (customerCart.addProductToCart(productID, salesmanID, customerCart.getCartID())) {
                 ans.append("added to cart successfully");

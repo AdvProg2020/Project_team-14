@@ -176,6 +176,14 @@ public class Product implements Serializable {
         return remainder.get(username) >= 1;
     }
 
+    public ArrayList<String> getSeller() {
+        ArrayList<String> sellers = new ArrayList<>();
+        for (String salesmanID : confirmationState.keySet()) {
+            if (confirmationState.get(salesmanID).equals(Confirmation.ACCEPTED)) sellers.add(salesmanID);
+        }
+        return sellers;
+    }
+
     public void setConfirmationState(String salesmanID, Confirmation confirmationState) {
         this.confirmationState.put(salesmanID, confirmationState);
     }

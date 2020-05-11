@@ -1,5 +1,9 @@
 package Controller;
 
+import Model.Cart.Cart;
+import Model.Category.Category;
+import Model.Storage;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
@@ -12,10 +16,8 @@ public class Server {
     private SalesmanManager salesmanManager;
     private CustomerManager customerManager;
 
-    /*still server answer just single customer, we can change a little things to handle more than one customer
-     * we change this HashMap to HashMap<String, HashMap>
-     */
-    private HashMap<String, String> abstractCart;
+    //first is username, second is a cart
+    private HashMap<String, Cart> abstractCarts;
 
     static private String answer;
 
@@ -25,7 +27,7 @@ public class Server {
         this.bossManager = new BossManager();
         this.customerManager = new CustomerManager();
         this.salesmanManager = new SalesmanManager();
-        abstractCart = new HashMap<>();
+        abstractCarts = new HashMap<>();
     }
 
     public static void setAnswer(String answer) {
@@ -34,10 +36,6 @@ public class Server {
 
     public static void setHasBoss(boolean hasBoss) {
         Server.hasBoss = hasBoss;
-    }
-
-    public HashMap<String, String> getAbstractCart() {
-        return abstractCart;
     }
 
     private Matcher getMatcher(String regex, String command) {
@@ -246,4 +244,23 @@ public class Server {
     public String serverToClient() {
         return Server.answer;
     }
+
+    /*
+     * ---------[ here are common parts, server handel this by itself, no manager required ]--------
+     */
+
+    public void showBalance(String username) {
+        Server.setAnswer("Your Balance is : " + Storage.getAccountWithUsername(username).getCredit());
+    }
+
+    public void listCategories(String sortFactor) {
+        StringBuilder ans = new StringBuilder("Here are all Categories name:");
+        for (Category category : Storage.allCategories) {
+            ans.append("\n").append(category.getCategoryName());
+        }
+        Server.setAnswer(ans.toString());
+    }
+
+
+
 }

@@ -90,6 +90,8 @@ public abstract class Account {
         this.telephone = telephone;
     }
 
+    public abstract int getCredit();
+
     public String toStringForBoss() {return "Username: " + this.getUsername() + " Role: " + this.getRole(); }
 
     public String toString() {
