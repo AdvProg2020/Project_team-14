@@ -7,15 +7,19 @@ import Model.Off.Sale;
 import Model.Product.Product;
 import Model.RandomString;
 import Model.Storage;
+import org.javatuples.Triplet;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Cart implements Serializable {
 
-    private HashMap<String, String> productIDs = new HashMap<>();
+    private HashMap<String, String> productIDs = new HashMap<>();//when logs updated with Triplet, we delete this
     private String username;
     private String cartID;
+
+    private ArrayList<Triplet<String, String, Integer>> allItems = new ArrayList<>();
 
     public Cart(String username) {
         this.username = username;
@@ -29,6 +33,7 @@ public class Cart implements Serializable {
     //in sell log which is call in constructor of buy log
     //Buy --> creating BuyLog --> creating SellLog --> giving the salesman their money
 
+    //updated with Triplet(nothing to do)  ******** note: assume that if we don't use offCode, String offCode will be null not "" !!!!! ******
     public boolean buy(String offCode) {
         Customer customer = (Customer) Storage.getAccountWithUsername(username);
         assert customer != null;
@@ -43,68 +48,14 @@ public class Cart implements Serializable {
         }
     }
 
+    //updated with Triplet
     public void clearCart() {
-        for (String productID : productIDs.keySet()) {
-            Product.getProductWithID(productID).decreaseProductRemaining(productIDs.get(productID));
+        for (Triplet<String, String, Integer> item : allItems) {
+            Product.getProductWithID(item.getValue0()).decreaseProductRemaining(item.getValue1(), item.getValue2());
         }
-        productIDs.clear();
+        allItems.clear();
     }
 
-    public boolean isCartEmpty() {
-        return productIDs.isEmpty();
-    }
-
-    public boolean isAlreadyInCart(String productID) {
-        return this.productIDs.containsKey(productID);
-    }
-
-    public HashMap<String, String> getProductIDs() {
-        return productIDs;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public String getCartID() {
-        return cartID;
-    }
-
-    public HashMap<String, Integer> getPrices() {
-        HashMap<String, Integer> prices = new HashMap<>();
-        for (String productID : productIDs.keySet()) {
-            Product product = Product.getProductWithID(productID);
-            assert product != null;
-            prices.put(productID, product.getPriceBySalesmanID(productIDs.get(productID)));
-        }
-        return prices;
-    }
-
-    public HashMap<String, Integer> getPricesAfterSale() {
-        HashMap<String, Integer> prices = new HashMap<>();
-        for (String productID : productIDs.keySet()) {
-            Product product = Product.getProductWithID(productID);
-            assert product != null;
-            prices.put(productID, Sale.getPriceAfterSale(productID, productIDs.get(productID)));
-        }
-        return prices;
-    }
-
-    private int getTotalPrice() {
-        int result = 0;
-        for (String productID : productIDs.keySet()) {
-            result += Sale.getPriceAfterSale(productID, productIDs.get(productID));
-        }
-        return result;
-    }
-
-    public int getTotalPrice(String offCodeID) {
-        if (offCodeID == null) {
-            return getTotalPrice();
-        } else {
-            return OffCode.getFinalPrice(getTotalPrice(), offCodeID);
-        }
-    }
 
     public static Cart getCartWithID(String cartID) {
         for (Cart cart : Storage.allCarts) {
@@ -122,40 +73,131 @@ public class Cart implements Serializable {
         return customer.getCart();
     }
 
+
+    //updated with Triplet
     public boolean addProductToCart(String productID, String salesmanID, String cartID) {
         Cart cart = getCartWithID(cartID);
         assert cart != null;
-        if (Product.getProductWithID(productID).isAvailableBySalesmanWithUsername(salesmanID)) {
-            cart.addProductToCart(productID, salesmanID);
+        Triplet<String, String, Integer> item = getItem(productID, salesmanID);
+        if (item != null) {
+            if (!Product.getProductWithID(productID).isAvailableBySalesmanWithUsername(salesmanID, getItemCount(productID, salesmanID) + 1)) {
+                return false;
+            }
+            allItems.remove(item);
+            allItems.add(item.setAt2(item.getValue2() + 1));//Triplet is immutable :|
+            return true;
+        }
+        if (Product.getProductWithID(productID).isAvailableBySalesmanWithUsername(salesmanID, 1)) {
+            allItems.add(new Triplet<>(productID, salesmanID, 1));
             return true;
         }
         return false;
     }
 
-    private void addProductToCart(String productID, String salesmanID) {
-        productIDs.put(productID, salesmanID);
+    //updated with Triplet
+    public boolean removeProductFromCart(String productID, String salesmanID) {
+        Triplet<String, String, Integer> item = getItem(productID, salesmanID);
+        if (item == null) {
+            return false;
+        }
+        allItems.remove(item);
+        if (item.getValue2() - 1 != 0) allItems.add(item.setAt2(item.getValue2() - 1));
+        return true;
     }
 
-    public void removeProductFromCart(String productID) {
-        productIDs.remove(productID);
+    //add for Triplet
+    private Triplet<String, String, Integer> getItem(String productID, String salesmanID) {
+        for (Triplet<String, String, Integer> item : allItems) {
+            if (item.getValue0().equals(productID) & item.getValue1().equals(salesmanID)) return item;
+        }
+        return null;
     }
 
-    private String toStringSingleProduct(String productID, String salesmanID) {
-        Product product = Product.getProductWithID(productID);
-        assert product != null;
-        String result = "Product: " + product.getName() + "\n";
-        result += "Salesman: " + salesmanID + "\n";
-        result += "Price: " + product.getPriceBySalesmanID(salesmanID) + "\n";
-        result += "Price after sale: " + Sale.getPriceAfterSale(productID, salesmanID) + "\n";
+    //add for Triplet
+    private int getItemCount(String productID, String salesmanID) {
+        return getItem(productID, salesmanID).getValue2();
+    }
+
+    //add for Triplet
+    public ArrayList<Triplet<String, String, Integer>> getAllItems() {
+        return allItems;
+    }
+
+    //updated with Triplet
+    public boolean isCartEmpty() {
+        return allItems.isEmpty();
+    }
+
+    public HashMap<String, String> getProductIDs() {
+        return productIDs;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getCartID() {
+        return cartID;
+    }
+
+    //not updated with Triplet !!!!!!!
+    public HashMap<String, Integer> getPrices() {
+        HashMap<String, Integer> prices = new HashMap<>();
+        for (String productID : productIDs.keySet()) {
+            Product product = Product.getProductWithID(productID);
+            assert product != null;
+            prices.put(productID, product.getPriceBySalesmanID(productIDs.get(productID)));
+        }
+        return prices;
+    }
+
+    //not updated with Triplet !!!!!!!
+    public HashMap<String, Integer> getPricesAfterSale() {
+        HashMap<String, Integer> prices = new HashMap<>();
+        for (String productID : productIDs.keySet()) {
+            Product product = Product.getProductWithID(productID);
+            assert product != null;
+            prices.put(productID, Sale.getPriceAfterSale(productID, productIDs.get(productID)));
+        }
+        return prices;
+    }
+
+    //updated with Triplet(nothing to do)
+    public int getTotalPrice(String offCodeID) {
+        if (offCodeID == null) {
+            return getTotalPrice();
+        } else {
+            return OffCode.getFinalPrice(getTotalPrice(), offCodeID);
+        }
+    }
+
+    //updated with Triplet
+    private int getTotalPrice() {
+        int result = 0;
+        for (Triplet<String, String, Integer> item : allItems) {
+            result += Sale.getPriceAfterSale(item.getValue0(), item.getValue1()) * item.getValue2();
+        }
         return result;
     }
 
+    //updated with Triplet
+    private String toStringSingleItem(Triplet<String, String, Integer> item) {
+        Product product = Product.getProductWithID(item.getValue0());
+        assert product != null;
+        String result = "Product: " + product.getName() + "\n";
+        result += "Salesman: " + item.getValue1() + "\n";
+        result += "Count: " + item.getValue2() + "\n";
+        result += "Price Per Unit: " + product.getPriceBySalesmanID(item.getValue1()) + "\n";
+        result += "Price after sale Per Unit: " + Sale.getPriceAfterSale(item.getValue0(), item.getValue1()) + "\n";
+        return result;
+    }
+
+    //updated with Triplet
     public String toString() {
-        StringBuilder result = new StringBuilder();
-        for (String productID : productIDs.keySet()) {
-            result.append(toStringSingleProduct(productID, productIDs.get(productID)));
+        StringBuilder result = new StringBuilder("Here are all of your products in cart:");
+        for (Triplet<String, String, Integer> item : allItems) {
+            result.append("\n").append(toStringSingleItem(item)).append("\n---------------------------------");
         }
-        result.append("---------------------------------");
         result.append("Total price WithOut Using OffCode: ").append(this.getTotalPrice());
         return result.toString();
     }

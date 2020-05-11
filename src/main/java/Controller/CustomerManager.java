@@ -3,12 +3,11 @@ package Controller;
 import Model.Account.Customer;
 import Model.Cart.Cart;
 import Model.Log.BuyLog;
-import Model.Log.SellLog;
-import Model.Off.Off;
 import Model.Off.OffCode;
 import Model.Product.Point;
 import Model.Product.Product;
 import Model.Storage;
+import org.javatuples.Triplet;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,7 +28,7 @@ public class CustomerManager {
 
     public void viewDiscountCodes (String username, String sortFactor) {
         Customer customer = (Customer)Storage.getAccountWithUsername(username);
-        HashMap<String, Integer> userOffCodes = customer.getOffCodesUsage();
+        HashMap<String, Integer> userOffCodes = customer.getCustomerOffCodes();
         /*
          * sort ArrayList
          */
@@ -59,11 +58,14 @@ public class CustomerManager {
             if (customerCart.addProductToCart(productID, salesmanID, customerCart.getCartID())) {
                 ans.append("added to cart successfully");
             } else {
-                ans.append("couldn't added to cart, because no product remains");
+                ans.append("error, couldn't added to cart, because no product remains");
             }
         } else if (type.equals("remove")) {
-            ans.append("removed from cart successfully");
-            customerCart.removeProductFromCart(productID);
+            if (customerCart.removeProductFromCart(productID, salesmanID)) {
+                ans.append("removed from cart successfully");
+            } else {
+                ans.append("error, couldn't remove, because no product exist");
+            }
         }
         Server.setAnswer(ans.toString());
     }
@@ -107,12 +109,11 @@ public class CustomerManager {
 
     public void canUserContinuePurchase(String username) {
         HashMap<String, String> errorProductIDs = new HashMap<>();
-        Customer customer = (Customer) Storage.getAccountWithUsername(username);
+        Cart customerCart = Cart.getCartBasedOnUsername(username);
         //find errors
-        for (String productID : customer.getCart().getProductIDs().keySet()) {
-            String salesmanID = customer.getCart().getProductIDs().get(productID);
-            if (!Product.getProductWithID(productID).isAvailableBySalesmanWithUsername(salesmanID)) {
-                errorProductIDs.put(productID, salesmanID);
+        for (Triplet<String, String, Integer> item : customerCart.getAllItems()) {
+            if (!Product.getProductWithID(item.getValue0()).isAvailableBySalesmanWithUsername(item.getValue1(), item.getValue2())) {
+                errorProductIDs.put(item.getValue0(), item.getValue1());
             }
         }
         //set answer to server

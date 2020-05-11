@@ -2,10 +2,8 @@ package Model.Account;
 
 import Model.Cart.Cart;
 import Model.Off.OffCode;
-import Model.Off.Sale;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -14,7 +12,7 @@ import static Model.Storage.*;
 public class Customer extends Account implements Serializable {
     private int credit;
     private Cart cart;
-    private HashMap<String, Integer> offCodesUsage;
+    private HashMap<String, Integer> customerOffCodes;
 
     public Customer(String username, String password, String firstName, String secondName, String Email, String telephone,
                     String role, int credit, HashMap<String, String> productsAlreadyInCart) {
@@ -26,7 +24,7 @@ public class Customer extends Account implements Serializable {
                 cart.addProductToCart(productID, productsAlreadyInCart.get(productID), cart.getCartID());
             }
         }
-        offCodesUsage = new HashMap<>();
+        customerOffCodes = new HashMap<>();
     }
 
     public int getCredit() {
@@ -72,20 +70,22 @@ public class Customer extends Account implements Serializable {
         return cart.isCartEmpty();
     }
 
-    public HashMap<String, Integer> getOffCodesUsage() {
-        return offCodesUsage;
+    public HashMap<String, Integer> getCustomerOffCodes() {
+        return customerOffCodes;
     }
 
     public void useOffCode(String offCodeID) {
-        int count = offCodesUsage.get(offCodeID);
-        offCodesUsage.replace(offCodeID, count, count - 1);
-        if (offCodesUsage.get(offCodeID) == 0) {
-            offCodesUsage.remove(offCodeID);
+        if (offCodeID != null) {
+            int count = customerOffCodes.get(offCodeID);
+            customerOffCodes.replace(offCodeID, count, count - 1);
+            if (customerOffCodes.get(offCodeID) == 0) {
+                customerOffCodes.remove(offCodeID);
+            }
         }
     }
 
     public void addOffCode(OffCode offCode) {
-        offCodesUsage.put(offCode.getOffCodeID(), offCode.getNumberOfTimesCanBeUsed());
+        customerOffCodes.put(offCode.getOffCodeID(), offCode.getNumberOfTimesCanBeUsed());
     }
 
     @Override
