@@ -3,6 +3,7 @@ package Menus.shows;
 import Menus.Filters.AccountsFilterMenu;
 import Menus.LoginOrRegisterMenu;
 import Menus.Menu;
+import Menus.Sorts.AccountsSortMenu;
 import Menus.Views.ViewAccountMenu;
 
 import java.util.HashMap;
@@ -14,10 +15,16 @@ public class ShowAccountsMenu extends ShowsMenu {
         super(fatherMenu, menuName);
         HashMap<Integer, Menu> subMenus = new HashMap<Integer, Menu>();
         filter = new AccountsFilterMenu(this, "Account Filter Menu");
+        sort = new AccountsSortMenu(this, "Account Sorts Menu");
         subMenus.put(1, filter);
-        subMenus.put(2, getSelectMenu());
-        subMenus.put(3, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
+        subMenus.put(2, sort);
+        subMenus.put(3, getSelectMenu());
+        subMenus.put(4, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
         this.setSubMenus(subMenus);
+    }
+
+    public void resetSorts() {
+        sort.resetSorts();
     }
 
     public void resetFilters() {
@@ -72,7 +79,7 @@ public class ShowAccountsMenu extends ShowsMenu {
     }
 
     private void getInfo() {
-        server.clientToServer("show accounts " + username + filter.getFilters());
+        server.clientToServer("show accounts " + username + filter.getFilters() + " " + sort.getSort());
         this.serverAnswer = server.serverToClient();
         System.out.println(serverAnswer);
     }

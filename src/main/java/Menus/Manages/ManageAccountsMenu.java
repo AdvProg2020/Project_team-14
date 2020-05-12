@@ -99,6 +99,7 @@ public class ManageAccountsMenu extends Menu {
     @Override
     public void execute() {
         ((ShowAccountsMenu) this.subMenus.get(1)).resetFilters();
+        ((ShowAccountsMenu) this.subMenus.get(1)).resetSorts();
         super.execute();
     }
 }

@@ -163,7 +163,7 @@ public class Server {
         String[] input = command.split("\\s");
         if (command.contains("filter")) {
             for (int i = 4; i < getWordCount(command); i += 2) {
-                if (input[i].equalsIgnoreCase("sorts:")) {
+                if (input[i].equalsIgnoreCase("sort:")) {
                     break;
                 }
                 filters.add(input[i]);
@@ -173,11 +173,35 @@ public class Server {
         return filters;
     }
 
+    private String getSortFactor(String command) {
+        String[] input = command.split("\\s");
+        if (command.contains("sort:")) {
+            for (int i = 4; i < getWordCount(command); i++) {
+                if (input[i].equalsIgnoreCase("sort:")) {
+                    return input[i + 1];
+                }
+            }
+        }
+        return "none";
+    }
+
+    private String getSortType(String command) {
+        String[] input = command.split("\\s");
+        if (command.contains("sort:")) {
+            for (int i = 4; i < getWordCount(command); i++) {
+                if (input[i].equalsIgnoreCase("sort:")) {
+                    return input[i + 2];
+                }
+            }
+        }
+        return "none";
+    }
+
     private void showAccounts(String command) {
         ArrayList<Object> filters;
         filters = getFilters(command);
         String[] input = command.split("\\s");
-        bossManager.showAccounts(input[2], filters);
+        bossManager.showAccounts(input[2], filters, getSortFactor(command), getSortType(command));
     }
 
     private void editPersonalInfo(String command) {

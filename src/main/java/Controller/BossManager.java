@@ -7,6 +7,7 @@ package Controller;
 //import Model.Product.Product;
 //import Model.Request.Request;
 
+import Controller.SortFactorEnum.AccountSortFactor;
 import Model.Account.*;
 import Model.Request.Request;
 import Model.Storage;
@@ -128,9 +129,12 @@ public class BossManager {
         return true;
     }
 
-    public void showAccounts(String username, ArrayList<Object> filters) {
+    public void showAccounts(String username, ArrayList<Object> filters, String sortFactor, String sortType) {
         int count = 0;
         ArrayList<Account> accounts = Storage.getAllAccounts();
+        if (!sortFactor.equalsIgnoreCase("none")) {
+            AccountSortFactor.sort(sortFactor, accounts);
+        }
         StringBuilder answer = new StringBuilder("All Accounts Username:").append("\n");
         if (accounts.size() == 0) {
             Server.setAnswer("no account found with this username");
