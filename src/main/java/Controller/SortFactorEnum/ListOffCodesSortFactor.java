@@ -26,8 +26,8 @@ public enum ListOffCodesSortFactor {
         } else if (sortFactor.equals(ListOffCodesSortFactor.PERCENTAGE.name())) {
             offCodes.sort(Comparator.comparingInt(OffCode::getPercentage));
         } else if (!sortFactor.isEmpty()) {
-            throw new SortFactorNotAvailableException("the sort factor isn't authentic " + "\n" +
-                    "the available sort factors: " + BossManager.getSortFactorsForListingOffCodes());
+            /*throw new SortFactorNotAvailableException("the sort factor isn't authentic " + "\n" +
+                    "the available sort factors: " + BossManager.getSortFactorsForListingOffCodes());*/
         }
     }
 }

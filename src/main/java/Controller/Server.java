@@ -1,8 +1,8 @@
 package Controller;
 
-import Model.Cart.Cart;
-import Model.Category.Category;
-import Model.Storage;
+//import Model.Cart.Cart;
+//import Model.Category.Category;
+//import Model.Storage;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,8 +19,7 @@ public class Server {
     private CustomerManager customerManager;
 
     //first is username, second is a cart
-    private HashMap<String, Cart> abstractCarts;
-
+    //private HashMap<String, Cart> abstractCarts;
     static private String answer;
 
     public Server() {
@@ -29,7 +28,7 @@ public class Server {
         this.bossManager = new BossManager();
         this.customerManager = new CustomerManager();
         this.salesmanManager = new SalesmanManager();
-        abstractCarts = new HashMap<>();
+        //abstractCarts = new HashMap<>();
     }
 
     public static void setAnswer(String answer) {
@@ -45,8 +44,7 @@ public class Server {
         return pattern.matcher(command);
     }
 
-    public void clientToServer(String command) throws UsernameAlreadyExistException, MoreMoneyThanLimitsException,
-            IncorrectPasswordException, InvalidUserNameException, BossAlreadyExistException, SalesmanNotConfirmedYetException {
+    public void clientToServer(String command) {
         Matcher matcher;
         if ((matcher = getMatcher("login (\\w+) (\\w+)", command)).find()) {
             this.login(matcher);
@@ -60,25 +58,25 @@ public class Server {
             this.viewPersonalInfo(command);
         } else if (command.startsWith("edit personal info ")) {
             this.editPersonalInfo(command);
-        } else if (command.startsWith("show accounts ")) {
+        }/* else if (command.startsWith("show accounts ")) {
             this.showAccounts(command);
         } else if (command.startsWith("view account info ")) {
             this.viewAccountInfo(command);
         } else if (command.startsWith("see authorization ")) {
             this.seeAuthorization(command);
-        } else if (command.startsWith("delete account ")) {
+        }*/ else if (command.startsWith("delete account ")) {
             this.deleteAccount(command);
-        } else if (command.startsWith("search account ")) {
+        }/* else if (command.startsWith("search account ")) {
             this.searchAccount(command);
         } else if (command.startsWith("show requests ")) {
             this.showRequests(command);
-        }
+        }*/
     }
 
-    private void showRequests(String command) {
+    /*private void showRequests(String command) {
         String[] input = command.split("\\s");
         bossManager.showRequest(input[2]);
-    }
+    }*/
 
     private void searchAccount(String command) {
         String[] input = command.split("\\s");
@@ -90,10 +88,10 @@ public class Server {
         accountManager.deleteAccount(input[2], input[3]);
     }
 
-    private void seeAuthorization(String command) {
+    /*private void seeAuthorization(String command) {
         String[] input = command.split("\\s");
         bossManager.seeAuthorization(input[2], input[3]);
-    }
+    }*/
 
     private void viewAccountInfo(String command) {
         String[] input = command.split("\\s");
@@ -128,10 +126,10 @@ public class Server {
         ArrayList<Object> filters;
         filters = getFilters(command);
         String[] input = command.split("\\s");
-        bossManager.showAccounts(input[2], filters);
+        //bossManager.showAccounts(input[2], filters);
     }
 
-    private void editPersonalInfo(String command) throws UsernameAlreadyExistException, IncorrectPasswordException, MoreMoneyThanLimitsException {
+    private void editPersonalInfo(String command) {
         String[] input = command.split("\\s");
         switch (input[3]) {
             case "firstName":
@@ -198,7 +196,7 @@ public class Server {
         accountManager.viewAccountInformation(input[3]);
     }
 
-    private void forgotPassword(String command) throws InvalidUserNameException {
+    private void forgotPassword(String command) {
         accountManager.forgotPassword(command.split("\\s")[2]);
     }
 
@@ -206,7 +204,7 @@ public class Server {
         accountManager.logout(command.split("\\s")[1]);
     }
 
-    private void login(Matcher matcher) throws SalesmanNotConfirmedYetException, IncorrectPasswordException, InvalidUserNameException {
+    private void login(Matcher matcher) {
         accountManager.login(matcher.group(1), matcher.group(2));
     }
 
@@ -237,7 +235,7 @@ public class Server {
     //we should make sure that each word doesn't contain any space otherwise
     //we will reach trouble spiting it with "\\s"
 
-    private void register(String input) throws UsernameAlreadyExistException, BossAlreadyExistException {
+    private void register(String input) {
         Server.answer = "";
         String[] attributes = input.split("\\s");
         if (!checkNameFormat(attributes[1])) {
@@ -271,7 +269,7 @@ public class Server {
                 customerManager.register(attributes);
             } else {
                 if (Server.hasBoss) {
-                    throw new BossAlreadyExistException("a boss has already registered!");
+                    Server.setAnswer("a boss has already registered");
                 } else {
                     bossManager.register(attributes);
                 }
@@ -288,17 +286,16 @@ public class Server {
      */
 
     public void showBalance(String username) {
-        Server.setAnswer("Your Balance is : " + Storage.getAccountWithUsername(username).getCredit());
+        //Server.setAnswer("Your Balance is : " + Storage.getAccountWithUsername(username).getCredit());
     }
 
     public void listCategories(String sortFactor) {
-        StringBuilder ans = new StringBuilder("Here are all Categories name:");
+        /*StringBuilder ans = new StringBuilder("Here are all Categories name:");
         for (Category category : Storage.allCategories) {
             ans.append("\n").append(category.getCategoryName());
         }
-        Server.setAnswer(ans.toString());
+        Server.setAnswer(ans.toString());*/
     }
-
 
 
 }

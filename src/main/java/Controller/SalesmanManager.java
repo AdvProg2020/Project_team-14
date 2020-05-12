@@ -25,9 +25,9 @@ public class SalesmanManager {
      * this is AccountManager part
      */
 
-    public void register(String[] information) throws UsernameAlreadyExistException {
+    public void register(String[] information) {
         if (Storage.isThereAccountWithUsername(information[3])) {
-            throw new UsernameAlreadyExistException("user name is already taken, try something else");
+            Server.setAnswer("username is already taken, try something else");
         }
         Server.setAnswer("register successful");
         new Salesman(information[3], information[4], information[1], information[2],
@@ -50,12 +50,12 @@ public class SalesmanManager {
      */
 
     //default sort factor is percentage
-    public void listSales(String salesmanID ,String sortFactor) {
+    public void listSales(String salesmanID, String sortFactor) {
         StringBuilder result = new StringBuilder("Here are All of your Sales:");
         ArrayList<Sale> sales = new ArrayList<>(Sale.getAllAuthenticSales(salesmanID));
         if (sortFactor.equalsIgnoreCase(valueOf(ListSalesSortFactor.PERCENTAGE))) {
             sales.sort(Comparator.comparingInt(Sale::getPercentage));
-        }  else if (sortFactor.equalsIgnoreCase(valueOf(ListSalesSortFactor.END_DATE))) {
+        } else if (sortFactor.equalsIgnoreCase(valueOf(ListSalesSortFactor.END_DATE))) {
             sales.sort(Comparator.comparing(Sale::getEnd));
         } else if (sortFactor.equals("")) {
             sales.sort(Comparator.comparingInt(Sale::getPercentage));

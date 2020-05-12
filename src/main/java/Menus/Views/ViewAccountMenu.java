@@ -10,14 +10,11 @@ public class ViewAccountMenu extends Menu {
     private int whereItHasBeenCalled;
     private String username;
 
-    public String getUsername() {
-        return username;
-    }
-
     private void PersonalInfoSubMenus(HashMap subMenus) {
         if (whereItHasBeenCalled <= 3) {
             subMenus.put(1, new EditAccountMenu(this, "Edit Personal Info Menu"));
-            subMenus.put(2, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
+            subMenus.put(2, getDeleteAccountMenu());
+            subMenus.put(3, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
         } else {
             server.clientToServer("see authorization " + Menu.username + " " + this.username);
             String serverAnswer = server.serverToClient();
@@ -28,32 +25,6 @@ public class ViewAccountMenu extends Menu {
                 subMenus.put(1, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
             }
         }
-    }
-
-    private Menu getDeleteAccountMenu() {
-        return new Menu(this, "Delete Account Menu") {
-            @Override
-            public void execute() {
-                System.out.println("are you sure you want to delete this account?");
-                String input = scanner.nextLine();
-                if (input.equalsIgnoreCase("yes")) {
-                    server.clientToServer("delete account " + Menu.username + " " +
-                            ((ViewAccountMenu) fatherMenu).getUsername());
-                    String serverAnswer = server.serverToClient();
-                    System.out.println(serverAnswer);
-                    if (serverAnswer.equalsIgnoreCase("deleted successfully")) {
-                        fatherMenu.getFatherMenu().getFatherMenu().execute();
-                    } else {
-                        fatherMenu.execute();
-                    }
-                } else if (input.equalsIgnoreCase("no")) {
-                    fatherMenu.execute();
-                } else {
-                    System.out.println("error");
-                    this.execute();
-                }
-            }
-        };
     }
 
     public ViewAccountMenu(Menu fatherMenu, String menuName) {
@@ -75,6 +46,50 @@ public class ViewAccountMenu extends Menu {
         this.setSubMenus(subMenus);
     }
 
+    private Menu getDeleteAccountMenu() {
+        return new Menu(this, "Delete Account Menu") {
+            @Override
+            public void execute() {
+                if (fatherMenu.getWhereItHasBeenCalled() <= 3) {
+                    System.out.println("are you sure you want to delete your account?");
+                } else {
+                    System.out.println("are you sure you want to delete this account?");
+                }
+                String input = scanner.nextLine();
+                if (input.equalsIgnoreCase("yes")) {
+                    if (fatherMenu.getWhereItHasBeenCalled() <= 3) {
+                        server.clientToServer("delete account " + Menu.username + " " + Menu.username);
+                    } else {
+                        server.clientToServer("delete account " + Menu.username + " " +
+                                ((ViewAccountMenu) fatherMenu).getUsername());
+                    }
+                    String serverAnswer = server.serverToClient();
+                    System.out.println(serverAnswer);
+                    if (serverAnswer.equalsIgnoreCase("deleted successfully")) {
+                        if (fatherMenu.getWhereItHasBeenCalled() <= 3) {
+                            Menu.isUserLogin = false;
+                            Menu.username = null;
+                            Menu.userType = null;
+                        }
+                        fatherMenu.getFatherMenu().getFatherMenu().execute();
+                    } else {
+                        fatherMenu.execute();
+                    }
+                } else if (input.equalsIgnoreCase("no")) {
+                    fatherMenu.execute();
+                } else {
+                    System.out.println("error");
+                    this.execute();
+                }
+            }
+        };
+    }
+
+
+    public String getUsername() {
+        return username;
+    }
+
     public void setAccount(String username) {
         this.username = username;
         HashMap<Integer, Menu> subMenus = new HashMap<Integer, Menu>();
@@ -82,7 +97,6 @@ public class ViewAccountMenu extends Menu {
         this.setSubMenus(subMenus);
     }
 
-    @Override
     public int getWhereItHasBeenCalled() {
         return whereItHasBeenCalled;
     }

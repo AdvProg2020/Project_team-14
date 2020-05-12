@@ -15,15 +15,22 @@ public class Customer extends Account implements Serializable {
     private HashMap<String, Integer> customerOffCodes;
 
     public Customer(String username, String password, String firstName, String secondName, String Email, String telephone,
+                    String role) {
+        super(username, password, firstName, secondName, Email, telephone, role);
+        this.credit = 0;
+        //customerOffCodes = new HashMap<>();
+    }
+
+    public Customer(String username, String password, String firstName, String secondName, String Email, String telephone,
                     String role, int credit, HashMap<String, String> productsAlreadyInCart) {
         super(username, password, firstName, secondName, Email, telephone, role);
         this.credit = credit;
-        cart = new Cart(username);
+        /*cart = new Cart(username);
         if (productsAlreadyInCart != null) {
             for (String productID : productsAlreadyInCart.keySet()) {
                 cart.addProductToCart(productID, productsAlreadyInCart.get(productID), cart.getCartID());
             }
-        }
+        }*/
         customerOffCodes = new HashMap<>();
     }
 
@@ -35,9 +42,9 @@ public class Customer extends Account implements Serializable {
         this.credit = credit;
     }
 
-    public boolean isCreditEnoughAccordingToCartWithOffCode(String offCode) {
+    /*public boolean isCreditEnoughAccordingToCartWithOffCode(String offCode) {
         return (credit > cart.getTotalPrice(offCode));
-    }
+    }*/
 
     public Cart getCart() {
         return cart;
@@ -66,9 +73,9 @@ public class Customer extends Account implements Serializable {
         }
     }
 
-    public boolean isCartEmpty() {
+    /*public boolean isCartEmpty() {
         return cart.isCartEmpty();
-    }
+    }*/
 
     public HashMap<String, Integer> getCustomerOffCodes() {
         return customerOffCodes;

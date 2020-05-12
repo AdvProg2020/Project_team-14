@@ -1,21 +1,20 @@
 package Controller;
 
-import Controller.SortFactorEnum.ListOffCodesSortFactor;
-import Controller.SortFactorEnum.ListProductSortFactor;
-import Model.Account.Account;
-import Model.Account.Boss;
-import Model.Category.Category;
-import Model.Off.OffCode;
-import Model.Product.Product;
-import Model.Request.Request;
+//import Controller.SortFactorEnum.ListOffCodesSortFactor;
+//import Controller.SortFactorEnum.ListProductSortFactor;
+//import Model.Category.Category;
+//import Model.Off.OffCode;
+//import Model.Product.Product;
+//import Model.Request.Request;
+
 import Model.Account.*;
-import Model.Request.Request;
+//import Model.Request.Request;
 import Model.Storage;
 import Exception.*;
 
-import java.text.ParseException;
+//import java.text.ParseException;
 import java.rmi.ServerError;
-import java.util.ArrayList;
+//import java.util.ArrayList;
 import java.util.Comparator;
 
 public class BossManager {
@@ -24,9 +23,9 @@ public class BossManager {
      * this is Account part
      */
 
-    public void register(String[] information) throws UsernameAlreadyExistException {
+    public void register(String[] information) {
         if (Storage.isThereAccountWithUsername(information[3])) {
-            throw new UsernameAlreadyExistException("the username is already take, try something else");
+            Server.setAnswer("the username is already taken, try something else");
         }
         Server.setAnswer("register successful");
         Server.setHasBoss(true);
@@ -98,7 +97,7 @@ public class BossManager {
     }
 
     public void showAccounts(String username) throws InvalidUserNameException {
-    private boolean isAccountInFilter(Account account, ArrayList<Object> filters) {
+    /*private boolean isAccountInFilter(Account account, ArrayList<Object> filters) {
         for (int i = 0; i < filters.size(); i += 2) {
             if (((String) filters.get(i)).equalsIgnoreCase("role")) {
                 if (checkRoleFilter(account, (String) filters.get(i + 1)) == false) {
@@ -117,9 +116,9 @@ public class BossManager {
             }
         }
         return true;
-    }
+    }*/
 
-    public void showAccounts(String username, ArrayList<Object> filters) {
+    /*public void showAccounts(String username, ArrayList<Object> filters) {
         int count = 0;
         ArrayList<Account> accounts = Storage.getAllAccounts();
         StringBuilder answer = new StringBuilder("All Accounts Username:").append("\n");
@@ -140,9 +139,9 @@ public class BossManager {
             String ans = answer.toString();
             Server.setAnswer(ans);
         }
-    }
+    }*/
 
-    public void seeAuthorization(String bossUsername, String username) {
+    /*public void seeAuthorization(String bossUsername, String username) {
         Account account = Storage.getAccountWithUsername(username);
         if (account instanceof Salesman) {
             Server.setAnswer("salesman");
@@ -162,17 +161,17 @@ public class BossManager {
                 account = Storage.getAccountWithUsername(fatherBoss);
             }
         }
-    }
+    }*/
 
-    public static void changeFathers(String bossAccount, String username) {
+    /*public static void changeFathers(String bossAccount, String username) {
         for (Account account : Storage.getAllAccounts()) {
             if (((Boss) account).getFatherBoss().equals(username)) {
                 ((Boss) account).setFatherBoss(bossAccount);
             }
         }
-    }
+    }*/
 
-    public void showRequest(String username) {
+    /*public void showRequest(String username) {
         int count = 0;
         ArrayList<Request> requests = Storage.getAllRequests();
         StringBuilder answer = new StringBuilder("");
@@ -194,16 +193,16 @@ public class BossManager {
         answer.append("here are what we found").append("\n");
         String ans = answer.toString();
         Server.setAnswer(ans);
-    }
+    }*/
 
-    //can be handel in AccountManager(this class has the same method)
-    public void showUsersInfo(String username) {
+        //can be handel in AccountManager(this class has the same method)
+    /*public void showUsersInfo(String username) {
         Account account = Storage.getAccountWithUsername(username);
         assert account != null;
         Server.setAnswer(account.toString());
-    }
+    }*/
 
-    public void deleteUser(String username) {
+    /*public void deleteUser(String username) {
         //should we check equality? (users can't remove themselves :|)
         //we can handel error whit exception
         if (Storage.getAccountWithUsername(username) == null) {
@@ -212,11 +211,11 @@ public class BossManager {
             //Storage.allAccounts.remove(Storage.getAccountWithUsername(username));
             Server.setAnswer("user successfully removed");
         }
-    }
+    }*/
 
-    //public void createManager(String[] info)   ---   should we have such a thing??
+        //public void createManager(String[] info)   ---   should we have such a thing??
 
-    public void listAllProducts(String sortFactor) throws SortFactorNotAvailableException {
+    /*public void listAllProducts(String sortFactor) throws SortFactorNotAvailableException {
         ArrayList<Product> products = new ArrayList<>(Storage.allProducts);
         ListProductSortFactor.sort(sortFactor, products);
         StringBuilder ans = new StringBuilder("Here are All products:").append("\n");
@@ -224,30 +223,30 @@ public class BossManager {
             ans.append(product.toStringForBossView());
         }
         Server.setAnswer(ans.toString());
-    }
+    }*/
 
-    //it gets us possible sort factors
+        //it gets us possible sort factors
 
-    public String getSortFactorsForListingAllProducts() {
+    /*public String getSortFactorsForListingAllProducts() {
         return ListProductSortFactor.getValues();
-    }
+    }*/
 
-    public void deleteProduct(String productID) {
+    /*public void deleteProduct(String productID) {
         if (Product.getProductWithID(productID) == null) {
             Server.setAnswer("error, there isn't any product whit this ID");
         } else {
             Storage.allProducts.remove(Product.getProductWithID(productID));
             Server.setAnswer("product with id [" + productID + "] removed successfully");
         }
-    }
+    }*/
 
-    /*
-     * this is discount codes part
-     */
+        /*
+         * this is discount codes part
+         */
 
-    //info: 0 -> start, 1 -> end, 2 -> percentage, 3 -> ceiling, 4 -> numberOfTimeCanBeUsed
+        //info: 0 -> start, 1 -> end, 2 -> percentage, 3 -> ceiling, 4 -> numberOfTimeCanBeUsed
 
-    public void createDiscountCode(String[] info, ArrayList<String> usernameCanUse) throws ParseException {
+    /*public void createDiscountCode(String[] info, ArrayList<String> usernameCanUse) throws ParseException {
         new OffCode(info[0], info[1], Integer.parseInt(info[2]), Integer.parseInt(info[3]), Integer.parseInt(info[4]), usernameCanUse);
         Server.setAnswer("offCode created successfully");
     }
@@ -305,22 +304,21 @@ public class BossManager {
             Storage.allOffCodes.remove(OffCode.getOffCodeByID(offCodeID));
             Server.setAnswer("offCode with ID [" + offCodeID + "] removed successfully");
         }
-    }
+    }*/
 
-    /*
-     * this is request part
-     */
+        /*
+         * this is request part
+         */
 
-    public void listAllRequests() {
+    /*public void listAllRequests() {
         StringBuilder ans = new StringBuilder("Here are All Requests:").append("\n");
         for (Request request : Request.getCheckingRequests()) {
             ans.append("Request ID: ").append(request.getRequestID()).append(", Request Type: ").append(request.getRequestType());
         }
         Server.setAnswer(ans.toString());
-    }
+    }*/
 
-    public void viewRequest(String requestID) throws InvalidRequestIDException {
-    /*public void viewRequest(String requestID) {
+    /*public void viewRequest(String requestID) throws InvalidRequestIDException {
         Request request = Request.getRequestByID(requestID);
         if (request == null) {
             throw new InvalidRequestIDException("Request ID is not authentic");
@@ -329,8 +327,7 @@ public class BossManager {
         }
     }*/
 
-    public void acceptRequest(String requestID) throws ParseException, InvalidRequestIDException {
-    /*public void acceptRequest(String requestID) throws ParseException {
+    /*public void acceptRequest(String requestID) throws ParseException, InvalidRequestIDException {
         Request request = Request.getRequestByID(requestID);
         if (request == null) {
             throw new InvalidRequestIDException("Request ID is not authentic");
@@ -340,8 +337,8 @@ public class BossManager {
         }
     }*/
 
-    public void declineRequest(String requestID) throws InvalidRequestIDException {
-    /*public void declineRequest(String requestID) {
+    /*public void declineRequest(String requestID) throws InvalidRequestIDException {
+    public void declineRequest(String requestID) {
         Request request = Request.getRequestByID(requestID);
         if (request == null) {
             throw new InvalidRequestIDException("Request ID is not authentic");
@@ -351,17 +348,17 @@ public class BossManager {
         }
     }*/
 
-    /*
-     * this is category part
-     */
+        /*
+         * this is category part
+         */
 
-    //info: 0 -> attribute, 1 -> parent category name, 2 -> category name
+        //info: 0 -> attribute, 1 -> parent category name, 2 -> category name
 
-    public void addCategory(String[] info) {
+    /*public void addCategory(String[] info) {
         new Category(info[0], info[1], info[2]);
-    }
+    }*/
 
-    public void editCategory(String categoryName, String attribute, String updatedInfo) throws InvalidCategoryNameException {
+    /*public void editCategory(String categoryName, String attribute, String updatedInfo) throws InvalidCategoryNameException {
         Category category = Category.getCategoryByName(categoryName);
         if (category == null) {
             throw new InvalidCategoryNameException("there's no category with this name");
@@ -379,9 +376,9 @@ public class BossManager {
             }
             Server.setAnswer("your changes updated successfully");
         }
-    }
+    }*/
 
-    public void removeCategory(String categoryName) throws InvalidCategoryNameException {
+    /*public void removeCategory(String categoryName) throws InvalidCategoryNameException {
         Category category = Category.getCategoryByName(categoryName);
         if (category == null) {
             throw new InvalidCategoryNameException("there's no category with this name");
@@ -392,6 +389,7 @@ public class BossManager {
             }
             Server.setAnswer("category deleted successfully");
         }
-    }
+    }*/
 
+    }
 }

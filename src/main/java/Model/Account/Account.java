@@ -5,7 +5,7 @@ import Model.Storage;
 import static Model.Storage.*;
 
 public abstract class Account {
-    private transient boolean isOnline;
+    private boolean isOnline;
     private String username;
     private String password;
     private String firstName;
@@ -92,12 +92,11 @@ public abstract class Account {
         this.telephone = telephone;
     }
 
+    public abstract int getCredit();
+
     public String toStringForBoss() {
         return "Username: " + this.getUsername() + " Role: " + this.getRole();
     }
-    public abstract int getCredit();
-
-    public String toStringForBoss() {return "Username: " + this.getUsername() + " Role: " + this.getRole(); }
 
     public String toString() {
         String result = "";

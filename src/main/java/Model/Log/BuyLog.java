@@ -30,9 +30,9 @@ public class BuyLog extends Log {
 
     //mark we should make sure that the offCode is authentic before passing it to BuyLog
 
-    public BuyLog(Cart cart, String offCodeID) {
+    /*public BuyLog(Cart cart, String offCodeID) {
         super();
-        this.products = cart.getProductIDs();
+        //this.products = cart.getProductIDs();
         this.prices = cart.getPrices();
         this.pricesAfterSale = cart.getPricesAfterSale();
         this.customerUsername = cart.getUsername();
@@ -53,7 +53,7 @@ public class BuyLog extends Log {
         for (String productID : products.keySet()) {
             new SellLog(this, productID, products.get(productID));
         }
-    }
+    }*/
 
     public HashMap<String, Integer> getPrices() {
         return prices;

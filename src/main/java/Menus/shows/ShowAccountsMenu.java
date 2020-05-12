@@ -55,16 +55,14 @@ public class ShowAccountsMenu extends ShowsMenu {
                 if (username.equalsIgnoreCase("back")) {
                     fatherMenu.execute();
                 }
-                if (fatherMenu instanceof ShowAccountsMenu) {
-                    String accounts = ((ShowAccountsMenu) fatherMenu).getServerAnswer();
-                    if (isThereAccountWithUsernameInList(accounts, username)) {
-                        ViewAccountMenu menu = new ViewAccountMenu(this, "View Account Menu");
-                        menu.setAccount(username);
-                        menu.execute();
-                    } else {
-                        this.execute();
-                        System.out.println("this account is not on the list");
-                    }
+                String accounts = ((ShowAccountsMenu) fatherMenu).getServerAnswer();
+                if (isThereAccountWithUsernameInList(accounts, username)) {
+                    ViewAccountMenu menu = new ViewAccountMenu(this, "View Account Menu");
+                    menu.setAccount(username);
+                    menu.execute();
+                } else {
+                    this.execute();
+                    System.out.println("this account is not on the list");
                 }
             }
         };

@@ -4,9 +4,11 @@ import Model.Account.*;
 import Model.Storage;
 import Exception.*;
 
+import javax.print.DocFlavor;
+
 public class AccountManager {
 
-    public void login(String username, String password) throws SalesmanNotConfirmedYetException, IncorrectPasswordException, InvalidUserNameException {
+    public void login(String username, String password) {
         if (Storage.isThereAccountWithUsername(username)) {
             Account account = Storage.getAccountWithUsername(username);
             assert account != null;
@@ -16,33 +18,30 @@ public class AccountManager {
                     if (!salesman.isConfirmed()) {
                         Server.setAnswer("you're not a confirmed salesman");
                         return;
-                        throw new SalesmanNotConfirmedYetException("you're not confirmed yet");
                     }
                 }
                 Server.setAnswer("login successful as " + account.getRole() + " " + username);
                 account.setOnline(true);
             } else {
-                throw new IncorrectPasswordException("your password is incorrect");
+                Server.setAnswer("your password is incorrect");
             }
         } else {
-            throw new InvalidUserNameException("the username doesn't exists");
+            Server.setAnswer("the username doesn't exists");
         }
     }
 
     public void logout(String username) {
         Account account = Storage.getAccountWithUsername(username);
-        assert account != null;
         account.setOnline(false);
         Server.setAnswer("logout successful");
     }
 
-    public void forgotPassword(String username) throws InvalidUserNameException {
+    public void forgotPassword(String username) {
         if (Storage.isThereAccountWithUsername(username)) {
             Account account = Storage.getAccountWithUsername(username);
-            assert account != null;
             Server.setAnswer("here is your password: " + account.getPassword());
         } else {
-            throw new InvalidUserNameException("the username doesn't exists");
+            Server.setAnswer("the username doesn't exists");
         }
     }
 
@@ -66,9 +65,9 @@ public class AccountManager {
         account.setSecondName(name);
     }
 
-    public void editUsername(String oldUsername, String newUsername) throws UsernameAlreadyExistException {
+    public void editUsername(String oldUsername, String newUsername) {
         if (Storage.isThereAccountWithUsername(newUsername)) {
-            throw new UsernameAlreadyExistException("username already exists, choose another one!");
+            Server.setAnswer("username already exists, choose another one!");
         } else {
             Server.setAnswer("edit successful");
             Account account = Storage.getAccountWithUsername(oldUsername);
@@ -91,18 +90,18 @@ public class AccountManager {
         Server.setAnswer("edit successful");
     }
 
-    public void editPassword(String username, String oldPassword, String newPassword) throws IncorrectPasswordException {
+    public void editPassword(String username, String oldPassword, String newPassword) {
         Account account = Storage.getAccountWithUsername(username);
         assert account != null;
         if (account.getPassword().equals(oldPassword)) {
             account.setPassword(newPassword);
             Server.setAnswer("edit successful");
         } else {
-            throw new IncorrectPasswordException("your previous password isn't correct");
+            Server.setAnswer("your previous password isn't correct");
         }
     }
 
-    public void editMoney(String username, String money) throws MoreMoneyThanLimitsException {
+    public void editMoney(String username, String money) {
         if (money.length() <= 8) {
             Account account = Storage.getAccountWithUsername(username);
             if (account instanceof Customer) {
@@ -112,7 +111,7 @@ public class AccountManager {
             }
             Server.setAnswer("edit successful");
         } else {
-            throw new MoreMoneyThanLimitsException("that's too much money, less money perhaps");
+            Server.setAnswer("that's too much money, less money perhaps");
         }
     }
 
@@ -127,7 +126,7 @@ public class AccountManager {
     public void deleteAccount(String bossUsername, String username) {
         Account account = Storage.getAccountWithUsername(username);
         if (account instanceof Boss) {
-            BossManager.changeFathers(bossUsername, username);
+            //BossManager.changeFathers(bossUsername, username);
         }
         Storage.getAllAccounts().remove(account);
         Server.setAnswer("deleted successfully");

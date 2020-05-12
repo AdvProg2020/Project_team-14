@@ -174,10 +174,10 @@ public class ProductManager {
         return arrayList;
     }
 
-    public void addCommentForProduct(String text, String username, String productID) {
+    /*public void addCommentForProduct(String text, String username, String productID) {
         Comment comment = new Comment(text, username, productID);
         new Request(comment);
-    }
+    }*/
 
     public boolean canUserCommentForProduct(String username, String productID) {
         return Comment.canUserCommentForProduct(username, productID);

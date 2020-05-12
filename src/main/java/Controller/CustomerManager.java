@@ -7,7 +7,8 @@ import Model.Off.OffCode;
 import Model.Product.Point;
 import Model.Product.Product;
 import Model.Storage;
-import org.javatuples.Triplet;
+import Exception.*;
+//import org.javatuples.Triplet;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,15 +20,15 @@ public class CustomerManager {
 
     public void register(String[] information) {
         if (Storage.isThereAccountWithUsername(information[3])) {
-            Server.setAnswer("username has already been taken");
+            Server.setAnswer("the username is already taken, try something else");
         }
         Server.setAnswer("register successful");
         new Customer(information[3], information[4], information[1], information[2],
                 information[6], information[7], information[5], 0, null);
     }
 
-    public void viewDiscountCodes (String username, String sortFactor) {
-        Customer customer = (Customer)Storage.getAccountWithUsername(username);
+    public void viewDiscountCodes(String username, String sortFactor) {
+        Customer customer = (Customer) Storage.getAccountWithUsername(username);
         HashMap<String, Integer> userOffCodes = customer.getCustomerOffCodes();
         /*
          * sort ArrayList
@@ -50,7 +51,7 @@ public class CustomerManager {
         Server.setAnswer(customer.getCart().toString());
     }
 
-    public void addOrRemoveProductToCart(String type, String username, String productID, String salesmanID) {
+    /*public void addOrRemoveProductToCart(String type, String username, String productID, String salesmanID) {
         //assume productID ans salesmanID are valid
         StringBuilder ans = new StringBuilder("your product ");
         Cart customerCart = Cart.getCartBasedOnUsername(username);
@@ -68,13 +69,13 @@ public class CustomerManager {
             }
         }
         Server.setAnswer(ans.toString());
-    }
+    }*/
 
-    public void showTotalPrice(String username) {
+    /*public void showTotalPrice(String username) {
         Customer customer = (Customer) Storage.getAccountWithUsername(username);
         assert customer != null;
         Server.setAnswer("Total Price:" + "\n" + customer.getCart().getTotalPrice(null));
-    }
+    }*/
 
     /*
      * this is order part
@@ -107,7 +108,7 @@ public class CustomerManager {
     //public void createLog();          ->      doesn't match this logic
     //public void setInfoOfLog();       ->      doesn't match this logic
 
-    public void canUserContinuePurchase(String username) {
+    /*public void canUserContinuePurchase(String username) {
         HashMap<String, String> errorProductIDs = new HashMap<>();
         Cart customerCart = Cart.getCartBasedOnUsername(username);
         //find errors
@@ -125,9 +126,9 @@ public class CustomerManager {
                 error.append("\n product [" + productID + "] is not available by [" + errorProductIDs.get(productID) + "]");
             }
         }
-    }
+    }*/
 
-    public void setOffCode(String username, String offCodeID) {
+    /*public void setOffCode(String username, String offCodeID) {
         StringBuilder ans = new StringBuilder("");
         OffCode offCode = OffCode.getOffCodeByID(offCodeID);
         if (offCodeID != null) {
@@ -142,9 +143,9 @@ public class CustomerManager {
         Customer customer = (Customer) Storage.getAccountWithUsername(username);
         assert customer != null;
         Server.setAnswer("Final Price:" + "\n" + customer.getCart().getTotalPrice(offCodeID));
-    }
+    }*/
 
-    public void buy(String username, String offCodeID) {
+    /*public void buy(String username, String offCodeID) {
         Customer customer = (Customer) Storage.getAccountWithUsername(username);
         assert customer != null;
         if (customer.getCart().buy(offCodeID)) {
@@ -152,5 +153,5 @@ public class CustomerManager {
         } else {
             Server.setAnswer("error, you don't have enough credit to purchase");
         }
-    }
+    }*/
 }

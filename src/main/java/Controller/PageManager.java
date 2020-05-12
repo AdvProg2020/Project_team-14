@@ -61,7 +61,7 @@ public class PageManager {
         }
     }
 
-    public void addProductToCart(String username, String productID, String salesmanID) {
+    /*public void addProductToCart(String username, String productID, String salesmanID) {
         Cart cart = Cart.getCartBasedOnUsername(username);
         if (cart.addProductToCart(productID, salesmanID, cart.getCartID())) {
             Server.setAnswer("product added to your cart successfully");
@@ -94,6 +94,6 @@ public class PageManager {
 
     public void addComment(String title, String content, String username, String productID) {
         new Comment(title, content, username, productID);
-    }
+    }*/
 
 }
