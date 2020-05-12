@@ -18,7 +18,7 @@ public class AccountsSortMenu extends SortsMenu {
     }
 
     private Menu getChangeSortUsernameAlphabetically() {
-        return new Menu(this, "change Username Alphabetically sort") {
+        return new Menu(this, "Change Username Alphabetically Sort") {
             @Override
             public void execute() {
                 System.out.println(menuName);
@@ -34,7 +34,7 @@ public class AccountsSortMenu extends SortsMenu {
                         if (input.equalsIgnoreCase("ascending") || input.equalsIgnoreCase
                                 ("descending") || input.equalsIgnoreCase("none")) {
                             ((SortsMenu) fatherMenu).setSortType(input);
-                            ((SortsMenu) fatherMenu).setSortFactor("username");
+                            ((SortsMenu) fatherMenu).setSortFactor("USERNAME");
                         } else {
                             System.out.println("wrong input");
                         }
@@ -61,7 +61,7 @@ public class AccountsSortMenu extends SortsMenu {
                         if (input.equalsIgnoreCase("ascending") || input.equalsIgnoreCase
                                 ("descending") || input.equalsIgnoreCase("none")) {
                             ((SortsMenu) fatherMenu).setSortType(input);
-                            ((SortsMenu) fatherMenu).setSortFactor("credit");
+                            ((SortsMenu) fatherMenu).setSortFactor("CREDIT");
                         } else {
                             System.out.println("wrong input");
                         }

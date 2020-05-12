@@ -31,7 +31,7 @@ public class SortsMenu extends Menu {
     }
 
     public String getSort() {
-        if (this.getSortType() == "none" || this.getSortFactor() == "none") {
+        if (this.getSortType().equals("none") || this.getSortFactor().equals("none")) {
             return "";
         } else {
             return "sort: " + this.getSortFactor() + " " + this.getSortType();

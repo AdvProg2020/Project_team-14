@@ -176,7 +176,7 @@ public class Server {
     private String getSortFactor(String command) {
         String[] input = command.split("\\s");
         if (command.contains("sort:")) {
-            for (int i = 4; i < getWordCount(command); i++) {
+            for (int i = 0; i < getWordCount(command); i++) {
                 if (input[i].equalsIgnoreCase("sort:")) {
                     return input[i + 1];
                 }
@@ -188,7 +188,7 @@ public class Server {
     private String getSortType(String command) {
         String[] input = command.split("\\s");
         if (command.contains("sort:")) {
-            for (int i = 4; i < getWordCount(command); i++) {
+            for (int i = 0; i < getWordCount(command); i++) {
                 if (input[i].equalsIgnoreCase("sort:")) {
                     return input[i + 2];
                 }
