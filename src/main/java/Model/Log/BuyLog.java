@@ -5,14 +5,17 @@ import Model.Off.OffCode;
 import Model.Product.Product;
 import Model.RandomString;
 import Model.Storage;
+import org.javatuples.Triplet;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class BuyLog extends Log {
 
-    //the first argument is productID and the second one is salesmanID
-    private HashMap<String, String> products;
+
+    //the first argument is productID and the second one is salesmanID the third one is product count
+    //----[ new ]-----
+    private ArrayList<Triplet<String, String, Integer>> allItems;
 
     //the first argument is productID and the second one is the prices with consideration of possible sales
     private HashMap<String, Integer> prices;
@@ -32,7 +35,7 @@ public class BuyLog extends Log {
 
     public BuyLog(Cart cart, String offCodeID) {
         super();
-        this.products = cart.getProductIDs();
+        this.allItems = cart.getAllItems();
         this.prices = cart.getPrices();
         this.pricesAfterSale = cart.getPricesAfterSale();
         this.customerUsername = cart.getUsername();
@@ -50,9 +53,16 @@ public class BuyLog extends Log {
         deliveryState = Delivery.PROCESSING;
         this.buyLogID = createID();
         Storage.allBuyLogs.add(this);
-        for (String productID : products.keySet()) {
-            new SellLog(this, productID, products.get(productID));
+        for (Triplet<String, String, Integer> item : allItems) {
+            new SellLog(this, item.getValue0(), item.getValue1());
         }
+    }
+    //----[ new ]-----
+    public int getProductCountByID(String productID) {
+        for (Triplet<String, String, Integer> item : allItems) {
+            if (item.getValue0().equals(productID)) return item.getValue2();
+        }
+        return -1;
     }
 
     public HashMap<String, Integer> getPrices() {
@@ -67,10 +77,6 @@ public class BuyLog extends Log {
         return pricesAfterSale;
     }
 
-    public HashMap<String, String> getProducts() {
-        return products;
-    }
-
     public String getCustomerUsername() {
         return customerUsername;
     }
@@ -83,8 +89,12 @@ public class BuyLog extends Log {
         return buyLogID;
     }
 
+    //----[ new ]-----
     public boolean containProduct(String productID) {
-        return products.containsKey(productID);
+        for (Triplet<String, String, Integer> item : allItems) {
+            if (item.getValue0().equals(productID)) return true;
+        }
+        return false;
     }
 
     public static ArrayList<BuyLog> getUserBuyLogs(String customerUsername) {
@@ -104,15 +114,16 @@ public class BuyLog extends Log {
         return null;
     }
 
-    private StringBuilder toStringSingleProduct(String productID) {
+    private StringBuilder toStringSingleItem(Triplet<String, String, Integer> item) {
         StringBuilder result = new StringBuilder();
-        result.append("Product Name:").append(Product.getNameByID(productID)).append("\n");
-        result.append("Salesman: ").append(products.get(productID)).append("\n");
-        result.append("Price: ").append(prices.get(productID)).append("\n");
-        if (pricesAfterSale.get(productID).equals(prices.get(productID))) {
+        result.append("Product Name:").append(Product.getNameByID(item.getValue0())).append("\n");
+        result.append("Salesman: ").append(item.getValue1()).append("\n");
+        result.append("Price Per Unit: ").append(prices.get(item.getValue0())).append("\n");
+        result.append("Count: ").append(item.getValue2()).append("\n");
+        if (pricesAfterSale.get(item.getValue0()).equals(prices.get(item.getValue0()))) {
             result.append("The product wasn't on sale." + "\n");
         } else {
-            result.append("The price after sale: ").append(pricesAfterSale.get(productID)).append("\n");
+            result.append("The price after sale: ").append(pricesAfterSale.get(item.getValue0())).append("\n");
         }
         result.append("------------------------------------------").append("\n");
         return result;
@@ -121,8 +132,8 @@ public class BuyLog extends Log {
     private String toStringProducts() {
         StringBuilder result = new StringBuilder();
         result.append("Products: " + "\n");
-        for (String productID : products.keySet()) {
-            result.append(toStringSingleProduct(productID));
+        for (Triplet<String, String, Integer> item : allItems) {
+            result.append(toStringSingleItem(item));
         }
         return result.toString();
     }

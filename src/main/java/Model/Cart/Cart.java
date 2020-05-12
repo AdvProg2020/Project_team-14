@@ -140,24 +140,24 @@ public class Cart implements Serializable {
         return cartID;
     }
 
-    //not updated with Triplet !!!!!!!
+    //----[ new ]---updated with Triplet
     public HashMap<String, Integer> getPrices() {
         HashMap<String, Integer> prices = new HashMap<>();
-        for (String productID : productIDs.keySet()) {
-            Product product = Product.getProductWithID(productID);
-            assert product != null;
-            prices.put(productID, product.getPriceBySalesmanID(productIDs.get(productID)));
+        for (Triplet<String, String, Integer> item : allItems) {
+            Product product = Product.getProductWithID(item.getValue0());
+            assert  product != null;
+            prices.put(item.getValue0(), product.getPriceBySalesmanID(item.getValue1()));
         }
         return prices;
     }
 
-    //not updated with Triplet !!!!!!!
+    //----[ new ]-----updated with Triplet
     public HashMap<String, Integer> getPricesAfterSale() {
         HashMap<String, Integer> prices = new HashMap<>();
-        for (String productID : productIDs.keySet()) {
-            Product product = Product.getProductWithID(productID);
+        for (Triplet<String, String, Integer> item : allItems) {
+            Product product = Product.getProductWithID(item.getValue0());
             assert product != null;
-            prices.put(productID, Sale.getPriceAfterSale(productID, productIDs.get(productID)));
+            prices.put(item.getValue0(), Sale.getPriceAfterSale(item.getValue0(), item.getValue1()));
         }
         return prices;
     }
