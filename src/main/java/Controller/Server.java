@@ -10,6 +10,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import Exception.*;
+import Model.Request.Enum.RequestType;
+import Model.Storage;
 
 public class Server {
     static private boolean hasBoss;
@@ -70,15 +72,33 @@ public class Server {
             this.searchAccount(command);
         } else if (command.startsWith("make new boss ")) {
             this.makeNewBoss(command);
-        }/* else if (command.startsWith("show requests ")) {
+        } else if (command.startsWith("show requests ")) {
             this.showRequests(command);
-        }*/
+        } else if (command.startsWith("view request ")) {
+            this.viewRequest(command);
+        } else if (command.startsWith("is request state checking ")) {
+            this.isRequestStateChecking(command);
+        }
     }
 
-    /*private void showRequests(String command) {
+    private void viewRequest(String command) {
         String[] input = command.split("\\s");
-        bossManager.showRequest(input[2]);
-    }*/
+        bossManager.viewRequest(input[2], input[3]);
+    }
+
+    private void isRequestStateChecking(String command) {
+        String[] input = command.split("\\s");
+        if (Storage.getRequestByID(input[4]).getRequestType().equals(RequestType.REGISTER_SALESMAN)) {
+            Server.setAnswer("yes");
+        } else {
+            Server.setAnswer("no");
+        }
+    }
+
+    private void showRequests(String command) {
+        String[] input = command.split("\\s");
+        bossManager.showRequests(input[2]);
+    }
 
     private void makeNewBoss(String input) {
         Server.answer = "";
@@ -265,6 +285,8 @@ public class Server {
 
     //we should make sure that each word doesn't contain any space otherwise
     //we will reach trouble spiting it with "\\s"
+    //answer:we can use something else like + for example
+    //right now we won't change it but we can use + for separating different attributes of message from client
 
     private void register(String input) {
         Server.answer = "";

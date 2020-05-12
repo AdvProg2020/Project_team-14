@@ -21,7 +21,7 @@ public abstract class RandomString {
         String result = "";
         result += type;
         result += "---";
-        result += getRandomString(25);
+        result += getRandomString(5);
         return result;
     }
 }

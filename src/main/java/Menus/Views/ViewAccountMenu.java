@@ -124,8 +124,4 @@ public class ViewAccountMenu extends Menu {
             this.getAccountInfo();
     }
 
-    @Override
-    public void execute() {
-        super.execute();
-    }
 }

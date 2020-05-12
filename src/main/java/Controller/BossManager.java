@@ -8,7 +8,7 @@ package Controller;
 //import Model.Request.Request;
 
 import Model.Account.*;
-//import Model.Request.Request;
+import Model.Request.Request;
 import Model.Storage;
 import Exception.*;
 
@@ -181,7 +181,7 @@ public class BossManager {
         }
     }*/
 
-    /*public void showRequest(String username) {
+    public void showRequests(String username) {
         int count = 0;
         ArrayList<Request> requests = Storage.getAllRequests();
         StringBuilder answer = new StringBuilder("");
@@ -189,7 +189,7 @@ public class BossManager {
             Server.setAnswer("nothing found");
         } else {
             for (Request request : requests) {
-                //answer.append(request.toStringForBoss() + "\n");
+                answer.append(request.toStringForBoss() + "\n");
                 count++;
             }
             if (count == 0) {
@@ -198,12 +198,16 @@ public class BossManager {
                 answer.append("here are what we found");
             }
             //if (!account.getUsername().equals(username))
-                //answer.append("Username: ").append(account.getUsername());    //just list users IDs, then he will select one
+            //answer.append("Username: ").append(account.getUsername());    //just list users IDs, then he will select one
         }
-        answer.append("here are what we found").append("\n");
         String ans = answer.toString();
         Server.setAnswer(ans);
-    }*/
+    }
+
+    public void viewRequest(String username, String requestID) {
+        Request request = Storage.getRequestByID(requestID);
+        Server.setAnswer(request.toString());
+    }
 
     //can be handel in AccountManager(this class has the same method)
     /*public void showUsersInfo(String username) {

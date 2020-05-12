@@ -26,7 +26,7 @@ public class ShowAccountsMenu extends ShowsMenu {
 
     private Menu getSelectMenu() {
         return new Menu(this, "Select Menu") {
-            boolean hasBeenCalled = true;
+            private boolean hasBeenCalled = true;
 
             private boolean isThereAccountWithUsernameInList(String list, String username) {
                 int wordCount = Menu.wordCount(list);
@@ -60,8 +60,8 @@ public class ShowAccountsMenu extends ShowsMenu {
                     menu.setAccount(username);
                     menu.execute();
                 } else {
-                    this.execute();
                     System.out.println("this account is not on the list");
+                    this.execute();
                 }
             }
         };

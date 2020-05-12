@@ -30,7 +30,7 @@ public class Storage {
     private static ArrayList<Account> allAccounts = new ArrayList<>();
     public static ArrayList<SpecialOffCode> allSpecialOffCodes = new ArrayList<>();
     public static ArrayList<Cart> allCarts = new ArrayList<>();
-    public static ArrayList<Request> allRequests = new ArrayList<>();
+    private static ArrayList<Request> allRequests = new ArrayList<>();
     public static ArrayList<SellLog> allSellLogs = new ArrayList<>();
 
     public static boolean isThereAccountWithUsername(String username) {
@@ -52,6 +52,17 @@ public class Storage {
 
     public static ArrayList<Request> getAllRequests() {
         return allRequests;
+    }
+
+    public static boolean isThereRequestByID(String requestID) {
+        return getRequestByID(requestID) != null;
+    }
+
+    public static Request getRequestByID(String requestID) {
+        for (Request request : Storage.allRequests) {
+            if (request.getRequestID().equals(requestID)) return request;
+        }
+        return null;
     }
 
     public static ArrayList<Customer> getAllCustomers() {

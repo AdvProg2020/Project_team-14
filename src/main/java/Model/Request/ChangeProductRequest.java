@@ -1,4 +1,5 @@
 package Model.Request;
+
 import Model.Product.Product;
 import Model.Request.Enum.*;
 
@@ -33,7 +34,7 @@ public class ChangeProductRequest extends Request {
         } else if (attribute.equals(ProductAttributes.DESCRIPTION)) {
             product.setDescription(updatedInfo);
         } else if (attribute.equals(ProductAttributes.IS_ON_SALE)) {
-            product.setIsOnSale(salesmanID, Boolean.parseBoolean(updatedInfo));
+            product.setIsOnSale(salesmanUsername, Boolean.parseBoolean(updatedInfo));
         }
     }
 
