@@ -34,7 +34,7 @@ public class ChangeProductRequest extends Request {
         } else if (attribute.equals(ProductAttributes.DESCRIPTION)) {
             product.setDescription(updatedInfo);
         } else if (attribute.equals(ProductAttributes.IS_ON_SALE)) {
-            product.setIsOnSale(salesmanUsername, Boolean.parseBoolean(updatedInfo));
+            product.setIsOnSale(accountUsername, Boolean.parseBoolean(updatedInfo));
         }
     }
 

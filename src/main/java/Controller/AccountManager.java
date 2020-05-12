@@ -126,7 +126,7 @@ public class AccountManager {
     public void deleteAccount(String bossUsername, String username) {
         Account account = Storage.getAccountWithUsername(username);
         if (account instanceof Boss) {
-            //BossManager.changeFathers(bossUsername, username);
+            BossManager.changeFathers(bossUsername, username);
         }
         Storage.getAllAccounts().remove(account);
         Server.setAnswer("deleted successfully");

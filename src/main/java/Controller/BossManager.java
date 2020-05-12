@@ -12,6 +12,7 @@ import Model.Account.*;
 import Model.Request.Request;
 import Model.Storage;
 import Exception.*;
+//import org.graalvm.compiler.nodes.calc.ObjectEqualsNode;
 
 //import java.text.ParseException;
 import java.rmi.ServerError;
@@ -177,15 +178,60 @@ public class BossManager {
         }
     }
 
-    /*public static void changeFathers(String bossAccount, String username) {
+    public static void changeFathers(String bossAccount, String username) {
         for (Account account : Storage.getAllAccounts()) {
             if (((Boss) account).getFatherBoss().equals(username)) {
                 ((Boss) account).setFatherBoss(bossAccount);
             }
         }
-    }*/
+    }
 
-    public void showRequests(String username) {
+    private int countWordsBySemicolon(String str) {
+        int counter = 0;
+        for (int i = 0; i < str.length(); i++) {
+            if (str.charAt(i) == ',') {
+                counter++;
+            }
+        }
+        return counter + 1;
+    }
+
+    private boolean checkUsernameFilter(Request request, String username) {
+        String[] usernames = username.split(",");
+        int usernameCount = countWordsBySemicolon(username);
+        for (int i = 0; i < usernameCount; i++) {
+            if (usernames[i].equals(request.getAccountUsername())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean checkRequestTypeFilter(Request request, String requestType) {
+        if (requestType.contains(request.getRequestType().toString())) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private boolean isRequestInFilter(Request request, ArrayList<Object> filters) {
+        for (int i = 0; i < filters.size(); i += 2) {
+            if (((String) filters.get(i)).equalsIgnoreCase("username")) {
+                if (checkUsernameFilter(request, (String) filters.get(i + 1)) == false) {
+                    return false;
+                }
+            }
+            if (((String) filters.get(i)).equalsIgnoreCase("requestType")) {
+                if (checkRequestTypeFilter(request, (String) filters.get(i + 1)) == false) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public void showRequests(String username, ArrayList<Object> filters) {
         int count = 0;
         ArrayList<Request> requests = Storage.getAllRequests();
         StringBuilder answer = new StringBuilder("");
@@ -193,8 +239,10 @@ public class BossManager {
             Server.setAnswer("nothing found");
         } else {
             for (Request request : requests) {
-                answer.append(request.toStringForBoss() + "\n");
-                count++;
+                if (isRequestInFilter(request, filters)) {
+                    answer.append(request.toStringForBoss() + "\n");
+                    count++;
+                }
             }
             if (count == 0) {
                 answer = new StringBuilder("nothing found");
@@ -213,16 +261,13 @@ public class BossManager {
         Server.setAnswer(request.toString());
     }
 
-    //can be handel in AccountManager(this class has the same method)
-    /*public void showUsersInfo(String username) {
-        Account account = Storage.getAccountWithUsername(username);
-        assert account != null;
-        Server.setAnswer(account.toString());
-    }*/
-
     /*public void deleteUser(String username) {
         //should we check equality? (users can't remove themselves :|)
         //we can handel error whit exception
+        //I add so users can delete themselves too
+        //and we need to check what thing should be deleted when a user get deleted
+        //we have it in account menu to
+        //and in edit username menu we should edit the username in for example request so i'm gonna fix it too :)
         if (Storage.getAccountWithUsername(username) == null) {
             Server.setAnswer("error, there isn't any user with this username, try another username");
         } else {

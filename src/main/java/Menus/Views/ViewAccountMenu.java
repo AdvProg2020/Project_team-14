@@ -14,7 +14,11 @@ public class ViewAccountMenu extends Menu {
         if (whereItHasBeenCalled <= 3) {
             subMenus.put(1, new EditAccountMenu(this, "Edit Personal Info Menu"));
             subMenus.put(2, getDeleteAccountMenu());
-            subMenus.put(3, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
+            if (whereItHasBeenCalled == 3) {
+                subMenus.put(3, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
+            } else {
+                subMenus.put(3, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
+            }
         } else {
             server.clientToServer("see authorization " + Menu.username + " " + this.username);
             String serverAnswer = server.serverToClient();

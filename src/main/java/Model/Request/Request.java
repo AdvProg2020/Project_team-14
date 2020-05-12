@@ -18,7 +18,7 @@ import static Model.RandomString.createID;
 
 public class Request implements Serializable {
     protected String requestID;
-    protected String salesmanUsername;
+    protected String accountUsername;
     protected Object object;
     protected RequestType requestType;
     protected Confirmation confirmation;
@@ -27,7 +27,7 @@ public class Request implements Serializable {
 
     public Request(String salesmanUsername, Product product, String type) {
         this.requestID = createID("Request");
-        this.salesmanUsername = salesmanUsername;
+        this.accountUsername = salesmanUsername;
         this.object = product;
         if (type.equalsIgnoreCase(String.valueOf(RequestType.CHANGE_PRODUCT))) {
             requestType = RequestType.CHANGE_PRODUCT;
@@ -44,7 +44,7 @@ public class Request implements Serializable {
 
     public Request(String salesmanUsername, Sale sale, String type) {
         this.requestID = createID("Request");
-        this.salesmanUsername = salesmanUsername;
+        this.accountUsername = salesmanUsername;
         this.object = sale;
         if (type.equalsIgnoreCase(String.valueOf(RequestType.CHANGE_SALE))) {
             requestType = RequestType.CHANGE_SALE;
@@ -61,7 +61,7 @@ public class Request implements Serializable {
 
     public Request(String salesmanUsername) {
         this.requestID = createID("Request");
-        this.salesmanUsername = salesmanUsername;
+        this.accountUsername = salesmanUsername;
         this.object = null;
         this.requestType = RequestType.REGISTER_SALESMAN;
         Storage.getAllRequests().add(this);
@@ -71,6 +71,7 @@ public class Request implements Serializable {
     //request for adding a comment
 
     public Request(Comment comment) {
+
         this.requestID = createID("Request");
         this.object = comment;
         this.requestType = RequestType.COMMENT_CONFIRMATION;
@@ -94,6 +95,14 @@ public class Request implements Serializable {
 
     public RequestType getRequestType() {
         return requestType;
+    }
+
+    public String getAccountUsername() {
+        return accountUsername;
+    }
+
+    public void setAccountUsername(String accountUsername) {
+        accountUsername = accountUsername;
     }
 
     //it accepts the request and makes the needed changes in objects as desired
@@ -179,7 +188,7 @@ public class Request implements Serializable {
     }
 
     private String toStringRegisterSalesman() {
-        Salesman salesman = (Salesman) Storage.getAccountWithUsername(salesmanUsername);
+        Salesman salesman = (Salesman) Storage.getAccountWithUsername(accountUsername);
         String result = "";
         result += "General information of salesman: " + "\n";
         result += salesman.toStringForRequest();

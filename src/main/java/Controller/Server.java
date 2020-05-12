@@ -10,6 +10,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import Exception.*;
+import Model.Account.Role;
 import Model.Request.Enum.RequestType;
 import Model.Storage;
 
@@ -78,6 +79,20 @@ public class Server {
             this.viewRequest(command);
         } else if (command.startsWith("is request state checking ")) {
             this.isRequestStateChecking(command);
+        } else if (command.startsWith("is account requestable ")) {
+            this.isAccountRequestable(command);
+        }
+    }
+
+    private void isAccountRequestable(String command) {
+        if (Storage.isThereAccountWithUsername(command.split("\\s")[3])) {
+            if (!Storage.getAccountWithUsername(command.split("\\s")[3]).getRole().equals(Role.BOSS)) {
+                Server.setAnswer("yes");
+            } else {
+                Server.setAnswer("no");
+            }
+        } else {
+            Server.setAnswer("no");
         }
     }
 
@@ -96,8 +111,10 @@ public class Server {
     }
 
     private void showRequests(String command) {
+        ArrayList<Object> filters;
+        filters = getFilters(command);
         String[] input = command.split("\\s");
-        bossManager.showRequests(input[2]);
+        bossManager.showRequests(input[2], filters);
     }
 
     private void makeNewBoss(String input) {
