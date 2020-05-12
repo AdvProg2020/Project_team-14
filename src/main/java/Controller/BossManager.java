@@ -261,6 +261,15 @@ public class BossManager {
         Server.setAnswer(request.toString());
     }
 
+    public void searchRequest(String requestID) {
+        if (Storage.isThereRequestByID(requestID)) {
+            Request request = Storage.getRequestByID(requestID);
+            Server.setAnswer("search completed " + request.getRequestType());
+        } else {
+            Server.setAnswer("no request exists with such ID");
+        }
+    }
+
     /*public void deleteUser(String username) {
         //should we check equality? (users can't remove themselves :|)
         //we can handel error whit exception

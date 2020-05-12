@@ -81,7 +81,13 @@ public class Server {
             this.isRequestStateChecking(command);
         } else if (command.startsWith("is account requestable ")) {
             this.isAccountRequestable(command);
+        } else if (command.startsWith("search request ")) {
+            this.searchRequest(command);
         }
+    }
+
+    private void searchRequest(String command) {
+        bossManager.searchRequest(command.split("\\s")[3]);
     }
 
     private void isAccountRequestable(String command) {

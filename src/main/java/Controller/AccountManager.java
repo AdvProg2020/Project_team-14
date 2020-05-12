@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.Account.*;
+import Model.Request.Request;
 import Model.Storage;
 import Exception.*;
 
@@ -73,6 +74,15 @@ public class AccountManager {
             Account account = Storage.getAccountWithUsername(oldUsername);
             assert account != null;
             account.setUsername(newUsername);
+            updateUsernameForModel(oldUsername, newUsername);
+        }
+    }
+
+    private void updateUsernameForModel(String oldUsername, String newUsername) {
+        for (Request request : Storage.getAllRequests()) {
+            if (request.getAccountUsername().equals(oldUsername)) {
+                request.setAccountUsername(newUsername);
+            }
         }
     }
 
