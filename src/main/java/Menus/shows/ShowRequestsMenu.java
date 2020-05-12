@@ -6,15 +6,23 @@ import Menus.Menu;
 import Menus.Views.ViewAccountMenu;
 import Menus.Views.ViewRequestMenu;
 
+import javax.swing.text.View;
 import java.util.HashMap;
 
 public class ShowRequestsMenu extends ShowsMenu {
     private String serverAnswer;
+    private boolean canChangeUsernameFilter = true;
 
     public ShowRequestsMenu(Menu fatherMenu, String menuName) {
         super(fatherMenu, menuName);
         HashMap<Integer, Menu> subMenus = new HashMap<Integer, Menu>();
+        if (fatherMenu instanceof ViewAccountMenu) {
+            canChangeUsernameFilter = false;
+        }
         filter = new RequestsFilterMenu(this, "Request Filter Menu");
+        if (fatherMenu instanceof ViewAccountMenu) {
+            ((RequestsFilterMenu) filter).setUsernameFilter(((ViewAccountMenu) fatherMenu).getUsername());
+        }
         subMenus.put(1, filter);
         subMenus.put(2, getSelectMenu());
         subMenus.put(3, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
@@ -64,6 +72,9 @@ public class ShowRequestsMenu extends ShowsMenu {
         };
     }
 
+    public boolean isCanChangeUsernameFilter() {
+        return canChangeUsernameFilter;
+    }
 
     public String getServerAnswer() {
         return this.serverAnswer;

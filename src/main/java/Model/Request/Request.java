@@ -2,7 +2,6 @@ package Model.Request;
 
 import Model.Account.Salesman;
 import Model.Confirmation;
-import Model.Off.Off;
 import Model.Off.Sale;
 import Model.Product.Comment;
 import Model.Product.Product;
@@ -11,8 +10,6 @@ import Model.Request.Enum.RequestType;
 import Model.Storage;
 
 import java.io.Serializable;
-import java.text.ParseException;
-import java.util.ArrayList;
 
 import static Model.RandomString.createID;
 
@@ -102,7 +99,7 @@ public class Request implements Serializable {
     }
 
     public void setAccountUsername(String accountUsername) {
-        accountUsername = accountUsername;
+        this.accountUsername = accountUsername;
     }
 
     //it accepts the request and makes the needed changes in objects as desired

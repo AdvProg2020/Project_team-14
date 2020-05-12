@@ -2,6 +2,7 @@ package Menus.Views;
 
 import Menus.*;
 import Menus.Edits.EditAccountMenu;
+import Menus.shows.ShowRequestsMenu;
 
 
 import java.util.HashMap;
@@ -23,8 +24,14 @@ public class ViewAccountMenu extends Menu {
             server.clientToServer("see authorization " + Menu.username + " " + this.username);
             String serverAnswer = server.serverToClient();
             if (!serverAnswer.equalsIgnoreCase("boss no")) {
-                subMenus.put(1, getDeleteAccountMenu());
-                subMenus.put(2, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
+                if (serverAnswer.equalsIgnoreCase("boss yes")) {
+                    subMenus.put(1, getDeleteAccountMenu());
+                    subMenus.put(2, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
+                } else {
+                    subMenus.put(1, new ShowRequestsMenu(this, "Show Requests Menu"));
+                    subMenus.put(2, getDeleteAccountMenu());
+                    subMenus.put(3, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
+                }
             } else {
                 subMenus.put(1, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
             }

@@ -2,6 +2,7 @@ package Menus.Filters;
 
 import Menus.LoginOrRegisterMenu;
 import Menus.Menu;
+import Menus.shows.ShowRequestsMenu;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,9 +22,14 @@ public class RequestsFilterMenu extends FiltersMenu {
         filters = new ArrayList<Object>();
         HashMap<Integer, Menu> subMenus = new HashMap<Integer, Menu>();
         makeFilters();
-        subMenus.put(1, getChangeRequestTypeMenu());
-        subMenus.put(2, getChangeUsernameMenu());
-        subMenus.put(3, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
+        if (((ShowRequestsMenu) fatherMenu).isCanChangeUsernameFilter()) {
+            subMenus.put(1, getChangeRequestTypeMenu());
+            subMenus.put(2, getChangeUsernameMenu());
+            subMenus.put(3, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
+        } else {
+            subMenus.put(1, getChangeRequestTypeMenu());
+            subMenus.put(2, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
+        }
         this.setSubMenus(subMenus);
     }
 
