@@ -15,7 +15,7 @@ import java.util.HashMap;
 
 public class Cart implements Serializable {
 
-    private HashMap<String, String> productIDs = new HashMap<>();//when logs updated with Triplet, we delete this
+//    private HashMap<String, String> productIDs = new HashMap<>();//when logs updated with Triplet, we delete this
     private String username;
     private String cartID;
 
@@ -128,9 +128,9 @@ public class Cart implements Serializable {
         return allItems.isEmpty();
     }
 
-    public HashMap<String, String> getProductIDs() {
-        return productIDs;
-    }
+//    public HashMap<String, String> getProductIDs() {
+//        return productIDs;
+//    }
 
     public String getUsername() {
         return username;
