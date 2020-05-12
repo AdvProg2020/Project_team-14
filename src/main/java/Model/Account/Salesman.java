@@ -3,11 +3,13 @@ package Model.Account;
 import Model.Confirmation;
 
 import java.io.*;
+import java.util.ArrayList;
 
 public class Salesman extends Account implements Serializable {
     private String company;
     private Confirmation confirmationState;
     private int credit;
+    private ArrayList<String> requestIDs;
 
     public Salesman(String username, String password, String firstName, String secondName, String Email, String telephone, String role, String company) {
         super(username, password, firstName, secondName, Email, telephone, role);

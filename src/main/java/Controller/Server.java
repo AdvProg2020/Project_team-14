@@ -58,17 +58,19 @@ public class Server {
             this.viewPersonalInfo(command);
         } else if (command.startsWith("edit personal info ")) {
             this.editPersonalInfo(command);
-        }/* else if (command.startsWith("show accounts ")) {
+        } else if (command.startsWith("show accounts ")) {
             this.showAccounts(command);
         } else if (command.startsWith("view account info ")) {
             this.viewAccountInfo(command);
         } else if (command.startsWith("see authorization ")) {
             this.seeAuthorization(command);
-        }*/ else if (command.startsWith("delete account ")) {
+        } else if (command.startsWith("delete account ")) {
             this.deleteAccount(command);
-        }/* else if (command.startsWith("search account ")) {
+        } else if (command.startsWith("search account ")) {
             this.searchAccount(command);
-        } else if (command.startsWith("show requests ")) {
+        } else if (command.startsWith("make new boss ")) {
+            this.makeNewBoss(command);
+        }/* else if (command.startsWith("show requests ")) {
             this.showRequests(command);
         }*/
     }
@@ -77,6 +79,35 @@ public class Server {
         String[] input = command.split("\\s");
         bossManager.showRequest(input[2]);
     }*/
+
+    private void makeNewBoss(String input) {
+        Server.answer = "";
+        String[] attributes = input.split("\\s");
+        if (!checkNameFormat(attributes[3])) {
+            Server.answer += "first name format is invalid" + "\n";
+        }
+        if (!checkNameFormat(attributes[4])) {
+            Server.answer += "last name format is invalid" + "\n";
+        }
+        if (!checkUsernameFormat(attributes[5])) {
+            Server.answer += "username format is invalid" + "\n";
+        }
+        if (!checkUsernameFormat(attributes[6])) {
+            Server.answer += "password format is invalid" + "\n";
+        }
+        if (attributes[6].length() < 8) {
+            Server.answer += "password length is not enough" + "\n";
+        }
+        if (!checkEmailFormat(attributes[7])) {
+            Server.answer += "Email format is invalid" + "\n";
+        }
+        if (!checkTelephoneFormat(attributes[8])) {
+            Server.answer += "telephone format is invalid" + "\n";
+        }
+        if (Server.answer.equals("")) {
+            bossManager.register(attributes);
+        }
+    }
 
     private void searchAccount(String command) {
         String[] input = command.split("\\s");
@@ -88,10 +119,10 @@ public class Server {
         accountManager.deleteAccount(input[2], input[3]);
     }
 
-    /*private void seeAuthorization(String command) {
+    private void seeAuthorization(String command) {
         String[] input = command.split("\\s");
         bossManager.seeAuthorization(input[2], input[3]);
-    }*/
+    }
 
     private void viewAccountInfo(String command) {
         String[] input = command.split("\\s");
@@ -112,7 +143,7 @@ public class Server {
         String[] input = command.split("\\s");
         if (command.contains("filter")) {
             for (int i = 4; i < getWordCount(command); i += 2) {
-                if (input[i].equalsIgnoreCase("sort")) {
+                if (input[i].equalsIgnoreCase("sorts:")) {
                     break;
                 }
                 filters.add(input[i]);
@@ -122,11 +153,11 @@ public class Server {
         return filters;
     }
 
-    private void showAccounts(String command) throws InvalidUserNameException {
+    private void showAccounts(String command) {
         ArrayList<Object> filters;
         filters = getFilters(command);
         String[] input = command.split("\\s");
-        //bossManager.showAccounts(input[2], filters);
+        bossManager.showAccounts(input[2], filters);
     }
 
     private void editPersonalInfo(String command) {

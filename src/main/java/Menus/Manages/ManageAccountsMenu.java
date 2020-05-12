@@ -14,8 +14,56 @@ public class ManageAccountsMenu extends Menu {
         HashMap<Integer, Menu> subMenus = new HashMap<Integer, Menu>();
         subMenus.put(1, new ShowAccountsMenu(this, "Show Accounts Menu"));
         subMenus.put(2, getSearchAccountMenu());
-        subMenus.put(3, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
+        subMenus.put(3, getCreateNewBossMenu());
+        subMenus.put(4, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
         this.setSubMenus(subMenus);
+    }
+
+    private Menu getCreateNewBossMenu() {
+        return new Menu(this, "Create Boss Menu") {
+            private void checkBack(String input) {
+                if (input.equals("back")) {
+                    fatherMenu.execute();
+                }
+            }
+
+            @Override
+            public void execute() {
+                System.out.println(this.menuName);
+                System.out.println("if you input back we will go back");
+                String message = new String();
+                String firstName, lastName;
+                String username, password;
+                String Email, telephone;
+                String company;
+                System.out.println("please enter the boss first and last name in separate lines:");
+                firstName = scanner.nextLine();
+                checkBack(firstName);
+                lastName = scanner.nextLine();
+                checkBack(lastName);
+                System.out.println("please enter the boss username and password in separate lines:");
+                username = scanner.nextLine();
+                checkBack(username);
+                password = scanner.nextLine();
+                checkBack(password);
+                System.out.println("please enter the boss email and telephone in separate lines:");
+                Email = scanner.nextLine();
+                checkBack(Email);
+                telephone = scanner.nextLine();
+                checkBack(telephone);
+                message = "make new boss " + firstName + " " + lastName + " " + username + " " + password + " "
+                        + Email + " " + telephone + " " + Menu.username;
+                server.clientToServer(message);
+                String serverAnswer;
+                serverAnswer = server.serverToClient();
+                System.out.println(serverAnswer);
+                if (serverAnswer.equals("register successful")) {
+                    fatherMenu.execute();
+                } else {
+                    this.execute();
+                }
+            }
+        };
     }
 
     private Menu getSearchAccountMenu() {
@@ -46,5 +94,11 @@ public class ManageAccountsMenu extends Menu {
                 }
             }
         };
+    }
+
+    @Override
+    public void execute() {
+        ((ShowAccountsMenu) this.subMenus.get(1)).resetFilters();
+        super.execute();
     }
 }

@@ -20,6 +20,10 @@ public class ShowAccountsMenu extends ShowsMenu {
         this.setSubMenus(subMenus);
     }
 
+    public void resetFilters() {
+        filter.resetFilters();
+    }
+
     private Menu getSelectMenu() {
         return new Menu(this, "Select Menu") {
             boolean hasBeenCalled = true;
@@ -35,17 +39,12 @@ public class ShowAccountsMenu extends ShowsMenu {
                 return false;
             }
 
-            private void resetFilters() {
-                filter.resetFilters();
-            }
-
             @Override
             public void execute() {
                 if (hasBeenCalled) {
                     hasBeenCalled = false;
                 } else {
                     hasBeenCalled = true;
-                    this.resetFilters();
                     fatherMenu.execute();
                 }
                 System.out.println(menuName);

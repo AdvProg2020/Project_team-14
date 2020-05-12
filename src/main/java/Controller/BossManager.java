@@ -14,7 +14,7 @@ import Exception.*;
 
 //import java.text.ParseException;
 import java.rmi.ServerError;
-//import java.util.ArrayList;
+import java.util.ArrayList;
 import java.util.Comparator;
 
 public class BossManager {
@@ -24,13 +24,24 @@ public class BossManager {
      */
 
     public void register(String[] information) {
-        if (Storage.isThereAccountWithUsername(information[3])) {
-            Server.setAnswer("the username is already taken, try something else");
+        if (information[0].equalsIgnoreCase("register")) {
+            if (Storage.isThereAccountWithUsername(information[3])) {
+                Server.setAnswer("the username is already taken, try something else");
+            }
+            Server.setAnswer("register successful");
+            Server.setHasBoss(true);
+            new Boss(information[3], information[4], information[1], information[2], information[6], information[7],
+                    information[5]).setFatherBoss(null);
+        } else {
+            if (Storage.isThereAccountWithUsername(information[5])) {
+                Server.setAnswer("the username is already taken, try something else");
+            }
+            Server.setAnswer("register successful");
+            Server.setHasBoss(true);
+            new Boss(information[5], information[6], information[3], information[4], information[7], information[8],
+                    "BOSS").setFatherBoss(information[9]);
+
         }
-        Server.setAnswer("register successful");
-        Server.setHasBoss(true);
-        new Boss(information[3], information[4], information[1], information[2], information[6], information[7],
-                information[5]).setFatherBoss(null);
     }
 
     private boolean checkRoleFilter(Account account, String filter) {
@@ -49,13 +60,13 @@ public class BossManager {
         if (account instanceof Boss) {
             return true;
         } else if (account instanceof Customer) {
-            if (((Customer) account).getCredit() >= Integer.parseInt(filter)) {
+            if ((account).getCredit() >= Integer.parseInt(filter)) {
                 return true;
             } else {
                 return false;
             }
         } else if (account instanceof Salesman) {
-            if (((Salesman) account).getCredit() >= Integer.parseInt(filter)) {
+            if ((account).getCredit() >= Integer.parseInt(filter)) {
                 return true;
             } else {
                 return false;
@@ -68,13 +79,13 @@ public class BossManager {
         if (account instanceof Boss) {
             return true;
         } else if (account instanceof Customer) {
-            if (((Customer) account).getCredit() <= Integer.parseInt(filter)) {
+            if (account.getCredit() <= Integer.parseInt(filter)) {
                 return true;
             } else {
                 return false;
             }
         } else if (account instanceof Salesman) {
-            if (((Salesman) account).getCredit() <= Integer.parseInt(filter)) {
+            if (account.getCredit() <= Integer.parseInt(filter)) {
                 return true;
             } else {
                 return false;
@@ -96,8 +107,7 @@ public class BossManager {
         }
     }
 
-    public void showAccounts(String username) throws InvalidUserNameException {
-    /*private boolean isAccountInFilter(Account account, ArrayList<Object> filters) {
+    private boolean isAccountInFilter(Account account, ArrayList<Object> filters) {
         for (int i = 0; i < filters.size(); i += 2) {
             if (((String) filters.get(i)).equalsIgnoreCase("role")) {
                 if (checkRoleFilter(account, (String) filters.get(i + 1)) == false) {
@@ -116,14 +126,14 @@ public class BossManager {
             }
         }
         return true;
-    }*/
+    }
 
-    /*public void showAccounts(String username, ArrayList<Object> filters) {
+    public void showAccounts(String username, ArrayList<Object> filters) {
         int count = 0;
         ArrayList<Account> accounts = Storage.getAllAccounts();
         StringBuilder answer = new StringBuilder("All Accounts Username:").append("\n");
         if (accounts.size() == 0) {
-            throw new InvalidUserNameException("no user found with this username");
+            Server.setAnswer("no account found with this username");
         } else {
             for (Account account : accounts) {
                 if (!account.getUsername().equals(username) && isAccountInFilter(account, filters)) {
@@ -139,9 +149,9 @@ public class BossManager {
             String ans = answer.toString();
             Server.setAnswer(ans);
         }
-    }*/
+    }
 
-    /*public void seeAuthorization(String bossUsername, String username) {
+    public void seeAuthorization(String bossUsername, String username) {
         Account account = Storage.getAccountWithUsername(username);
         if (account instanceof Salesman) {
             Server.setAnswer("salesman");
@@ -161,7 +171,7 @@ public class BossManager {
                 account = Storage.getAccountWithUsername(fatherBoss);
             }
         }
-    }*/
+    }
 
     /*public static void changeFathers(String bossAccount, String username) {
         for (Account account : Storage.getAllAccounts()) {
@@ -195,7 +205,7 @@ public class BossManager {
         Server.setAnswer(ans);
     }*/
 
-        //can be handel in AccountManager(this class has the same method)
+    //can be handel in AccountManager(this class has the same method)
     /*public void showUsersInfo(String username) {
         Account account = Storage.getAccountWithUsername(username);
         assert account != null;
@@ -213,7 +223,7 @@ public class BossManager {
         }
     }*/
 
-        //public void createManager(String[] info)   ---   should we have such a thing??
+    //public void createManager(String[] info)   ---   should we have such a thing??
 
     /*public void listAllProducts(String sortFactor) throws SortFactorNotAvailableException {
         ArrayList<Product> products = new ArrayList<>(Storage.allProducts);
@@ -225,7 +235,7 @@ public class BossManager {
         Server.setAnswer(ans.toString());
     }*/
 
-        //it gets us possible sort factors
+    //it gets us possible sort factors
 
     /*public String getSortFactorsForListingAllProducts() {
         return ListProductSortFactor.getValues();
@@ -240,11 +250,11 @@ public class BossManager {
         }
     }*/
 
-        /*
-         * this is discount codes part
-         */
+    /*
+     * this is discount codes part
+     */
 
-        //info: 0 -> start, 1 -> end, 2 -> percentage, 3 -> ceiling, 4 -> numberOfTimeCanBeUsed
+    //info: 0 -> start, 1 -> end, 2 -> percentage, 3 -> ceiling, 4 -> numberOfTimeCanBeUsed
 
     /*public void createDiscountCode(String[] info, ArrayList<String> usernameCanUse) throws ParseException {
         new OffCode(info[0], info[1], Integer.parseInt(info[2]), Integer.parseInt(info[3]), Integer.parseInt(info[4]), usernameCanUse);
@@ -306,9 +316,9 @@ public class BossManager {
         }
     }*/
 
-        /*
-         * this is request part
-         */
+    /*
+     * this is request part
+     */
 
     /*public void listAllRequests() {
         StringBuilder ans = new StringBuilder("Here are All Requests:").append("\n");
@@ -348,11 +358,11 @@ public class BossManager {
         }
     }*/
 
-        /*
-         * this is category part
-         */
+    /*
+     * this is category part
+     */
 
-        //info: 0 -> attribute, 1 -> parent category name, 2 -> category name
+    //info: 0 -> attribute, 1 -> parent category name, 2 -> category name
 
     /*public void addCategory(String[] info) {
         new Category(info[0], info[1], info[2]);
@@ -391,5 +401,4 @@ public class BossManager {
         }
     }*/
 
-    }
 }
