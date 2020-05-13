@@ -86,6 +86,10 @@ public class Request implements Serializable {
         return result;
     }*/
 
+    public Confirmation getConfirmation() {
+        return confirmation;
+    }
+
     public String getRequestID() {
         return requestID;
     }
@@ -104,13 +108,13 @@ public class Request implements Serializable {
 
     //it accepts the request and makes the needed changes in objects as desired
 
-    /*public void accept() throws ParseException {
+    public void accept() {
         if (this.requestType.equals(RequestType.CHANGE_SALE)) {
-            this.confirmation = Confirmation.ACCEPTED;
+            /*this.confirmation = Confirmation.ACCEPTED;
             if (this instanceof ChangeSaleRequest) {
                 ((ChangeSaleRequest) this).updateAttributeWithUpdatedInfo();
-            }
-        } else if (this.requestType.equals(RequestType.DELETE_SALE)) {
+            }*/
+        } /*else if (this.requestType.equals(RequestType.DELETE_SALE)) {
             Sale sale = (Sale) object;
             this.confirmation = Confirmation.ACCEPTED;
             sale.setConfirmationState(Confirmation.DENIED);
@@ -131,16 +135,16 @@ public class Request implements Serializable {
             if (this instanceof ChangeProductRequest) {
                 ((ChangeProductRequest) this).updateAttributeWithUpdatedInfo();
             }
-        } else if (this.requestType.equals(RequestType.REGISTER_SALESMAN)) {
+        }*/ else if (this.requestType.equals(RequestType.REGISTER_SALESMAN)) {
             this.confirmation = Confirmation.ACCEPTED;
-            Salesman salesman = (Salesman) Storage.getAccountWithUsername(salesmanUsername);
+            Salesman salesman = (Salesman) Storage.getAccountWithUsername(accountUsername);
             assert salesman != null;
             salesman.setConfirmationState(Confirmation.ACCEPTED);
-        } else if (this.requestType.equals(RequestType.COMMENT_CONFIRMATION)) {
+        }/* else if (this.requestType.equals(RequestType.COMMENT_CONFIRMATION)) {
             this.confirmation = Confirmation.ACCEPTED;
             Comment comment = (Comment) object;
             comment.setConfirmationState(Confirmation.ACCEPTED);
-        }
+        }*/
 
     }
 
@@ -153,7 +157,7 @@ public class Request implements Serializable {
     public void decline() {
         if (this.requestType.equals(RequestType.CHANGE_SALE)) {
             this.confirmation = Confirmation.DENIED;
-        } else if (this.requestType.equals(RequestType.DELETE_SALE)) {
+        }/* else if (this.requestType.equals(RequestType.DELETE_SALE)) {
             this.confirmation = Confirmation.DENIED;
         } else if (this.requestType.equals(RequestType.ADD_NEW_SALE)) {
             this.confirmation = Confirmation.DENIED;
@@ -167,17 +171,17 @@ public class Request implements Serializable {
             product.setConfirmationState(salesmanUsername, Confirmation.DENIED);
         } else if (this.requestType.equals(RequestType.CHANGE_PRODUCT)) {
             this.confirmation = Confirmation.DENIED;
-        } else if (this.requestType.equals(RequestType.REGISTER_SALESMAN)) {
+        }*/ else if (this.requestType.equals(RequestType.REGISTER_SALESMAN)) {
             this.confirmation = Confirmation.DENIED;
-            Salesman salesman = (Salesman) Storage.getAccountWithUsername(salesmanUsername);
+            Salesman salesman = (Salesman) Storage.getAccountWithUsername(accountUsername);
             assert salesman != null;
             salesman.setConfirmationState(Confirmation.DENIED);
-        } else if (this.requestType.equals(RequestType.COMMENT_CONFIRMATION)) {
+        } /*else if (this.requestType.equals(RequestType.COMMENT_CONFIRMATION)) {
             this.confirmation = Confirmation.DENIED;
             Comment comment = (Comment) object;
             comment.setConfirmationState(Confirmation.DENIED);
-        }
-    }*/
+        }*/
+    }
 
     public String toStringForBoss() {
         String result = "Request Type: " + this.requestType + " Request ID: " + this.requestID;
@@ -185,11 +189,18 @@ public class Request implements Serializable {
     }
 
     private String toStringRegisterSalesman() {
-        Salesman salesman = (Salesman) Storage.getAccountWithUsername(accountUsername);
-        String result = "";
-        result += "General information of salesman: " + "\n";
-        result += salesman.toStringForRequest();
-        return result;
+        if (!this.accountUsername.equals("deleted account")) {
+            Salesman salesman = (Salesman) Storage.getAccountWithUsername(accountUsername);
+            String result = "";
+            result += "General information of salesman: " + "\n";
+            result += salesman.toStringForRequest();
+            return result;
+        } else {
+            String result = "";
+            result += "General information of salesman: " + "\n";
+            result += "this account has been deleted";
+            return result;
+        }
     }
 
     /*private String toStringAddNewProduct() {
@@ -224,7 +235,7 @@ public class Request implements Serializable {
 
 
     public String toString() {
-        String result = "Type: " + this.requestType.name().toLowerCase() + "\n";
+        String result = "Type: " + this.requestType.name() + "\n";
         if (requestType.equals(RequestType.CHANGE_PRODUCT)) {
             /*ChangeProductRequest changeProductRequest = (ChangeProductRequest) this;
             return result + changeProductRequest.toStringChangeProduct();*/

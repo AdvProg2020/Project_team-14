@@ -11,7 +11,9 @@ import java.util.regex.Pattern;
 
 import Exception.*;
 import Model.Account.Role;
+import Model.Confirmation;
 import Model.Request.Enum.RequestType;
+import Model.Request.Request;
 import Model.Storage;
 
 public class Server {
@@ -83,7 +85,33 @@ public class Server {
             this.isAccountRequestable(command);
         } else if (command.startsWith("search request ")) {
             this.searchRequest(command);
+        } else if (command.startsWith("accept request ")) {
+            this.acceptRequest(command);
+        } else if (command.startsWith("decline request")) {
+            this.declineRequest(command);
+        } else if (command.startsWith("delete request")) {
+            this.deleteRequest(command);
+        } else if (command.startsWith("what is request username ")) {
+            this.getRequestAccountUsername(command);
         }
+    }
+
+    private void getRequestAccountUsername(String command) {
+        Server.setAnswer(Storage.getRequestByID(command.split("\\s")[4]).getAccountUsername());
+    }
+
+    private void deleteRequest(String command) {
+        bossManager.deleteRequest(command.split("\\s")[3]);
+    }
+
+    private void declineRequest(String command) {
+        Storage.getRequestByID(command.split("\\s")[3]).decline();
+        Server.setAnswer("declined successfully");
+    }
+
+    private void acceptRequest(String command) {
+        Storage.getRequestByID(command.split("\\s")[3]).accept();
+        Server.setAnswer("accepted successfully");
     }
 
     private void searchRequest(String command) {
@@ -109,7 +137,7 @@ public class Server {
 
     private void isRequestStateChecking(String command) {
         String[] input = command.split("\\s");
-        if (Storage.getRequestByID(input[4]).getRequestType().equals(RequestType.REGISTER_SALESMAN)) {
+        if (Storage.getRequestByID(input[4]).getConfirmation().equals(Confirmation.CHECKING)) {
             Server.setAnswer("yes");
         } else {
             Server.setAnswer("no");

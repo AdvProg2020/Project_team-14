@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.Account.*;
+import Model.Confirmation;
 import Model.Request.Request;
 import Model.Storage;
 import Exception.*;
@@ -17,7 +18,11 @@ public class AccountManager {
                 if (account.getRole().equals(Role.SALESMAN)) {
                     Salesman salesman = (Salesman) account;
                     if (!salesman.isConfirmed()) {
-                        Server.setAnswer("you're not a confirmed salesman");
+                        Server.setAnswer("you're not a confirmed salesman yet");
+                        if (salesman.getConfirmationState().equals(Confirmation.DENIED)) {
+                            Server.setAnswer("you're request of registering has been denied so you're account will be " +
+                                    "deleted from now on");
+                        }
                         return;
                     }
                 }
@@ -140,5 +145,14 @@ public class AccountManager {
         }
         Storage.getAllAccounts().remove(account);
         Server.setAnswer("deleted successfully");
+        updateDeleteUsernameForModel(username);
+    }
+
+    private void updateDeleteUsernameForModel(String username) {
+        for (Request request : Storage.getAllRequests()) {
+            if (request.getAccountUsername().equals(username)) {
+                request.setAccountUsername("deleted account");
+            }
+        }
     }
 }

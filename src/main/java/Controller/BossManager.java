@@ -270,6 +270,11 @@ public class BossManager {
         }
     }
 
+    public void deleteRequest(String requestID) {
+        Request request = Storage.getRequestByID(requestID);
+        Storage.getAllRequests().remove(requestID);
+    }
+
     /*public void deleteUser(String username) {
         //should we check equality? (users can't remove themselves :|)
         //we can handel error whit exception

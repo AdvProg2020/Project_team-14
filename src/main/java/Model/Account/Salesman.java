@@ -20,6 +20,10 @@ public class Salesman extends Account implements Serializable {
         confirmationState = Confirmation.CHECKING;
     }
 
+    public Confirmation getConfirmationState() {
+        return confirmationState;
+    }
+
     public void setConfirmationState(Confirmation confirmationState) {
         this.confirmationState = confirmationState;
     }
