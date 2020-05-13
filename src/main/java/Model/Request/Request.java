@@ -236,6 +236,7 @@ public class Request implements Serializable {
 
     public String toString() {
         String result = "Type: " + this.requestType.name() + "\n";
+        result += "Confirmation State: " + this.getConfirmation().name() + "\n";
         if (requestType.equals(RequestType.CHANGE_PRODUCT)) {
             /*ChangeProductRequest changeProductRequest = (ChangeProductRequest) this;
             return result + changeProductRequest.toStringChangeProduct();*/

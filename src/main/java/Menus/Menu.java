@@ -87,7 +87,14 @@ public class Menu {
         }
         this.show();
         Menu nextMenu = this;
-        int input = Integer.parseInt(scanner.nextLine());
+        String str = scanner.nextLine();
+        int input = 0;
+        if (str.matches("(\\d+)")) {
+            input = Integer.parseInt(str);
+        } else {
+            System.out.println("please input the number of menu");
+            this.execute();
+        }
         if (input == subMenus.size() + 1) {
             if (this.fatherMenu == null) {
                 System.exit(1);

@@ -249,11 +249,11 @@ public class BossManager {
             } else {
                 answer.append("here are what we found");
             }
+            String ans = answer.toString();
+            Server.setAnswer(ans);
             //if (!account.getUsername().equals(username))
             //answer.append("Username: ").append(account.getUsername());    //just list users IDs, then he will select one
         }
-        String ans = answer.toString();
-        Server.setAnswer(ans);
     }
 
     public void viewRequest(String username, String requestID) {
@@ -272,7 +272,8 @@ public class BossManager {
 
     public void deleteRequest(String requestID) {
         Request request = Storage.getRequestByID(requestID);
-        Storage.getAllRequests().remove(requestID);
+        Storage.getAllRequests().remove(request);
+        Server.setAnswer("deleted successfully");
     }
 
     /*public void deleteUser(String username) {
