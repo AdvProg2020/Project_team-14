@@ -15,7 +15,7 @@ import java.util.Date;
 
 public class SaleTest {
     Salesman salesman1 = new Salesman("salesmanUser1", "password", "firstname", "secondName",
-            "h.hafezi2000@gmail.com", "09333805288", "SALESMAN", "company");
+            "h.hafezi2000@gmail.com", "09333805288", "SALESMAN", "company",1000);
 
     Customer customer = new Customer("customerUser", "password", "firstname", "secondName",
             "h.hafezi2000@yahoo.com", "09333805288", "CUSTOMER", 1000,null);

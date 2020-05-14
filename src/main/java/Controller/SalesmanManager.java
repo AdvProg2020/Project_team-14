@@ -31,7 +31,7 @@ public class SalesmanManager {
         }
         Server.setAnswer("register successful");
         new Salesman(information[3], information[4], information[1], information[2],
-                information[6], information[7], information[5], information[8]);
+                information[6], information[7], information[5], information[8],0);
     }
 
     public void showCompanyInfo(String salesmanID) {

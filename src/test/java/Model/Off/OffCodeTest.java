@@ -14,7 +14,7 @@ import java.util.Date;
 
 public class OffCodeTest {
     Salesman salesman1 = new Salesman("salesmanUser1", "password", "firstname", "secondName",
-            "h.hafezi2000@gmail.com", "09333805288", "SALESMAN", "company", 0);
+            "h.hafezi2000@gmail.com", "09333805288", "SALESMAN", "company",1000);
     Product product = new Product("name", salesman1.getUsername(), "brand", "description", 10000, 10);
 
     @Test

@@ -97,9 +97,7 @@ public class Category implements Serializable {
     public String toString() {
         return "Category Name: " + this.categoryName + "\n" +
                 "Category Attribute: " + this.attribute + "\n" +
-                toStringParentCategory() +
-                toStringSubCategory() +
-                toStringProducts();
+                toStringParentCategory();
     }
 
 }

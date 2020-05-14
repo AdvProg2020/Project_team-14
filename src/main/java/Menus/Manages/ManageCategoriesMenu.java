@@ -2,6 +2,8 @@ package Menus.Manages;
 
 import Menus.LoginOrRegisterMenu;
 import Menus.Menu;
+import Menus.Views.ViewCategoryMenu;
+import Menus.Views.ViewRequestMenu;
 import Menus.shows.ShowCategoriesMenu;
 
 import java.util.HashMap;
@@ -11,7 +13,7 @@ public class ManageCategoriesMenu extends Menu {
         super(fatherMenu, menuName);
         this.logoutType = false;
         HashMap<Integer, Menu> subMenus = new HashMap<Integer, Menu>();
-        subMenus.put(1, new ShowCategoriesMenu(this, "Show Accounts Menu"));
+        subMenus.put(1, new ShowCategoriesMenu(this, "Show Categories Menu"));
         subMenus.put(2, getSearchCategoryMenu());
         subMenus.put(3, getCreateNewCategoryMenu());
         subMenus.put(4, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
@@ -19,8 +21,32 @@ public class ManageCategoriesMenu extends Menu {
     }
 
     private Menu getSearchCategoryMenu() {
-        return new Menu(this, "Search Category Menu") {
+        return new Menu(this, "Search Request Menu") {
+            boolean hasBeenCalled = true;
 
+            @Override
+            public void execute() {
+                if (hasBeenCalled) {
+                    hasBeenCalled = false;
+                } else {
+                    hasBeenCalled = true;
+                    fatherMenu.execute();
+                }
+                System.out.println(menuName);
+                System.out.println("if you input back we will go back");
+                System.out.println("please input the category name");
+                String categoryName = scanner.nextLine();
+                server.clientToServer("search category " + Menu.username + " " + categoryName);
+                String serverAnswer = server.serverToClient();
+                System.out.println(serverAnswer);
+                if (serverAnswer.equals("search completed")) {
+                    ViewCategoryMenu menu = new ViewCategoryMenu(this, "View Category Menu",
+                            categoryName);
+                    menu.execute();
+                } else {
+                    this.execute();
+                }
+            }
         };
     }
 

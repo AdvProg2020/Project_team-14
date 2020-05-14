@@ -6,6 +6,7 @@ import Menus.LoginOrRegisterMenu;
 import Menus.Menu;
 import Menus.Views.ViewAccountMenu;
 import Menus.Views.ViewCategoryMenu;
+import Menus.Views.ViewRequestMenu;
 
 import java.util.HashMap;
 
@@ -34,7 +35,42 @@ public class ShowCategoriesMenu extends ShowsMenu {
 
     private Menu getSelectMenu() {
         return new Menu(this, "Select Menu") {
+            private boolean hasBeenCalled = true;
 
+            private boolean isThereCategoryWithNameInList(String list, String categoryName) {
+                int wordCount = Menu.wordCount(list);
+                String[] lists = list.split("\\s");
+                for (int i = 0; i < wordCount; i++) {
+                    if (lists[i].equals(categoryName) && lists[i - 1].equals("Name:") && lists[i - 2].equals("Category")) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+
+            @Override
+            public void execute() {
+                if (hasBeenCalled) {
+                    hasBeenCalled = false;
+                } else {
+                    hasBeenCalled = true;
+                    fatherMenu.execute();
+                }
+                System.out.println(menuName);
+                System.out.println("if you input back we will go back");
+                System.out.println("select one of categories above by inserting category name");
+                String categoryName = scanner.nextLine();
+                if (username.equalsIgnoreCase("back")) {
+                    fatherMenu.execute();
+                }
+                String categories = ((ShowCategoriesMenu) fatherMenu).getServerAnswer();
+                if (isThereCategoryWithNameInList(categories, categoryName)) {
+                    new ViewCategoryMenu(this, "View Category Menu", categoryName).execute();
+                } else {
+                    System.out.println("this category is not on the list");
+                    this.execute();
+                }
+            }
         };
     }
 

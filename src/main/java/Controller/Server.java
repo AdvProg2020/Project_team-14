@@ -97,7 +97,20 @@ public class Server {
             this.createCategory(command);
         } else if (command.startsWith("show categories ")) {
             this.showCategories(command);
+        } else if (command.startsWith("view category ")) {
+            this.viewCategory(command);
+        } else if (command.startsWith("search category ")) {
+            this.searchCategory(command);
         }
+    }
+
+    private void searchCategory(String command) {
+        bossManager.searchCategory(command.split("\\s")[3]);
+    }
+
+    private void viewCategory(String command) {
+        String[] input = command.split("\\s");
+        bossManager.viewCategory(input[2], input[3]);
     }
 
     private void showCategories(String command) {

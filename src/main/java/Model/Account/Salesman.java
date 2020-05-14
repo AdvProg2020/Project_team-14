@@ -12,11 +12,11 @@ public class Salesman extends Account implements Serializable {
     private int credit;
     private ArrayList<String> requestIDs;
 
-    public Salesman(String username, String password, String firstName, String secondName, String Email, String telephone, String role, String company) {
+    public Salesman(String username, String password, String firstName, String secondName, String Email, String telephone, String role, String company, int credit) {
         super(username, password, firstName, secondName, Email, telephone, role);
         new Request(this.getUsername());
         this.company = company;
-        this.credit = 0;
+        this.credit = credit;
         confirmationState = Confirmation.CHECKING;
     }
 

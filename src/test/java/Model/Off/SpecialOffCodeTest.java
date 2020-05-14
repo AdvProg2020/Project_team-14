@@ -11,7 +11,7 @@ public class SpecialOffCodeTest {
     @Test
     public void SpecialOffCodeTesting() throws InterruptedException {
         Customer customer = new Customer("customerUser", "password", "firstname", "secondName",
-                "h.hafezi2000@yahoo.com", "09333805288", "CUSTOMER", 1000);
+                "h.hafezi2000@yahoo.com", "09333805288", "CUSTOMER",0);
         specialOffCode.setCeiling(1000);
         specialOffCode.setNumberOfTimesItCanBeUsed(2);
         specialOffCode.deactivate();

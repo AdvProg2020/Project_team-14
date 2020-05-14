@@ -19,6 +19,7 @@ import Exception.*;
 import java.rmi.ServerError;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.concurrent.Callable;
 
 public class BossManager {
 
@@ -302,7 +303,7 @@ public class BossManager {
         //we will change it
     }
 
-    public void showCategories(String categoryName, ArrayList<Object> filters) {
+    public void showCategories(String username, ArrayList<Object> filters) {
         int count = 0;
         ArrayList<Category> categories = Storage.getAllCategories();
         StringBuilder answer = new StringBuilder("");
@@ -322,6 +323,20 @@ public class BossManager {
             }
             String ans = answer.toString();
             Server.setAnswer(ans);
+        }
+    }
+
+    public void viewCategory(String username, String categoryName) {
+        Category category = Storage.getCategoryByName(categoryName);
+        Server.setAnswer(category.toString());
+    }
+
+    public void searchCategory(String categoryName) {
+        if (Storage.isThereCategoryWithName(categoryName)) {
+            Category category = Storage.getCategoryByName(categoryName);
+            Server.setAnswer("search completed");
+        } else {
+            Server.setAnswer("no category exists with such ID");
         }
     }
 

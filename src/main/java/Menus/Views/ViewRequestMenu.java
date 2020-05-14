@@ -45,7 +45,6 @@ public class ViewRequestMenu extends Menu {
         super(fatherMenu, menuName);
         this.requestID = requestID;
         this.logoutType = false;
-        HashMap<Integer, Menu> subMenus = new HashMap<Integer, Menu>();
         if (requestType.equalsIgnoreCase("Register_Salesman")) {
             this.whereItHasBeenCalled = 1;
         }

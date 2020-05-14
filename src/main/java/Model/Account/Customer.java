@@ -15,9 +15,9 @@ public class Customer extends Account implements Serializable {
     private HashMap<String, Integer> customerOffCodes;
 
     public Customer(String username, String password, String firstName, String secondName, String Email, String telephone,
-                    String role) {
+                    String role,int credit) {
         super(username, password, firstName, secondName, Email, telephone, role);
-        this.credit = 0;
+        this.credit = credit;
         //customerOffCodes = new HashMap<>();
     }
 
@@ -42,9 +42,9 @@ public class Customer extends Account implements Serializable {
         this.credit = credit;
     }
 
-    /*public boolean isCreditEnoughAccordingToCartWithOffCode(String offCode) {
+    public boolean isCreditEnoughAccordingToCartWithOffCode(String offCode) {
         return (credit > cart.getTotalPrice(offCode));
-    }*/
+    }
 
     public Cart getCart() {
         return cart;
