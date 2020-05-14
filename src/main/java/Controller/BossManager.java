@@ -9,6 +9,7 @@ package Controller;
 
 import Controller.SortFactorEnum.AccountSortFactor;
 import Model.Account.*;
+import Model.Category.Category;
 import Model.Request.Request;
 import Model.Storage;
 import Exception.*;
@@ -276,22 +277,63 @@ public class BossManager {
         Server.setAnswer("deleted successfully");
     }
 
-    /*public void deleteUser(String username) {
-        //should we check equality? (users can't remove themselves :|)
-        //we can handel error whit exception
-        //I add so users can delete themselves too
-        //and we need to check what thing should be deleted when a user get deleted
-        //we have it in account menu to
-        //and in edit username menu we should edit the username in for example request so i'm gonna fix it too :)
-        if (Storage.getAccountWithUsername(username) == null) {
-            Server.setAnswer("error, there isn't any user with this username, try another username");
+    /*
+     * this is category part
+     */
+
+    public void createCategory(String categoryName, String fatherCategoryName, String categoryAttribute) {
+        if (!Storage.isThereCategoryWithName(categoryName)) {
+            if (fatherCategoryName.equalsIgnoreCase("rootCategory")) {
+                new Category(categoryName, null, categoryAttribute);
+            } else {
+                if (Storage.isThereCategoryWithName(fatherCategoryName)) {
+                    new Category(categoryName, fatherCategoryName, categoryAttribute);
+                    Storage.getCategoryByName(fatherCategoryName).addSubCategory(categoryName);
+                } else {
+                    Server.setAnswer("there isn't a category with this father category name");
+                }
+            }
         } else {
-            //Storage.allAccounts.remove(Storage.getAccountWithUsername(username));
-            Server.setAnswer("user successfully removed");
+            Server.setAnswer("a category with this name has already exists");
+        }
+    }
+
+    /*public void addCategory(String[] info) {
+        new Category(info[0], info[1], info[2]);
+    }*/
+
+    /*public void editCategory(String categoryName, String attribute, String updatedInfo) throws InvalidCategoryNameException {
+        Category category = Category.getCategoryByName(categoryName);
+        if (category == null) {
+            throw new InvalidCategoryNameException("there's no category with this name");
+        } else {
+            switch (attribute) {
+                case "attribute":
+                    category.setAttribute(updatedInfo);
+                    break;
+                case "addProduct":
+                    category.addProductToCategory(updatedInfo);
+                    break;
+                case "removeProduct":
+                    category.deleteProductFromCategory(updatedInfo);
+                    break;
+            }
+            Server.setAnswer("your changes updated successfully");
         }
     }*/
 
-    //public void createManager(String[] info)   ---   should we have such a thing??
+    /*public void removeCategory(String categoryName) throws InvalidCategoryNameException {
+        Category category = Category.getCategoryByName(categoryName);
+        if (category == null) {
+            throw new InvalidCategoryNameException("there's no category with this name");
+        } else {
+            Storage.allCategories.remove(category);
+            for (String productID : category.getAllProductIDs()) {
+                category.deleteProductFromCategory(productID);
+            }
+            Server.setAnswer("category deleted successfully");
+        }
+    }*/
 
     /*public void listAllProducts(String sortFactor) throws SortFactorNotAvailableException {
         ArrayList<Product> products = new ArrayList<>(Storage.allProducts);
@@ -302,8 +344,6 @@ public class BossManager {
         }
         Server.setAnswer(ans.toString());
     }*/
-
-    //it gets us possible sort factors
 
     /*public String getSortFactorsForListingAllProducts() {
         return ListProductSortFactor.getValues();
@@ -381,91 +421,6 @@ public class BossManager {
         } else {
             Storage.allOffCodes.remove(OffCode.getOffCodeByID(offCodeID));
             Server.setAnswer("offCode with ID [" + offCodeID + "] removed successfully");
-        }
-    }*/
-
-    /*
-     * this is request part
-     */
-
-    /*public void listAllRequests() {
-        StringBuilder ans = new StringBuilder("Here are All Requests:").append("\n");
-        for (Request request : Request.getCheckingRequests()) {
-            ans.append("Request ID: ").append(request.getRequestID()).append(", Request Type: ").append(request.getRequestType());
-        }
-        Server.setAnswer(ans.toString());
-    }*/
-
-    /*public void viewRequest(String requestID) throws InvalidRequestIDException {
-        Request request = Request.getRequestByID(requestID);
-        if (request == null) {
-            throw new InvalidRequestIDException("Request ID is not authentic");
-        } else {
-            Server.setAnswer(request.toString());
-        }
-    }*/
-
-    /*public void acceptRequest(String requestID) throws ParseException, InvalidRequestIDException {
-        Request request = Request.getRequestByID(requestID);
-        if (request == null) {
-            throw new InvalidRequestIDException("Request ID is not authentic");
-        } else {
-            request.accept();
-            Server.setAnswer("you accepted request with [" + requestID + "] ID, which was a [" + request.getRequestType() + "] request");
-        }
-    }*/
-
-    /*public void declineRequest(String requestID) throws InvalidRequestIDException {
-    public void declineRequest(String requestID) {
-        Request request = Request.getRequestByID(requestID);
-        if (request == null) {
-            throw new InvalidRequestIDException("Request ID is not authentic");
-        } else {
-            request.decline();
-            Server.setAnswer("you just declined request with [" + requestID + "] ID, which was a [" + request.getRequestType() + "] request");
-        }
-    }*/
-
-    /*
-     * this is category part
-     */
-
-    //info: 0 -> attribute, 1 -> parent category name, 2 -> category name
-
-    /*public void addCategory(String[] info) {
-        new Category(info[0], info[1], info[2]);
-    }*/
-
-    /*public void editCategory(String categoryName, String attribute, String updatedInfo) throws InvalidCategoryNameException {
-        Category category = Category.getCategoryByName(categoryName);
-        if (category == null) {
-            throw new InvalidCategoryNameException("there's no category with this name");
-        } else {
-            switch (attribute) {
-                case "attribute":
-                    category.setAttribute(updatedInfo);
-                    break;
-                case "addProduct":
-                    category.addProductToCategory(updatedInfo);
-                    break;
-                case "removeProduct":
-                    category.deleteProductFromCategory(updatedInfo);
-                    break;
-            }
-            Server.setAnswer("your changes updated successfully");
-        }
-    }*/
-
-    /*public void removeCategory(String categoryName) throws InvalidCategoryNameException {
-        Category category = Category.getCategoryByName(categoryName);
-        if (category == null) {
-            throw new InvalidCategoryNameException("there's no category with this name");
-        } else {
-            Storage.allCategories.remove(category);
-            for (String productID : category.getAllProductIDs()) {
-                category.deleteProductFromCategory(productID);
-            }
-            Server.setAnswer("category deleted successfully");
         }
     }*/
 

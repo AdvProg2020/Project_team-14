@@ -26,7 +26,7 @@ public class Storage {
     public static ArrayList<OffCode> allOffCodes = new ArrayList<>();
     public static ArrayList<Sale> allSales = new ArrayList<>();
     public static ArrayList<BuyLog> allBuyLogs = new ArrayList<>();
-    public static ArrayList<Category> allCategories = new ArrayList<>();
+    private static ArrayList<Category> allCategories = new ArrayList<>();
     private static ArrayList<Account> allAccounts = new ArrayList<>();
     public static ArrayList<SpecialOffCode> allSpecialOffCodes = new ArrayList<>();
     public static ArrayList<Cart> allCarts = new ArrayList<>();
@@ -54,6 +54,10 @@ public class Storage {
         return allRequests;
     }
 
+    public static ArrayList<Category> getAllCategories() {
+        return allCategories;
+    }
+
     public static boolean isThereRequestByID(String requestID) {
         return getRequestByID(requestID) != null;
     }
@@ -61,6 +65,19 @@ public class Storage {
     public static Request getRequestByID(String requestID) {
         for (Request request : Storage.allRequests) {
             if (request.getRequestID().equals(requestID)) return request;
+        }
+        return null;
+    }
+
+    public static boolean isThereCategoryWithName(String categoryName) {
+        return getCategoryByName(categoryName) != null;
+    }
+
+    public static Category getCategoryByName(String categoryName) {
+        for (Category category : allCategories) {
+            if (category.getCategoryName().equals(categoryName)) {
+                return category;
+            }
         }
         return null;
     }

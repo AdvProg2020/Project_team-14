@@ -87,12 +87,28 @@ public class Server {
             this.searchRequest(command);
         } else if (command.startsWith("accept request ")) {
             this.acceptRequest(command);
-        } else if (command.startsWith("decline request")) {
+        } else if (command.startsWith("decline request ")) {
             this.declineRequest(command);
-        } else if (command.startsWith("delete request")) {
+        } else if (command.startsWith("delete request ")) {
             this.deleteRequest(command);
         } else if (command.startsWith("what is request username ")) {
             this.getRequestAccountUsername(command);
+        } else if (command.startsWith("create category ")) {
+            this.createCategory(command);
+        }
+    }
+
+    private void createCategory(String command) {
+        Server.answer = "";
+        if (!checkNameFormat(command.split("\\s")[2])) {
+            Server.answer += "category name format is invalid";
+        }
+        if (!checkNameFormat(command.split("\\s")[3])) {
+            Server.answer += "father category name format is invalid";
+        }
+        if (Server.answer.equals("")) {
+            bossManager.createCategory(command.split("\\s")[2], command.split("\\s")[3],
+                    command.split("\\s")[4]);
         }
     }
 

@@ -2,6 +2,7 @@ package Model.Category;
 
 import Model.Product.Product;
 import Model.RandomString;
+import Model.Storage;
 
 import java.util.ArrayList;
 import java.io.*;
@@ -12,22 +13,18 @@ public class Category implements Serializable {
 
     //note that the name of each category must be unique so we can get the name
     //we should check to ensure that there's no previous category with this name
+    //OK
     private String categoryName;
     private ArrayList<String> allProductIDs = new ArrayList<>();
     private ArrayList<String> subCategoryNames = new ArrayList<>();
     private String parentCategoryName;
     private String attribute;
 
-    public Category(String attribute, String parentCategoryName, String categoryName) {
+    public Category(String categoryName, String parentCategoryName, String attribute) {
         this.attribute = attribute;
         this.parentCategoryName = parentCategoryName;
         this.categoryName = categoryName;
-        if (parentCategoryName != null) {
-            Category category=getCategoryByName(parentCategoryName);
-            assert category != null;
-            category.addSubCategory(categoryName);
-        }
-        allCategories.add(this);
+        Storage.getAllCategories().add(this);
     }
 
     public void setAttribute(String attribute) {
@@ -56,21 +53,8 @@ public class Category implements Serializable {
         Product.getProductWithID(productID).setCategoryName(null);
     }
 
-    public static boolean isThereCategoryWithName(String categoryName) {
-        return getCategoryByName(categoryName) != null;
-    }
-
-    private void addSubCategory(String categoryName) {
+    public void addSubCategory(String categoryName) {
         this.subCategoryNames.add(categoryName);
-    }
-
-    public static Category getCategoryByName(String categoryName) {
-        for (Category category : allCategories) {
-            if (category.categoryName.equals(categoryName)) {
-                return category;
-            }
-        }
-        return null;
     }
 
     public boolean containsProduct(String productID) {
