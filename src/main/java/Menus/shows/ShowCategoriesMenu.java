@@ -21,8 +21,8 @@ public class ShowCategoriesMenu extends ShowsMenu {
             canChangeSubCategoryFilter = false;
         }
         filter = new CategoriesFilterMenu(this, "Category Filter Menu");
-        if (fatherMenu instanceof ViewAccountMenu) {
-            ((RequestsFilterMenu) filter).setUsernameFilter(((ViewAccountMenu) fatherMenu).getUsername());
+        if (fatherMenu instanceof ViewCategoryMenu) {
+            ((CategoriesFilterMenu) filter).setFatherCategoryFilter(((ViewCategoryMenu) fatherMenu).getCategoryName());
             subMenus.put(1, getSelectMenu());
             subMenus.put(2, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
         } else {
