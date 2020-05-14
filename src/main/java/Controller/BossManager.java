@@ -299,10 +299,11 @@ public class BossManager {
     }
 
     private boolean checkFatherCategoryFilter(Category category, String fatherCategory) {
+        if (category.getParentCategoryName() == null) return false;
         String[] fatherCategories = fatherCategory.split(",");
         int wordCount = countWordsBySemicolon(fatherCategory);
         for (int i = 0; i < wordCount; i++) {
-            if (category.getParentCategoryName().equals(fatherCategory)) {
+            if (category.getParentCategoryName().equals(fatherCategories[i])) {
                 return true;
             }
         }
