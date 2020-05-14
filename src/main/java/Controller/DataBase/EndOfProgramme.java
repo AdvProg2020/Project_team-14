@@ -60,7 +60,7 @@ public class EndOfProgramme extends DataBase implements Runnable {
     @Override
     protected void updateCategories() throws IOException {
         String path = "src\\main\\resources\\DataBase\\Categories\\";
-        for (Category category : allCategories) {
+        for (Category category : getAllCategories()) {
             storeObjectInFile(category, path + category.getCategoryName());
         }
     }

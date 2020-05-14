@@ -78,7 +78,7 @@ public class ManageCategoriesMenu extends Menu {
                 System.out.println(this.getMenuName());
                 System.out.println("if you input back we will go back");
                 String message = new String();
-                String categoryName, fatherCategoryName;
+                String categoryName, fatherCategoryName = "";
                 String categoryAttributes = "";
                 System.out.println("please enter the category name:");
                 categoryName = scanner.nextLine();
@@ -103,6 +103,9 @@ public class ManageCategoriesMenu extends Menu {
                     } else {
                         categoryAttributes = deleteAttribute(categoryAttributes, input.split("\\s")[1]);
                     }
+                }
+                if (categoryAttributes.equals("")) {
+                    categoryAttributes = "none";
                 }
                 server.clientToServer("create category " + categoryName + " " + fatherCategoryName +
                         " " + categoryAttributes);

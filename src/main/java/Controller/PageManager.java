@@ -6,6 +6,7 @@ import Model.Category.Category;
 import Model.Product.Comment;
 import Model.Product.Product;
 import Exception.*;
+import Model.Storage;
 
 import java.util.ArrayList;
 
@@ -17,7 +18,7 @@ public class PageManager {
     //filter factor: 0 -> [category name] , 1-> [be in sale:boolean]
 
     public void showProducts(String sortFactor, ArrayList<String> filterFactor) throws SortFactorNotAvailableException {
-        Category category = Category.getCategoryByName(filterFactor.get(0));
+        Category category = Storage.getCategoryByName(filterFactor.get(0));
         assert category != null;
         ArrayList<Product> products = new ArrayList<>(ProductManager.getArrayListOfProductsFromArrayListOfProductIDs(category.getAllProductIDs()));
         StringBuilder ans = new StringBuilder("All Products in [" + filterFactor.get(0) + "] category:");

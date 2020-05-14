@@ -83,7 +83,7 @@ public class startOfProgramme extends DataBase {
         for (File file : files) {
             ObjectInputStream in = new ObjectInputStream(new FileInputStream(file.getAbsolutePath()));
             Category s = (Category) in.readObject();
-            allCategories.add(s);
+            getAllCategories().add(s);
         }
     }
 

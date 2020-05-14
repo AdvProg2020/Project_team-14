@@ -89,6 +89,11 @@ public class Category implements Serializable {
         return result;
     }
 
+    public String toStringForBoss() {
+        return "Category Name: " + this.categoryName + " " +
+                "Category Attribute: " + this.attribute;
+    }
+
     public String toString() {
         return "Category Name: " + this.categoryName + "\n" +
                 "Category Attribute: " + this.attribute + "\n" +

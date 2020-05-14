@@ -95,10 +95,20 @@ public class Server {
             this.getRequestAccountUsername(command);
         } else if (command.startsWith("create category ")) {
             this.createCategory(command);
+        } else if (command.startsWith("show categories ")) {
+            this.showCategories(command);
         }
     }
 
+    private void showCategories(String command) {
+        ArrayList<Object> filters;
+        filters = getFilters(command);
+        String[] input = command.split("\\s");
+        bossManager.showCategories(input[2], filters);
+    }
+
     private void createCategory(String command) {
+        System.out.println(command);
         Server.answer = "";
         if (!checkNameFormat(command.split("\\s")[2])) {
             Server.answer += "category name format is invalid";

@@ -252,8 +252,6 @@ public class BossManager {
             }
             String ans = answer.toString();
             Server.setAnswer(ans);
-            //if (!account.getUsername().equals(username))
-            //answer.append("Username: ").append(account.getUsername());    //just list users IDs, then he will select one
         }
     }
 
@@ -282,6 +280,7 @@ public class BossManager {
      */
 
     public void createCategory(String categoryName, String fatherCategoryName, String categoryAttribute) {
+        Server.setAnswer("category created");
         if (!Storage.isThereCategoryWithName(categoryName)) {
             if (fatherCategoryName.equalsIgnoreCase("rootCategory")) {
                 new Category(categoryName, null, categoryAttribute);
@@ -298,9 +297,33 @@ public class BossManager {
         }
     }
 
-    /*public void addCategory(String[] info) {
-        new Category(info[0], info[1], info[2]);
-    }*/
+    private boolean isCategoryInFilter(Category category, ArrayList<Object> filters) {
+        return true;
+        //we will change it
+    }
+
+    public void showCategories(String categoryName, ArrayList<Object> filters) {
+        int count = 0;
+        ArrayList<Category> categories = Storage.getAllCategories();
+        StringBuilder answer = new StringBuilder("");
+        if (categories.size() == 0) {
+            Server.setAnswer("nothing found");
+        } else {
+            for (Category category : categories) {
+                if (isCategoryInFilter(category, filters)) {
+                    answer.append(category.toStringForBoss() + "\n");
+                    count++;
+                }
+            }
+            if (count == 0) {
+                answer = new StringBuilder("nothing found");
+            } else {
+                answer.append("here are what we found");
+            }
+            String ans = answer.toString();
+            Server.setAnswer(ans);
+        }
+    }
 
     /*public void editCategory(String categoryName, String attribute, String updatedInfo) throws InvalidCategoryNameException {
         Category category = Category.getCategoryByName(categoryName);
