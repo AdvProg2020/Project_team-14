@@ -298,9 +298,26 @@ public class BossManager {
         }
     }
 
+    private boolean checkFatherCategoryFilter(Category category, String fatherCategory) {
+        String[] fatherCategories = fatherCategory.split(",");
+        int wordCount = countWordsBySemicolon(fatherCategory);
+        for (int i = 0; i < wordCount; i++) {
+            if (category.getParentCategoryName().equals(fatherCategory)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private boolean isCategoryInFilter(Category category, ArrayList<Object> filters) {
+        for (int i = 0; i < filters.size(); i += 2) {
+            if (((String) filters.get(i)).equalsIgnoreCase("fatherCategory")) {
+                if (checkFatherCategoryFilter(category, (String) filters.get(i + 1)) == false) {
+                    return false;
+                }
+            }
+        }
         return true;
-        //we will change it
     }
 
     public void showCategories(String username, ArrayList<Object> filters) {

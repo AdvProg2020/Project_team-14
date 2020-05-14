@@ -83,7 +83,7 @@ public class ShowCategoriesMenu extends ShowsMenu {
     }
 
     private void getInfo() {
-        server.clientToServer("show categories " + Menu.username);
+        server.clientToServer("show categories " + Menu.username + filter.getFilters());
         this.serverAnswer = server.serverToClient();
         System.out.println(serverAnswer);
     }

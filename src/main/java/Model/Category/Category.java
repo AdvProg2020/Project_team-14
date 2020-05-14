@@ -35,6 +35,14 @@ public class Category implements Serializable {
         return (this.parentCategoryName != null);
     }
 
+    public String getParentCategoryName() {
+        return parentCategoryName;
+    }
+
+    public void setParentCategoryName(String parentCategoryName) {
+        this.parentCategoryName = parentCategoryName;
+    }
+
     public String getCategoryName() {
         return categoryName;
     }

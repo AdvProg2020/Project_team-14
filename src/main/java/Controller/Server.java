@@ -101,6 +101,16 @@ public class Server {
             this.viewCategory(command);
         } else if (command.startsWith("search category ")) {
             this.searchCategory(command);
+        } else if (command.startsWith("is category exists ")) {
+            this.isCategoryExists(command);
+        }
+    }
+
+    private void isCategoryExists(String command) {
+        if (Storage.isThereCategoryWithName(command.split("\\s")[3])) {
+            setAnswer("yes");
+        } else {
+            setAnswer("no");
         }
     }
 
