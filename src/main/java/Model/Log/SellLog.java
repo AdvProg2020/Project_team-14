@@ -10,6 +10,7 @@ public class SellLog {
     private BuyLog buyLog;
     private String productID;
     private String salesmanID;
+    private int productCount;
     private String customerID;
     private boolean wasOnSale;
     private int priceBeforeSale;
@@ -17,6 +18,7 @@ public class SellLog {
 
     public SellLog(BuyLog buyLog, String productID, String salesmanID) {
         this.buyLog = buyLog;
+        this.productCount = buyLog.getProductCountByID(productID);
         this.priceAfterSale = buyLog.getPricesAfterSale().get(productID);
         this.priceBeforeSale = buyLog.getPrices().get(productID);
         this.wasOnSale = !(this.priceAfterSale == this.priceBeforeSale);
@@ -51,6 +53,7 @@ public class SellLog {
         String result = "";
         result += "Product: " + Product.getNameByID(productID) + "\n";
         result += "Customer Username: " + customerID + "\n";
+        result += "Count: " + productCount + "\n";
         if (wasOnSale) {
             result += "the product was sold on sale" + "\n";
             result += "price before sale: " + priceBeforeSale + "\n";
@@ -73,6 +76,4 @@ public class SellLog {
         }
         return result.toString();
     }
-
-
 }

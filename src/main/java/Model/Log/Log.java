@@ -27,8 +27,6 @@ public abstract class Log implements Serializable {
         return "Date: " + getDate().toString();
     }
 
-    ;
-
     public static boolean hasCustomerBoughtProduct(String username, String productID) {
         for (BuyLog buyLog : BuyLog.getUserBuyLogs(username)) {
             if (buyLog.containProduct(productID)) {
