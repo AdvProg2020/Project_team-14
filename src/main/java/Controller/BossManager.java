@@ -358,6 +358,29 @@ public class BossManager {
         }
     }
 
+    public void editCategoryName(String oldCategoryName, String newCategoryName) {
+        Server.setAnswer("edit successful");
+        Category category = Storage.getCategoryByName(oldCategoryName);
+        if (Storage.isThereCategoryWithName(newCategoryName)) {
+            Server.setAnswer("there is already exists a category with such name");
+        } else {
+            category.setCategoryName(newCategoryName);
+        }
+    }
+
+    public void editFatherCategory(String categoryName, String newFatherCategory) {
+        Server.setAnswer("edit successful");
+        Category category = Storage.getCategoryByName(categoryName);
+        if (newFatherCategory.equals("none")) {
+            category.setParentCategoryName(null);
+        }
+        if (Storage.isThereCategoryWithName(newFatherCategory)) {
+            category.setParentCategoryName(newFatherCategory);
+        } else {
+            System.out.println("there isn't a category with this name");
+        }
+    }
+
     /*public void editCategory(String categoryName, String attribute, String updatedInfo) throws InvalidCategoryNameException {
         Category category = Category.getCategoryByName(categoryName);
         if (category == null) {

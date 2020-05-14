@@ -103,7 +103,19 @@ public class Server {
             this.searchCategory(command);
         } else if (command.startsWith("is category exists ")) {
             this.isCategoryExists(command);
+        } else if (command.startsWith("edit category name ")) {
+            this.editCategoryName(command);
+        } else if (command.startsWith("edit father category ")) {
+            this.editFatherCategory(command);
         }
+    }
+
+    private void editCategoryName(String command) {
+        bossManager.editCategoryName(command.split("\\s")[4], command.split("\\s")[5]);
+    }
+
+    private void editFatherCategory(String command) {
+        bossManager.editFatherCategory(command.split("\\s")[4], command.split("\\s")[5]);
     }
 
     private void isCategoryExists(String command) {

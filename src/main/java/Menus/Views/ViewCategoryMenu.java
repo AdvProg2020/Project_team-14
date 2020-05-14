@@ -36,6 +36,10 @@ public class ViewCategoryMenu extends Menu {
         return categoryName;
     }
 
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
     private void getCategoryInfo() {
         server.clientToServer("view category " + Menu.username + " " + categoryName);
         String serverAnswer = server.serverToClient();
