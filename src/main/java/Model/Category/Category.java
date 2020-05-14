@@ -14,9 +14,10 @@ public class Category implements Serializable {
     //note that the name of each category must be unique so we can get the name
     //we should check to ensure that there's no previous category with this name
     //OK
+    //let's delete sub category and all products because
+    //we have parent category and for products we can have category
     private String categoryName;
     private ArrayList<String> allProductIDs = new ArrayList<>();
-    private ArrayList<String> subCategoryNames = new ArrayList<>();
     private String parentCategoryName;
     private String attribute;
 
@@ -29,6 +30,10 @@ public class Category implements Serializable {
 
     public void setAttribute(String attribute) {
         this.attribute = attribute;
+    }
+
+    public String getAttribute() {
+        return attribute;
     }
 
     public boolean hasParentCategory() {
@@ -65,21 +70,8 @@ public class Category implements Serializable {
         Product.getProductWithID(productID).setCategoryName(null);
     }
 
-    public void addSubCategory(String categoryName) {
-        this.subCategoryNames.add(categoryName);
-    }
-
     public boolean containsProduct(String productID) {
         return allProductIDs.contains(productID);
-    }
-
-    private StringBuilder toStringSubCategory() {
-        StringBuilder result = new StringBuilder();
-        result.append("SubCategories: " + "\n");
-        for (String subCategory : subCategoryNames) {
-            result.append(subCategory).append("\n");
-        }
-        return result;
     }
 
     private StringBuilder toStringProducts() {

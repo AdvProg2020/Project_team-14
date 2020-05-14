@@ -288,7 +288,6 @@ public class BossManager {
             } else {
                 if (Storage.isThereCategoryWithName(fatherCategoryName)) {
                     new Category(categoryName, fatherCategoryName, categoryAttribute);
-                    Storage.getCategoryByName(fatherCategoryName).addSubCategory(categoryName);
                 } else {
                     Server.setAnswer("there isn't a category with this father category name");
                 }
@@ -381,38 +380,44 @@ public class BossManager {
         }
     }
 
-    /*public void editCategory(String categoryName, String attribute, String updatedInfo) throws InvalidCategoryNameException {
-        Category category = Category.getCategoryByName(categoryName);
-        if (category == null) {
-            throw new InvalidCategoryNameException("there's no category with this name");
+    public void addCategoryAttribute(String categoryName, String categoryNewAttribute) {
+        Category category = Storage.getCategoryByName(categoryName);
+        if (category.getAttribute().equals(categoryNewAttribute)) {
+            Server.setAnswer("you added nothing to the attributes");
         } else {
-            switch (attribute) {
-                case "attribute":
-                    category.setAttribute(updatedInfo);
-                    break;
-                case "addProduct":
-                    category.addProductToCategory(updatedInfo);
-                    break;
-                case "removeProduct":
-                    category.deleteProductFromCategory(updatedInfo);
-                    break;
-            }
-            Server.setAnswer("your changes updated successfully");
+            Server.setAnswer("attributes added successfully");
+            category.setAttribute(categoryNewAttribute);
         }
-    }*/
+    }
 
-    /*public void removeCategory(String categoryName) throws InvalidCategoryNameException {
-        Category category = Category.getCategoryByName(categoryName);
-        if (category == null) {
-            throw new InvalidCategoryNameException("there's no category with this name");
+    public void deleteCategoryAttribute(String categoryName, String categoryNewAttribute) {
+        Category category = Storage.getCategoryByName(categoryName);
+        if (category.getAttribute().equals(categoryNewAttribute)) {
+            Server.setAnswer("you deleted nothing from the attributes");
         } else {
-            Storage.allCategories.remove(category);
-            for (String productID : category.getAllProductIDs()) {
-                category.deleteProductFromCategory(productID);
-            }
-            Server.setAnswer("category deleted successfully");
+            Server.setAnswer("attributes deleted successfully");
+            category.setAttribute(categoryNewAttribute);
         }
-    }*/
+    }
+
+    public void editCategoryAttribute(String categoryName, String categoryNewAttribute) {
+        Category category = Storage.getCategoryByName(categoryName);
+        if (category.getAttribute().equals(categoryNewAttribute)) {
+            Server.setAnswer("you edited nothing from the attributes");
+        } else {
+            Server.setAnswer("attributes edited successfully");
+            category.setAttribute(categoryNewAttribute);
+        }
+    }
+
+    public void deleteCategory(String categoryName) {
+        Category category = Storage.getCategoryByName(categoryName);
+        Storage.getAllCategories().remove(category);
+        /*for (String productID : category.getAllProductIDs()) {
+            category.deleteProductFromCategory(productID);
+        }*/
+        Server.setAnswer("deleted successfully");
+    }
 
     /*public void listAllProducts(String sortFactor) throws SortFactorNotAvailableException {
         ArrayList<Product> products = new ArrayList<>(Storage.allProducts);

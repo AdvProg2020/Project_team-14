@@ -92,6 +92,9 @@ public class ManageCategoriesMenu extends Menu {
                 if (attributes.contains(input + ",")) {
                     int position = attributes.indexOf(input + ",");
                     return attributes.substring(0, position) + attributes.substring(position + input.length() + 1);
+                } else if (attributes.contains("," + input)) {
+                    int position = attributes.indexOf(("," + input));
+                    return attributes.substring(0, position);
                 } else {
                     System.out.println("it hasn't the attribute you want to delete");
                     return attributes;

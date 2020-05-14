@@ -107,7 +107,37 @@ public class Server {
             this.editCategoryName(command);
         } else if (command.startsWith("edit father category ")) {
             this.editFatherCategory(command);
+        } else if (command.startsWith("what is category attribute ")) {
+            this.whatIsCategoryAttribute(command);
+        } else if (command.startsWith("add category attribute ")) {
+            this.addCategoryAttribute(command);
+        } else if (command.startsWith("delete category attribute ")) {
+            this.deleteCategoryAttribute(command);
+        } else if (command.startsWith("edit category attribute")) {
+            this.editCategoryAttribute(command);
+        } else if (command.startsWith("delete category ")) {
+            this.deleteCategory(command);
         }
+    }
+
+    private void deleteCategory(String command) {
+        bossManager.deleteCategory(command.split("\\s")[4]);
+    }
+
+    private void editCategoryAttribute(String command) {
+        bossManager.editCategoryAttribute(command.split("\\s")[4], command.split("\\s")[5]);
+    }
+
+    private void deleteCategoryAttribute(String command) {
+        bossManager.deleteCategoryAttribute(command.split("\\s")[4], command.split("\\s")[5]);
+    }
+
+    private void addCategoryAttribute(String command) {
+        bossManager.addCategoryAttribute(command.split("\\s")[4], command.split("\\s")[5]);
+    }
+
+    private void whatIsCategoryAttribute(String command) {
+        setAnswer(Storage.getCategoryByName(command.split("\\s")[4]).getAttribute());
     }
 
     private void editCategoryName(String command) {

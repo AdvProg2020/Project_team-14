@@ -28,7 +28,27 @@ public class ViewCategoryMenu extends Menu {
 
     private Menu getDeleteCategoryMenu() {
         return new Menu(this, "Delete Category Menu") {
-
+            @Override
+            public void execute() {
+                System.out.println("are you sure you want to delete this category");
+                String input = scanner.nextLine();
+                if (input.equalsIgnoreCase("yes")) {
+                    server.clientToServer("delete category " + Menu.username + " " + ((ViewRequestMenu)
+                            this.getFatherMenu()).getRequestID());
+                    String serverAnswer = server.serverToClient();
+                    System.out.println(serverAnswer);
+                    if (serverAnswer.equalsIgnoreCase("deleted successfully")) {
+                        fatherMenu.getFatherMenu().getFatherMenu().execute();
+                    } else {
+                        fatherMenu.execute();
+                    }
+                } else if (input.equalsIgnoreCase("no")) {
+                    fatherMenu.execute();
+                } else {
+                    System.out.println("error");
+                    this.execute();
+                }
+            }
         };
     }
 
