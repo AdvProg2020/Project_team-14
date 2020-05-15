@@ -363,6 +363,11 @@ public class BossManager {
         if (Storage.isThereCategoryWithName(newCategoryName)) {
             Server.setAnswer("there is already exists a category with such name");
         } else {
+            for (Category subCategory : Storage.getAllCategories()) {
+                if (subCategory.getParentCategoryName().equals(oldCategoryName)) {
+                    subCategory.setParentCategoryName(newCategoryName);
+                }
+            }
             category.setCategoryName(newCategoryName);
         }
     }
@@ -413,6 +418,11 @@ public class BossManager {
     public void deleteCategory(String categoryName) {
         Category category = Storage.getCategoryByName(categoryName);
         Storage.getAllCategories().remove(category);
+        for (Category subCategory : Storage.getAllCategories()) {
+            if (subCategory.getParentCategoryName().equals(categoryName)) {
+                subCategory.setParentCategoryName(null);
+            }
+        }
         /*for (String productID : category.getAllProductIDs()) {
             category.deleteProductFromCategory(productID);
         }*/

@@ -33,8 +33,8 @@ public class ViewCategoryMenu extends Menu {
                 System.out.println("are you sure you want to delete this category");
                 String input = scanner.nextLine();
                 if (input.equalsIgnoreCase("yes")) {
-                    server.clientToServer("delete category " + Menu.username + " " + ((ViewRequestMenu)
-                            this.getFatherMenu()).getRequestID());
+                    server.clientToServer("delete category " + Menu.username + " " + ((ViewCategoryMenu)
+                            this.getFatherMenu()).getCategoryName());
                     String serverAnswer = server.serverToClient();
                     System.out.println(serverAnswer);
                     if (serverAnswer.equalsIgnoreCase("deleted successfully")) {

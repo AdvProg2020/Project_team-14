@@ -121,7 +121,7 @@ public class Server {
     }
 
     private void deleteCategory(String command) {
-        bossManager.deleteCategory(command.split("\\s")[4]);
+        bossManager.deleteCategory(command.split("\\s")[3]);
     }
 
     private void editCategoryAttribute(String command) {
