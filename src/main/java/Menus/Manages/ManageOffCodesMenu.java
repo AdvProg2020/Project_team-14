@@ -50,7 +50,7 @@ public class ManageOffCodesMenu extends Menu {
                 System.out.println("if you input back we will go back");
 
                 //get info from user
-                System.out.println("enter Start Time and End Time in separate lines:(format: mm/dd/yyyy)");
+                System.out.println("enter Start Time and End Time in separate lines:(format: mm-dd-yyyy hh-mm-ss)");
                 String startTime = scanner.nextLine();
                 checkBack(startTime);
                 String endTime = scanner.nextLine();
@@ -90,11 +90,15 @@ public class ManageOffCodesMenu extends Menu {
                 ArrayList<String> ans = new ArrayList<>();
                 String command;
                 while (!(command = scanner.nextLine()).equalsIgnoreCase("done")) {
-                    if (command.split("\\s")[0].equalsIgnoreCase("add")) {
+                    if (command.split("\\s").length != 2) {
+                        System.err.println("wrong order, use this format");
+                        System.err.println("-add [username] : to add\n-delete [username] : to delete in case of mistaken addition\n-DONE : to end addition");
+                    } else if (command.startsWith("add")) {
                         addUsernameToArray(command.split("\\s")[1], ans);
-                    } else if (command.split("\\s")[0].equalsIgnoreCase("delete")) {
+                    } else if (command.startsWith("delete")) {
                         deleteUsernameFromArray(command.split("\\s")[1], ans);
                     } else {
+                        System.err.println("wrong order, use this format");
                         System.err.println("-add [username] : to add\n-delete [username] : to delete in case of mistaken addition\n-DONE : to end addition");
                     }
                 }

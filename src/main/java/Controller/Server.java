@@ -125,7 +125,7 @@ public class Server {
         String[] info = command.split("\\+"); //info: 1-->percentage 2-->ceiling 3-->frequency 4-->period
         if (checkOffCodeInfoCorrectness(info)) {
             bossManager.createSpecialOffCode(Integer.parseInt(info[4]), Integer.parseInt(info[1]), Integer.parseInt(info[2]), Integer.parseInt(info[3]));
-            setAnswer("creation of offCode was successful");
+            setAnswer("creation of offCode successful");
         }
     }
 
@@ -133,10 +133,17 @@ public class Server {
         String[] info = command.split("\\+");   //info: 1-->percentage 2-->ceiling 3-->frequency 4-->start 5-->end
         if (checkOffCodeInfoCorrectness(info)) {
             String usernames = info[6].substring(info[6].indexOf(":") + 2, info[6].length() - 1); //info[6] = User:[....]
+            ArrayList<String> allUsersCanUse = convertStringToArray(usernames);
             bossManager.createNormalOffCode(info[4], info[5], Integer.parseInt(info[1]), Integer.parseInt(info[2]),
-                    Integer.parseInt(info[3]), new ArrayList<String>(Arrays.asList(usernames.split(", "))));
+                    Integer.parseInt(info[3]), allUsersCanUse);
             setAnswer("creation of offCode successful");
         }
+    }
+
+    private ArrayList<String> convertStringToArray(String s) {
+        ArrayList<String> ans = new ArrayList<>();
+        if (s.equals("")) return ans;
+        return new ArrayList<String>(Arrays.asList(s.split(", ")));
     }
 
     //info: create new normal offCode+percentage+ceiling+frequency+start+end+User:[...]
