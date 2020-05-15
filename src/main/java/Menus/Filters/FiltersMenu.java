@@ -22,16 +22,16 @@ public class FiltersMenu extends Menu {
         String filter = new String("");
         for (int i = 0; i < filters.size(); i += 2) {
             if (filters.get(i + 1) != null) {
-                filter += " ";
+                filter += "+";
                 filter += filters.get(i);
-                filter += " ";
+                filter += "+";
                 filter += filters.get(i + 1);
             }
         }
         if (filter.equals("")) {
             return filter;
         } else {
-            return " filters:" + filter;
+            return "+filters:" + filter;
         }
     }
 }

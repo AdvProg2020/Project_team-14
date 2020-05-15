@@ -36,7 +36,7 @@ public class ManageRequestsMenu extends Menu {
                 System.out.println("if you input back we will go back");
                 System.out.println("please input the requestID");
                 String requestID = scanner.nextLine();
-                server.clientToServer("search request " + Menu.username + " " + requestID);
+                server.clientToServer("search request+" + Menu.username + "+" + requestID);
                 String serverAnswer = server.serverToClient();
                 if (serverAnswer.startsWith("search completed")) {
                     System.out.println("search completed");

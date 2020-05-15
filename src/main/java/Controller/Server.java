@@ -28,6 +28,7 @@ public class Server {
     static private String answer;
 
     public Server() {
+        System.out.println(getWordCount("salam+matin+khbi"));
         answer = "";
         this.accountManager = new AccountManager();
         this.bossManager = new BossManager();
@@ -51,105 +52,105 @@ public class Server {
 
     public void clientToServer(String command) {
         Matcher matcher;
-        if ((matcher = getMatcher("login (\\w+) (\\w+)", command)).find()) {
+        if ((matcher = getMatcher("login\\+(\\w+)\\+(\\w+)", command)).find()) {
             this.login(matcher);
-        } else if (command.startsWith("register ")) {
+        } else if (command.startsWith("register+")) {
             this.register(command);
-        } else if (command.startsWith("logout ")) {
+        } else if (command.startsWith("logout+")) {
             this.logout(command);
-        } else if (command.startsWith("forgot password ")) {
+        } else if (command.startsWith("forgot password+")) {
             this.forgotPassword(command);
-        } else if (command.startsWith("view personal info ")) {
+        } else if (command.startsWith("view personal info+")) {
             this.viewPersonalInfo(command);
-        } else if (command.startsWith("edit personal info ")) {
+        } else if (command.startsWith("edit personal info+")) {
             this.editPersonalInfo(command);
-        } else if (command.startsWith("show accounts ")) {
+        } else if (command.startsWith("show accounts+")) {
             this.showAccounts(command);
-        } else if (command.startsWith("view account info ")) {
+        } else if (command.startsWith("view account info+")) {
             this.viewAccountInfo(command);
-        } else if (command.startsWith("see authorization ")) {
+        } else if (command.startsWith("see authorization+")) {
             this.seeAuthorization(command);
-        } else if (command.startsWith("delete account ")) {
+        } else if (command.startsWith("delete account+")) {
             this.deleteAccount(command);
-        } else if (command.startsWith("search account ")) {
+        } else if (command.startsWith("search account+")) {
             this.searchAccount(command);
-        } else if (command.startsWith("make new boss ")) {
+        } else if (command.startsWith("make new boss+")) {
             this.makeNewBoss(command);
-        } else if (command.startsWith("show requests ")) {
+        } else if (command.startsWith("show requests+")) {
             this.showRequests(command);
-        } else if (command.startsWith("view request ")) {
+        } else if (command.startsWith("view request+")) {
             this.viewRequest(command);
-        } else if (command.startsWith("is request state checking ")) {
+        } else if (command.startsWith("is request state checking+")) {
             this.isRequestStateChecking(command);
-        } else if (command.startsWith("is account requestable ")) {
+        } else if (command.startsWith("is account requestable+")) {
             this.isAccountRequestable(command);
-        } else if (command.startsWith("search request ")) {
+        } else if (command.startsWith("search request+")) {
             this.searchRequest(command);
-        } else if (command.startsWith("accept request ")) {
+        } else if (command.startsWith("accept request+")) {
             this.acceptRequest(command);
-        } else if (command.startsWith("decline request ")) {
+        } else if (command.startsWith("decline request+")) {
             this.declineRequest(command);
-        } else if (command.startsWith("delete request ")) {
+        } else if (command.startsWith("delete request+")) {
             this.deleteRequest(command);
-        } else if (command.startsWith("what is request username ")) {
+        } else if (command.startsWith("what is request username+")) {
             this.getRequestAccountUsername(command);
-        } else if (command.startsWith("create category ")) {
+        } else if (command.startsWith("create category+")) {
             this.createCategory(command);
-        } else if (command.startsWith("show categories ")) {
+        } else if (command.startsWith("show categories+")) {
             this.showCategories(command);
-        } else if (command.startsWith("view category ")) {
+        } else if (command.startsWith("view category+")) {
             this.viewCategory(command);
-        } else if (command.startsWith("search category ")) {
+        } else if (command.startsWith("search category+")) {
             this.searchCategory(command);
-        } else if (command.startsWith("is category exists ")) {
+        } else if (command.startsWith("is category exists+")) {
             this.isCategoryExists(command);
-        } else if (command.startsWith("edit category name ")) {
+        } else if (command.startsWith("edit category name+")) {
             this.editCategoryName(command);
-        } else if (command.startsWith("edit father category ")) {
+        } else if (command.startsWith("edit father category+")) {
             this.editFatherCategory(command);
-        } else if (command.startsWith("what is category attribute ")) {
+        } else if (command.startsWith("what is category attribute+")) {
             this.whatIsCategoryAttribute(command);
-        } else if (command.startsWith("add category attribute ")) {
+        } else if (command.startsWith("add category attribute+")) {
             this.addCategoryAttribute(command);
-        } else if (command.startsWith("delete category attribute ")) {
+        } else if (command.startsWith("delete category attribute+")) {
             this.deleteCategoryAttribute(command);
-        } else if (command.startsWith("edit category attribute")) {
+        } else if (command.startsWith("edit category attribute+")) {
             this.editCategoryAttribute(command);
-        } else if (command.startsWith("delete category ")) {
+        } else if (command.startsWith("delete category+")) {
             this.deleteCategory(command);
         }
     }
 
     private void deleteCategory(String command) {
-        bossManager.deleteCategory(command.split("\\s")[3]);
+        bossManager.deleteCategory(command.split("\\+")[1]);
     }
 
     private void editCategoryAttribute(String command) {
-        bossManager.editCategoryAttribute(command.split("\\s")[4], command.split("\\s")[5]);
+        bossManager.editCategoryAttribute(command.split("\\+")[2], command.split("\\+")[3]);
     }
 
     private void deleteCategoryAttribute(String command) {
-        bossManager.deleteCategoryAttribute(command.split("\\s")[4], command.split("\\s")[5]);
+        bossManager.deleteCategoryAttribute(command.split("\\+")[2], command.split("\\+")[4]);
     }
 
     private void addCategoryAttribute(String command) {
-        bossManager.addCategoryAttribute(command.split("\\s")[4], command.split("\\s")[5]);
+        bossManager.addCategoryAttribute(command.split("\\+")[2], command.split("\\+")[3]);
     }
 
     private void whatIsCategoryAttribute(String command) {
-        setAnswer(Storage.getCategoryByName(command.split("\\s")[4]).getAttribute());
+        setAnswer(Storage.getCategoryByName(command.split("\\+")[1]).getAttribute());
     }
 
     private void editCategoryName(String command) {
-        bossManager.editCategoryName(command.split("\\s")[4], command.split("\\s")[5]);
+        bossManager.editCategoryName(command.split("\\+")[2], command.split("\\+")[3]);
     }
 
     private void editFatherCategory(String command) {
-        bossManager.editFatherCategory(command.split("\\s")[4], command.split("\\s")[5]);
+        bossManager.editFatherCategory(command.split("\\+")[2], command.split("\\+")[3]);
     }
 
     private void isCategoryExists(String command) {
-        if (Storage.isThereCategoryWithName(command.split("\\s")[3])) {
+        if (Storage.isThereCategoryWithName(command.split("\\+")[1])) {
             setAnswer("yes");
         } else {
             setAnswer("no");
@@ -157,61 +158,61 @@ public class Server {
     }
 
     private void searchCategory(String command) {
-        bossManager.searchCategory(command.split("\\s")[3]);
+        bossManager.searchCategory(command.split("\\+")[2]);
     }
 
     private void viewCategory(String command) {
-        String[] input = command.split("\\s");
-        bossManager.viewCategory(input[2], input[3]);
+        String[] input = command.split("\\+");
+        bossManager.viewCategory(input[1], input[2]);
     }
 
     private void showCategories(String command) {
         ArrayList<Object> filters;
         filters = getFilters(command);
-        String[] input = command.split("\\s");
-        bossManager.showCategories(input[2], filters);
+        String[] input = command.split("\\+");
+        bossManager.showCategories(input[1], filters);
     }
 
     private void createCategory(String command) {
         System.out.println(command);
         Server.answer = "";
-        if (!checkNameFormat(command.split("\\s")[2])) {
+        if (!checkNameFormat(command.split("\\+")[1])) {
             Server.answer += "category name format is invalid";
         }
-        if (!checkNameFormat(command.split("\\s")[3])) {
+        if (!checkNameFormat(command.split("\\+")[2])) {
             Server.answer += "father category name format is invalid";
         }
         if (Server.answer.equals("")) {
-            bossManager.createCategory(command.split("\\s")[2], command.split("\\s")[3],
-                    command.split("\\s")[4]);
+            bossManager.createCategory(command.split("\\+")[1], command.split("\\+")[2],
+                    command.split("\\+")[3]);
         }
     }
 
     private void getRequestAccountUsername(String command) {
-        Server.setAnswer(Storage.getRequestByID(command.split("\\s")[4]).getAccountUsername());
+        Server.setAnswer(Storage.getRequestByID(command.split("\\+")[1]).getAccountUsername());
     }
 
     private void deleteRequest(String command) {
-        bossManager.deleteRequest(command.split("\\s")[3]);
+        bossManager.deleteRequest(command.split("\\+")[2]);
     }
 
     private void declineRequest(String command) {
-        Storage.getRequestByID(command.split("\\s")[3]).decline();
+        Storage.getRequestByID(command.split("\\+")[2]).decline();
         Server.setAnswer("declined successfully");
     }
 
     private void acceptRequest(String command) {
-        Storage.getRequestByID(command.split("\\s")[3]).accept();
+        Storage.getRequestByID(command.split("\\+")[2]).accept();
         Server.setAnswer("accepted successfully");
     }
 
     private void searchRequest(String command) {
-        bossManager.searchRequest(command.split("\\s")[3]);
+        bossManager.searchRequest(command.split("\\+")[2]);
     }
 
     private void isAccountRequestable(String command) {
-        if (Storage.isThereAccountWithUsername(command.split("\\s")[3])) {
-            if (!Storage.getAccountWithUsername(command.split("\\s")[3]).getRole().equals(Role.BOSS)) {
+        if (Storage.isThereAccountWithUsername(command.split("\\+")[1])) {
+            if (!Storage.getAccountWithUsername(command.split("\\+")[1]).getRole().equals(Role.BOSS)) {
                 Server.setAnswer("yes");
             } else {
                 Server.setAnswer("no");
@@ -222,13 +223,13 @@ public class Server {
     }
 
     private void viewRequest(String command) {
-        String[] input = command.split("\\s");
-        bossManager.viewRequest(input[2], input[3]);
+        String[] input = command.split("\\+");
+        bossManager.viewRequest(input[1], input[2]);
     }
 
     private void isRequestStateChecking(String command) {
-        String[] input = command.split("\\s");
-        if (Storage.getRequestByID(input[4]).getConfirmation().equals(Confirmation.CHECKING)) {
+        String[] input = command.split("\\+");
+        if (Storage.getRequestByID(input[1]).getConfirmation().equals(Confirmation.CHECKING)) {
             Server.setAnswer("yes");
         } else {
             Server.setAnswer("no");
@@ -238,32 +239,32 @@ public class Server {
     private void showRequests(String command) {
         ArrayList<Object> filters;
         filters = getFilters(command);
-        String[] input = command.split("\\s");
-        bossManager.showRequests(input[2], filters);
+        String[] input = command.split("\\+");
+        bossManager.showRequests(input[1], filters);
     }
 
     private void makeNewBoss(String input) {
         Server.answer = "";
-        String[] attributes = input.split("\\s");
-        if (!checkNameFormat(attributes[3])) {
+        String[] attributes = input.split("\\+");
+        if (!checkNameFormat(attributes[1])) {
             Server.answer += "first name format is invalid" + "\n";
         }
-        if (!checkNameFormat(attributes[4])) {
+        if (!checkNameFormat(attributes[2])) {
             Server.answer += "last name format is invalid" + "\n";
         }
-        if (!checkUsernameFormat(attributes[5])) {
+        if (!checkUsernameFormat(attributes[3])) {
             Server.answer += "username format is invalid" + "\n";
         }
-        if (!checkUsernameFormat(attributes[6])) {
+        if (!checkUsernameFormat(attributes[4])) {
             Server.answer += "password format is invalid" + "\n";
         }
-        if (attributes[6].length() < 8) {
+        if (attributes[4].length() < 8) {
             Server.answer += "password length is not enough" + "\n";
         }
-        if (!checkEmailFormat(attributes[7])) {
+        if (!checkEmailFormat(attributes[5])) {
             Server.answer += "Email format is invalid" + "\n";
         }
-        if (!checkTelephoneFormat(attributes[8])) {
+        if (!checkTelephoneFormat(attributes[6])) {
             Server.answer += "telephone format is invalid" + "\n";
         }
         if (Server.answer.equals("")) {
@@ -272,39 +273,39 @@ public class Server {
     }
 
     private void searchAccount(String command) {
-        String[] input = command.split("\\s");
-        bossManager.searchAccount(input[3]);
+        String[] input = command.split("\\+");
+        bossManager.searchAccount(input[2]);
     }
 
     private void deleteAccount(String command) {
-        String[] input = command.split("\\s");
-        accountManager.deleteAccount(input[2], input[3]);
+        String[] input = command.split("\\+");
+        accountManager.deleteAccount(input[1], input[2]);
     }
 
     private void seeAuthorization(String command) {
-        String[] input = command.split("\\s");
-        bossManager.seeAuthorization(input[2], input[3]);
+        String[] input = command.split("\\+");
+        bossManager.seeAuthorization(input[1], input[2]);
     }
 
     private void viewAccountInfo(String command) {
-        String[] input = command.split("\\s");
-        bossManager.viewAccount(input[3], input[4]);
+        String[] input = command.split("\\+");
+        bossManager.viewAccount(input[1], input[2]);
     }
 
     private int getWordCount(String input) {
         int count = 0;
-        Matcher matcher = getMatcher("(\\S+)", input);
+        Matcher matcher = getMatcher("\\+", input);
         while (matcher.find()) {
             count++;
         }
-        return count;
+        return count + 1;
     }
 
     private ArrayList<Object> getFilters(String command) {
         ArrayList<Object> filters = new ArrayList<Object>();
-        String[] input = command.split("\\s");
+        String[] input = command.split("\\+");
         if (command.contains("filter")) {
-            for (int i = 4; i < getWordCount(command); i += 2) {
+            for (int i = 3; i < getWordCount(command); i += 2) {
                 if (input[i].equalsIgnoreCase("sort:")) {
                     break;
                 }
@@ -316,7 +317,7 @@ public class Server {
     }
 
     private String getSortFactor(String command) {
-        String[] input = command.split("\\s");
+        String[] input = command.split("\\+");
         if (command.contains("sort:")) {
             for (int i = 0; i < getWordCount(command); i++) {
                 if (input[i].equalsIgnoreCase("sort:")) {
@@ -328,7 +329,7 @@ public class Server {
     }
 
     private String getSortType(String command) {
-        String[] input = command.split("\\s");
+        String[] input = command.split("\\+");
         if (command.contains("sort:")) {
             for (int i = 0; i < getWordCount(command); i++) {
                 if (input[i].equalsIgnoreCase("sort:")) {
@@ -342,52 +343,52 @@ public class Server {
     private void showAccounts(String command) {
         ArrayList<Object> filters;
         filters = getFilters(command);
-        String[] input = command.split("\\s");
-        bossManager.showAccounts(input[2], filters, getSortFactor(command), getSortType(command));
+        String[] input = command.split("\\+");
+        bossManager.showAccounts(input[1], filters, getSortFactor(command), getSortType(command));
     }
 
     private void editPersonalInfo(String command) {
-        String[] input = command.split("\\s");
-        switch (input[3]) {
+        String[] input = command.split("\\+");
+        switch (input[1]) {
             case "firstName":
-                if (checkNameFormat(input[4])) {
-                    accountManager.editFirstName(input[5], input[4]);
+                if (checkNameFormat(input[2])) {
+                    accountManager.editFirstName(input[3], input[2]);
                 } else {
                     answer = "invalid first name type";
                 }
                 break;
             case "lastName":
-                if (checkNameFormat(input[4])) {
-                    accountManager.editLastName(input[5], input[4]);
+                if (checkNameFormat(input[2])) {
+                    accountManager.editLastName(input[3], input[2]);
                 } else {
                     answer = "invalid last name type";
                 }
                 break;
             case "username":
-                if (checkUsernameFormat(input[4])) {
-                    accountManager.editUsername(input[5], input[4]);
+                if (checkUsernameFormat(input[2])) {
+                    accountManager.editUsername(input[3], input[2]);
                 } else {
                     answer = "invalid username type";
                 }
                 break;
             case "Email":
-                if (checkEmailFormat(input[4])) {
-                    accountManager.editEmail(input[5], input[4]);
+                if (checkEmailFormat(input[2])) {
+                    accountManager.editEmail(input[3], input[2]);
                 } else {
                     answer = "invalid Email type";
                 }
                 break;
             case "telephone":
-                if (checkTelephoneFormat(input[4])) {
-                    accountManager.editTelephone(input[5], input[4]);
+                if (checkTelephoneFormat(input[2])) {
+                    accountManager.editTelephone(input[3], input[2]);
                 } else {
                     answer = "invalid Telephone type";
                 }
                 break;
             case "password":
-                if (checkUsernameFormat(input[5])) {
-                    if (input[6].equals(input[5])) {
-                        accountManager.editPassword(input[7], input[4], input[5]);
+                if (checkUsernameFormat(input[3])) {
+                    if (input[4].equals(input[3])) {
+                        accountManager.editPassword(input[5], input[2], input[3]);
                     } else {
                         answer = "your new password differs from resubmit of your password";
                     }
@@ -396,29 +397,29 @@ public class Server {
                 }
                 break;
             case "money":
-                if (checkMoneyFormat(input[4])) {
-                    accountManager.editMoney(input[5], input[4]);
+                if (checkMoneyFormat(input[2])) {
+                    accountManager.editMoney(input[3], input[2]);
                 } else {
                     answer = "invalid money type";
                 }
                 break;
             case "company":
-                accountManager.editCompany(input[5], input[4]);
+                accountManager.editCompany(input[3], input[2]);
                 break;
         }
     }
 
     private void viewPersonalInfo(String command) {
-        String[] input = command.split("\\s");
-        accountManager.viewAccountInformation(input[3]);
+        String[] input = command.split("\\+");
+        accountManager.viewAccountInformation(input[1]);
     }
 
     private void forgotPassword(String command) {
-        accountManager.forgotPassword(command.split("\\s")[2]);
+        accountManager.forgotPassword(command.split("\\+")[1]);
     }
 
     private void logout(String command) {
-        accountManager.logout(command.split("\\s")[1]);
+        accountManager.logout(command.split("\\+")[1]);
     }
 
     private void login(Matcher matcher) {
@@ -456,7 +457,7 @@ public class Server {
 
     private void register(String input) {
         Server.answer = "";
-        String[] attributes = input.split("\\s");
+        String[] attributes = input.split("\\+");
         if (!checkNameFormat(attributes[1])) {
             Server.answer += "first name format is invalid" + "\n";
         }

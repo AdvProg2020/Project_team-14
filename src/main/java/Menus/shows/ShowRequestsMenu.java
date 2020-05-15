@@ -81,7 +81,7 @@ public class ShowRequestsMenu extends ShowsMenu {
     }
 
     private void getInfo() {
-        server.clientToServer("show requests " + username + filter.getFilters());
+        server.clientToServer("show requests+" + username + filter.getFilters());
         this.serverAnswer = server.serverToClient();
         System.out.println(serverAnswer);
     }

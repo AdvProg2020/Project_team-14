@@ -2,6 +2,7 @@ package Menus.Edits;
 
 import Menus.Menu;
 import Menus.Views.ViewCategoryMenu;
+import Model.Account.Salesman;
 
 import java.util.HashMap;
 
@@ -30,8 +31,8 @@ public class EditCategoryMenu extends Menu {
                 if (categoryName.equals("back")) {
                     fatherMenu.execute();
                 }
-                server.clientToServer("edit category name " + Menu.username + " " +
-                        ((ViewCategoryMenu) fatherMenu).getCategoryName() + " " + categoryName);
+                server.clientToServer("edit category name+" + Menu.username + "+" +
+                        ((ViewCategoryMenu) fatherMenu).getCategoryName() + "+" + categoryName);
                 String serverAnswer = server.serverToClient();
                 System.out.println(serverAnswer);
                 if (serverAnswer.equals("edit successful")) {
@@ -58,8 +59,8 @@ public class EditCategoryMenu extends Menu {
                 if (categoryName.equals("back")) {
                     fatherMenu.execute();
                 }
-                server.clientToServer("edit father category " + Menu.username + " " +
-                        ((ViewCategoryMenu) fatherMenu.getFatherMenu()).getCategoryName() + " " + categoryName);
+                server.clientToServer("edit father category+" + Menu.username + "+" +
+                        ((ViewCategoryMenu) fatherMenu.getFatherMenu()).getCategoryName() + "+" + categoryName);
                 String serverAnswer = server.serverToClient();
                 System.out.println(serverAnswer);
                 if (serverAnswer.equals("edit successful")) {
@@ -85,6 +86,10 @@ public class EditCategoryMenu extends Menu {
         return new Menu(this, "Add Attribute Menu") {
 
             private String addAttribute(String attributes, String input) {
+                if (input.equals("")) {
+                    System.out.println("you didn't add anything");
+                    return attributes;
+                }
                 if (attributes.equals("")) {
                     attributes = input;
                     return attributes;
@@ -103,7 +108,7 @@ public class EditCategoryMenu extends Menu {
 
             @Override
             public void execute() {
-                server.clientToServer("what is category attribute " + ((ViewCategoryMenu) fatherMenu).getCategoryName());
+                server.clientToServer("what is category attribute+" + ((ViewCategoryMenu) fatherMenu).getCategoryName());
                 String currentAttribute = server.serverToClient();
                 System.out.println(this.getMenuName());
                 System.out.println("if you input back we will go back");
@@ -117,8 +122,8 @@ public class EditCategoryMenu extends Menu {
                     }
                     currentAttribute = addAttribute(currentAttribute, input);
                 }
-                server.clientToServer("add category attribute " + Menu.username + " " +
-                        ((ViewCategoryMenu) fatherMenu.getFatherMenu()).getCategoryName() + " " + currentAttribute);
+                server.clientToServer("add category attribute+" + Menu.username + "+" +
+                        ((ViewCategoryMenu) fatherMenu.getFatherMenu()).getCategoryName() + "+" + currentAttribute);
                 System.out.println(server.serverToClient());
                 fatherMenu.execute();
             }
@@ -132,6 +137,14 @@ public class EditCategoryMenu extends Menu {
                 if (attributes.equals("")) {
                     System.out.println("there's nothing to delete");
                     return attributes;
+                }
+                if (!attributes.contains(",")) {
+                    if (input.equals(attributes)) {
+                        return "";
+                    } else {
+                        System.out.println("it hasn't the attribute you want to delete");
+                        return attributes;
+                    }
                 }
                 if (attributes.contains(input + ",")) {
                     int position = attributes.indexOf(input + ",");
@@ -148,7 +161,7 @@ public class EditCategoryMenu extends Menu {
 
             @Override
             public void execute() {
-                server.clientToServer("what is category attribute " + ((ViewCategoryMenu) fatherMenu).getCategoryName());
+                server.clientToServer("what is category attribute+" + ((ViewCategoryMenu) fatherMenu).getCategoryName());
                 String currentAttribute = server.serverToClient();
                 System.out.println(this.getMenuName());
                 System.out.println("if you input back we will go back");
@@ -162,8 +175,8 @@ public class EditCategoryMenu extends Menu {
                     }
                     currentAttribute = deleteAttribute(currentAttribute, input);
                 }
-                server.clientToServer("delete category attribute " + Menu.username + " " +
-                        ((ViewCategoryMenu) fatherMenu.getFatherMenu()).getCategoryName() + " " + currentAttribute);
+                server.clientToServer("delete category attribute+" + Menu.username + "+" +
+                        ((ViewCategoryMenu) fatherMenu.getFatherMenu()).getCategoryName() + "+" + currentAttribute);
                 System.out.println(server.serverToClient());
                 fatherMenu.execute();
             }
@@ -177,6 +190,14 @@ public class EditCategoryMenu extends Menu {
                 if (attributes.equals("")) {
                     System.out.println("there's nothing to edit");
                     return attributes;
+                }
+                if (!attributes.contains(",")) {
+                    if (attributes.equals(input)) {
+                        return newInput;
+                    } else {
+                        System.out.println("it hasn't the attribute you want to edit");
+                        return attributes;
+                    }
                 }
                 if (attributes.contains(input + ",")) {
                     int position = attributes.indexOf(input + ",");
@@ -193,7 +214,7 @@ public class EditCategoryMenu extends Menu {
 
             @Override
             public void execute() {
-                server.clientToServer("what is category attribute " + ((ViewCategoryMenu) fatherMenu).getCategoryName());
+                server.clientToServer("what is category attribute+" + ((ViewCategoryMenu) fatherMenu).getCategoryName());
                 String currentAttribute = server.serverToClient();
                 System.out.println(this.getMenuName());
                 System.out.println("if you input back we will go back");
@@ -209,8 +230,8 @@ public class EditCategoryMenu extends Menu {
                     String newInput = scanner.nextLine();
                     currentAttribute = editAttribute(currentAttribute, input, newInput);
                 }
-                server.clientToServer("edit category attribute " + Menu.username + " " +
-                        ((ViewCategoryMenu) fatherMenu.getFatherMenu()).getCategoryName() + " " + currentAttribute);
+                server.clientToServer("edit category attribute+" + Menu.username + "+" +
+                        ((ViewCategoryMenu) fatherMenu.getFatherMenu()).getCategoryName() + "+" + currentAttribute);
                 System.out.println(server.serverToClient());
                 fatherMenu.execute();
             }

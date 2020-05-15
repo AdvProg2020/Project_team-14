@@ -114,7 +114,7 @@ public class RequestsFilterMenu extends FiltersMenu {
                 if (username.equals("clear")) {
                     return true;
                 }
-                server.clientToServer("is account requestable " + username);
+                server.clientToServer("is account requestable+" + username);
                 if (server.serverToClient().equalsIgnoreCase("yes")) {
                     return true;
                 } else {

@@ -23,7 +23,7 @@ public class LoginOrRegisterMenu extends Menu {
     }
 
     private void Logout() {
-        server.clientToServer("logout " + Menu.username);
+        server.clientToServer("logout+" + Menu.username);
         String answer = server.serverToClient();
         System.out.println(answer);
         if (answer.equals("logout successful")) {
@@ -77,13 +77,13 @@ public class LoginOrRegisterMenu extends Menu {
                 checkBack(Email);
                 telephone = scanner.nextLine();
                 checkBack(telephone);
-                message = "register " + firstName + " " + lastName + " " + username + " " + password + " " + role + " "
-                        + Email + " " + telephone + " ";
+                message = "register+" + firstName + "+" + lastName + "+" + username + "+" + password + "+" + role + "+"
+                        + Email + "+" + telephone;
                 if (role.equals("salesman")) {
                     System.out.println("please enter your company:");
                     company = scanner.nextLine();
                     checkBack(company);
-                    message += company;
+                    message += "+" + company;
                 }
                 server.clientToServer(message);
                 String serverAnswer;
@@ -116,7 +116,7 @@ public class LoginOrRegisterMenu extends Menu {
                 if (password.equals("back")) {
                     fatherMenu.execute();
                 }
-                server.clientToServer("login " + username + " " + password);
+                server.clientToServer("login+" + username + "+" + password);
                 serverAnswer = server.serverToClient();
                 System.out.println(serverAnswer);
                 if (serverAnswer.startsWith("login successful ")) {
@@ -149,7 +149,7 @@ public class LoginOrRegisterMenu extends Menu {
                 if (username.equals("back")) {
                     fatherMenu.execute();
                 }
-                server.clientToServer("forgot password " + username);
+                server.clientToServer("forgot password+" + username);
                 String answer = server.serverToClient();
                 System.out.println(answer);
                 if (answer.contains("here is your password: ")) {

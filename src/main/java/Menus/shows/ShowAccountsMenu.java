@@ -79,7 +79,7 @@ public class ShowAccountsMenu extends ShowsMenu {
     }
 
     private void getInfo() {
-        server.clientToServer("show accounts " + username + filter.getFilters() + " " + sort.getSort());
+        server.clientToServer("show accounts+" + username + filter.getFilters() + sort.getSort());
         this.serverAnswer = server.serverToClient();
         System.out.println(serverAnswer);
     }

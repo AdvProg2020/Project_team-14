@@ -33,7 +33,7 @@ public class ViewCategoryMenu extends Menu {
                 System.out.println("are you sure you want to delete this category");
                 String input = scanner.nextLine();
                 if (input.equalsIgnoreCase("yes")) {
-                    server.clientToServer("delete category " + Menu.username + " " + ((ViewCategoryMenu)
+                    server.clientToServer("delete category+" + Menu.username + "+" + ((ViewCategoryMenu)
                             this.getFatherMenu()).getCategoryName());
                     String serverAnswer = server.serverToClient();
                     System.out.println(serverAnswer);
@@ -61,7 +61,7 @@ public class ViewCategoryMenu extends Menu {
     }
 
     private void getCategoryInfo() {
-        server.clientToServer("view category " + Menu.username + " " + categoryName);
+        server.clientToServer("view category+" + Menu.username + "+" + categoryName);
         String serverAnswer = server.serverToClient();
         System.out.println(serverAnswer);
     }

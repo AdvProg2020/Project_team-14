@@ -13,9 +13,9 @@ public class ViewRequestMenu extends Menu {
 
     public void requestSubMenus() {
         HashMap<Integer, Menu> subMenus = new HashMap<Integer, Menu>();
-        server.clientToServer("what is request username " + this.requestID);
+        server.clientToServer("what is request username+" + this.requestID);
         setAccountUsername(server.serverToClient());
-        server.clientToServer("is request state checking " + this.requestID);
+        server.clientToServer("is request state checking+" + this.requestID);
         if (server.serverToClient().equalsIgnoreCase("yes")) {
             if (!this.getAccountUsername().equals("deleted account")) {
                 subMenus.put(1, getAcceptRequestMenu());
@@ -58,7 +58,7 @@ public class ViewRequestMenu extends Menu {
                 System.out.println("Are you sure you want to accept this request");
                 String input = scanner.nextLine();
                 if (input.equalsIgnoreCase("yes")) {
-                    server.clientToServer("accept request " + Menu.username + " " +
+                    server.clientToServer("accept request+" + Menu.username + "+" +
                             ((ViewRequestMenu) fatherMenu).getRequestID());
                     String serverAnswer = server.serverToClient();
                     System.out.println(serverAnswer);
@@ -80,7 +80,7 @@ public class ViewRequestMenu extends Menu {
                 System.out.println("Are you sure you want to decline this request");
                 String input = scanner.nextLine();
                 if (input.equalsIgnoreCase("yes")) {
-                    server.clientToServer("decline request " + Menu.username + " " +
+                    server.clientToServer("decline request+" + Menu.username + "+" +
                             ((ViewRequestMenu) fatherMenu).getRequestID());
                     String serverAnswer = server.serverToClient();
                     System.out.println(serverAnswer);
@@ -102,7 +102,7 @@ public class ViewRequestMenu extends Menu {
                 System.out.println("are you sure you want to delete this request");
                 String input = scanner.nextLine();
                 if (input.equalsIgnoreCase("yes")) {
-                    server.clientToServer("delete request " + Menu.username + " " + ((ViewRequestMenu)
+                    server.clientToServer("delete request+" + Menu.username + "+" + ((ViewRequestMenu)
                             this.getFatherMenu()).getRequestID());
                     String serverAnswer = server.serverToClient();
                     System.out.println(serverAnswer);
@@ -134,7 +134,7 @@ public class ViewRequestMenu extends Menu {
     }
 
     private void getRequestInfo() {
-        server.clientToServer("view request " + Menu.username + " " + requestID);
+        server.clientToServer("view request+" + Menu.username + "+" + requestID);
         String serverAnswer = server.serverToClient();
         System.out.println(serverAnswer);
     }

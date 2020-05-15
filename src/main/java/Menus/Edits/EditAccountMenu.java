@@ -62,7 +62,7 @@ public class EditAccountMenu extends Menu {
                 if (name.equals("back")) {
                     fatherMenu.execute();
                 }
-                server.clientToServer("edit personal info " + editableName + " " + name + " " + username);
+                server.clientToServer("edit personal info+" + editableName + "+" + name + "+" + username);
                 String serverAnswer = server.serverToClient();
                 System.out.println(serverAnswer);
                 if (serverAnswer.equals("edit successful")) {
@@ -99,8 +99,8 @@ public class EditAccountMenu extends Menu {
                 if (pass3.equals("back")) {
                     fatherMenu.execute();
                 }
-                server.clientToServer("edit personal info password " + pass1 + " " + pass2 + " " + pass3
-                        + " " + username);
+                server.clientToServer("edit personal info+password+" + pass1 + "+" + pass2 + "+" + pass3
+                        + "+" + username);
                 String clientAnswer = server.serverToClient();
                 System.out.println(clientAnswer);
                 if (clientAnswer.equals("edit successful")) {

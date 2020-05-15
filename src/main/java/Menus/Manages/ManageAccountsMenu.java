@@ -51,8 +51,8 @@ public class ManageAccountsMenu extends Menu {
                 checkBack(Email);
                 telephone = scanner.nextLine();
                 checkBack(telephone);
-                message = "make new boss " + firstName + " " + lastName + " " + username + " " + password + " "
-                        + Email + " " + telephone + " " + Menu.username;
+                message = "make new boss+" + firstName + "+" + lastName + "+" + username + "+" + password + "+"
+                        + Email + "+" + telephone + "+" + Menu.username;
                 server.clientToServer(message);
                 String serverAnswer;
                 serverAnswer = server.serverToClient();
@@ -82,7 +82,7 @@ public class ManageAccountsMenu extends Menu {
                 System.out.println("if you input back we will go back");
                 System.out.println("please input the username");
                 String username = scanner.nextLine();
-                server.clientToServer("search account " + Menu.username + " " + username);
+                server.clientToServer("search account+" + Menu.username + "+" + username);
                 String serverAnswer = server.serverToClient();
                 System.out.println(serverAnswer);
                 if (serverAnswer.equalsIgnoreCase("search completed")) {

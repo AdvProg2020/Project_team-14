@@ -35,7 +35,7 @@ public class ManageCategoriesMenu extends Menu {
                 System.out.println("if you input back we will go back");
                 System.out.println("please input the category name");
                 String categoryName = scanner.nextLine();
-                server.clientToServer("search category " + Menu.username + " " + categoryName);
+                server.clientToServer("search category+" + Menu.username + "+" + categoryName);
                 String serverAnswer = server.serverToClient();
                 System.out.println(serverAnswer);
                 if (serverAnswer.equals("search completed")) {
@@ -135,8 +135,8 @@ public class ManageCategoriesMenu extends Menu {
                 if (categoryAttributes.equals("")) {
                     categoryAttributes = "none";
                 }
-                server.clientToServer("create category " + categoryName + " " + fatherCategoryName +
-                        " " + categoryAttributes);
+                server.clientToServer("create category+" + categoryName + "+" + fatherCategoryName +
+                        "+" + categoryAttributes);
                 String serverAnswer;
                 serverAnswer = server.serverToClient();
                 System.out.println(serverAnswer);

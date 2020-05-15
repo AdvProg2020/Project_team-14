@@ -37,14 +37,13 @@ public class BossManager {
             new Boss(information[3], information[4], information[1], information[2], information[6], information[7],
                     information[5]).setFatherBoss(null);
         } else {
-            if (Storage.isThereAccountWithUsername(information[5])) {
+            if (Storage.isThereAccountWithUsername(information[3])) {
                 Server.setAnswer("the username is already taken, try something else");
             }
             Server.setAnswer("register successful");
             Server.setHasBoss(true);
-            new Boss(information[5], information[6], information[3], information[4], information[7], information[8],
-                    "BOSS").setFatherBoss(information[9]);
-
+            new Boss(information[3], information[4], information[1], information[2], information[5], information[6],
+                    "BOSS").setFatherBoss(information[7]);
         }
     }
 

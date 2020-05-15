@@ -21,7 +21,7 @@ public class ViewAccountMenu extends Menu {
                 subMenus.put(3, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
             }
         } else {
-            server.clientToServer("see authorization " + Menu.username + " " + this.username);
+            server.clientToServer("see authorization+" + Menu.username + "+" + this.username);
             String serverAnswer = server.serverToClient();
             if (!serverAnswer.equalsIgnoreCase("boss no")) {
                 if (serverAnswer.equalsIgnoreCase("boss yes")) {
@@ -69,9 +69,9 @@ public class ViewAccountMenu extends Menu {
                 String input = scanner.nextLine();
                 if (input.equalsIgnoreCase("yes")) {
                     if (fatherMenu.getWhereItHasBeenCalled() <= 3) {
-                        server.clientToServer("delete account " + Menu.username + " " + Menu.username);
+                        server.clientToServer("delete account+" + Menu.username + "+" + Menu.username);
                     } else {
-                        server.clientToServer("delete account " + Menu.username + " " +
+                        server.clientToServer("delete account+" + Menu.username + "+" +
                                 ((ViewAccountMenu) fatherMenu).getUsername());
                     }
                     String serverAnswer = server.serverToClient();
@@ -113,14 +113,14 @@ public class ViewAccountMenu extends Menu {
     }
 
     private void getPersonalInfo() {
-        server.clientToServer("view personal info " + Menu.username);
+        server.clientToServer("view personal info+" + Menu.username);
         String serverAnswer;
         serverAnswer = server.serverToClient();
         System.out.println(serverAnswer);
     }
 
     private void getAccountInfo() {
-        server.clientToServer("view account info " + Menu.username + " " + this.username);
+        server.clientToServer("view account info+" + Menu.username + "+" + this.username);
         String serverAnswer;
         serverAnswer = server.serverToClient();
         System.out.println(serverAnswer);

@@ -54,7 +54,7 @@ public class CategoriesFilterMenu extends FiltersMenu {
                 if (categoryName.equals("clear")) {
                     return true;
                 }
-                server.clientToServer("is category exists " + categoryName);
+                server.clientToServer("is category exists+" + categoryName);
                 if (server.serverToClient().equalsIgnoreCase("yes")) {
                     return true;
                 } else {
