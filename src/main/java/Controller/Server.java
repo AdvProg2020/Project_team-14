@@ -112,6 +112,8 @@ public class Server {
             this.searchOffCode(command);
         } else if (command.startsWith("create new normal offCode")) {
             this.createNormalOffCode(command);
+        } else if (command.startsWith("create new special offCode")) {
+            this.createSpecialOffCode(command);
         }
     }
 
@@ -119,44 +121,64 @@ public class Server {
         bossManager.searchOffCode(command.split("\\+")[2]);
     }
 
+    private void createSpecialOffCode(String command) {
+        String[] info = command.split("\\+"); //info: 1-->percentage 2-->ceiling 3-->frequency 4-->period
+        if (checkOffCodeInfoCorrectness(info)) {
+            bossManager.createSpecialOffCode(Integer.parseInt(info[4]), Integer.parseInt(info[1]), Integer.parseInt(info[2]), Integer.parseInt(info[3]));
+            setAnswer("creation of offCode was successful");
+        }
+    }
+
     private void createNormalOffCode(String command) {
-        String[] info = command.split("\\+");   //info: 1-->start 2-->end 3-->percentage 4-->ceiling 5-->frequency
-        if (checkOffCodeInfoCorrectness(info[1], info[2], info[3], info[4], info[5])) {
+        String[] info = command.split("\\+");   //info: 1-->percentage 2-->ceiling 3-->frequency 4-->start 5-->end
+        if (checkOffCodeInfoCorrectness(info)) {
             String usernames = info[6].substring(info[6].indexOf(":") + 2, info[6].length() - 1); //info[6] = User:[....]
-            bossManager.createNormalOffCode(info[1], info[2], Integer.parseInt(info[3]), Integer.parseInt(info[4]),
-                    Integer.parseInt(info[5]), new ArrayList<String>(Arrays.asList(usernames.split(", "))));
+            bossManager.createNormalOffCode(info[4], info[5], Integer.parseInt(info[1]), Integer.parseInt(info[2]),
+                    Integer.parseInt(info[3]), new ArrayList<String>(Arrays.asList(usernames.split(", "))));
             setAnswer("creation of offCode successful");
         }
     }
 
-    private boolean checkOffCodeInfoCorrectness(String start, String end, String percentage, String ceiling, String frequency) {
+    //info: create new normal offCode+percentage+ceiling+frequency+start+end+User:[...]
+    //info: create new special offCode+percentage+ceiling+frequency+period
+    private boolean checkOffCodeInfoCorrectness(String[] info) {
         String checkResult = "Errors:";
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH-mm-ss");
 
-        //check errors
-        try {
-            dateFormat.parse(start);
-        } catch (ParseException e) {
-            checkResult += "\n" + "START TIME: format is invalid, check it and try again";
+        //check different part
+        if (info[0].equals("create new normal offCode")) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH-mm-ss");
+            try {
+                dateFormat.parse(info[4]);
+            } catch (ParseException e) {
+                checkResult += "\n" + "START TIME: format is invalid, check it and try again";
+            }
+            try {
+                dateFormat.parse(info[5]);
+            } catch (ParseException e) {
+                checkResult += "\n" + "END TIME: format is invalid, check it and try again";
+            }
+        } else {
+            try {
+                Integer.parseInt(info[4]);
+            } catch (Exception e) {
+                checkResult += "\n" + "PERIOD: format is invalid, check it and trt again";
+            }
         }
+
+        //check same parts
         try {
-            dateFormat.parse(end);
-        } catch (ParseException e) {
-            checkResult += "\n" + "END TIME: format is invalid, check it and try again" + "\n";
-        }
-        try {
-            int interest = Integer.parseInt(percentage);
+            int interest = Integer.parseInt(info[1]);
             if (interest <= 0 | 100 < interest) checkResult += "\n" + "PERCENTAGE: this number must be between 1 and 100";
         } catch (Exception e) {
             checkResult += "\n" + "PERCENTAGE: format is invalid, check it and try again";
         }
         try {
-            Integer.parseInt(ceiling);
+            Integer.parseInt(info[2]);
         } catch (Exception e) {
             checkResult += "\n" + "CEILING: format is invalid, check it and try again";
         }
         try {
-            Integer.parseInt(frequency);
+            Integer.parseInt(info[3]);
         } catch (Exception e) {
             checkResult += "\n" + "FREQUENCY: format is invalid, check it and try again";
         }

@@ -11,6 +11,7 @@ import Controller.SortFactorEnum.AccountSortFactor;
 import Model.Account.*;
 import Model.Category.Category;
 import Model.Off.OffCode;
+import Model.Off.SpecialOffCode;
 import Model.Request.Request;
 import Model.Storage;
 import Exception.*;
@@ -387,16 +388,20 @@ public class BossManager {
      * this is discount code part
      */
 
-    public void createNormalOffCode(String start, String end, int percentage, int ceiling, int frequency, ArrayList<String> users) {
-        new OffCode(start, end, percentage, ceiling, frequency, users);
-    }
-
     public void searchOffCode(String offCodeID) {
         if (Storage.isThereOffCodeWithID(offCodeID)) {
             Server.setAnswer("search completed");
         } else {
             Server.setAnswer("no OffCode exist with such ID");
         }
+    }
+
+    public void createNormalOffCode(String start, String end, int percentage, int ceiling, int frequency, ArrayList<String> users) {
+        new OffCode(start, end, percentage, ceiling, frequency, users);
+    }
+
+    public void createSpecialOffCode(int period, int percentage, int ceiling, int frequency) {
+        new SpecialOffCode(period, percentage, ceiling, frequency);
     }
 
     /*public void editCategory(String categoryName, String attribute, String updatedInfo) throws InvalidCategoryNameException {
