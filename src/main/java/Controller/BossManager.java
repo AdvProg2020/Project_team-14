@@ -10,6 +10,7 @@ package Controller;
 import Controller.SortFactorEnum.AccountSortFactor;
 import Model.Account.*;
 import Model.Category.Category;
+import Model.Off.OffCode;
 import Model.Request.Request;
 import Model.Storage;
 import Exception.*;
@@ -17,6 +18,7 @@ import Exception.*;
 
 //import java.text.ParseException;
 import java.rmi.ServerError;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.concurrent.Callable;
@@ -378,6 +380,22 @@ public class BossManager {
             category.setParentCategoryName(newFatherCategory);
         } else {
             System.out.println("there isn't a category with this name");
+        }
+    }
+
+    /*
+     * this is discount code part
+     */
+
+    public void createNormalOffCode(String start, String end, int percentage, int ceiling, int frequency, ArrayList<String> users) {
+        new OffCode(start, end, percentage, ceiling, frequency, users);
+    }
+
+    public void searchOffCode(String offCodeID) {
+        if (Storage.isThereOffCodeWithID(offCodeID)) {
+            Server.setAnswer("search completed");
+        } else {
+            Server.setAnswer("no OffCode exist with such ID");
         }
     }
 

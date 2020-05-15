@@ -4,16 +4,15 @@ package Controller;
 //import Model.Category.Category;
 //import Model.Storage;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import Exception.*;
 import Model.Account.Role;
 import Model.Confirmation;
-import Model.Request.Enum.RequestType;
-import Model.Request.Request;
 import Model.Storage;
 
 public class Server {
@@ -108,6 +107,66 @@ public class Server {
         } else if (command.startsWith("edit father category ")) {
             this.editFatherCategory(command);
         }
+        //-----[ new ]----
+        else if (command.startsWith("search offCod")) {
+            this.searchOffCode(command);
+        } else if (command.startsWith("create new normal offCode")) {
+            this.createNormalOffCode(command);
+        }
+    }
+
+    private void searchOffCode(String command) {
+        bossManager.searchOffCode(command.split("\\+")[2]);
+    }
+
+    private void createNormalOffCode(String command) {
+        String[] info = command.split("\\+");   //info: 1-->start 2-->end 3-->percentage 4-->ceiling 5-->frequency
+        if (checkOffCodeInfoCorrectness(info[1], info[2], info[3], info[4], info[5])) {
+            String usernames = info[6].substring(info[6].indexOf(":") + 2, info[6].length() - 1); //info[6] = User:[....]
+            bossManager.createNormalOffCode(info[1], info[2], Integer.parseInt(info[3]), Integer.parseInt(info[4]),
+                    Integer.parseInt(info[5]), new ArrayList<String>(Arrays.asList(usernames.split(", "))));
+            setAnswer("creation of offCode successful");
+        }
+    }
+
+    private boolean checkOffCodeInfoCorrectness(String start, String end, String percentage, String ceiling, String frequency) {
+        String checkResult = "Errors:";
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH-mm-ss");
+
+        //check errors
+        try {
+            dateFormat.parse(start);
+        } catch (ParseException e) {
+            checkResult += "\n" + "START TIME: format is invalid, check it and try again";
+        }
+        try {
+            dateFormat.parse(end);
+        } catch (ParseException e) {
+            checkResult += "\n" + "END TIME: format is invalid, check it and try again" + "\n";
+        }
+        try {
+            int interest = Integer.parseInt(percentage);
+            if (interest <= 0 | 100 < interest) checkResult += "\n" + "PERCENTAGE: this number must be between 1 and 100";
+        } catch (Exception e) {
+            checkResult += "\n" + "PERCENTAGE: format is invalid, check it and try again";
+        }
+        try {
+            Integer.parseInt(ceiling);
+        } catch (Exception e) {
+            checkResult += "\n" + "CEILING: format is invalid, check it and try again";
+        }
+        try {
+            Integer.parseInt(frequency);
+        } catch (Exception e) {
+            checkResult += "\n" + "FREQUENCY: format is invalid, check it and try again";
+        }
+
+        //set answer
+        if (!checkResult.equals("Errors:")) {
+            setAnswer(checkResult);
+            return false;
+        }
+        return true;
     }
 
     private void editCategoryName(String command) {

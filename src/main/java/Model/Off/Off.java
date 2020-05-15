@@ -13,10 +13,14 @@ public abstract class Off {
 
     //start and end must be in format "dd-MM-yyyy HH-mm-ss" otherwise exception will be thrown
 
-    public Off(String start, String end, int percentage) throws ParseException {
+    public Off(String start, String end, int percentage) {
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH-mm-ss");
-        this.start = formatter.parse(start);
-        this.end = formatter.parse(end);
+        try {
+            this.start = formatter.parse(start);
+            this.end = formatter.parse(end);
+        } catch (ParseException e) {
+            //e.printStackTrace();
+        }
         this.percentage = percentage;
     }
 

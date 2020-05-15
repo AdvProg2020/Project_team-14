@@ -82,6 +82,17 @@ public class Storage {
         return null;
     }
 
+    public static boolean isThereOffCodeWithID(String offCodeID) {
+        return getOffCodeById(offCodeID) != null;
+    }
+
+    public static OffCode getOffCodeById (String offCodeID) {
+        for (OffCode offCode : allOffCodes) {
+            if (offCode.getOffCodeID().equals(offCodeID)) return offCode;
+        }
+        return null;
+    }
+
     public static ArrayList<Customer> getAllCustomers() {
         ArrayList<Customer> arrayList = new ArrayList<>();
         for (Account account : allAccounts) {
