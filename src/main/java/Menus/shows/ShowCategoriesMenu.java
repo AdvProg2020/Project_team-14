@@ -11,7 +11,7 @@ import Menus.Views.ViewRequestMenu;
 import java.util.HashMap;
 
 public class ShowCategoriesMenu extends ShowsMenu {
-    private String serverAnswer;
+    //private String serverAnswer;
     private boolean canChangeSubCategoryFilter = true;
 
     public ShowCategoriesMenu(Menu fatherMenu, String menuName) {
@@ -78,19 +78,19 @@ public class ShowCategoriesMenu extends ShowsMenu {
         return canChangeSubCategoryFilter;
     }
 
-    public String getServerAnswer() {
+    /*public String getServerAnswer() {
         return this.serverAnswer;
-    }
+    }*/
 
-    private void getInfo() {
+    /*private void getInfo() {
         server.clientToServer("show categories " + Menu.username + filter.getFilters());
         this.serverAnswer = server.serverToClient();
         System.out.println(serverAnswer);
-    }
+    }*/
 
-    @Override
+    /*@Override
     protected void show() {
         super.show();
         getInfo();
-    }
+    }*/
 }

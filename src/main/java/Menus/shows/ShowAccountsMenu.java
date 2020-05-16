@@ -9,7 +9,7 @@ import Menus.Views.ViewAccountMenu;
 import java.util.HashMap;
 
 public class ShowAccountsMenu extends ShowsMenu {
-    private String serverAnswer;
+    //private String serverAnswer;
 
     public ShowAccountsMenu(Menu fatherMenu, String menuName) {
         super(fatherMenu, menuName);
@@ -74,19 +74,19 @@ public class ShowAccountsMenu extends ShowsMenu {
         };
     }
 
-    public String getServerAnswer() {
+    /*public String getServerAnswer() {
         return this.serverAnswer;
-    }
+    }*/
 
-    private void getInfo() {
+    /*private void getInfo() {
         server.clientToServer("show accounts " + username + filter.getFilters() + " " + sort.getSort());
         this.serverAnswer = server.serverToClient();
         System.out.println(serverAnswer);
-    }
+    }*/
 
-    @Override
+    /*@Override
     protected void show() {
         super.show();
         getInfo();
-    }
+    }*/
 }
