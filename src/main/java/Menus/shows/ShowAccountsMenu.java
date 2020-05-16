@@ -13,6 +13,7 @@ public class ShowAccountsMenu extends ShowsMenu {
 
     public ShowAccountsMenu(Menu fatherMenu, String menuName) {
         super(fatherMenu, menuName);
+        this.type = "accounts";
         HashMap<Integer, Menu> subMenus = new HashMap<Integer, Menu>();
         filter = new AccountsFilterMenu(this, "Account Filter Menu");
         sort = new AccountsSortMenu(this, "Account Sorts Menu");

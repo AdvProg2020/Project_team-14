@@ -12,6 +12,7 @@ public class ShowOffCodesMenu extends ShowsMenu {
 
     public ShowOffCodesMenu(Menu fatherMenu, String menuName, int whereHasBeenCalled) {
         super(fatherMenu, menuName);
+        this.type = "offCodes";
         this.whereHasBeenCalled = whereHasBeenCalled;
         HashMap<Integer, Menu> subMenus = new HashMap<>();
         //subMenus.put(1, new OffCodesFilterMenu(this, "OffCode Filter Menu"));

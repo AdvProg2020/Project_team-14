@@ -15,6 +15,7 @@ public class ShowRequestsMenu extends ShowsMenu {
 
     public ShowRequestsMenu(Menu fatherMenu, String menuName) {
         super(fatherMenu, menuName);
+        this.type = "requests";
         HashMap<Integer, Menu> subMenus = new HashMap<Integer, Menu>();
         if (fatherMenu instanceof ViewAccountMenu) {
             canChangeUsernameFilter = false;
