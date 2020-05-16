@@ -93,6 +93,17 @@ public class Storage {
         return null;
     }
 
+    public static boolean isThereProductWithID(String productID) {
+        return getProductById(productID) != null;
+    }
+
+    public static Product getProductById(String productID) {
+        for (Product product : allProducts) {
+            if (product.getProductID().equalsIgnoreCase(productID)) return product;
+        }
+        return null;
+    }
+
     public static ArrayList<Customer> getAllCustomers() {
         ArrayList<Customer> arrayList = new ArrayList<>();
         for (Account account : allAccounts) {

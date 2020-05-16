@@ -128,7 +128,16 @@ public class Server {
             this.searchSale(command);
         } else if (command.startsWith("view sale")) {
             this.viewSale(command);
+        } else if (command.startsWith("show sales")) {
+            this.showSales(command);
         }
+    }
+
+    private void showSales(String command) {
+        ArrayList<Object> filters;
+        filters = getFilters(command);
+        String[] input = command.split("\\+");
+        salesmanManager.showSales(input[1], filters, getSortFactor(command), getSortType(command));
     }
 
     private void viewSale(String command) {
@@ -185,6 +194,10 @@ public class Server {
             return false;
         }
     }
+
+    /*
+     * this is offCode part
+     */
 
     private void showOffCodes(String command) {
         ArrayList<Object> filters;
@@ -281,6 +294,10 @@ public class Server {
         }
         return true;
     }
+
+    /*
+     * this is category part
+     */
 
     private void editCategoryName(String command) {
         bossManager.editCategoryName(command.split("\\s")[4], command.split("\\s")[5]);

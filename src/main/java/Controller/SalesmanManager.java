@@ -1,10 +1,8 @@
 package Controller;
 
 
-import Controller.SortFactorEnum.ListSalesSortFactor;
-import Controller.SortFactorEnum.ViewBuyersOfProductSortFactor;
+import Controller.SortFactorEnum.SalesSortFactor;
 import Model.Account.Salesman;
-import Model.Log.Log;
 import Model.Log.SellLog;
 import Model.Off.Sale;
 import Model.Product.Product;
@@ -12,10 +10,7 @@ import Model.Request.ChangeProductRequest;
 import Model.Request.ChangeSaleRequest;
 import Model.Request.Request;
 import Model.Storage;
-import Exception.*;
 
-import java.awt.*;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Comparator;
 
@@ -51,20 +46,21 @@ public class SalesmanManager {
      */
 
     //default sort factor is percentage
-    public void showSales(String salesmanID, String sortFactor) {
+    public void showSales(String salesmanID, ArrayList<Object> filters, String sortFactor, String sortType) {
         StringBuilder result = new StringBuilder("Here are All of your Sales:");
         ArrayList<Sale> sales = new ArrayList<>(Sale.getAllAuthenticSales(salesmanID));
-        if (sortFactor.equalsIgnoreCase(valueOf(ListSalesSortFactor.PERCENTAGE))) {
-            sales.sort(Comparator.comparingInt(Sale::getPercentage));
-        } else if (sortFactor.equalsIgnoreCase(valueOf(ListSalesSortFactor.END_DATE))) {
-            sales.sort(Comparator.comparing(Sale::getEnd));
-        } else if (sortFactor.equals("")) {
-            sales.sort(Comparator.comparingInt(Sale::getPercentage));
-        }
+        SalesSortFactor.sort(sortFactor, sortType, sales);
         for (Sale sale : sales) {
-            result.append("\n").append(sale.getSaleID()); //assume we list just IDs, then if user chose one, we show detail
+            if (saleHasFactor()) {
+                result.append("\n").append(sale.getSaleID()); //assume we list just IDs, then if user chose one, we show detail
+            }
         }
         Server.setAnswer(result.toString());
+    }
+
+    private boolean saleHasFactor() {
+        return true;
+        //has work
     }
 
     public void viewSale(String saleID) {
