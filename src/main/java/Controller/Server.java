@@ -124,7 +124,21 @@ public class Server {
             this.createSale(command);
         } else if (command.startsWith("can add product to sale")) {
             this.canAddProductToSale(command);
+        } else if (command.startsWith("search sale")) {
+            this.searchSale(command);
+        } else if (command.startsWith("view sale")) {
+            this.viewSale(command);
         }
+    }
+
+    private void viewSale(String command) {
+        String[] input = command.split("\\+");
+        salesmanManager.viewSale(input[2]);
+    }
+
+    private void searchSale(String command) {
+        String[] input = command.split("\\+");
+        salesmanManager.searchSale(input[2]);
     }
 
     private void canAddProductToSale(String command) {

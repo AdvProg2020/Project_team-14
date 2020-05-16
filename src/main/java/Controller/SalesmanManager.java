@@ -14,6 +14,7 @@ import Model.Request.Request;
 import Model.Storage;
 import Exception.*;
 
+import java.awt.*;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -50,7 +51,7 @@ public class SalesmanManager {
      */
 
     //default sort factor is percentage
-    public void listSales(String salesmanID, String sortFactor) {
+    public void showSales(String salesmanID, String sortFactor) {
         StringBuilder result = new StringBuilder("Here are All of your Sales:");
         ArrayList<Sale> sales = new ArrayList<>(Sale.getAllAuthenticSales(salesmanID));
         if (sortFactor.equalsIgnoreCase(valueOf(ListSalesSortFactor.PERCENTAGE))) {
@@ -66,7 +67,7 @@ public class SalesmanManager {
         Server.setAnswer(result.toString());
     }
 
-    public void viewSingleSale(String saleID) {
+    public void viewSale(String saleID) {
         Sale selectedSale = Sale.getSaleByID(saleID);
         String ans;
         if (selectedSale == null) {
@@ -94,12 +95,24 @@ public class SalesmanManager {
     }
 
     public void canAddToSale(String salesmanID, String productID) {
-        for (Product product : Storage.allProducts) {
-            if (product.doesSalesmanSellProductWithUsername(salesmanID)) {
+        if (!Storage.isThereProductWithID(productID)) {
+            Server.setAnswer("no product exist with this ID");
+        } else {
+            if (!Storage.getProductById(productID).doesSalesmanSellProductWithUsername(salesmanID)) {
+                Server.setAnswer("you don't sell this product");
+            } else {
                 Server.setAnswer("yes");
             }
         }
-        Server.setAnswer("no");
+    }
+
+    public void searchSale(String saleID) {
+        for (Sale sale : Storage.allSales) {
+            if (sale.getSaleID().equalsIgnoreCase(saleID)) {
+                Server.setAnswer("search completed");
+            }
+        }
+        Server.setAnswer("There isn't exist a sale with such a sale");
     }
 
     /*

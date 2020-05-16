@@ -2,6 +2,7 @@ package Menus.Manages;
 
 import Menus.LoginOrRegisterMenu;
 import Menus.Menu;
+import Menus.Views.ViewSalesMenu;
 import Menus.shows.ShowSalesMenu;
 
 import java.util.ArrayList;
@@ -20,7 +21,23 @@ public class ManageSalesMenu extends Menu {
 
     private Menu getSearchSale() {
         return new Menu(this, "Search Sale Menu") {
+            @Override
+            public void execute() {
+                System.out.println(menuName);
+                System.out.println("if you input back we will go back");
 
+                //get info from user
+                System.out.println("Enter salesID to see details");
+                String saleID = scanner.nextLine();
+                checkBack(saleID);
+                server.clientToServer("search sale" + "+" + Menu.username + "+" + saleID);
+                System.out.println(server.serverToClient());
+                if (server.serverToClient().equalsIgnoreCase("search completed")) {
+                    new ViewSalesMenu(this, "View Sale Menu", saleID).execute();
+                } else {
+                    fatherMenu.execute();
+                }
+            }
         };
     }
 
@@ -78,7 +95,7 @@ public class ManageSalesMenu extends Menu {
                 if (server.serverToClient().equalsIgnoreCase("yes")) {
                     array.add(productID);
                 } else {
-                    System.err.println("this product doesn't exist, or you are not seller of this product");
+                    System.err.println(server.serverToClient());
                 }
             }
 
