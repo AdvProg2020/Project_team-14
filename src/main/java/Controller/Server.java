@@ -122,15 +122,22 @@ public class Server {
             this.showOffCodes(command);
         } else if (command.startsWith("create new sale")) {
             this.createSale(command);
+        } else if (command.startsWith("can add product to sale")) {
+            this.canAddProductToSale(command);
         }
     }
 
+    private void canAddProductToSale(String command) {
+        String[] input = command.split("\\+");//1-->salesmanID    2-->productID
+        salesmanManager.canAddToSale(input[1], input[2]);
+    }
+
     private void createSale(String command) {
-        String[] info = command.split("\\+");//0-->salesmanID    1--> start     2-->end     3-->percentage     4-->productIDs
-        if (isSaleInfoValid(info[1], info[2], info[3])) {
+        String[] info = command.split("\\+");//1-->salesmanID    2--> start     3-->end     4-->percentage     5-->productIDs
+        if (isSaleInfoValid(info[2], info[3], info[4])) {
             Server.setAnswer("creation of sale successful");
-            String productsID = info[4].substring(info[4].indexOf(":") + 1, info[4].length() - 1);
-            salesmanManager.createSale(info[0], info[1], info[2], Integer.parseInt(info[3]), convertStringToArray(productsID));
+            String productsID = info[5].substring(info[5].indexOf(":") + 1, info[5].length() - 1);
+            salesmanManager.createSale(info[1], info[2], info[3], Integer.parseInt(info[4]), convertStringToArray(productsID));
         }
     }
 

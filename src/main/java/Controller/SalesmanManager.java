@@ -93,6 +93,15 @@ public class SalesmanManager {
         new Request(salesmanID, newSale, "ADD_NEW_SALE");
     }
 
+    public void canAddToSale(String salesmanID, String productID) {
+        for (Product product : Storage.allProducts) {
+            if (product.doesSalesmanSellProductWithUsername(salesmanID)) {
+                Server.setAnswer("yes");
+            }
+        }
+        Server.setAnswer("no");
+    }
+
     /*
      * this is ProductManager part
      */

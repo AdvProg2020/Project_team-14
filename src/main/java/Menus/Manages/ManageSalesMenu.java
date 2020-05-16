@@ -74,7 +74,7 @@ public class ManageSalesMenu extends Menu {
             }
 
             private void addProductToSale(String productID, ArrayList<String> array) {
-                server.clientToServer("can add to sale" + "+" + Menu.username + "+" + productID);
+                server.clientToServer("can add product to sale" + "+" + Menu.username + "+" + productID);
                 if (server.serverToClient().equalsIgnoreCase("yes")) {
                     array.add(productID);
                 } else {
