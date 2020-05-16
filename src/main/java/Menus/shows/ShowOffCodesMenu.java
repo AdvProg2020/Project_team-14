@@ -8,7 +8,7 @@ import Menus.Views.ViewOffCodeMenu;
 import java.util.HashMap;
 
 public class ShowOffCodesMenu extends ShowsMenu {
-    private int whereHasBeenCalled;
+    private int whereHasBeenCalled;//0 : from boss      1 : from customer
 
     public ShowOffCodesMenu(Menu fatherMenu, String menuName, int whereHasBeenCalled) {
         super(fatherMenu, menuName);
@@ -41,7 +41,7 @@ public class ShowOffCodesMenu extends ShowsMenu {
                 checkBack(offCodeID);
                 String allOffCodes = ((ShowsMenu) fatherMenu).getServerAnswer();
                 if (isIdInTheList(allOffCodes, offCodeID)) {
-                    new ViewOffCodeMenu(this, "View OffCode Menu", offCodeID).execute();
+                    new ViewOffCodeMenu(this, "View OffCode Menu", offCodeID, whereHasBeenCalled).execute();
                 } else {
                     System.out.println("we couldn't found this id the above list, try another one");
                     fatherMenu.execute();

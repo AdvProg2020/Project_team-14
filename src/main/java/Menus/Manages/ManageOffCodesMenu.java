@@ -1,20 +1,18 @@
 package Menus.Manages;
 
-import Controller.Server;
 import Menus.LoginOrRegisterMenu;
 import Menus.Menu;
 import Menus.Views.ViewOffCodeMenu;
 import Menus.shows.ShowOffCodesMenu;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 
 public class ManageOffCodesMenu extends Menu {
     public ManageOffCodesMenu(Menu fatherMenu, String menuName) {
         super(fatherMenu, menuName);
         HashMap<Integer, Menu> subMenus = new HashMap<>();
-        subMenus.put(1, new ShowOffCodesMenu(this, "Show OffCodes Menu"));
+        subMenus.put(1, new ShowOffCodesMenu(this, "Show OffCodes Menu", 0));
         subMenus.put(2, getSearchOffCodeMenu());
         subMenus.put(3, getCreateNormalOffCodeMenu());
         subMenus.put(4, getCreateSpecialOffCodeMenu());
@@ -35,7 +33,7 @@ public class ManageOffCodesMenu extends Menu {
                 String serverAnswer = server.serverToClient();
                 System.out.println(serverAnswer);
                 if (serverAnswer.equalsIgnoreCase("search completed")) {
-                    Menu viewOffCode = new ViewOffCodeMenu(this, "View OffCode Menu", offCodeID);
+                    Menu viewOffCode = new ViewOffCodeMenu(this, "View OffCode Menu", offCodeID, 0);
                     viewOffCode.execute();
                 } else {
                     fatherMenu.execute();
