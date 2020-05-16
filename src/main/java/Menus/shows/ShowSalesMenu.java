@@ -1,6 +1,6 @@
 package Menus.shows;
 
-import Menus.Filters.SalesFilterMenu;
+//import Menus.Filters.SalesFilterMenu;
 import Menus.LoginOrRegisterMenu;
 import Menus.Menu;
 import Menus.Sorts.SalesSortMenu;
@@ -13,7 +13,7 @@ public class ShowSalesMenu extends ShowsMenu {
         super(fatherMenu, menuName);
         this.type = "sales";
         HashMap<Integer, Menu> subMenus = new HashMap<>();
-        filter = new SalesFilterMenu(this, "Sales Filter Menu");
+        //filter = new SalesFilterMenu(this, "Sales Filter Menu");
         sort = new SalesSortMenu(this, "Sales Sort Menu");
         subMenus.put(1, filter);
         subMenus.put(2, sort);

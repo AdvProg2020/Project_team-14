@@ -6,7 +6,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 public class SpecialOffCodeTest {
-    SpecialOffCode specialOffCode = new SpecialOffCode();
+    /*SpecialOffCode specialOffCode = new SpecialOffCode();
 
     @Test
     public void SpecialOffCodeTesting() throws InterruptedException {
@@ -22,6 +22,6 @@ public class SpecialOffCodeTest {
         specialOffCode.activate();
         Assert.assertTrue(Storage.allOffCodes.size() >= 1);
         specialOffCode.deactivate();
-    }
+    }*/
 
 }

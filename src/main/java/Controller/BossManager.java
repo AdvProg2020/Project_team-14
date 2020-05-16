@@ -291,7 +291,6 @@ public class BossManager {
             } else {
                 if (Storage.isThereCategoryWithName(fatherCategoryName)) {
                     new Category(categoryName, fatherCategoryName, categoryAttribute);
-                    Storage.getCategoryByName(fatherCategoryName).addSubCategory(categoryName);
                 } else {
                     Server.setAnswer("there isn't a category with this father category name");
                 }

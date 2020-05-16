@@ -1,6 +1,6 @@
 package Menus.Views;
 
-import Menus.Edits.EditSaleMenu;
+//import Menus.Edits.EditSaleMenu;
 import Menus.LoginOrRegisterMenu;
 import Menus.Menu;
 
@@ -13,7 +13,7 @@ public class ViewSalesMenu extends Menu {
         super(fatherMenu, menuName);
         this.saleID = saleID;
         HashMap<Integer, Menu> subMenus = new HashMap<>();
-        subMenus.put(1, new EditSaleMenu(this, "Edit Sale Menu"));
+        //subMenus.put(1, new EditSaleMenu(this, "Edit Sale Menu"));
         subMenus.put(2, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
     }
 

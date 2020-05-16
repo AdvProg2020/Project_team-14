@@ -38,11 +38,6 @@ public class ManageProductsMenu extends Menu {
 
     private Menu getAddProductMenu() {
         return new Menu(this, "Add Product Menu") {
-            private void checkBack(String input) {
-                if (input.equals("back")) {
-                    fatherMenu.execute();
-                }
-            }
 
             @Override
             public void execute() {

@@ -1,6 +1,6 @@
 package Menus.Views;
 
-import Menus.Edits.EditOffCodeMenu;
+//import Menus.Edits.EditOffCodeMenu;
 import Menus.LoginOrRegisterMenu;
 import Menus.Menu;
 
@@ -20,7 +20,7 @@ public class ViewOffCodeMenu extends Menu {
     private void setSubMenus() {
         HashMap<Integer, Menu> subMenus = new HashMap<>();
         if (whereHasBeenCalled == 0) {
-            subMenus.put(1, new EditOffCodeMenu(this, "Edit OffCode Menu"));
+            //subMenus.put(1, new EditOffCodeMenu(this, "Edit OffCode Menu"));
             subMenus.put(2, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
         } else {
             subMenus.put(1, new LoginOrRegisterMenu(this, "Login\\Register Menu"));

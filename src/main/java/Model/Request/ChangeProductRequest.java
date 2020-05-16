@@ -27,7 +27,7 @@ public class ChangeProductRequest extends Request {
     }
 
     public void updateAttributeWithUpdatedInfo() throws ParseException {
-        Product product = (Product) Storage.getProductWithID(objectID);
+        Product product = (Product) Storage.getProductById(objectID);
         if (attribute.equals(ProductAttributes.BRAND)) {
             product.setBrand(updatedInfo);
         } else if (attribute.equals(ProductAttributes.NAME)) {
@@ -40,7 +40,7 @@ public class ChangeProductRequest extends Request {
     }
 
     public String toStringChangeProduct() {
-        Product product = (Product) Storage.getProductWithID(objectID);
+        Product product = (Product) Storage.getProductById(objectID);
         return "Product Name:" + product.getName() + "\n" +
                 "Attribute to change: " + attribute.name().toLowerCase() + "\n"
                 + "New attribute value: " + updatedInfo
