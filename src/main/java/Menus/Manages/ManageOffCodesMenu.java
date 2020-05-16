@@ -3,6 +3,8 @@ package Menus.Manages;
 import Controller.Server;
 import Menus.LoginOrRegisterMenu;
 import Menus.Menu;
+import Menus.Views.ViewOffCodeMenu;
+import Menus.shows.ShowOffCodesMenu;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,7 +35,8 @@ public class ManageOffCodesMenu extends Menu {
                 String serverAnswer = server.serverToClient();
                 System.out.println(serverAnswer);
                 if (serverAnswer.equalsIgnoreCase("search completed")) {
-                    //must add view
+                    Menu viewOffCode = new ViewOffCodeMenu(this, "View OffCode Menu", offCodeID);
+                    viewOffCode.execute();
                 } else {
                     fatherMenu.execute();
                 }

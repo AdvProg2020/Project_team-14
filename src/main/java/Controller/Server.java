@@ -114,7 +114,19 @@ public class Server {
             this.createNormalOffCode(command);
         } else if (command.startsWith("create new special offCode")) {
             this.createSpecialOffCode(command);
+        } else if (command.startsWith("view offCode")) {
+            this.viewOffCode(command);
+        } else if (command.startsWith("edit offCode")) {
+            this.editOffCode(command);
         }
+    }
+
+    private void editOffCode(String command) {
+
+    }
+
+    private void viewOffCode(String command) {
+        bossManager.viewOffCode(command.split("\\+")[1], command.split("\\+")[2]);
     }
 
     private void searchOffCode(String command) {

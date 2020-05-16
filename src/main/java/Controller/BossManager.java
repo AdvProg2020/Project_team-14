@@ -404,6 +404,15 @@ public class BossManager {
         new SpecialOffCode(period, percentage, ceiling, frequency);
     }
 
+    public void viewOffCode(String username, String offCodeID) {
+        if (!Storage.isThereOffCodeWithID(offCodeID)) {
+            Server.setAnswer("ERROR, no offCode found with this ID");
+        } else {
+            OffCode offCode = Storage.getOffCodeById(offCodeID);
+            Server.setAnswer(offCode.toString());
+        }
+    }
+
     /*public void editCategory(String categoryName, String attribute, String updatedInfo) throws InvalidCategoryNameException {
         Category category = Category.getCategoryByName(categoryName);
         if (category == null) {
