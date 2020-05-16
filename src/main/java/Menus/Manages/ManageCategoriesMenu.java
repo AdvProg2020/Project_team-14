@@ -1,5 +1,6 @@
 package Menus.Manages;
 
+import Menus.Edits.EditCategoryMenu;
 import Menus.LoginOrRegisterMenu;
 import Menus.Menu;
 import Menus.Views.ViewCategoryMenu;
@@ -68,6 +69,10 @@ public class ManageCategoriesMenu extends Menu {
             }
 
             private String addAttribute(String attributes, String input) {
+                if (input.equals("")) {
+                    System.out.println("you didn't add anything");
+                    return attributes;
+                }
                 if (attributes.equals("")) {
                     attributes = input;
                     return attributes;
@@ -88,6 +93,14 @@ public class ManageCategoriesMenu extends Menu {
                 if (attributes.equals("")) {
                     System.out.println("there's nothing to delete");
                     return attributes;
+                }
+                if (!attributes.contains(",")) {
+                    if (input.equals(attributes)) {
+                        return "";
+                    } else {
+                        System.out.println("it hasn't the attribute you want to delete");
+                        return attributes;
+                    }
                 }
                 if (attributes.contains(input + ",")) {
                     int position = attributes.indexOf(input + ",");

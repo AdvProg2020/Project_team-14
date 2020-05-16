@@ -28,7 +28,6 @@ public class Server {
     static private String answer;
 
     public Server() {
-        System.out.println(getWordCount("salam+matin+khbi"));
         answer = "";
         this.accountManager = new AccountManager();
         this.bossManager = new BossManager();

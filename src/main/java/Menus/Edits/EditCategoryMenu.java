@@ -32,7 +32,7 @@ public class EditCategoryMenu extends Menu {
                     fatherMenu.execute();
                 }
                 server.clientToServer("edit category name+" + Menu.username + "+" +
-                        ((ViewCategoryMenu) fatherMenu).getCategoryName() + "+" + categoryName);
+                        ((ViewCategoryMenu) fatherMenu.getFatherMenu()).getCategoryName() + "+" + categoryName);
                 String serverAnswer = server.serverToClient();
                 System.out.println(serverAnswer);
                 if (serverAnswer.equals("edit successful")) {

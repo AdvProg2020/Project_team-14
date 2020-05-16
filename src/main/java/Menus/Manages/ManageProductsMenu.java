@@ -49,41 +49,6 @@ public class ManageProductsMenu extends Menu {
                 System.out.println(this.getMenuName());
                 System.out.println("if you input back we will go back");
                 String productName, brand, description, price, remainder;
-                /*System.out.println("please enter your first and last name in separate lines:");
-                firstName = scanner.nextLine();
-                checkBack(firstName);
-                lastName = scanner.nextLine();
-                checkBack(lastName);
-                System.out.println("please enter your username and password in separate lines:");
-                username = scanner.nextLine();
-                checkBack(username);
-                password = scanner.nextLine();
-                checkBack(password);
-                System.out.println("please enter your role");
-                role = scanner.nextLine();
-                checkBack(role);
-                System.out.println("please enter your Email and telephone in separate lines:");
-                Email = scanner.nextLine();
-                checkBack(Email);
-                telephone = scanner.nextLine();
-                checkBack(telephone);
-                message = "register " + firstName + " " + lastName + " " + username + " " + password + " " + role + " "
-                        + Email + " " + telephone + " ";
-                if (role.equals("salesman")) {
-                    System.out.println("please enter your company:");
-                    company = scanner.nextLine();
-                    checkBack(company);
-                    message += company;
-                }
-                server.clientToServer(message);
-                String serverAnswer;
-                serverAnswer = server.serverToClient();
-                System.out.println(serverAnswer);
-                if (serverAnswer.equals("register successful")) {
-                    fatherMenu.execute();
-                } else {
-                    this.execute();
-                }*/
             }
         };
     }

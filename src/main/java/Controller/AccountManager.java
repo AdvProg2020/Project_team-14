@@ -22,6 +22,7 @@ public class AccountManager {
                         if (salesman.getConfirmationState().equals(Confirmation.DENIED)) {
                             Server.setAnswer("you're request of registering has been denied so you're account will be " +
                                     "deleted from now on");
+                            Storage.getAllAccounts().remove(account);
                         }
                         return;
                     }

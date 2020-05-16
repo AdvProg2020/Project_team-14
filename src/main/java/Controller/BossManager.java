@@ -363,6 +363,9 @@ public class BossManager {
             Server.setAnswer("there is already exists a category with such name");
         } else {
             for (Category subCategory : Storage.getAllCategories()) {
+                if (subCategory.getParentCategoryName() == null) {
+                    continue;
+                }
                 if (subCategory.getParentCategoryName().equals(oldCategoryName)) {
                     subCategory.setParentCategoryName(newCategoryName);
                 }
@@ -418,6 +421,9 @@ public class BossManager {
         Category category = Storage.getCategoryByName(categoryName);
         Storage.getAllCategories().remove(category);
         for (Category subCategory : Storage.getAllCategories()) {
+            if (subCategory.getParentCategoryName() == null) {
+                continue;
+            }
             if (subCategory.getParentCategoryName().equals(categoryName)) {
                 subCategory.setParentCategoryName(null);
             }

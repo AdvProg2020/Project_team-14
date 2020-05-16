@@ -176,6 +176,7 @@ public class Request implements Serializable {
             Salesman salesman = (Salesman) Storage.getAccountWithUsername(accountUsername);
             assert salesman != null;
             salesman.setConfirmationState(Confirmation.DENIED);
+            this.accountUsername = "deleted account";
         } /*else if (this.requestType.equals(RequestType.COMMENT_CONFIRMATION)) {
             this.confirmation = Confirmation.DENIED;
             Comment comment = (Comment) object;
