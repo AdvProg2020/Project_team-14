@@ -31,7 +31,7 @@ public class ShowOffCodesMenu extends ShowsMenu {
     }
 
     private Menu getSelectMenu() {
-        return new Menu(this, "Select Menu") {
+        return new Menu(this, "Select OffCode Menu") {
 
             @Override
             public void execute() {
@@ -42,6 +42,8 @@ public class ShowOffCodesMenu extends ShowsMenu {
                 System.out.println("select one of the above offCodeID to see detail:");
                 String offCodeID = scanner.nextLine();
                 checkBack(offCodeID);
+
+                //check existence
                 String allOffCodes = ((ShowsMenu) fatherMenu).getServerAnswer();
                 if (isIdInTheList(allOffCodes, offCodeID)) {
                     new ViewOffCodeMenu(this, "View OffCode Menu", offCodeID, whereHasBeenCalled).execute();
