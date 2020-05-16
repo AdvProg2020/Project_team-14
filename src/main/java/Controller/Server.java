@@ -118,11 +118,20 @@ public class Server {
             this.viewOffCode(command);
         } else if (command.startsWith("edit offCode")) {
             this.editOffCode(command);
+        } else if (command.startsWith("show offCodes")) {
+            this.showOffCodes(command);
         }
     }
 
-    private void editOffCode(String command) {
+    private void showOffCodes(String command) {
+        ArrayList<Object> filters;
+        filters = getFilters(command);
+        String[] input = command.split("\\+");
+        bossManager.showOffCodes(input[1], filters, getSortFactor(command), getSortType(command));
+    }
 
+    private void editOffCode(String command) {
+    //nothing yet
     }
 
     private void viewOffCode(String command) {

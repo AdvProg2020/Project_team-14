@@ -38,6 +38,10 @@ public abstract class Off {
         return end;
     }
 
+    public Date getStart() {
+        return start;
+    }
+
     public void setPercentage(String percentage) {
         this.percentage = Integer.parseInt(percentage);
     }

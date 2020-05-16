@@ -414,6 +414,39 @@ public class BossManager {
         }
     }
 
+    public void showOffCodes(String username, ArrayList<Object> filters, String sortFactor, String sortType) {
+        ArrayList<OffCode> allOffCodes;
+        if (Storage.getAccountWithUsername(username).getRole().equals("BOSS")) {
+            allOffCodes = Storage.allOffCodes;
+        } else {
+            allOffCodes = OffCode.getAllCustomerOffCodesByUsername(username);
+        }
+        OffCodesSortFactor.sort(sortFactor, sortType, allOffCodes);
+
+        StringBuilder ans = new StringBuilder("All OffCodes:");
+        boolean found = false;
+        for (OffCode offCode : allOffCodes) {
+            /*
+             * must check filter factor
+             */
+            if (doOffCodeHasFilterFactor()) {
+                ans.append("\n").append(offCode.getOffCodeID());
+                found = true;
+            }
+        }
+        ans.append("\n").append("What founded, listed above");
+        if (!found) {
+            Server.setAnswer("nothing found");
+        } else {
+            Server.setAnswer(ans.toString());
+        }
+    }
+
+    //still has word must implement it in OffCode Class
+    public boolean doOffCodeHasFilterFactor() {
+        return true;
+    }
+
     /*public void editCategory(String categoryName, String attribute, String updatedInfo) throws InvalidCategoryNameException {
         Category category = Category.getCategoryByName(categoryName);
         if (category == null) {
