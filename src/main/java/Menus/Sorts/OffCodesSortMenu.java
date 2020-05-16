@@ -9,7 +9,6 @@ public class OffCodesSortMenu extends SortsMenu {
 
     public OffCodesSortMenu(Menu fatherMenu, String menuName) {
         super(fatherMenu, menuName);
-        this.logoutType = false;
         HashMap<Integer, Menu> subMenus = new HashMap<>();
         subMenus.put(1, getResetSort(this));
         subMenus.put(2, getSubMenuSelectFactor(this, "startTime"));
