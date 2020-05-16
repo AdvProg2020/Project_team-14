@@ -82,11 +82,11 @@ public class ManageOffCodesMenu extends Menu {
                 }
             }
 
-            private void checkBack(String command) {
+            /*private void checkBack(String command) {
                 if (command.equalsIgnoreCase("back")) {
                     fatherMenu.execute();
                 }
-            }
+            }*/
 
             private ArrayList<String> getUserNames() {
                 System.out.println("-add [username] : to add\n-delete [username] : to delete in case of mistaken addition\n-DONE : to end addition");
@@ -163,11 +163,11 @@ public class ManageOffCodesMenu extends Menu {
                 }
             }
 
-            private void checkBack(String command) {
+            /*private void checkBack(String command) {
                 if (command.equalsIgnoreCase("back")) {
                     fatherMenu.execute();
                 }
-            }
+            }*/
         };
     }
 }

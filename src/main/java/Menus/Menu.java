@@ -66,6 +66,12 @@ public class Menu {
         return this.menuName;
     }
 
+    public void checkBack(String command) {
+        if (command.equalsIgnoreCase("back")) {
+            fatherMenu.execute();
+        }
+    }
+
     protected void show() {
         System.out.println(this.menuName + ":");
         for (Integer menuNum : subMenus.keySet()) {
@@ -76,7 +82,6 @@ public class Menu {
         else
             System.out.println((subMenus.size() + 1) + ". Exit");
     }
-
 
     public void execute() {
         if (!isUserLogin && !logoutType) {
