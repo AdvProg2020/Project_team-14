@@ -22,7 +22,7 @@ public class ChangeSaleRequest extends Request {
         this.updatedInfo = updatedInfo;
     }
 
-    public void updateAttributeWithUpdatedInfo() throws ParseException {
+    /*public void updateAttributeWithUpdatedInfo() throws ParseException {
         Sale sale = (Sale) object;
         if (attribute.equals(SaleAttributes.END_DATE)) {
             sale.setEnd(updatedInfo);
@@ -31,7 +31,7 @@ public class ChangeSaleRequest extends Request {
         } else if (attribute.equals(SaleAttributes.PERCENTAGE)) {
             sale.setPercentage(updatedInfo);
         }
-    }
+    }*/
 
     public String toStringChangeSale() {
         return "Salesman username: " + accountUsername + "\n" +

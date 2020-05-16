@@ -2,6 +2,7 @@ package Model.Request;
 
 import Model.Product.Product;
 import Model.Request.Enum.*;
+import Model.Storage;
 
 import java.text.ParseException;
 
@@ -26,7 +27,7 @@ public class ChangeProductRequest extends Request {
     }
 
     public void updateAttributeWithUpdatedInfo() throws ParseException {
-        Product product = (Product) object;
+        Product product = (Product) Storage.getProductWithID(objectID);
         if (attribute.equals(ProductAttributes.BRAND)) {
             product.setBrand(updatedInfo);
         } else if (attribute.equals(ProductAttributes.NAME)) {
@@ -39,7 +40,7 @@ public class ChangeProductRequest extends Request {
     }
 
     public String toStringChangeProduct() {
-        Product product = (Product) object;
+        Product product = (Product) Storage.getProductWithID(objectID);
         return "Product Name:" + product.getName() + "\n" +
                 "Attribute to change: " + attribute.name().toLowerCase() + "\n"
                 + "New attribute value: " + updatedInfo

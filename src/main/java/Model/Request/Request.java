@@ -16,7 +16,7 @@ import static Model.RandomString.createID;
 public class Request implements Serializable {
     protected String requestID;
     protected String accountUsername;
-    protected Object object;
+    protected String objectID;
     protected RequestType requestType;
     protected Confirmation confirmation;
 
@@ -25,12 +25,12 @@ public class Request implements Serializable {
     public Request(String salesmanUsername, Product product, String type) {
         this.requestID = createID("Request");
         this.accountUsername = salesmanUsername;
-        this.object = product;
+        this.objectID = product.getProductID();
         if (type.equalsIgnoreCase(String.valueOf(RequestType.CHANGE_PRODUCT))) {
-            requestType = RequestType.CHANGE_PRODUCT;
-        } else if (type.equalsIgnoreCase(String.valueOf(RequestType.DELETE_PRODUCT))) {
+            //requestType = RequestType.CHANGE_PRODUCT;
+        }/* else if (type.equalsIgnoreCase(String.valueOf(RequestType.DELETE_PRODUCT))) {
             requestType = RequestType.DELETE_PRODUCT;
-        } else if (type.equalsIgnoreCase(String.valueOf(RequestType.ADD_NEW_PRODUCT))) {
+        }*/ else if (type.equalsIgnoreCase(String.valueOf(RequestType.ADD_NEW_PRODUCT))) {
             requestType = RequestType.ADD_NEW_PRODUCT;
         }
         Storage.getAllRequests().add(this);
@@ -42,7 +42,7 @@ public class Request implements Serializable {
     public Request(String salesmanUsername, Sale sale, String type) {
         this.requestID = createID("Request");
         this.accountUsername = salesmanUsername;
-        this.object = sale;
+        this.objectID = sale.getSaleID();
         if (type.equalsIgnoreCase(String.valueOf(RequestType.CHANGE_SALE))) {
             requestType = RequestType.CHANGE_SALE;
         } else if (type.equalsIgnoreCase(String.valueOf(RequestType.DELETE_SALE))) {
@@ -59,7 +59,7 @@ public class Request implements Serializable {
     public Request(String salesmanUsername) {
         this.requestID = createID("Request");
         this.accountUsername = salesmanUsername;
-        this.object = null;
+        this.objectID = null;
         this.requestType = RequestType.REGISTER_SALESMAN;
         Storage.getAllRequests().add(this);
         this.confirmation = Confirmation.CHECKING;
@@ -70,7 +70,7 @@ public class Request implements Serializable {
     public Request(Comment comment) {
 
         this.requestID = createID("Request");
-        this.object = comment;
+        this.objectID = comment.getCommentID();
         this.requestType = RequestType.COMMENT_CONFIRMATION;
         Storage.getAllRequests().add(this);
         this.confirmation = Confirmation.CHECKING;
@@ -156,7 +156,7 @@ public class Request implements Serializable {
 
     public void decline() {
         if (this.requestType.equals(RequestType.CHANGE_SALE)) {
-            this.confirmation = Confirmation.DENIED;
+            //this.confirmation = Confirmation.DENIED;
         }/* else if (this.requestType.equals(RequestType.DELETE_SALE)) {
             this.confirmation = Confirmation.DENIED;
         } else if (this.requestType.equals(RequestType.ADD_NEW_SALE)) {
@@ -166,9 +166,9 @@ public class Request implements Serializable {
         } else if (this.requestType.equals(RequestType.DELETE_PRODUCT)) {
             this.confirmation = Confirmation.DENIED;
         } else if (this.requestType.equals(RequestType.ADD_NEW_PRODUCT)) {
-            this.confirmation = Confirmation.DENIED;
+            this.confirmation = Confirmation.CHECKING;
             Product product = (Product) object;
-            product.setConfirmationState(salesmanUsername, Confirmation.DENIED);
+            product.setConfirmationState(accountUsername, Confirmation.CHECKING);
         } else if (this.requestType.equals(RequestType.CHANGE_PRODUCT)) {
             this.confirmation = Confirmation.DENIED;
         }*/ else if (this.requestType.equals(RequestType.REGISTER_SALESMAN)) {
