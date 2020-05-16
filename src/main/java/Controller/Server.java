@@ -120,6 +120,48 @@ public class Server {
             this.editOffCode(command);
         } else if (command.startsWith("show offCodes")) {
             this.showOffCodes(command);
+        } else if (command.startsWith("create new sale")) {
+            this.createSale(command);
+        }
+    }
+
+    private void createSale(String command) {
+        String[] info = command.split("\\+");//0-->salesmanID    1--> start     2-->end     3-->percentage     4-->productIDs
+        if (isSaleInfoValid(info[1], info[2], info[3])) {
+            Server.setAnswer("creation of sale successful");
+            String productsID = info[4].substring(info[4].indexOf(":") + 1, info[4].length() - 1);
+            salesmanManager.createSale(info[0], info[1], info[2], Integer.parseInt(info[3]), convertStringToArray(productsID));
+        }
+    }
+
+    private boolean isSaleInfoValid(String start, String end, String percentage) {
+        StringBuilder checkResult = new StringBuilder("Errors:");
+
+        //check errors
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH-mm-ss");
+        try {
+            dateFormat.parse(start);
+        } catch (ParseException e) {
+            checkResult.append("\n").append("START: invalid format");
+        }
+        try {
+            dateFormat.parse(end);
+        } catch (ParseException e) {
+            checkResult.append("\n").append("END: invalid format");
+        }
+        try {
+            int interest = Integer.parseInt(percentage);
+            if (interest <= 0 | 100 < interest) checkResult.append("\n").append("PERCENTAGE: must be from 1 to 100");
+        } catch (Exception e) {
+            checkResult.append("\n").append("PERCENTAGE: invalid format");
+        }
+
+        //set answer
+        if (checkResult.equals("Errors:")) {
+            return true;
+        } else {
+            setAnswer(checkResult.toString());
+            return false;
         }
     }
 

@@ -88,10 +88,9 @@ public class SalesmanManager {
         Server.setAnswer(ans);
     }
 
-    //order of info : 0 -> [start time] , 1 -> [end time] , 2 -> [percentage] , 3 -> [salesmanID]
-    public void addSale(ArrayList<String> info) throws ParseException {
-        Sale newSale = new Sale(info.get(0), info.get(1), Integer.parseInt(info.get(2)), info.get(3));
-        new Request(info.get(3), newSale, "ADD_NEW_SALE");
+    public void createSale(String salesmanID, String start, String end, int percentage, ArrayList<String> productID) {
+        Sale newSale = new Sale(start, end, percentage, salesmanID, productID);
+        new Request(salesmanID, newSale, "ADD_NEW_SALE");
     }
 
     /*

@@ -70,7 +70,7 @@ public class ManageOffCodesMenu extends Menu {
 
                 //send info to server
                 String message = "create new normal offCode+" + offPercentage + "+" +
-                        ceiling + "+" + frequency + "+" + startTime + "+" + endTime + "+" + "Users:" + usernameCanUseIt;
+                        ceiling + "+" + frequency + "+" + startTime + "+" + endTime + "+" + "Users:" + usernameCanUseIt.toString();
                 server.clientToServer(message);
                 System.out.println(server.serverToClient());
                 if (server.serverToClient().equals("creation of offCode successful")) {
@@ -79,12 +79,6 @@ public class ManageOffCodesMenu extends Menu {
                     this.execute();
                 }
             }
-
-            /*private void checkBack(String command) {
-                if (command.equalsIgnoreCase("back")) {
-                    fatherMenu.execute();
-                }
-            }*/
 
             private ArrayList<String> getUserNames() {
                 System.out.println("-add [username] : to add\n-delete [username] : to delete in case of mistaken addition\n-DONE : to end addition");

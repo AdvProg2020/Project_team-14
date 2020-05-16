@@ -18,11 +18,11 @@ public class Sale extends Off implements Serializable {
     private String salesmanID;
     private Confirmation confirmationState;
 
-    public Sale(String start, String end, int percentage, String salesmanID) throws ParseException {
+    public Sale(String start, String end, int percentage, String salesmanID, ArrayList<String> productIDs) {
         super(start, end, percentage);
         this.saleID = RandomString.createID("Sale");
         this.salesmanID = salesmanID;
-        productIDs = new ArrayList<>();
+        this.productIDs = productIDs;
         confirmationState = Confirmation.CHECKING;
         allSales.add(this);
     }
