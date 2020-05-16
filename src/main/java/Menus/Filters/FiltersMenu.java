@@ -10,6 +10,7 @@ public class FiltersMenu extends Menu {
     public FiltersMenu(Menu fatherMenu, String menuName) {
         super(fatherMenu, menuName);
         this.logoutType = false;
+        filters = new ArrayList<Object>();
     }
 
     public void resetFilters() {

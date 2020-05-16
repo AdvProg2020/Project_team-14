@@ -3,6 +3,7 @@ package Menus.shows;
 import Menus.Filters.RequestsFilterMenu;
 import Menus.LoginOrRegisterMenu;
 import Menus.Menu;
+import Menus.Sorts.RequestsSortMenu;
 import Menus.Views.ViewAccountMenu;
 import Menus.Views.ViewRequestMenu;
 
@@ -21,12 +22,14 @@ public class ShowRequestsMenu extends ShowsMenu {
             canChangeUsernameFilter = false;
         }
         filter = new RequestsFilterMenu(this, "Request Filter Menu");
+        sort = new RequestsSortMenu(this, "Request Sort Menu");
         if (fatherMenu instanceof ViewAccountMenu) {
             ((RequestsFilterMenu) filter).setUsernameFilter(((ViewAccountMenu) fatherMenu).getUsername());
         }
         subMenus.put(1, filter);
-        subMenus.put(2, getSelectMenu());
-        subMenus.put(3, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
+        subMenus.put(2, sort);
+        subMenus.put(3, getSelectMenu());
+        subMenus.put(4, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
         this.setSubMenus(subMenus);
     }
 

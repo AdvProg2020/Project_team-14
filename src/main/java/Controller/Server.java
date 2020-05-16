@@ -116,8 +116,10 @@ public class Server {
             this.editCategoryAttribute(command);
         } else if (command.startsWith("delete category+")) {
             this.deleteCategory(command);
-        } else if (command.startsWith("create product")) {
+        } else if (command.startsWith("create product+")) {
             this.createProduct(command);
+        } else if (command.startsWith("show products+")) {
+            this.showProducts(command);
         } else if (command.startsWith("search offCod")) {
             this.searchOffCode(command);
         } else if (command.startsWith("create new normal offCode")) {
@@ -142,6 +144,7 @@ public class Server {
             this.showSales(command);
         }
     }
+
     private void showSales(String command) {
         ArrayList<Object> filters;
         filters = getFilters(command);
@@ -281,7 +284,8 @@ public class Server {
         //check same parts
         try {
             int interest = Integer.parseInt(info[1]);
-            if (interest <= 0 | 100 < interest) checkResult += "\n" + "PERCENTAGE: this number must be between 1 and 100";
+            if (interest <= 0 | 100 < interest)
+                checkResult += "\n" + "PERCENTAGE: this number must be between 1 and 100";
         } catch (Exception e) {
             checkResult += "\n" + "PERCENTAGE: format is invalid, check it and try again";
         }
@@ -304,6 +308,12 @@ public class Server {
         return true;
     }
 
+    private void showProducts(String command) {
+        ArrayList<Object> filters;
+        filters = getFilters(command);
+        String[] input = command.split("\\+");
+        salesmanManager.showProducts(input[1], filters);
+    }
 
     private boolean checkProductNameFormat(String input) {
         return getMatcher("([\\d\\w_\\-,\\s])+", input).matches();

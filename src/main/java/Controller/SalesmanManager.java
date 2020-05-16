@@ -39,6 +39,33 @@ public class SalesmanManager {
         Server.setAnswer("product created");
     }
 
+    private boolean isProductInFilter(Product product, ArrayList<Object> filters) {
+        return true;
+    }
+
+    public void showProducts(String username, ArrayList<Object> filters) {
+        int count = 0;
+        ArrayList<Product> products = Storage.getAllProducts();
+        StringBuilder answer = new StringBuilder("");
+        if (products.size() == 0) {
+            Server.setAnswer("nothing found");
+        } else {
+            for (Product product : products) {
+                if (isProductInFilter(product, filters)) {
+                    answer.append(product.toStringForBoss() + "\n");
+                    count++;
+                }
+            }
+            if (count == 0) {
+                answer = new StringBuilder("nothing found");
+            } else {
+                answer.append("here are what we found");
+            }
+            String ans = answer.toString();
+            Server.setAnswer(ans);
+        }
+    }
+
     public String getSalesHistory(String salesmanID) {
         Salesman salesman = (Salesman) Storage.getAccountWithUsername(salesmanID);
         return SellLog.getSalesmanSellLogs_StringFormatted(salesmanID);

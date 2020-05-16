@@ -15,6 +15,14 @@ public class ShowsMenu extends Menu {
         this.logoutType = false;
     }
 
+    public void resetSorts() {
+        sort.resetSorts();
+    }
+
+    public void resetFilters() {
+        filter.resetFilters();
+    }
+
     public String getServerAnswer() {
         return serverAnswer;
     }

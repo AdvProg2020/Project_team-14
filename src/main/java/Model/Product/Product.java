@@ -206,6 +206,13 @@ public class Product implements Serializable {
         return null;
     }
 
+    public String toStringForBoss() {
+        return "Name: " + this.name + "\n" +
+                "Price: " + this.getMinimumPrice() + "\n" +
+                "Average Point: " + this.getAveragePoint() + "\n" +
+                "Confirmation State: " + this.confirmationState;
+    }
+
     public String toStringForBossView() {
         return "Name: " + this.name + "\n" +
                 "Brand: " + this.brand + "\n" +

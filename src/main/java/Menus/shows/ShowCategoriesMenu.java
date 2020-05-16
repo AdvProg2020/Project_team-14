@@ -4,6 +4,8 @@ import Menus.Filters.CategoriesFilterMenu;
 import Menus.Filters.RequestsFilterMenu;
 import Menus.LoginOrRegisterMenu;
 import Menus.Menu;
+import Menus.Sorts.CategoriesSortMenu;
+import Menus.Sorts.SortsMenu;
 import Menus.Views.ViewAccountMenu;
 import Menus.Views.ViewCategoryMenu;
 import Menus.Views.ViewRequestMenu;
@@ -22,14 +24,17 @@ public class ShowCategoriesMenu extends ShowsMenu {
             canChangeSubCategoryFilter = false;
         }
         filter = new CategoriesFilterMenu(this, "Category Filter Menu");
+        sort = new CategoriesSortMenu(this, "Category Sort Menu");
         if (fatherMenu instanceof ViewCategoryMenu) {
             ((CategoriesFilterMenu) filter).setFatherCategoryFilter(((ViewCategoryMenu) fatherMenu).getCategoryName());
             subMenus.put(1, getSelectMenu());
-            subMenus.put(2, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
+            subMenus.put(2, sort);
+            subMenus.put(3, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
         } else {
             subMenus.put(1, filter);
-            subMenus.put(2, getSelectMenu());
-            subMenus.put(3, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
+            subMenus.put(2, sort);
+            subMenus.put(3, getSelectMenu());
+            subMenus.put(4, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
         }
         this.setSubMenus(subMenus);
     }

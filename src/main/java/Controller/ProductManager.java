@@ -18,14 +18,6 @@ import static java.lang.String.valueOf;
 
 public class ProductManager {
 
-    //the order is 0-->name  1-->salesmanID  2-->brand  3-->description  4-->price  5-->remainder
-
-    public void addNewProduct(String productID, ArrayList<String> information) {
-        Product p = new Product(information.get(0), information.get(1), information.get(2), information.get(3),
-                Integer.parseInt(information.get(4)), Integer.parseInt(information.get(5)));
-        new Request(information.get(1), p, "ADD_NEW_PRODUCT");
-    }
-
     public void editProduct(String productID, String salesmanID, String attribute, String updatedInfo) {
         new ChangeProductRequest(salesmanID, Product.getProductWithID(productID), attribute, updatedInfo);
     }

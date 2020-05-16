@@ -24,14 +24,6 @@ public class ShowAccountsMenu extends ShowsMenu {
         this.setSubMenus(subMenus);
     }
 
-    public void resetSorts() {
-        sort.resetSorts();
-    }
-
-    public void resetFilters() {
-        filter.resetFilters();
-    }
-
     private Menu getSelectMenu() {
         return new Menu(this, "Select Menu") {
             private boolean hasBeenCalled = true;
