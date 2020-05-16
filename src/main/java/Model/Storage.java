@@ -22,7 +22,7 @@ import java.util.ArrayList;
 public class Storage {
     public static ArrayList<Comment> allComments = new ArrayList<>();
     public static ArrayList<Point> allPoints = new ArrayList<>();
-    public static ArrayList<Product> allProducts = new ArrayList<>();
+    private static ArrayList<Product> allProducts = new ArrayList<>();
     public static ArrayList<OffCode> allOffCodes = new ArrayList<>();
     public static ArrayList<Sale> allSales = new ArrayList<>();
     public static ArrayList<BuyLog> allBuyLogs = new ArrayList<>();
@@ -48,6 +48,10 @@ public class Storage {
 
     public static ArrayList<Account> getAllAccounts() {
         return allAccounts;
+    }
+
+    public static ArrayList<Product> getAllProducts() {
+        return allProducts;
     }
 
     public static ArrayList<Request> getAllRequests() {
@@ -77,6 +81,19 @@ public class Storage {
         for (Category category : allCategories) {
             if (category.getCategoryName().equals(categoryName)) {
                 return category;
+            }
+        }
+        return null;
+    }
+
+    public static boolean isThereProductWithID(String productID) {
+        return getProductWithID(productID) != null;
+    }
+
+    public static Product getProductWithID(String productID) {
+        for (Product product : allProducts) {
+            if (product.getProductID().equals(productID)) {
+                return product;
             }
         }
         return null;

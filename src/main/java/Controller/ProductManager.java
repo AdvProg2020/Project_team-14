@@ -132,7 +132,7 @@ public class ProductManager {
     }
 
     public static Product getProductWithName(String name) {
-        for (Product product : Storage.allProducts) {
+        for (Product product : Storage.getAllProducts()) {
             if (product.getName().equals(name)) {
                 return product;
             }
@@ -152,7 +152,7 @@ public class ProductManager {
 
     public static ArrayList<Product> getProductsOfSalesman(String salesmanUser) {
         ArrayList<Product> arrayList = new ArrayList<>();
-        for (Product product : Storage.allProducts) {
+        for (Product product : Storage.getAllProducts()) {
             if (product.doesSalesmanSellProductWithUsername(salesmanUser)) {
                 arrayList.add(product);
             }

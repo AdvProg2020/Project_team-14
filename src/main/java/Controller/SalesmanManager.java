@@ -31,13 +31,15 @@ public class SalesmanManager {
         }
         Server.setAnswer("register successful");
         new Salesman(information[3], information[4], information[1], information[2],
-                information[6], information[7], information[5], information[8],0);
+                information[6], information[7], information[5], information[8], 0);
     }
 
-    public void showCompanyInfo(String salesmanID) {
-        Salesman salesman = (Salesman) Storage.getAccountWithUsername(salesmanID);
-        assert salesman != null;
-        Server.setAnswer("Salesman Company Info : " + salesman.getCompany());
+    //the order is 2-->name  1-->salesmanID  3-->brand  4-->description  5-->price  6-->remainder
+    public void createProduct(String info) {
+        String[] information = info.split("\\+");
+        Product product = new Product(information[2], information[1], information[3], information[4],
+                Integer.parseInt(information[5]), Integer.parseInt(information[6]));
+        new Request(information[1], product, "ADD_NEW_PRODUCT");
     }
 
     public String getSalesHistory(String salesmanID) {
@@ -97,13 +99,6 @@ public class SalesmanManager {
     /*
      * this is ProductManager part
      */
-
-    //the order is 0-->name  1-->salesmanID  2-->brand  3-->description  4-->price  5-->remainder
-    public void addNewProduct(String productID, ArrayList<String> information) {
-        Product p = new Product(information.get(0), information.get(1), information.get(2), information.get(3),
-                Integer.parseInt(information.get(4)), Integer.parseInt(information.get(5)));
-        new Request(information.get(1), p, "ADD_NEW_PRODUCT");
-    }
 
     public void editProduct(String productID, String salesmanID, String attribute, String updatedInfo) {
         new ChangeProductRequest(salesmanID, Product.getProductWithID(productID), attribute, updatedInfo);

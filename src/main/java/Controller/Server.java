@@ -117,6 +117,44 @@ public class Server {
             this.editCategoryAttribute(command);
         } else if (command.startsWith("delete category+")) {
             this.deleteCategory(command);
+        } else if (command.startsWith("create product")) {
+            this.createProduct(command);
+        }
+    }
+
+    private boolean checkProductNameFormat(String input) {
+        return getMatcher("([\\d\\w_\\-,\\s])+", input).matches();
+    }
+
+    private boolean checkDescriptionFormat(String description) {
+        return getMatcher("[\\w\\s\\.]+", description).matches();
+    }
+
+    private void createProduct(String command) {
+        Server.answer = "";
+        if (!checkProductNameFormat(command.split("\\+")[2])) {
+            Server.answer += "product name format is invalid";
+        }
+        if (!checkNameFormat(command.split("\\+")[3])) {
+            Server.answer += "brand format is invalid";
+        }
+        if (!checkDescriptionFormat(command.split("\\+")[4])) {
+            Server.answer += "description format is invalid";
+        }
+        if (!checkMoneyFormat(command.split("\\+")[5])) {
+            Server.answer += "money format is invalid";
+        }
+        if (command.split("\\+")[5].length() > 8) {
+            Server.answer += "money is too much!";
+        }
+        if (!checkMoneyFormat(command.split("\\+")[6])) {
+            Server.answer += "remainder format is invalid";
+        }
+        if (command.split("\\+")[6].length() > 5) {
+            Server.answer += "remainder is too much!";
+        }
+        if (Server.answer.equals("")) {
+            salesmanManager.createProduct(command);
         }
     }
 
@@ -173,7 +211,6 @@ public class Server {
     }
 
     private void createCategory(String command) {
-        System.out.println(command);
         Server.answer = "";
         if (!checkNameFormat(command.split("\\+")[1])) {
             Server.answer += "category name format is invalid";

@@ -79,7 +79,7 @@ public class LoginOrRegisterMenu extends Menu {
                 checkBack(telephone);
                 message = "register+" + firstName + "+" + lastName + "+" + username + "+" + password + "+" + role + "+"
                         + Email + "+" + telephone;
-                if (role.equals("salesman")) {
+                if (role.equalsIgnoreCase("salesman")) {
                     System.out.println("please enter your company:");
                     company = scanner.nextLine();
                     checkBack(company);

@@ -14,6 +14,7 @@ import Model.Off.SpecialOffCode;
 import Model.Product.Comment;
 import Model.Product.Point;
 import Model.Product.Product;
+import Model.Storage;
 
 import static Model.Storage.*;
 
@@ -92,7 +93,7 @@ public class EndOfProgramme extends DataBase implements Runnable {
     @Override
     protected void updateProducts() throws IOException {
         String path = "src\\main\\resources\\DataBase\\Products\\";
-        for (Product product : allProducts) {
+        for (Product product : Storage.getAllProducts()) {
             storeObjectInFile(product, path + product.getProductID());
         }
     }

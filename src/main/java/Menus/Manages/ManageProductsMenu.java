@@ -49,6 +49,31 @@ public class ManageProductsMenu extends Menu {
                 System.out.println(this.getMenuName());
                 System.out.println("if you input back we will go back");
                 String productName, brand, description, price, remainder;
+                System.out.println("please enter product name:");
+                productName = scanner.nextLine();
+                checkBack(productName);
+                System.out.println("please enter brand of the product:");
+                brand = scanner.nextLine();
+                checkBack(brand);
+                System.out.println("please enter the description of the product:");
+                description = scanner.nextLine();
+                checkBack(description);
+                System.out.println("please enter the price of product:");
+                price = scanner.nextLine();
+                checkBack(price);
+                System.out.println("please enter the number of remainder:");
+                remainder = scanner.nextLine();
+                checkBack(remainder);
+                server.clientToServer("create product+" + Menu.username + "+" + productName + "+"
+                        + brand + "+" + description + "+" + price + "+" + remainder);
+                String serverAnswer;
+                serverAnswer = server.serverToClient();
+                System.out.println(serverAnswer);
+                if (serverAnswer.equals("product created")) {
+                    fatherMenu.execute();
+                } else {
+                    this.execute();
+                }
             }
         };
     }

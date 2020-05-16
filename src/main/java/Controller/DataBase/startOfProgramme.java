@@ -133,7 +133,7 @@ public class startOfProgramme extends DataBase {
         for (File file : files) {
             ObjectInputStream in = new ObjectInputStream(new FileInputStream(file.getAbsolutePath()));
             Product s = (Product) in.readObject();
-            allProducts.add(s);
+            Storage.getAllProducts().add(s);
         }
 
     }

@@ -3,6 +3,7 @@ package Model.Product;
 import Model.Category.Category;
 import Model.Confirmation;
 import Model.RandomString;
+import Model.Storage;
 
 import java.io.Serializable;
 import java.util.*;
@@ -43,7 +44,7 @@ public class Product implements Serializable {
         this.isOnSale.put(salesmanID, false);
         this.salesmanIDs.add(salesmanID);
         this.price.put(salesmanID, price);
-        allProducts.add(this);
+        Storage.getAllProducts().add(this);
     }
 
     public void setName(String name) {
@@ -197,7 +198,7 @@ public class Product implements Serializable {
     }
 
     public static Product getProductWithID(String productID) {
-        for (Product product : allProducts) {
+        for (Product product : Storage.getAllProducts()) {
             if (product.getProductID().equals(productID)) {
                 return product;
             }
