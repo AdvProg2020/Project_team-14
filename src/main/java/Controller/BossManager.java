@@ -8,8 +8,10 @@ package Controller;
 //import Model.Request.Request;
 
 import Controller.SortFactorEnum.AccountSortFactor;
+import Controller.SortFactorEnum.OffCodesSortFactor;
 import Model.Account.*;
 import Model.Category.Category;
+import Model.Off.Off;
 import Model.Off.OffCode;
 import Model.Off.SpecialOffCode;
 import Model.Request.Request;
@@ -138,9 +140,8 @@ public class BossManager {
     public void showAccounts(String username, ArrayList<Object> filters, String sortFactor, String sortType) {
         int count = 0;
         ArrayList<Account> accounts = Storage.getAllAccounts();
-        if (!sortFactor.equalsIgnoreCase("none")) {
-            AccountSortFactor.sort(sortFactor, accounts);
-        }
+        AccountSortFactor.sort(sortFactor, sortType, accounts);
+
         StringBuilder answer = new StringBuilder("All Accounts Username:").append("\n");
         if (accounts.size() == 0) {
             Server.setAnswer("no account found with this username");
