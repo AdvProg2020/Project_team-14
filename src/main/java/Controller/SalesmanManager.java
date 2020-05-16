@@ -1,10 +1,8 @@
 package Controller;
 
 
-import Controller.SortFactorEnum.ListSalesSortFactor;
-import Controller.SortFactorEnum.ViewBuyersOfProductSortFactor;
+import Controller.SortFactorEnum.SalesSortFactor;
 import Model.Account.Salesman;
-import Model.Log.Log;
 import Model.Log.SellLog;
 import Model.Off.Sale;
 import Model.Product.Product;
@@ -12,9 +10,7 @@ import Model.Request.ChangeProductRequest;
 import Model.Request.ChangeSaleRequest;
 import Model.Request.Request;
 import Model.Storage;
-import Exception.*;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Comparator;
 
@@ -53,23 +49,24 @@ public class SalesmanManager {
      */
 
     //default sort factor is percentage
-    public void listSales(String salesmanID, String sortFactor) {
+    public void showSales(String salesmanID, ArrayList<Object> filters, String sortFactor, String sortType) {
         StringBuilder result = new StringBuilder("Here are All of your Sales:");
         ArrayList<Sale> sales = new ArrayList<>(Sale.getAllAuthenticSales(salesmanID));
-        if (sortFactor.equalsIgnoreCase(valueOf(ListSalesSortFactor.PERCENTAGE))) {
-            sales.sort(Comparator.comparingInt(Sale::getPercentage));
-        } else if (sortFactor.equalsIgnoreCase(valueOf(ListSalesSortFactor.END_DATE))) {
-            sales.sort(Comparator.comparing(Sale::getEnd));
-        } else if (sortFactor.equals("")) {
-            sales.sort(Comparator.comparingInt(Sale::getPercentage));
-        }
+        SalesSortFactor.sort(sortFactor, sortType, sales);
         for (Sale sale : sales) {
-            result.append("\n").append(sale.getSaleID()); //assume we list just IDs, then if user chose one, we show detail
+            if (saleHasFactor()) {
+                result.append("\n").append(sale.getSaleID()); //assume we list just IDs, then if user chose one, we show detail
+            }
         }
         Server.setAnswer(result.toString());
     }
 
-    public void viewSingleSale(String saleID) {
+    private boolean saleHasFactor() {
+        return true;
+        //has work
+    }
+
+    public void viewSale(String saleID) {
         Sale selectedSale = Sale.getSaleByID(saleID);
         String ans;
         if (selectedSale == null) {
@@ -91,10 +88,30 @@ public class SalesmanManager {
         Server.setAnswer(ans);
     }
 
-    //order of info : 0 -> [start time] , 1 -> [end time] , 2 -> [percentage] , 3 -> [salesmanID]
-    public void addSale(ArrayList<String> info) throws ParseException {
-        Sale newSale = new Sale(info.get(0), info.get(1), Integer.parseInt(info.get(2)), info.get(3));
-        new Request(info.get(3), newSale, "ADD_NEW_SALE");
+    public void createSale(String salesmanID, String start, String end, int percentage, ArrayList<String> productID) {
+        Sale newSale = new Sale(start, end, percentage, salesmanID, productID);
+        new Request(salesmanID, newSale, "ADD_NEW_SALE");
+    }
+
+    public void canAddToSale(String salesmanID, String productID) {
+        if (!Storage.isThereProductWithID(productID)) {
+            Server.setAnswer("no product exist with this ID");
+        } else {
+            if (!Storage.getProductById(productID).doesSalesmanSellProductWithUsername(salesmanID)) {
+                Server.setAnswer("you don't sell this product");
+            } else {
+                Server.setAnswer("yes");
+            }
+        }
+    }
+
+    public void searchSale(String saleID) {
+        for (Sale sale : Storage.allSales) {
+            if (sale.getSaleID().equalsIgnoreCase(saleID)) {
+                Server.setAnswer("search completed");
+            }
+        }
+        Server.setAnswer("There isn't exist a sale with such a sale");
     }
 
     /*

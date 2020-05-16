@@ -27,7 +27,12 @@ public class SpecialOffCode extends RandomString implements Runnable, Serializab
     private int percentage = 20;
     private int numberOfTimesItCanBeUsed = 1;
 
-    public SpecialOffCode() {
+    //----[ updated newly ]----- constructor has parameter, change class parameter
+    public SpecialOffCode(int period, int percentage, int ceiling, int numberOfTimesItCanBeUsed) {
+        durationInHour = period * 24;
+        this.percentage = percentage;
+        this.ceiling = ceiling;
+        this.numberOfTimesItCanBeUsed = numberOfTimesItCanBeUsed;
         allSpecialOffCodes.add(this);
         specialOffCodeID = createID("SpecialOffCode---");
     }
@@ -80,7 +85,7 @@ public class SpecialOffCode extends RandomString implements Runnable, Serializab
                 new OffCode(today, tomorrow, percentage, ceiling, numberOfTimesItCanBeUsed,
                         new ArrayList<>(Collections.singleton(Customer.getRandomUsername())));
             }
-        } catch (ParseException e) {
+        } catch (/*ParseException e*/Exception e) {
             e.printStackTrace();
         }
         try {

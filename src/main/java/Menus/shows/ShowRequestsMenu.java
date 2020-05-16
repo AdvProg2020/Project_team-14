@@ -10,11 +10,12 @@ import javax.swing.text.View;
 import java.util.HashMap;
 
 public class ShowRequestsMenu extends ShowsMenu {
-    private String serverAnswer;
+    //private String serverAnswer;
     private boolean canChangeUsernameFilter = true;
 
     public ShowRequestsMenu(Menu fatherMenu, String menuName) {
         super(fatherMenu, menuName);
+        this.type = "requests";
         HashMap<Integer, Menu> subMenus = new HashMap<Integer, Menu>();
         if (fatherMenu instanceof ViewAccountMenu) {
             canChangeUsernameFilter = false;
@@ -76,19 +77,19 @@ public class ShowRequestsMenu extends ShowsMenu {
         return canChangeUsernameFilter;
     }
 
-    public String getServerAnswer() {
+    /*public String getServerAnswer() {
         return this.serverAnswer;
-    }
+    }*/
 
-    private void getInfo() {
-        server.clientToServer("show requests+" + username + filter.getFilters());
+    /*private void getInfo() {
+        server.clientToServer("show requests " + username + filter.getFilters());
         this.serverAnswer = server.serverToClient();
         System.out.println(serverAnswer);
-    }
+    }*/
 
-    @Override
+    /*@Override
     protected void show() {
         super.show();
         getInfo();
-    }
+    }*/
 }

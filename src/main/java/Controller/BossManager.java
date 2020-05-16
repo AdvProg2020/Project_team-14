@@ -8,8 +8,12 @@ package Controller;
 //import Model.Request.Request;
 
 import Controller.SortFactorEnum.AccountSortFactor;
+import Controller.SortFactorEnum.OffCodesSortFactor;
 import Model.Account.*;
 import Model.Category.Category;
+import Model.Off.Off;
+import Model.Off.OffCode;
+import Model.Off.SpecialOffCode;
 import Model.Request.Request;
 import Model.Storage;
 import Exception.*;
@@ -17,6 +21,7 @@ import Exception.*;
 
 //import java.text.ParseException;
 import java.rmi.ServerError;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.concurrent.Callable;
@@ -134,9 +139,8 @@ public class BossManager {
     public void showAccounts(String username, ArrayList<Object> filters, String sortFactor, String sortType) {
         int count = 0;
         ArrayList<Account> accounts = Storage.getAllAccounts();
-        if (!sortFactor.equalsIgnoreCase("none")) {
-            AccountSortFactor.sort(sortFactor, accounts);
-        }
+        AccountSortFactor.sort(sortFactor, sortType, accounts);
+
         StringBuilder answer = new StringBuilder("All Accounts Username:").append("\n");
         if (accounts.size() == 0) {
             Server.setAnswer("no account found with this username");
@@ -287,6 +291,7 @@ public class BossManager {
             } else {
                 if (Storage.isThereCategoryWithName(fatherCategoryName)) {
                     new Category(categoryName, fatherCategoryName, categoryAttribute);
+                    Storage.getCategoryByName(fatherCategoryName).addSubCategory(categoryName);
                 } else {
                     Server.setAnswer("there isn't a category with this father category name");
                 }
@@ -407,6 +412,63 @@ public class BossManager {
         }
     }
 
+    /*
+     * this is discount code part
+     */
+
+    public void searchOffCode(String offCodeID) {
+        if (Storage.isThereOffCodeWithID(offCodeID)) {
+            Server.setAnswer("search completed");
+        } else {
+            Server.setAnswer("no OffCode exist with such ID");
+        }
+    }
+
+    public void createNormalOffCode(String start, String end, int percentage, int ceiling, int frequency, ArrayList<String> users) {
+        new OffCode(start, end, percentage, ceiling, frequency, users);
+    }
+
+    public void createSpecialOffCode(int period, int percentage, int ceiling, int frequency) {
+        new SpecialOffCode(period, percentage, ceiling, frequency);
+    }
+
+    public void viewOffCode(String username, String offCodeID) {
+        if (!Storage.isThereOffCodeWithID(offCodeID)) {
+            Server.setAnswer("ERROR, no offCode found with this ID");
+        } else {
+            OffCode offCode = Storage.getOffCodeById(offCodeID);
+            Server.setAnswer(offCode.toString());
+        }
+    }
+
+    public void showOffCodes(String username, ArrayList<Object> filters, String sortFactor, String sortType) {
+        ArrayList<OffCode> allOffCodes;
+        if (Storage.getAccountWithUsername(username).getRole().equals("BOSS")) {
+            allOffCodes = Storage.allOffCodes;
+        } else {
+            allOffCodes = OffCode.getAllCustomerOffCodesByUsername(username);
+        }
+        OffCodesSortFactor.sort(sortFactor, sortType, allOffCodes);
+
+        StringBuilder ans = new StringBuilder("All OffCodes:");
+        boolean found = false;
+        for (OffCode offCode : allOffCodes) {
+            /*
+             * must check filter factor
+             */
+            if (doOffCodeHasFilterFactor()) {
+                ans.append("\n").append(offCode.getOffCodeID());
+                found = true;
+            }
+        }
+        ans.append("\n").append("What founded, listed above");
+        if (!found) {
+            Server.setAnswer("nothing found");
+        } else {
+            Server.setAnswer(ans.toString());
+        }
+    }
+
     public void editCategoryAttribute(String categoryName, String categoryNewAttribute) {
         Category category = Storage.getCategoryByName(categoryName);
         if (category.getAttribute().equals(categoryNewAttribute)) {
@@ -432,6 +494,11 @@ public class BossManager {
             category.deleteProductFromCategory(productID);
         }*/
         Server.setAnswer("deleted successfully");
+    }
+
+    //still has word must implement it in OffCode Class
+    public boolean doOffCodeHasFilterFactor() {
+        return true;
     }
 
     /*public void listAllProducts(String sortFactor) throws SortFactorNotAvailableException {

@@ -86,15 +86,24 @@ public class Storage {
         return null;
     }
 
-    public static boolean isThereProductWithID(String productID) {
-        return getProductWithID(productID) != null;
+    public static boolean isThereOffCodeWithID(String offCodeID) {
+        return getOffCodeById(offCodeID) != null;
     }
 
-    public static Product getProductWithID(String productID) {
+    public static OffCode getOffCodeById (String offCodeID) {
+        for (OffCode offCode : allOffCodes) {
+            if (offCode.getOffCodeID().equals(offCodeID)) return offCode;
+        }
+        return null;
+    }
+
+    public static boolean isThereProductWithID(String productID) {
+        return getProductById(productID) != null;
+    }
+
+    public static Product getProductById(String productID) {
         for (Product product : allProducts) {
-            if (product.getProductID().equals(productID)) {
-                return product;
-            }
+            if (product.getProductID().equalsIgnoreCase(productID)) return product;
         }
         return null;
     }

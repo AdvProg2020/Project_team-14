@@ -44,11 +44,11 @@ public class LoginOrRegisterMenu extends Menu {
     private Menu getRegisterMenu() {
         return new Menu(this, "Register Menu") {
 
-            private void checkBack(String input) {
+            /*private void checkBack(String input) {
                 if (input.equals("back")) {
                     fatherMenu.execute();
                 }
-            }
+            }*/
 
             @Override
             public void execute() {

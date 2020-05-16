@@ -52,11 +52,11 @@ public class ManageCategoriesMenu extends Menu {
 
     private Menu getCreateNewCategoryMenu() {
         return new Menu(this, "Create New Category Menu") {
-            private void checkBack(String input) {
+            /*private void checkBack(String input) {
                 if (input.equals("back")) {
                     fatherMenu.execute();
                 }
-            }
+            }*/
 
             private int countWordsBySemicolon(String str) {
                 int counter = 0;

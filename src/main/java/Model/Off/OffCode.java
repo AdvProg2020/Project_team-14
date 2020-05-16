@@ -17,7 +17,7 @@ public class OffCode extends Off implements Serializable {
     private int numberOfTimesCanBeUsed;
     private ArrayList<String> userNamesCanUseIt = new ArrayList<>();
 
-    public OffCode(String start, String end, int percentage, int ceiling, int numberOfTimesCanBeUsed, ArrayList<String> userNamesCanUseIt) throws ParseException {
+    public OffCode(String start, String end, int percentage, int ceiling, int numberOfTimesCanBeUsed, ArrayList<String> userNamesCanUseIt) {
         super(start, end, percentage);
         this.ceiling = ceiling;
         this.numberOfTimesCanBeUsed = numberOfTimesCanBeUsed;

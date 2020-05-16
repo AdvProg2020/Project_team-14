@@ -4,16 +4,15 @@ package Controller;
 //import Model.Category.Category;
 //import Model.Storage;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import Exception.*;
 import Model.Account.Role;
 import Model.Confirmation;
-import Model.Request.Enum.RequestType;
-import Model.Request.Request;
 import Model.Storage;
 
 public class Server {
@@ -119,8 +118,192 @@ public class Server {
             this.deleteCategory(command);
         } else if (command.startsWith("create product")) {
             this.createProduct(command);
+        } else if (command.startsWith("search offCod")) {
+            this.searchOffCode(command);
+        } else if (command.startsWith("create new normal offCode")) {
+            this.createNormalOffCode(command);
+        } else if (command.startsWith("create new special offCode")) {
+            this.createSpecialOffCode(command);
+        } else if (command.startsWith("view offCode")) {
+            this.viewOffCode(command);
+        } else if (command.startsWith("edit offCode")) {
+            this.editOffCode(command);
+        } else if (command.startsWith("show offCodes")) {
+            this.showOffCodes(command);
+        } else if (command.startsWith("create new sale")) {
+            this.createSale(command);
+        } else if (command.startsWith("can add product to sale")) {
+            this.canAddProductToSale(command);
+        } else if (command.startsWith("search sale")) {
+            this.searchSale(command);
+        } else if (command.startsWith("view sale")) {
+            this.viewSale(command);
+        } else if (command.startsWith("show sales")) {
+            this.showSales(command);
         }
     }
+    private void showSales(String command) {
+        ArrayList<Object> filters;
+        filters = getFilters(command);
+        String[] input = command.split("\\+");
+        salesmanManager.showSales(input[1], filters, getSortFactor(command), getSortType(command));
+    }
+
+    private void viewSale(String command) {
+        String[] input = command.split("\\+");
+        salesmanManager.viewSale(input[2]);
+    }
+
+    private void searchSale(String command) {
+        String[] input = command.split("\\+");
+        salesmanManager.searchSale(input[2]);
+    }
+
+    private void canAddProductToSale(String command) {
+        String[] input = command.split("\\+");//1-->salesmanID    2-->productID
+        salesmanManager.canAddToSale(input[1], input[2]);
+    }
+
+    private void createSale(String command) {
+        String[] info = command.split("\\+");//1-->salesmanID    2--> start     3-->end     4-->percentage     5-->productIDs
+        if (isSaleInfoValid(info[2], info[3], info[4])) {
+            Server.setAnswer("creation of sale successful");
+            String productsID = info[5].substring(info[5].indexOf(":") + 1, info[5].length() - 1);
+            salesmanManager.createSale(info[1], info[2], info[3], Integer.parseInt(info[4]), convertStringToArray(productsID));
+        }
+    }
+
+    private boolean isSaleInfoValid(String start, String end, String percentage) {
+        StringBuilder checkResult = new StringBuilder("Errors:");
+
+        //check errors
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH-mm-ss");
+        try {
+            dateFormat.parse(start);
+        } catch (ParseException e) {
+            checkResult.append("\n").append("START: invalid format");
+        }
+        try {
+            dateFormat.parse(end);
+        } catch (ParseException e) {
+            checkResult.append("\n").append("END: invalid format");
+        }
+        try {
+            int interest = Integer.parseInt(percentage);
+            if (interest <= 0 | 100 < interest) checkResult.append("\n").append("PERCENTAGE: must be from 1 to 100");
+        } catch (Exception e) {
+            checkResult.append("\n").append("PERCENTAGE: invalid format");
+        }
+
+        //set answer
+        if (checkResult.equals("Errors:")) {
+            return true;
+        } else {
+            setAnswer(checkResult.toString());
+            return false;
+        }
+    }
+
+    /*
+     * this is offCode part
+     */
+
+    private void showOffCodes(String command) {
+        ArrayList<Object> filters;
+        filters = getFilters(command);
+        String[] input = command.split("\\+");
+        bossManager.showOffCodes(input[1], filters, getSortFactor(command), getSortType(command));
+    }
+
+    private void editOffCode(String command) {
+        //nothing yet
+    }
+
+    private void viewOffCode(String command) {
+        bossManager.viewOffCode(command.split("\\+")[1], command.split("\\+")[2]);
+    }
+
+    private void searchOffCode(String command) {
+        bossManager.searchOffCode(command.split("\\+")[2]);
+    }
+
+    private void createSpecialOffCode(String command) {
+        String[] info = command.split("\\+"); //info: 1-->percentage 2-->ceiling 3-->frequency 4-->period
+        if (checkOffCodeInfoCorrectness(info)) {
+            bossManager.createSpecialOffCode(Integer.parseInt(info[4]), Integer.parseInt(info[1]), Integer.parseInt(info[2]), Integer.parseInt(info[3]));
+            setAnswer("creation of offCode successful");
+        }
+    }
+
+    private void createNormalOffCode(String command) {
+        String[] info = command.split("\\+");   //info: 1-->percentage 2-->ceiling 3-->frequency 4-->start 5-->end
+        if (checkOffCodeInfoCorrectness(info)) {
+            String usernames = info[6].substring(info[6].indexOf(":") + 2, info[6].length() - 1); //info[6] = User:[....]
+            ArrayList<String> allUsersCanUse = convertStringToArray(usernames);
+            bossManager.createNormalOffCode(info[4], info[5], Integer.parseInt(info[1]), Integer.parseInt(info[2]),
+                    Integer.parseInt(info[3]), allUsersCanUse);
+            setAnswer("creation of offCode successful");
+        }
+    }
+
+    private ArrayList<String> convertStringToArray(String s) {
+        ArrayList<String> ans = new ArrayList<>();
+        if (s.equals("")) return ans;
+        return new ArrayList<String>(Arrays.asList(s.split(", ")));
+    }
+
+    //info: create new normal offCode+percentage+ceiling+frequency+start+end+User:[...]
+    //info: create new special offCode+percentage+ceiling+frequency+period
+    private boolean checkOffCodeInfoCorrectness(String[] info) {
+        String checkResult = "Errors:";
+
+        //check different part
+        if (info[0].equals("create new normal offCode")) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH-mm-ss");
+            try {
+                dateFormat.parse(info[4]);
+            } catch (ParseException e) {
+                checkResult += "\n" + "START TIME: format is invalid, check it and try again";
+            }
+            try {
+                dateFormat.parse(info[5]);
+            } catch (ParseException e) {
+                checkResult += "\n" + "END TIME: format is invalid, check it and try again";
+            }
+        } else {
+            try {
+                Integer.parseInt(info[4]);
+            } catch (Exception e) {
+                checkResult += "\n" + "PERIOD: format is invalid, check it and trt again";
+            }
+        }
+
+        //check same parts
+        try {
+            int interest = Integer.parseInt(info[1]);
+            if (interest <= 0 | 100 < interest) checkResult += "\n" + "PERCENTAGE: this number must be between 1 and 100";
+        } catch (Exception e) {
+            checkResult += "\n" + "PERCENTAGE: format is invalid, check it and try again";
+        }
+        try {
+            Integer.parseInt(info[2]);
+        } catch (Exception e) {
+            checkResult += "\n" + "CEILING: format is invalid, check it and try again";
+        }
+        try {
+            Integer.parseInt(info[3]);
+        } catch (Exception e) {
+            checkResult += "\n" + "FREQUENCY: format is invalid, check it and try again";
+        }
+
+        //set answer
+        if (!checkResult.equals("Errors:")) {
+            setAnswer(checkResult);
+            return false;
+        }
+        return true;
+    }
+
 
     private boolean checkProductNameFormat(String input) {
         return getMatcher("([\\d\\w_\\-,\\s])+", input).matches();
