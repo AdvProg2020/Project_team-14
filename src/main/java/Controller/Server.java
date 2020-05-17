@@ -153,6 +153,11 @@ public class Server {
         } else if (command.startsWith("edit sale")) {
             this.editSale(command);
         }
+
+        //end parts
+        else if (command.startsWith("show balance")) {
+            this.showBalance(command);
+        }
     }
 
     private void editSale(String command) {
@@ -783,8 +788,9 @@ public class Server {
      * ---------[ here are common parts, server handel this by itself, no manager required ]--------
      */
 
-    public void showBalance(String username) {
-        //Server.setAnswer("Your Balance is : " + Storage.getAccountWithUsername(username).getCredit());
+    public void showBalance(String command) {
+        String username = command.split("\\+")[1];
+        Server.setAnswer("Your Balance is : " + Storage.getAccountWithUsername(username).getCredit());
     }
 
     public void listCategories(String sortFactor) {
