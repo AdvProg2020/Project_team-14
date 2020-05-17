@@ -3,6 +3,8 @@ package Controller;
 import Controller.SortFactorEnum.ViewBuyersOfProductSortFactor;
 import Controller.SortFactorEnum.ListProductSortFactor;
 import Exception.*;
+import Model.Account.Account;
+import Model.Account.Role;
 import Model.Log.Log;
 import Model.Product.Comment;
 import Model.Product.Product;
@@ -17,6 +19,47 @@ import java.util.Comparator;
 import static java.lang.String.valueOf;
 
 public class ProductManager {
+
+
+    private boolean isProductInFilter(Product product, ArrayList<Object> filters) {
+        return true;
+    }
+
+    public void showProducts(String username, ArrayList<Object> filters) {
+        int count = 0;
+        ArrayList<Product> products = Storage.getAllProducts();
+        StringBuilder answer = new StringBuilder("");
+        if (products.size() == 0) {
+            Server.setAnswer("nothing found");
+        } else {
+            for (Product product : products) {
+                if (isProductInFilter(product, filters)) {
+                    answer.append(product.toStringForBoss() + "\n");
+                    count++;
+                }
+            }
+            if (count == 0) {
+                answer = new StringBuilder("nothing found");
+            } else {
+                answer.append("here are what we found");
+            }
+            String ans = answer.toString();
+            Server.setAnswer(ans);
+        }
+    }
+
+    public void viewProduct(String username, String productID) {
+        Account account = Storage.getAccountWithUsername(username);
+        Product product = Storage.getProductById(productID);
+        if (account.getRole().equals(Role.BOSS)) {
+            Server.setAnswer(product.toStringForBossView());
+        } else if (account.getRole().equals(Role.SALESMAN)) {
+            Server.setAnswer(product.toStringForSalesmanView(username));
+        } else {
+            Server.setAnswer(product.toStringForCustomerView());
+        }
+    }
+
 
     public void editProduct(String productID, String salesmanID, String attribute, String updatedInfo) {
         new ChangeProductRequest(salesmanID, Product.getProductWithID(productID), attribute, updatedInfo);

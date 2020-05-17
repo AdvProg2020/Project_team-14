@@ -229,16 +229,8 @@ public class Product implements Serializable {
     }
 
     public String toStringForBossView() {
-        return "Name: " + this.name + "\n" +
-                "Brand: " + this.brand + "\n" +
-                "Description: " + this.description + "\n" +
-                "Seen Count: " + this.seenCount + "\n" +
-                "Price: " + this.getMinimumPrice() + "\n" +
-                "Average Point: " + this.getAveragePoint() + "\n";
-    }
-
-    public String toStringForCustomerView() {
         StringBuilder result = new StringBuilder();
+        result.append("Product ID: ").append(this.productID).append("\n");
         result.append("Name: ").append(this.name).append("\n");
         result.append("Brand: ").append(this.brand).append("\n");
         result.append("Description: ").append(this.description).append("\n");
@@ -248,30 +240,46 @@ public class Product implements Serializable {
                 continue;
             }
             result.append("Salesman: ").append(salesmanID);
-            result.append(" Price: ").append(price.get(salesmanID)).append("\n");
+            result.append(" Price: ").append(price.get(salesmanID)).append(" Remainder: ").
+                    append(remainder.get(salesmanID)).append("\n");
         }
+        result.append("Seen Count: ").append(this.seenCount).append("\n");
+        result.append("Average Point" + this.getAveragePoint() + "\n");
+        return result.toString();
+    }
+
+    public String toStringForCustomerView() {
+        StringBuilder result = new StringBuilder();
+        result.append("Product ID: ").append(this.productID).append("\n");
+        result.append("Name: ").append(this.name).append("\n");
+        result.append("Brand: ").append(this.brand).append("\n");
+        result.append("Description: ").append(this.description).append("\n");
+        result.append("Price: ").append(getMinimumPrice()).append("\n");
         return result.toString();
     }
 
     public String toStringForSalesmanView(String salesmanUser) {
         StringBuilder result = new StringBuilder();
+        result.append("Product ID: ").append(this.productID).append("\n");
         result.append("Name: ").append(this.name).append("\n");
         result.append("Brand: ").append(this.brand).append("\n");
         result.append("Description: ").append(this.description).append("\n");
-        result.append("Sellers: " + "\n");
-        for (String salesmanID : salesmanIDs) {
-            if (!doesSalesmanSellProductWithUsername(salesmanID) || !isAvailableBySalesmanWithUsername(salesmanID, 1)) {
-                continue;
+        if (salesmanIDs.contains(salesmanUser)) {
+            if (hasBeenDeleted.get(salesmanUser) == false) {
+                result.append("Confirmation state for you: ").append(confirmationState.get(salesmanUser)).append("\n");
+                result.append("Your Price: ").append(price.get(salesmanUser)).append("\n");
+                result.append("Your remainder: ").append(remainder.get(salesmanUser)).append("\n");
+                if (isOnSale.get(salesmanUser)) {
+                    result.append("The product is on sale").append("\n");
+                } else {
+                    result.append("The product isn't on sale").append("\n");
+                }
+            } else {
+                result.append("you have been deleted from selling this product\n");
+                result.append("Price: ").append(getMinimumPrice()).append("\n");
             }
-            result.append("Salesman: ").append(salesmanID);
-            result.append(" Price: ").append(price.get(salesmanID)).append("\n");
-        }
-        result.append("Confirmation state for you: ").append(confirmationState.get(salesmanUser)).append("\n");
-        result.append("Your remainder: ").append(remainder.get(salesmanUser)).append("\n");
-        if (isOnSale.get(salesmanUser)) {
-            result.append("The product is on sale").append("\n");
         } else {
-            result.append("The product isn't on sale").append("\n");
+            result.append("Price: ").append(getMinimumPrice()).append("\n");
         }
         return result.toString();
     }

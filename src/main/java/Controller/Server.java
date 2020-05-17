@@ -18,6 +18,7 @@ import Model.Storage;
 public class Server {
     static private boolean hasBoss;
     private AccountManager accountManager;
+    private ProductManager productManager;
     private BossManager bossManager;
     private SalesmanManager salesmanManager;
     private CustomerManager customerManager;
@@ -32,6 +33,7 @@ public class Server {
         this.bossManager = new BossManager();
         this.customerManager = new CustomerManager();
         this.salesmanManager = new SalesmanManager();
+        this.productManager = new ProductManager();
         //abstractCarts = new HashMap<>();
     }
 
@@ -124,6 +126,8 @@ public class Server {
             this.createProduct(command);
         } else if (command.startsWith("show products+")) {
             this.showProducts(command);
+        } else if (command.startsWith("view product+")) {
+            this.viewProduct(command);
         } else if (command.startsWith("search offCod")) {
             this.searchOffCode(command);
         } else if (command.startsWith("create new normal offCode")) {
@@ -312,11 +316,15 @@ public class Server {
         return true;
     }
 
+    private void viewProduct(String command) {
+        productManager.viewProduct(command.split("\\+")[1], command.split("\\+")[2]);
+    }
+
     private void showProducts(String command) {
         ArrayList<Object> filters;
         filters = getFilters(command);
         String[] input = command.split("\\+");
-        salesmanManager.showProducts(input[1], filters);
+        productManager.showProducts(input[1], filters);
     }
 
     private boolean checkProductNameFormat(String input) {
