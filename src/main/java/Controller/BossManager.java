@@ -411,6 +411,33 @@ public class BossManager {
         }
     }
 
+    public void editCategoryAttribute(String categoryName, String categoryNewAttribute) {
+        Category category = Storage.getCategoryByName(categoryName);
+        if (category.getAttribute().equals(categoryNewAttribute)) {
+            Server.setAnswer("you edited nothing from the attributes");
+        } else {
+            Server.setAnswer("attributes edited successfully");
+            category.setAttribute(categoryNewAttribute);
+        }
+    }
+
+    public void deleteCategory(String categoryName) {
+        Category category = Storage.getCategoryByName(categoryName);
+        Storage.getAllCategories().remove(category);
+        for (Category subCategory : Storage.getAllCategories()) {
+            if (subCategory.getParentCategoryName() == null) {
+                continue;
+            }
+            if (subCategory.getParentCategoryName().equals(categoryName)) {
+                subCategory.setParentCategoryName(null);
+            }
+        }
+        /*for (String productID : category.getAllProductIDs()) {
+            category.deleteProductFromCategory(productID);
+        }*/
+        Server.setAnswer("deleted successfully");
+    }
+
     /*
      * this is discount code part
      */
@@ -477,36 +504,26 @@ public class BossManager {
         }
     }
 
-    public void editCategoryAttribute(String categoryName, String categoryNewAttribute) {
-        Category category = Storage.getCategoryByName(categoryName);
-        if (category.getAttribute().equals(categoryNewAttribute)) {
-            Server.setAnswer("you edited nothing from the attributes");
-        } else {
-            Server.setAnswer("attributes edited successfully");
-            category.setAttribute(categoryNewAttribute);
-        }
-    }
-
-    public void deleteCategory(String categoryName) {
-        Category category = Storage.getCategoryByName(categoryName);
-        Storage.getAllCategories().remove(category);
-        for (Category subCategory : Storage.getAllCategories()) {
-            if (subCategory.getParentCategoryName() == null) {
-                continue;
-            }
-            if (subCategory.getParentCategoryName().equals(categoryName)) {
-                subCategory.setParentCategoryName(null);
-            }
-        }
-        /*for (String productID : category.getAllProductIDs()) {
-            category.deleteProductFromCategory(productID);
-        }*/
-        Server.setAnswer("deleted successfully");
-    }
-
     //still has word must implement it in OffCode Class
     public boolean doOffCodeHasFilterFactor() {
         return true;
+    }
+
+    public void editOffCode(String offCodeID, String attribute, String updatedInfo) {
+        if (!Storage.isThereOffCodeWithID(offCodeID)) {
+            Server.setAnswer("ERROR: there isn't any offCode with this ID");
+        } else {
+            OffCode offCode = Storage.getOffCodeById(offCodeID);
+            if (attribute.equalsIgnoreCase("start time")) {
+                offCode.setStart(updatedInfo);
+            } else if (attribute.equalsIgnoreCase("end time")) {
+                offCode.setEnd(updatedInfo);
+            } else if (attribute.equalsIgnoreCase("percentage")) {
+                offCode.setPercentage(updatedInfo);
+            } else if (attribute.equalsIgnoreCase("ceiling")) {
+                offCode.setCeiling(Integer.parseInt(updatedInfo));
+            }
+        }
     }
 
     /*public void listAllProducts(String sortFactor) throws SortFactorNotAvailableException {

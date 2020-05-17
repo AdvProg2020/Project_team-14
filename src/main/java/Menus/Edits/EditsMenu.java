@@ -39,7 +39,7 @@ public class EditsMenu extends Menu {
                 ((EditsMenu) fatherMenu).setUpdatedInfo(updatedInfo);
                 String serverAnswer = ((EditsMenu) fatherMenu).sendInfoToServerToChange();
                 System.out.println(serverAnswer);
-                if (serverAnswer.equalsIgnoreCase("edit successful")) {
+                if (serverAnswer.startsWith("edit successful")) {
                     fatherMenu.execute();
                 } else {
                     this.execute();

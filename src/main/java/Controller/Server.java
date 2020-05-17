@@ -232,6 +232,15 @@ public class Server {
         return "";
     }
 
+    private String isNumericalValueValid(String value, String type) {
+        try {
+            Integer.parseInt(value);
+        } catch (Exception e) {
+            return "\n" + type.toUpperCase() + ": format is invalid";
+        }
+        return "";
+    }
+
     private boolean isSaleInfoValid(String start, String end, String percentage) {
         StringBuilder checkResult = new StringBuilder("Errors:");
 
@@ -261,7 +270,22 @@ public class Server {
     }
 
     private void editOffCode(String command) {
-        //nothing yet
+        String[] input = command.split("\\+");
+        StringBuilder error = new StringBuilder("ERRORS:");
+        //check errors
+        if (input[2].equals("percentage")) {
+            error.append(isPercentageValid(input[3]));
+        } else if (input[2].contains("date")) {
+            error.append(isDateValid(input[3], input[2]));
+        } else if (input[2].equals("ceiling")) {
+            error.append(isNumericalValueValid(input[3], input[2]));
+        }
+        //set info
+        if (error.toString().equals("ERRORS:")) {
+            bossManager.editOffCode(input[1], input[2], input[3]);
+        } else {
+            Server.setAnswer(error.toString());
+        }
     }
 
     private void viewOffCode(String command) {

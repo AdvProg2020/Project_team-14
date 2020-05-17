@@ -78,7 +78,7 @@ public class SalesmanManager {
     }
 
     public void editSale(String saleID, String attribute, String updatedInfo) {
-        String ans = "your request to update Sale info has been sent to manager";
+        String ans = "edit successful, your request has been sent to manager";
         Sale selectedSale = Sale.getSaleByID(saleID);
         if (selectedSale == null) {
             ans = "ERROR: sale doesn't exist.";

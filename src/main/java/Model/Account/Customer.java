@@ -20,7 +20,7 @@ public class Customer extends Account implements Serializable {
                     String role,int credit) {
         super(username, password, firstName, secondName, Email, telephone, role);
         this.credit = credit;
-        //customerOffCodes = new HashMap<>();
+        customerOffCodes = new HashMap<>();
     }
 
     public Customer(String username, String password, String firstName, String secondName, String Email, String telephone,
