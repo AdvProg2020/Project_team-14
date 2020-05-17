@@ -150,6 +150,27 @@ public class Server {
             this.viewSale(command);
         } else if (command.startsWith("show sales")) {
             this.showSales(command);
+        } else if (command.startsWith("edit sale")) {
+            this.editSale(command);
+        }
+    }
+
+    private void editSale(String command) {
+        String[] input = command.split("\\+");
+
+        //check errors
+        StringBuilder error = new StringBuilder("ERRORS:");
+        if (input[2].equals("percentage")) {
+            error.append(isPercentageValid(input[3]));
+        } else if (input[2].contains("Date")) {
+            error.append(isDateValid(input[3], input[2]));
+        }
+
+        //set answer
+        if (error.toString().equals("ERRORS:")) {
+            salesmanManager.editSale(input[1], input[2], input[3]);
+        } else {
+            Server.setAnswer(error.toString());
         }
     }
 
@@ -184,30 +205,38 @@ public class Server {
         }
     }
 
+    private String isPercentageValid(String percentage) {
+        try {
+            int interest = Integer.parseInt(percentage);
+            if (interest <= 0 | 100 < interest) {
+                return "\nPERCENTAGE: must be from 1 to 100";
+            }
+        } catch (Exception e) {
+            return "\nPERCENTAGE: invalid format";
+        }
+        return "";
+    }
+
+    private String isDateValid(String date, String type) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH-mm-ss");
+        try {
+            dateFormat.parse(date);
+        } catch (ParseException e) {
+            return "\n" + type.toUpperCase() + ": invalid format";
+        }
+        return "";
+    }
+
     private boolean isSaleInfoValid(String start, String end, String percentage) {
         StringBuilder checkResult = new StringBuilder("Errors:");
 
         //check errors
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH-mm-ss");
-        try {
-            dateFormat.parse(start);
-        } catch (ParseException e) {
-            checkResult.append("\n").append("START: invalid format");
-        }
-        try {
-            dateFormat.parse(end);
-        } catch (ParseException e) {
-            checkResult.append("\n").append("END: invalid format");
-        }
-        try {
-            int interest = Integer.parseInt(percentage);
-            if (interest <= 0 | 100 < interest) checkResult.append("\n").append("PERCENTAGE: must be from 1 to 100");
-        } catch (Exception e) {
-            checkResult.append("\n").append("PERCENTAGE: invalid format");
-        }
+        checkResult.append(isDateValid(start, "start"));
+        checkResult.append(isDateValid(end, "end"));
+        checkResult.append(isPercentageValid(percentage));
 
         //set answer
-        if (checkResult.equals("Errors:")) {
+        if (checkResult.toString().equals("Errors:")) {
             return true;
         } else {
             setAnswer(checkResult.toString());

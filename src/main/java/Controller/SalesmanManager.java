@@ -81,7 +81,7 @@ public class SalesmanManager {
         String ans = "your request to update Sale info has been sent to manager";
         Sale selectedSale = Sale.getSaleByID(saleID);
         if (selectedSale == null) {
-            ans = "error, sale doesn't exist.";
+            ans = "ERROR: sale doesn't exist.";
         } else {
             new ChangeSaleRequest(selectedSale.getSalesmanID(), selectedSale, attribute, updatedInfo);
         }
