@@ -324,55 +324,32 @@ public class Server {
     //info: create new normal offCode+percentage+ceiling+frequency+start+end+User:[...]
     //info: create new special offCode+percentage+ceiling+frequency+period
     private boolean checkOffCodeInfoCorrectness(String[] info) {
-        String checkResult = "Errors:";
+        StringBuilder error = new StringBuilder("ERRORS:");
 
         //check different part
         if (info[0].equals("create new normal offCode")) {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH-mm-ss");
-            try {
-                dateFormat.parse(info[4]);
-            } catch (ParseException e) {
-                checkResult += "\n" + "START TIME: format is invalid, check it and try again";
-            }
-            try {
-                dateFormat.parse(info[5]);
-            } catch (ParseException e) {
-                checkResult += "\n" + "END TIME: format is invalid, check it and try again";
-            }
+            error.append(isDateValid(info[4], "START TIME"));
+            error.append(isDateValid(info[5], "END TIME"));
         } else {
-            try {
-                Integer.parseInt(info[4]);
-            } catch (Exception e) {
-                checkResult += "\n" + "PERIOD: format is invalid, check it and trt again";
-            }
+            error.append(isNumericalValueValid(info[4], "PERIOD"));
         }
 
         //check same parts
-        try {
-            int interest = Integer.parseInt(info[1]);
-            if (interest <= 0 | 100 < interest)
-                checkResult += "\n" + "PERCENTAGE: this number must be between 1 and 100";
-        } catch (Exception e) {
-            checkResult += "\n" + "PERCENTAGE: format is invalid, check it and try again";
-        }
-        try {
-            Integer.parseInt(info[2]);
-        } catch (Exception e) {
-            checkResult += "\n" + "CEILING: format is invalid, check it and try again";
-        }
-        try {
-            Integer.parseInt(info[3]);
-        } catch (Exception e) {
-            checkResult += "\n" + "FREQUENCY: format is invalid, check it and try again";
-        }
+        error.append(isPercentageValid(info[1]));
+        error.append(isNumericalValueValid(info[2], "CEILING"));
+        error.append(isNumericalValueValid(info[3], "FREQUENCY"));
 
         //set answer
-        if (!checkResult.equals("Errors:")) {
-            setAnswer(checkResult);
+        if (!error.toString().equals("Errors:")) {
+            setAnswer(error.toString());
             return false;
         }
         return true;
     }
+
+    /*
+     * this is Product Part
+     */
 
     private void viewProduct(String command) {
         productManager.viewProduct(command.split("\\+")[1], command.split("\\+")[2]);
