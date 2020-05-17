@@ -664,7 +664,7 @@ public class Server {
     }
 
     private void getAccountRole(String command) {
-        Storage.getAccountWithUsername(command.split("\\+")[1]).getRole();
+        setAnswer(Storage.getAccountWithUsername(command.split("\\+")[1]).getRole().name());
     }
 
     private void logout(String command) {

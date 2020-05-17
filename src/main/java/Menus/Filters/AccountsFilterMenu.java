@@ -17,6 +17,9 @@ public class AccountsFilterMenu extends FiltersMenu {
         filters.add("maxCredit");
         filters.add(new String());
         filters.set(5, null);
+        filters.add("ProductsSalesman:");
+        filters.add(new String());
+        filters.set(7, null);
     }
 
     public AccountsFilterMenu(Menu fatherMenu, String menuName) {

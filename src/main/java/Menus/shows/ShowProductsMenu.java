@@ -58,7 +58,7 @@ public class ShowProductsMenu extends ShowsMenu {
                 }
                 String products = ((ShowProductsMenu) fatherMenu).getServerAnswer();
                 if (isThereProductWithIDInList(products, productID)) {
-                    ViewProductMenu menu = new ViewProductMenu(this, "View Account Menu", productID);
+                    ViewProductMenu menu = new ViewProductMenu(this, "View Product Menu", productID);
                     menu.execute();
                 } else {
                     System.out.println("this account is not on the list");

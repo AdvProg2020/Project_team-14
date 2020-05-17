@@ -7,13 +7,13 @@ import Menus.shows.ShowAccountsMenu;
 import Menus.shows.ShowCategoriesMenu;
 import Menus.shows.ShowRequestsMenu;
 
+import java.util.HashMap;
+
 public class ViewProductMenu extends Menu {
     private String productID;
 
-    public ViewProductMenu(Menu fatherMenu, String menuName, String productID) {
-        super(fatherMenu, menuName);
-        this.productID = productID;
-        this.logoutType = false;
+    private void productSubMenus() {
+        HashMap<Integer, Menu> subMenus = new HashMap<Integer, Menu>();
         if (Menu.isUserLogin == false) {
             //we will add something here like add to cart menu
         } else {
@@ -48,6 +48,14 @@ public class ViewProductMenu extends Menu {
                 // we will ad comment and add to cart here later
             }
         }
+        setSubMenus(subMenus);
+    }
+
+    public ViewProductMenu(Menu fatherMenu, String menuName, String productID) {
+        super(fatherMenu, menuName);
+        this.productID = productID;
+        this.logoutType = false;
+        productSubMenus();
     }
 
     private Menu getDeleteProductMenu() {

@@ -209,9 +209,13 @@ public class Request implements Serializable {
     }
 
     private String toStringAddNewProduct() {
-        Product product = (Product) Storage.getProductById(objectID);
-        return "General information of product: " + "\n" + product.toStringForBoss() +
-                "Confirmation State: " + confirmation.name() + "\n";
+        Product product = Storage.getProductById(objectID);
+        Salesman salesman = (Salesman) Storage.getAccountWithUsername(accountUsername);
+        String result = "";
+        result += "General information of salesman: " + "\n";
+        result += salesman.toStringForRequest();
+        return result + "General information of product: " + "\n" + product.toStringForBoss() +
+                "Confirmation State: " + confirmation.name();
     }
 
     /*private String toStringAddNewSale() {
