@@ -4,6 +4,7 @@ package Controller;
 //import Model.Category.Category;
 //import Model.Storage;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import Controller.DataBase.startOfProgramme;
 import Menus.shows.ShowRequestsMenu;
 import Model.Account.Role;
 import Model.Category.Category;
@@ -30,13 +32,15 @@ public class Server {
     //private HashMap<String, Cart> abstractCarts;
     static private String answer;
 
-    public Server() {
+    public Server() throws IOException, ClassNotFoundException {
         answer = "";
         this.accountManager = new AccountManager();
         this.bossManager = new BossManager();
         this.customerManager = new CustomerManager();
         this.salesmanManager = new SalesmanManager();
         this.productManager = new ProductManager();
+        startOfProgramme startOfProgramme=new startOfProgramme();
+        startOfProgramme.startProgramme();
         //abstractCarts = new HashMap<>();
     }
 

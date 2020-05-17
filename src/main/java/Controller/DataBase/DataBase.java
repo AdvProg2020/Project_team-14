@@ -78,7 +78,7 @@ public abstract class DataBase {
     }
 
     public static void clearFolder() throws IOException {
-        FileUtils.cleanDirectory(new File("src\\main\\resources\\DataBase"));
+     //   FileUtils.cleanDirectory(new File("src\\main\\resources\\DataBase"));
     }
 
 }
