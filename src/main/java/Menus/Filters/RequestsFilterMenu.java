@@ -81,6 +81,8 @@ public class RequestsFilterMenu extends FiltersMenu {
                 }
                 if (requestType.equals("REGISTER_SALESMAN")) {
                     return true;
+                } else if (requestType.equals("ADD_PRODUCT")) {
+                    return true;
                 } else {
                     return false;
                 }

@@ -86,6 +86,10 @@ public class Request implements Serializable {
         return result;
     }*/
 
+    public String getObjectID() {
+        return objectID;
+    }
+
     public Confirmation getConfirmation() {
         return confirmation;
     }
@@ -126,11 +130,11 @@ public class Request implements Serializable {
             Product product = (Product) object;
             this.confirmation = Confirmation.ACCEPTED;
             product.deleteForSalesman(salesmanUsername);
-        } else if (this.requestType.equals(RequestType.ADD_NEW_PRODUCT)) {
+        }*/ else if (this.requestType.equals(RequestType.ADD_NEW_PRODUCT)) {
             this.confirmation = Confirmation.ACCEPTED;
-            Product product = (Product) object;
-            product.setConfirmationState(salesmanUsername, Confirmation.ACCEPTED);
-        } else if (this.requestType.equals(RequestType.CHANGE_PRODUCT)) {
+            Product product = Storage.getProductById(objectID);
+            product.setConfirmationState(accountUsername, Confirmation.ACCEPTED);
+        }/* else if (this.requestType.equals(RequestType.CHANGE_PRODUCT)) {
             this.confirmation = Confirmation.ACCEPTED;
             if (this instanceof ChangeProductRequest) {
                 ((ChangeProductRequest) this).updateAttributeWithUpdatedInfo();
@@ -165,11 +169,11 @@ public class Request implements Serializable {
             sale.setConfirmationState(Confirmation.DENIED);
         } else if (this.requestType.equals(RequestType.DELETE_PRODUCT)) {
             this.confirmation = Confirmation.DENIED;
-        } else if (this.requestType.equals(RequestType.ADD_NEW_PRODUCT)) {
-            this.confirmation = Confirmation.CHECKING;
-            Product product = (Product) object;
-            product.setConfirmationState(accountUsername, Confirmation.CHECKING);
-        } else if (this.requestType.equals(RequestType.CHANGE_PRODUCT)) {
+        }*/ else if (this.requestType.equals(RequestType.ADD_NEW_PRODUCT)) {
+            this.confirmation = Confirmation.DENIED;
+            Product product = Storage.getProductById(objectID);
+            product.setConfirmationState(accountUsername, Confirmation.DENIED);
+        }/* else if (this.requestType.equals(RequestType.CHANGE_PRODUCT)) {
             this.confirmation = Confirmation.DENIED;
         }*/ else if (this.requestType.equals(RequestType.REGISTER_SALESMAN)) {
             this.confirmation = Confirmation.DENIED;
@@ -204,14 +208,13 @@ public class Request implements Serializable {
         }
     }
 
-    /*private String toStringAddNewProduct() {
-        Product product = (Product) object;
-        return "General information of product: " + "\n" + product.toStringForBossView() +
+    private String toStringAddNewProduct() {
+        Product product = (Product) Storage.getProductById(objectID);
+        return "General information of product: " + "\n" + product.toStringForBoss() +
                 "Confirmation State: " + confirmation.name() + "\n";
-
     }
 
-    private String toStringAddNewSale() {
+    /*private String toStringAddNewSale() {
         Sale sale = (Sale) object;
         return "Salesman username: " + salesmanUsername + "\n" + "General information of sale: " + "\n"
                 + ((Off) sale).toString() + "\n" + "Confirmation State: " + confirmation.name() + "\n";
@@ -241,9 +244,9 @@ public class Request implements Serializable {
         if (requestType.equals(RequestType.CHANGE_PRODUCT)) {
             /*ChangeProductRequest changeProductRequest = (ChangeProductRequest) this;
             return result + changeProductRequest.toStringChangeProduct();*/
-        }/* else if (requestType.equals(RequestType.ADD_NEW_PRODUCT)) {
+        } else if (requestType.equals(RequestType.ADD_NEW_PRODUCT)) {
             return result + toStringAddNewProduct();
-        } else if (requestType.equals(RequestType.ADD_NEW_SALE)) {
+        }/* else if (requestType.equals(RequestType.ADD_NEW_SALE)) {
             return result + toStringAddNewSale();
         } else if (requestType.equals(RequestType.CHANGE_SALE)) {
             ChangeSaleRequest changeSaleRequest = (ChangeSaleRequest) this;

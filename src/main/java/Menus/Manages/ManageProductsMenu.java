@@ -24,8 +24,9 @@ public class ManageProductsMenu extends Menu {
         } else if (fatherMenu instanceof SalesmanMenu) {
             subMenus.put(1, getAddProductMenu());
             subMenus.put(2, getSearchProductMenu());
-            subMenus.put(3, new ShowProductsMenu(this, "Show My Products Menu"));
-            subMenus.put(4, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
+            subMenus.put(3, new ShowProductsMenu(this, "Show Products Menu"));
+            subMenus.put(4, new ShowProductsMenu(this, "Show My Products Menu"));
+            subMenus.put(5, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
         }
         this.setSubMenus(subMenus);
     }

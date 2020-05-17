@@ -9,10 +9,15 @@ import java.util.HashMap;
 public class ViewRequestMenu extends Menu {
     private int whereItHasBeenCalled;
     private String requestID;
+    private String objectID;
     private String accountUsername;
 
     public void requestSubMenus() {
         HashMap<Integer, Menu> subMenus = new HashMap<Integer, Menu>();
+        if (whereItHasBeenCalled == 2) {
+            server.clientToServer("what is request object ID+" + this.requestID);
+            this.objectID = server.serverToClient();
+        }
         server.clientToServer("what is request username+" + this.requestID);
         setAccountUsername(server.serverToClient());
         server.clientToServer("is request state checking+" + this.requestID);
@@ -22,20 +27,43 @@ public class ViewRequestMenu extends Menu {
                 subMenus.put(2, getDeclineRequestMenu());
                 subMenus.put(3, new ViewAccountMenu(this, "View Account Menu"));
                 ((ViewAccountMenu) subMenus.get(3)).setAccount(this.getAccountUsername());
-                subMenus.put(4, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
+                if (whereItHasBeenCalled == 2) {
+                    subMenus.put(4, new ViewProductMenu(this, "View Product Menu", objectID));
+                    subMenus.put(5, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
+                } else {
+                    subMenus.put(4, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
+                }
             } else {
-                subMenus.put(1, getDeleteRequestMenu());
-                subMenus.put(2, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
+                if (whereItHasBeenCalled == 2) {
+                    subMenus.put(1, new ViewProductMenu(this, "View Product Menu", objectID));
+                    subMenus.put(2, getDeleteRequestMenu());
+                    subMenus.put(3, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
+                } else {
+                    subMenus.put(1, getDeleteRequestMenu());
+                    subMenus.put(2, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
+                }
             }
         } else {
             if (!this.getAccountUsername().equals("deleted account")) {
                 subMenus.put(1, new ViewAccountMenu(this, "View Account Menu"));
                 ((ViewAccountMenu) subMenus.get(1)).setAccount(this.getAccountUsername());
-                subMenus.put(2, getDeleteRequestMenu());
-                subMenus.put(3, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
+                if (whereItHasBeenCalled == 2) {
+                    subMenus.put(2, new ViewProductMenu(this, "View Product Menu", objectID));
+                    subMenus.put(3, getDeleteRequestMenu());
+                    subMenus.put(4, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
+                } else {
+                    subMenus.put(2, getDeleteRequestMenu());
+                    subMenus.put(3, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
+                }
             } else {
-                subMenus.put(1, getDeleteRequestMenu());
-                subMenus.put(2, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
+                if (whereItHasBeenCalled == 2) {
+                    subMenus.put(1, new ViewProductMenu(this, "View Product Menu", objectID));
+                    subMenus.put(2, getDeleteRequestMenu());
+                    subMenus.put(3, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
+                } else {
+                    subMenus.put(1, getDeleteRequestMenu());
+                    subMenus.put(2, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
+                }
             }
         }
         this.setSubMenus(subMenus);
@@ -47,6 +75,8 @@ public class ViewRequestMenu extends Menu {
         this.logoutType = false;
         if (requestType.equalsIgnoreCase("Register_Salesman")) {
             this.whereItHasBeenCalled = 1;
+        } else if (requestType.equalsIgnoreCase("ADD_PRODUCT")) {
+            this.whereItHasBeenCalled = 2;
         }
         requestSubMenus();
     }

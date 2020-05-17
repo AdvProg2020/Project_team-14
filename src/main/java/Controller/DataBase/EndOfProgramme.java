@@ -136,6 +136,5 @@ public class EndOfProgramme extends DataBase implements Runnable {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
     }
 }

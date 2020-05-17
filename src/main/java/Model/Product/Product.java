@@ -206,11 +206,26 @@ public class Product implements Serializable {
         return null;
     }
 
+    private Confirmation getOverallConfirmation() {
+        for (String salesmanID : this.salesmanIDs) {
+            if (confirmationState.get(salesmanID).equals(Confirmation.ACCEPTED)) {
+                return Confirmation.ACCEPTED;
+            }
+        }
+        for (String salesmanID : this.salesmanIDs) {
+            if (confirmationState.get(salesmanID).equals(Confirmation.CHECKING)) {
+                return Confirmation.CHECKING;
+            }
+        }
+        return Confirmation.DENIED;
+    }
+
     public String toStringForBoss() {
-        return "Name: " + this.name + "\n" +
+        return "Product ID: " + this.productID + "\n" +
+                "Name: " + this.name + "\n" +
                 "Price: " + this.getMinimumPrice() + "\n" +
                 "Average Point: " + this.getAveragePoint() + "\n" +
-                "Confirmation State: " + this.confirmationState;
+                "Confirmation State: " + this.getOverallConfirmation();
     }
 
     public String toStringForBossView() {

@@ -2,6 +2,7 @@ package Menus.Views;
 
 import Menus.*;
 import Menus.Edits.EditAccountMenu;
+import Menus.shows.ShowProductsMenu;
 import Menus.shows.ShowRequestsMenu;
 
 
@@ -28,9 +29,16 @@ public class ViewAccountMenu extends Menu {
                     subMenus.put(1, getDeleteAccountMenu());
                     subMenus.put(2, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
                 } else {
-                    subMenus.put(1, new ShowRequestsMenu(this, "Show Requests Menu"));
-                    subMenus.put(2, getDeleteAccountMenu());
-                    subMenus.put(3, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
+                    if (serverAnswer.equalsIgnoreCase("salesman")) {
+                        subMenus.put(1, new ShowProductsMenu(this, "Show Products Menu"));
+                        subMenus.put(2, new ShowRequestsMenu(this, "Show Requests Menu"));
+                        subMenus.put(3, getDeleteAccountMenu());
+                        subMenus.put(4, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
+                    } else {
+                        subMenus.put(1, new ShowRequestsMenu(this, "Show Requests Menu"));
+                        subMenus.put(2, getDeleteAccountMenu());
+                        subMenus.put(3, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
+                    }
                 }
             } else {
                 subMenus.put(1, new LoginOrRegisterMenu(this, "Login\\Register Menu"));

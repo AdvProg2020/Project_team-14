@@ -58,6 +58,8 @@ public class Server {
             this.logout(command);
         } else if (command.startsWith("forgot password+")) {
             this.forgotPassword(command);
+        } else if (command.startsWith("what is account role+")) {
+            this.getAccountRole(command);
         } else if (command.startsWith("view personal info+")) {
             this.viewPersonalInfo(command);
         } else if (command.startsWith("edit personal info+")) {
@@ -92,6 +94,8 @@ public class Server {
             this.deleteRequest(command);
         } else if (command.startsWith("what is request username+")) {
             this.getRequestAccountUsername(command);
+        } else if (command.startsWith("what is request object ID+")) {
+            this.getRequestObjectID(command);
         } else if (command.startsWith("create category+")) {
             this.createCategory(command);
         } else if (command.startsWith("show categories+")) {
@@ -417,6 +421,10 @@ public class Server {
         }
     }
 
+    private void getRequestObjectID(String command) {
+        Server.setAnswer(Storage.getRequestByID(command.split("\\+")[1]).getObjectID());
+    }
+
     private void getRequestAccountUsername(String command) {
         Server.setAnswer(Storage.getRequestByID(command.split("\\+")[1]).getAccountUsername());
     }
@@ -645,6 +653,10 @@ public class Server {
 
     private void forgotPassword(String command) {
         accountManager.forgotPassword(command.split("\\+")[1]);
+    }
+
+    private void getAccountRole(String command) {
+        Storage.getAccountWithUsername(command.split("\\+")[1]).getRole();
     }
 
     private void logout(String command) {
