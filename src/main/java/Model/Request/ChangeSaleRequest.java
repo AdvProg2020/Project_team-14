@@ -3,6 +3,7 @@ package Model.Request;
 import Model.Off.Sale;
 import Model.Product.Product;
 import Model.Request.Enum.*;
+import Model.Storage;
 
 import java.text.ParseException;
 
@@ -22,8 +23,8 @@ public class ChangeSaleRequest extends Request {
         this.updatedInfo = updatedInfo;
     }
 
-    /*public void updateAttributeWithUpdatedInfo() throws ParseException {
-        Sale sale = (Sale) object;
+    public void updateAttributeWithUpdatedInfo() throws ParseException {
+        Sale sale = Storage.getSaleById(objectID);
         if (attribute.equals(SaleAttributes.END_DATE)) {
             sale.setEnd(updatedInfo);
         } else if (attribute.equals(SaleAttributes.START_DATE)) {
@@ -31,7 +32,7 @@ public class ChangeSaleRequest extends Request {
         } else if (attribute.equals(SaleAttributes.PERCENTAGE)) {
             sale.setPercentage(updatedInfo);
         }
-    }*/
+    }
 
     public String toStringChangeSale() {
         return "Salesman username: " + accountUsername + "\n" +

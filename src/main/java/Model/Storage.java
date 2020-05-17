@@ -108,6 +108,13 @@ public class Storage {
         return null;
     }
 
+    public static Sale getSaleById(String saleID) {
+        for (Sale sale : allSales) {
+            if (sale.getSaleID().equals(saleID)) return sale;
+        }
+        return null;
+    }
+
     public static ArrayList<Customer> getAllCustomers() {
         ArrayList<Customer> arrayList = new ArrayList<>();
         for (Account account : allAccounts) {
