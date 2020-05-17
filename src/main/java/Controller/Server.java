@@ -324,7 +324,7 @@ public class Server {
         ArrayList<Object> filters;
         filters = getFilters(command);
         String[] input = command.split("\\+");
-        productManager.showProducts(input[1], filters);
+        productManager.showProducts(input[1], filters, getSortFactor(command), getSortType(command));
     }
 
     private boolean checkProductNameFormat(String input) {

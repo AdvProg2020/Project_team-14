@@ -8,17 +8,15 @@ import java.util.Collections;
 import java.util.Comparator;
 
 public enum AccountSortFactor {
-    USERNAME, CREDIT;
+    ALPHABETICALLY, CREDIT;
 
     public static String getValues() {
-        return "{Username,Credit}";
+        return "{Alphabetically,Credit}";
     }
 
     public static void sort(String sortFactor, String sortType, ArrayList<Account> accounts) {
         //default sort factor is ALPHABETICALLY
-        if (sortFactor.equalsIgnoreCase("none")) {
-            accounts.sort(Comparator.comparing(Account::getUsername));
-        } else if (sortFactor.equals(AccountSortFactor.USERNAME.name())) {
+        if (sortFactor.equalsIgnoreCase("none") | sortFactor.equals(AccountSortFactor.ALPHABETICALLY.name())) {
             accounts.sort(Comparator.comparing(Account::getUsername));
         } else if (sortFactor.equals(AccountSortFactor.CREDIT.name())) {
             accounts.sort(Comparator.comparing(Account::getCredit));
@@ -26,11 +24,7 @@ public enum AccountSortFactor {
 
         //default sort type is ASCENDING
         if (sortType.equalsIgnoreCase("descending")) {
-            reverseArray(accounts);
+            Collections.reverse(accounts);
         }
-    }
-
-    public static void reverseArray(ArrayList<Account> arrayList) {
-        Collections.reverse(Arrays.asList(arrayList));
     }
 }

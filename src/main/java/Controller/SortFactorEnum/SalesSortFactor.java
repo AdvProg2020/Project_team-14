@@ -24,12 +24,8 @@ public enum SalesSortFactor {
 
         //default sort type is ASCENDING
         if (sortType.equalsIgnoreCase("descending")) {
-            reverseArray(sales);
+            Collections.reverse(sales);
         }
-    }
-
-    public static void reverseArray(ArrayList<Sale> sales) {
-        Collections.reverse(Arrays.asList(sales));
     }
 
     public static String getValues() {

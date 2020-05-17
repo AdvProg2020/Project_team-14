@@ -29,11 +29,7 @@ public enum OffCodesSortFactor {
 
         //default sort type is ASCENDING
         if (sortType.equalsIgnoreCase("descending")) {
-            reverseArray(offCodes);
+            Collections.reverse(offCodes);
         }
-    }
-
-    public static void reverseArray(ArrayList<OffCode> arrayList) {
-        Collections.reverse(Arrays.asList(arrayList));
     }
 }
