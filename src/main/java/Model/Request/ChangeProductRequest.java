@@ -27,7 +27,7 @@ public class ChangeProductRequest extends Request {
     }
 
     public void updateAttributeWithUpdatedInfo() throws ParseException {
-        Product product = (Product) Storage.getProductById(objectID);
+        Product product = (Product) object;
         if (attribute.equals(ProductAttributes.BRAND)) {
             assert product != null;
             product.setBrand(updatedInfo);
@@ -39,12 +39,12 @@ public class ChangeProductRequest extends Request {
             product.setDescription(updatedInfo);
         } else if (attribute.equals(ProductAttributes.IS_ON_SALE)) {
             assert product != null;
-            product.setIsOnSale(accountUsername, Boolean.parseBoolean(updatedInfo));
+            product.setIsOnSale(salesmanUsername, Boolean.parseBoolean(updatedInfo));
         }
     }
 
     public String toStringChangeProduct() {
-        Product product = (Product) Storage.getProductById(objectID);
+        Product product = (Product) object;
         assert product != null;
         return "Product Name:" + product.getName() + "\n" +
                 "Attribute to change: " + attribute.name().toLowerCase() + "\n"

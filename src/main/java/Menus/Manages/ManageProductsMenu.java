@@ -7,6 +7,7 @@ import Menus.SalesmanMenu;
 import Menus.shows.ShowProductsMenu;
 import Menus.shows.ShowRequestsMenu;
 
+import java.text.ParseException;
 import java.util.HashMap;
 
 public class ManageProductsMenu extends Menu {
@@ -41,7 +42,7 @@ public class ManageProductsMenu extends Menu {
         return new Menu(this, "Add Product Menu") {
 
             @Override
-            public void execute() {
+            public void execute() throws ParseException {
                 System.out.println(this.getMenuName());
                 System.out.println("if you input back we will go back");
                 String productName, brand, description, price, remainder;

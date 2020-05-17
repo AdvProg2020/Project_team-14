@@ -7,14 +7,15 @@ import Menus.shows.ShowAccountsMenu;
 import Menus.shows.ShowCategoriesMenu;
 import Menus.shows.ShowRequestsMenu;
 
+import java.text.ParseException;
 import java.util.HashMap;
 
 public class ViewProductMenu extends Menu {
     private String productID;
 
-    private void productSubMenus() {
+    private void productSubMenus() throws ParseException {
         HashMap<Integer, Menu> subMenus = new HashMap<Integer, Menu>();
-        if (Menu.isUserLogin == false) {
+        if (!Menu.isUserLogin) {
             //we will add something here like add to cart menu
         } else {
             server.clientToServer("what is account role+" + Menu.username);
@@ -51,7 +52,7 @@ public class ViewProductMenu extends Menu {
         setSubMenus(subMenus);
     }
 
-    public ViewProductMenu(Menu fatherMenu, String menuName, String productID) {
+    public ViewProductMenu(Menu fatherMenu, String menuName, String productID) throws ParseException {
         super(fatherMenu, menuName);
         this.productID = productID;
         this.logoutType = false;
@@ -97,14 +98,14 @@ public class ViewProductMenu extends Menu {
         this.productID = productID;
     }
 
-    private void getProductInfo() {
+    private void getProductInfo() throws ParseException {
         server.clientToServer("view product+" + Menu.username + "+" + productID);
         String serverAnswer = server.serverToClient();
         System.out.println(serverAnswer);
     }
 
     @Override
-    protected void show() {
+    protected void show() throws ParseException {
         super.show();
         getProductInfo();
     }

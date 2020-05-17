@@ -2,6 +2,7 @@ package Menus.Edits;
 
 import Menus.Menu;
 
+import java.text.ParseException;
 import java.util.HashMap;
 
 public class EditAccountMenu extends Menu {
@@ -53,7 +54,7 @@ public class EditAccountMenu extends Menu {
         String changeType = getMenuNameByCodeName(editableName);
         return new Menu(this, "Edit " + changeType + " Menu:") {
             @Override
-            public void execute() {
+            public void execute() throws ParseException {
                 System.out.println(this.getMenuName());
                 System.out.println("if you input back we will go back");
                 System.out.println("insert the new " + changeType + ":");
@@ -80,7 +81,7 @@ public class EditAccountMenu extends Menu {
     private Menu getEditPasswordMenu() {
         return new Menu(this, "Edit Password Menu:") {
             @Override
-            public void execute() {
+            public void execute() throws ParseException {
                 System.out.println(this.getMenuName());
                 System.out.println("if you input back we will go back");
                 String pass1, pass2, pass3;

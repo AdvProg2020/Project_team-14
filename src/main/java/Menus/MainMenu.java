@@ -1,9 +1,10 @@
 package Menus;
 
+import java.text.ParseException;
 import java.util.HashMap;
 
 public class MainMenu extends Menu {
-    public MainMenu(Menu fatherMenu, String menuName) {
+    public MainMenu(Menu fatherMenu, String menuName) throws ParseException {
         super(fatherMenu, menuName);
         this.logoutType = true;
         HashMap<Integer, Menu> subMenus = new HashMap<Integer, Menu>();

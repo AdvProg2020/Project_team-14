@@ -3,6 +3,7 @@ package Menus.Sorts;
 import Menus.LoginOrRegisterMenu;
 import Menus.Menu;
 
+import java.text.ParseException;
 import java.util.HashMap;
 
 public class SortsMenu extends Menu {
@@ -53,7 +54,7 @@ public class SortsMenu extends Menu {
             private String sortFactor = wantedSortFactor;
 
             @Override
-            public void execute() {
+            public void execute() throws ParseException {
                 System.out.println(menuName);
                 System.out.println("your current sort type is: " + ((SortsMenu) fatherMenu).showCurrentTypeOfFactor(sortFactor));
                 ((SortsMenu) fatherMenu).getTypeFromUser(fatherMenu, sortFactor);
@@ -85,7 +86,7 @@ public class SortsMenu extends Menu {
         return new Menu(fatherMenu, "Reset Sort Factor") {
 
             @Override
-            public void execute() {
+            public void execute() throws ParseException {
                 System.out.println("Are you sure ? (Y/N)");
                 while (true) {
                     String input = scanner.nextLine();
@@ -104,7 +105,7 @@ public class SortsMenu extends Menu {
     }
 
     @Override
-    protected void show() {
+    protected void show() throws ParseException {
         super.show();
         if (this.getSortType().equals("none") || this.getSortFactor().equals("none")) {
             System.out.println("you don't have a sort factor right now");

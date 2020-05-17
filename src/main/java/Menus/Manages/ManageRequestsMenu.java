@@ -7,6 +7,7 @@ import Menus.Views.ViewAccountMenu;
 import Menus.Views.ViewRequestMenu;
 import Menus.shows.ShowRequestsMenu;
 
+import java.text.ParseException;
 import java.util.HashMap;
 
 public class ManageRequestsMenu extends Menu {
@@ -25,7 +26,7 @@ public class ManageRequestsMenu extends Menu {
             boolean hasBeenCalled = true;
 
             @Override
-            public void execute() {
+            public void execute() throws ParseException {
                 if (hasBeenCalled) {
                     hasBeenCalled = false;
                 } else {

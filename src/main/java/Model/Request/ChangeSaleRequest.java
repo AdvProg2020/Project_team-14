@@ -22,8 +22,9 @@ public class ChangeSaleRequest extends Request {
         this.updatedInfo = updatedInfo;
     }
 
-   /* public void updateAttributeWithUpdatedInfo() throws ParseException {
+    public void updateAttributeWithUpdatedInfo() throws ParseException {
         Sale sale = (Sale) object;
+        assert sale != null;
         if (attribute.equals(SaleAttributes.END_DATE)) {
             sale.setEnd(updatedInfo);
         } else if (attribute.equals(SaleAttributes.START_DATE)) {
@@ -31,10 +32,10 @@ public class ChangeSaleRequest extends Request {
         } else if (attribute.equals(SaleAttributes.PERCENTAGE)) {
             sale.setPercentage(updatedInfo);
         }
-    }*/
+    }
 
     public String toStringChangeSale() {
-        return "Salesman username: " + accountUsername + "\n" +
+        return "Salesman username: " + salesmanUsername + "\n" +
                 "Attribute to change: " + attribute.name().toLowerCase() + "\n"
                 + "New attribute value: " + updatedInfo
                 + "Confirmation State: " + confirmation.name() + "\n";

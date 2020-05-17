@@ -3,6 +3,7 @@ package Menus.Filters;
 import Menus.LoginOrRegisterMenu;
 import Menus.Menu;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -89,7 +90,7 @@ public class AccountsFilterMenu extends FiltersMenu {
     private Menu getChangeCreditLimitMenu(String type) {
         return new Menu(this, "Change " + type + " Credit Limit Menu") {
             @Override
-            public void execute() {
+            public void execute() throws ParseException {
                 System.out.println(menuName);
                 System.out.println("if you input back we will go back");
                 while (true) {
@@ -132,7 +133,7 @@ public class AccountsFilterMenu extends FiltersMenu {
     private Menu getChangeRoleMenu() {
         return new Menu(this, "Change Role Menu") {
             @Override
-            public void execute() {
+            public void execute() throws ParseException {
                 System.out.println("Change Role Menu");
                 System.out.println("if you input back we will go back");
                 while (true) {

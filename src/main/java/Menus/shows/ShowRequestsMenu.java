@@ -8,6 +8,7 @@ import Menus.Views.ViewAccountMenu;
 import Menus.Views.ViewRequestMenu;
 
 import javax.swing.text.View;
+import java.text.ParseException;
 import java.util.HashMap;
 
 public class ShowRequestsMenu extends ShowsMenu {
@@ -50,7 +51,7 @@ public class ShowRequestsMenu extends ShowsMenu {
             }
 
             @Override
-            public void execute() {
+            public void execute() throws ParseException {
                 if (hasBeenCalled) {
                     hasBeenCalled = false;
                 } else {

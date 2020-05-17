@@ -1,5 +1,6 @@
 package Menus;
 
+import java.text.ParseException;
 import java.util.HashMap;
 
 public class LoginOrRegisterMenu extends Menu {
@@ -22,7 +23,7 @@ public class LoginOrRegisterMenu extends Menu {
         }
     }
 
-    private void Logout() {
+    private void Logout() throws ParseException {
         server.clientToServer("logout+" + Menu.username);
         String answer = server.serverToClient();
         System.out.println(answer);
@@ -33,7 +34,7 @@ public class LoginOrRegisterMenu extends Menu {
     }
 
     @Override
-    public void execute() {
+    public void execute() throws ParseException {
         if (Menu.isUserLogin) {
             Logout();
             return;
@@ -51,10 +52,10 @@ public class LoginOrRegisterMenu extends Menu {
             }*/
 
             @Override
-            public void execute() {
+            public void execute() throws ParseException {
                 System.out.println("register Menu:");
                 System.out.println("if you input back we will go back");
-                String message = new String();
+                String message;
                 String firstName, lastName;
                 String username, password, role;
                 String Email, telephone;
@@ -101,7 +102,7 @@ public class LoginOrRegisterMenu extends Menu {
     private Menu getLoginMenu() {
         return new Menu(this, "Login Menu") {
             @Override
-            public void execute() {
+            public void execute() throws ParseException {
                 System.out.println("login menu:");
                 System.out.println("if you input back we will go back");
                 String username, password;
@@ -140,7 +141,7 @@ public class LoginOrRegisterMenu extends Menu {
     private Menu getForgotPasswordMenu() {
         return new Menu(this, "Forgot Password Menu") {
             @Override
-            public void execute() {
+            public void execute() throws ParseException {
                 System.out.println("forgot password menu:");
                 System.out.println("if you input back we will go back");
                 System.out.println("please input your username:");

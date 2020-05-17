@@ -4,6 +4,7 @@ import Menus.LoginOrRegisterMenu;
 import Menus.Menu;
 import Menus.shows.ShowCategoriesMenu;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -50,7 +51,7 @@ public class CategoriesFilterMenu extends FiltersMenu {
 
     private Menu getChangeFatherCategoryFilterMenu() {
         return new Menu(this, "Change Father Category Filter Menu") {
-            private boolean checkInputValidation(String categoryName) {
+            private boolean checkInputValidation(String categoryName) throws ParseException {
                 if (categoryName.equals("clear")) {
                     return true;
                 }
@@ -63,7 +64,7 @@ public class CategoriesFilterMenu extends FiltersMenu {
             }
 
             @Override
-            public void execute() {
+            public void execute() throws ParseException {
                 System.out.println(this.getMenuName());
                 System.out.println("if you input back we will go back");
                 while (true) {
