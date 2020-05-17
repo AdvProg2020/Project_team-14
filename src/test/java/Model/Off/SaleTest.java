@@ -26,20 +26,20 @@ public class SaleTest {
 
     @Test
     public void saleTesting() throws ParseException {
-        arrayList.add(product.getProductID());
         arrayList.add(product2.getProductID());
+        arrayList.add(product.getProductID());
         Date nowDate = new Date();
         Format formatter = new SimpleDateFormat("dd-MM-yyyy HH-mm-ss");
         String today = formatter.format(nowDate);
-        Sale sale = new Sale("01-12-2020 20-20-20", "01-12-2020 20-20-20", 20, salesman1.getUsername(),arrayList);
+        Sale sale = new Sale("01-12-2020 20-20-20", "01-12-2020 20-20-20", 20, salesman1.getUsername());
+        sale.addToProducts(product2.getProductID());
+        sale.addToProducts(product.getProductID());
         sale.setConfirmationState(Confirmation.ACCEPTED);
         Assert.assertTrue(sale.isConfirmed());
         Assert.assertFalse(sale.isChecking());
         Assert.assertFalse(sale.isAuthentic());
         sale.setStart(today);
         Assert.assertTrue(sale.isAuthentic());
-        sale.addToProducts(product.getProductID());
-        sale.addToProducts(product2.getProductID());
         sale.addToProducts("neuer is the best");
         sale.removeFromProducts("neuer is the best");
         Assert.assertTrue(sale.doesContainProduct(product.getProductID()));
@@ -48,12 +48,11 @@ public class SaleTest {
         Assert.assertNull(Sale.getSaleByID("neuer is the best"));
         Assert.assertEquals(Sale.getPriceAfterSale(product.getProductID(), "salesmanUser1"), 8);
         sale.removeFromProducts(product.getProductID());
-        Assert.assertEquals(Sale.getPriceAfterSale(product.getProductID(), "salesmanUser1"), 10);
         Assert.assertFalse(Sale.isProductInSaleWithID(product.getProductID(), "salesmanUser1"));
         Assert.assertTrue(Sale.isProductInSaleWithID(product2.getProductID(), "salesmanUser1"));
     }
 
-    /*@Test
+    @Test
     public void toStringTest() throws ParseException {
         Sale sale = new Sale("01-12-2020 20-20-20", "01-12-2020 20-20-20", 20, salesman1.getUsername());
         sale.addToProducts(product.getProductID());
@@ -67,5 +66,5 @@ public class SaleTest {
         result += "name2" + "\n";
         Assert.assertEquals(result, sale.toString());
 
-    }*/
+    }
 }

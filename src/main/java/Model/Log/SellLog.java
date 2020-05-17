@@ -2,11 +2,14 @@ package Model.Log;
 
 import Model.Account.Salesman;
 import Model.Product.Product;
+import Model.RandomString;
 import Model.Storage;
 
+import javax.xml.transform.sax.SAXResult;
 import java.util.ArrayList;
 
 public class SellLog {
+    private String sellLogID;
     private BuyLog buyLog;
     private String productID;
     private String salesmanID;
@@ -29,6 +32,11 @@ public class SellLog {
         Salesman salesman = (Salesman) Storage.getAccountWithUsername(salesmanID);
         assert salesman != null;
         salesman.setCredit(salesman.getCredit() + priceAfterSale);
+        sellLogID = RandomString.createID("SellLog");
+    }
+
+    public String getSellLogID() {
+        return sellLogID;
     }
 
     public String getDeliveryState() {
@@ -67,7 +75,7 @@ public class SellLog {
     }
 
     public static String getSalesmanSellLogs_StringFormatted(String salesmanID) {
-        if(!hasSalesmanAnySellLog(salesmanID)){
+        if (!hasSalesmanAnySellLog(salesmanID)) {
             return "no sell log yet!";
         }
         StringBuilder result = new StringBuilder("Sell logs of salesman: " + salesmanID + "\n");

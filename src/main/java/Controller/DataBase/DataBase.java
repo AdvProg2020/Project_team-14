@@ -28,6 +28,13 @@ public abstract class DataBase {
 
     abstract void updatePoints() throws IOException, ClassNotFoundException;
 
+    abstract void updateRequests() throws IOException, ClassNotFoundException;
+
+    abstract void updateSellLogs() throws IOException, ClassNotFoundException;
+
+    abstract void updateCarts() throws IOException, ClassNotFoundException;
+
+
     public static void makeDirectories() {
 
         File file = new File("src\\main\\resources\\DataBase");
@@ -54,6 +61,12 @@ public abstract class DataBase {
         file11.mkdirs();
         File file12 = new File("src\\main\\resources\\DataBase\\Points");
         file12.mkdirs();
+        File file13 = new File("src\\main\\resources\\DataBase\\Requests");
+        file13.mkdirs();
+        File file14 = new File("src\\main\\resources\\DataBase\\Carts");
+        file14.mkdirs();
+        File file15 = new File("src\\main\\resources\\DataBase\\SellLogs");
+        file15.mkdirs();
     }
 
     public static void storeObjectInFile(Object obj, String address) throws IOException {

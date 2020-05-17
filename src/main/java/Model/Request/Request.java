@@ -10,6 +10,8 @@ import Model.Request.Enum.RequestType;
 import Model.Storage;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.util.ArrayList;
 
 import static Model.RandomString.createID;
 
@@ -27,10 +29,10 @@ public class Request implements Serializable {
         this.accountUsername = salesmanUsername;
         this.objectID = product.getProductID();
         if (type.equalsIgnoreCase(String.valueOf(RequestType.CHANGE_PRODUCT))) {
-            //requestType = RequestType.CHANGE_PRODUCT;
-        }/* else if (type.equalsIgnoreCase(String.valueOf(RequestType.DELETE_PRODUCT))) {
+            requestType = RequestType.CHANGE_PRODUCT;
+        } else if (type.equalsIgnoreCase(String.valueOf(RequestType.DELETE_PRODUCT))) {
             requestType = RequestType.DELETE_PRODUCT;
-        }*/ else if (type.equalsIgnoreCase(String.valueOf(RequestType.ADD_NEW_PRODUCT))) {
+        } else if (type.equalsIgnoreCase(String.valueOf(RequestType.ADD_NEW_PRODUCT))) {
             requestType = RequestType.ADD_NEW_PRODUCT;
         }
         Storage.getAllRequests().add(this);
@@ -76,15 +78,15 @@ public class Request implements Serializable {
         this.confirmation = Confirmation.CHECKING;
     }
 
-    /*public static ArrayList<Request> getCheckingRequests() {
+    public static ArrayList<Request> getCheckingRequests() {
         ArrayList<Request> result = new ArrayList<>();
-        for (Request request : Storage.allRequests) {
+        for (Request request : Storage.getAllRequests()) {
             if (request.confirmation.equals(Confirmation.CHECKING)) {
                 result.add(request);
             }
         }
         return result;
-    }*/
+    }
 
     public String getObjectID() {
         return objectID;
@@ -112,12 +114,12 @@ public class Request implements Serializable {
 
     //it accepts the request and makes the needed changes in objects as desired
 
-    public void accept() {
+    public void accept() throws ParseException {
         if (this.requestType.equals(RequestType.CHANGE_SALE)) {
-            /*this.confirmation = Confirmation.ACCEPTED;
+            this.confirmation = Confirmation.ACCEPTED;
             if (this instanceof ChangeSaleRequest) {
                 ((ChangeSaleRequest) this).updateAttributeWithUpdatedInfo();
-            }*/
+            }
         } /*else if (this.requestType.equals(RequestType.DELETE_SALE)) {
             Sale sale = (Sale) object;
             this.confirmation = Confirmation.ACCEPTED;
@@ -133,6 +135,7 @@ public class Request implements Serializable {
         }*/ else if (this.requestType.equals(RequestType.ADD_NEW_PRODUCT)) {
             this.confirmation = Confirmation.ACCEPTED;
             Product product = Storage.getProductById(objectID);
+            assert product != null;
             product.setConfirmationState(accountUsername, Confirmation.ACCEPTED);
         }/* else if (this.requestType.equals(RequestType.CHANGE_PRODUCT)) {
             this.confirmation = Confirmation.ACCEPTED;
@@ -172,6 +175,7 @@ public class Request implements Serializable {
         }*/ else if (this.requestType.equals(RequestType.ADD_NEW_PRODUCT)) {
             this.confirmation = Confirmation.DENIED;
             Product product = Storage.getProductById(objectID);
+            assert product != null;
             product.setConfirmationState(accountUsername, Confirmation.DENIED);
         }/* else if (this.requestType.equals(RequestType.CHANGE_PRODUCT)) {
             this.confirmation = Confirmation.DENIED;
@@ -189,8 +193,7 @@ public class Request implements Serializable {
     }
 
     public String toStringForBoss() {
-        String result = "Request Type: " + this.requestType + " Request ID: " + this.requestID;
-        return result;
+        return "Request Type: " + this.requestType + " Request ID: " + this.requestID;
     }
 
     private String toStringRegisterSalesman() {
@@ -198,6 +201,7 @@ public class Request implements Serializable {
             Salesman salesman = (Salesman) Storage.getAccountWithUsername(accountUsername);
             String result = "";
             result += "General information of salesman: " + "\n";
+            assert salesman != null;
             result += salesman.toStringForRequest();
             return result;
         } else {
@@ -213,7 +217,9 @@ public class Request implements Serializable {
         Salesman salesman = (Salesman) Storage.getAccountWithUsername(accountUsername);
         String result = "";
         result += "General information of salesman: " + "\n";
+        assert salesman != null;
         result += salesman.toStringForRequest();
+        assert product != null;
         return result + "General information of product: " + "\n" + product.toStringForBoss() +
                 "Confirmation State: " + confirmation.name();
     }

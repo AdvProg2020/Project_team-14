@@ -21,6 +21,12 @@ public class startOfProgramme extends DataBase {
 
     public void startProgramme() throws IOException, ClassNotFoundException {
         makeDirectories();
+        updateFiles();
+        EndOfProgramme endOfProgramme=new EndOfProgramme();
+        endOfProgramme.run();
+    }
+
+    private void updateFiles() throws IOException, ClassNotFoundException {
         updateBosses();
         updateBuyLogs();
         updateCategories();
@@ -32,8 +38,10 @@ public class startOfProgramme extends DataBase {
         updateSales();
         updateSalesmen();
         updateSpecialOffCodes();
-        EndOfProgramme endOfProgramme=new EndOfProgramme();
-        endOfProgramme.run();
+        updateSellLogs();
+        updateCarts();
+        updateRequests();
+
     }
 
 
@@ -166,6 +174,44 @@ public class startOfProgramme extends DataBase {
 
     @Override
     protected void updatePoints() throws IOException, ClassNotFoundException {
+        String path = "src\\main\\resources\\DataBase\\Points";
+        File[] files = new File(path).listFiles();
+        assert files != null;
+        for (File file : files) {
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream(file.getAbsolutePath()));
+            Point s = (Point) in.readObject();
+            allPoints.add(s);
+        }
+    }
+
+    @Override
+    protected void updateRequests() throws IOException, ClassNotFoundException {
+        String path = "src\\main\\resources\\DataBase\\Comments";
+        File[] files = new File(path).listFiles();
+        assert files != null;
+        for (File file : files) {
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream(file.getAbsolutePath()));
+            Comment s = (Comment) in.readObject();
+            allComments.add(s);
+        }
+    }
+
+
+    @Override
+    protected void updateCarts() throws IOException, ClassNotFoundException {
+        String path = "src\\main\\resources\\DataBase\\SpecialOffCodes";
+        File[] files = new File(path).listFiles();
+        assert files != null;
+        for (File file : files) {
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream(file.getAbsolutePath()));
+            SpecialOffCode s = (SpecialOffCode) in.readObject();
+            allSpecialOffCodes.add(s);
+        }
+
+    }
+
+    @Override
+    protected void updateSellLogs() throws IOException, ClassNotFoundException {
         String path = "src\\main\\resources\\DataBase\\Points";
         File[] files = new File(path).listFiles();
         assert files != null;

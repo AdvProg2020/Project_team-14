@@ -28,6 +28,18 @@ public class Category implements Serializable {
         Storage.getAllCategories().add(this);
     }
 
+    public ArrayList<Category> getSubCategories() {
+        ArrayList<Category> categories = new ArrayList<>();
+        for (Category category : Storage.getAllCategories()) {
+            if (category.getParentCategoryName() == null) {
+                continue;
+            } else if (category.getParentCategoryName().equals(this.getCategoryName())) {
+                categories.add(category);
+            }
+        }
+        return categories;
+    }
+
     public void setAttribute(String attribute) {
         this.attribute = attribute;
     }
@@ -67,7 +79,7 @@ public class Category implements Serializable {
 
     public void deleteProductFromCategory(String productID) {
         this.allProductIDs.remove(productID);
-        Product.getProductWithID(productID).setCategoryName(null);
+        Product.getProductWithID(productID).setCategoryName("");
     }
 
     public boolean containsProduct(String productID) {
@@ -79,6 +91,15 @@ public class Category implements Serializable {
         result.append("Products: " + "\n");
         for (String productID : allProductIDs) {
             result.append(Product.getNameByID(productID)).append("\n");
+        }
+        return result;
+    }
+
+    private StringBuilder toStringSubCategories() {
+        StringBuilder result = new StringBuilder();
+        result.append("SubCategories: ").append("\n");
+        for (Category category : this.getSubCategories()) {
+            result.append(category.getCategoryName()).append("\n");
         }
         return result;
     }
@@ -101,7 +122,7 @@ public class Category implements Serializable {
     public String toString() {
         return "Category Name: " + this.categoryName + "\n" +
                 "Category Attribute: " + this.attribute + "\n" +
-                toStringParentCategory();
+                toStringParentCategory() + toStringSubCategories() + toStringProducts();
     }
 
 }
