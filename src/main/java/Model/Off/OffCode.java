@@ -19,19 +19,21 @@ public class OffCode extends Off implements Serializable {
 
     public OffCode(String start, String end, int percentage, int ceiling, int numberOfTimesCanBeUsed, ArrayList<String> userNamesCanUseIt) {
         super(start, end, percentage);
+        offCodeID = RandomString.createID("OffCode");
+        allOffCodes.add(this);
         this.ceiling = ceiling;
         this.numberOfTimesCanBeUsed = numberOfTimesCanBeUsed;
         this.userNamesCanUseIt.addAll(userNamesCanUseIt);
         for (String username : userNamesCanUseIt) {
-            ((Customer) Storage.getAccountWithUsername(username)).addOffCode(this);
+            Customer customer = ((Customer) Storage.getAccountWithUsername(username));
+            assert customer != null;
+            customer.addOffCode(this.offCodeID,numberOfTimesCanBeUsed);
         }
-        allOffCodes.add(this);
 
         //because IDs are generally too long I decided to to make the length the random String 5 in order for more comfort
-        offCodeID = RandomString.createID("OffCode");
     }
 
-    public static ArrayList<OffCode> getAllCustomerOffCodesByUsername (String username) {
+    public static ArrayList<OffCode> getAllCustomerOffCodesByUsername(String username) {
         ArrayList<OffCode> customerOffCodes = new ArrayList<>();
         for (OffCode offCode : allOffCodes) {
             if (offCode.canCustomerUseItWithUsername(username)) customerOffCodes.add(offCode);

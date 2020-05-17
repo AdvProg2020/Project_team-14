@@ -14,10 +14,10 @@ import static Model.Storage.*;
 public class Customer extends Account implements Serializable {
     private int credit;
     private Cart cart;
-    private HashMap<String, Integer> customerOffCodes;
+    private HashMap<String, Integer> customerOffCodes=new HashMap<>();
 
     public Customer(String username, String password, String firstName, String secondName, String Email, String telephone,
-                    String role,int credit) {
+                    String role, int credit) {
         super(username, password, firstName, secondName, Email, telephone, role);
         this.credit = credit;
         customerOffCodes = new HashMap<>();
@@ -33,7 +33,6 @@ public class Customer extends Account implements Serializable {
                 cart.addProductToCart(productID, productsAlreadyInCart.get(productID), cart.getCartID());
             }
         }*/
-        customerOffCodes = new HashMap<>();
     }
 
     public int getCredit() {
@@ -75,10 +74,6 @@ public class Customer extends Account implements Serializable {
         }
     }
 
-    /*public boolean isCartEmpty() {
-        return cart.isCartEmpty();
-    }*/
-
     public HashMap<String, Integer> getCustomerOffCodes() {
         return customerOffCodes;
     }
@@ -93,8 +88,8 @@ public class Customer extends Account implements Serializable {
         }
     }
 
-    public void addOffCode(OffCode offCode) {
-        customerOffCodes.put(offCode.getOffCodeID(), offCode.getNumberOfTimesCanBeUsed());
+    public void addOffCode(String offCode, int numberOfTimesCanBeUsed) {
+        customerOffCodes.put(offCode, numberOfTimesCanBeUsed);
     }
 
     public String getOffCodeInfo(String offCodeID) {

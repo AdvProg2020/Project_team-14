@@ -49,10 +49,15 @@ public class OffCodeTest {
     @Test
     public void toStringTest() throws ParseException {
         ArrayList<String> arrayList = new ArrayList<>();
+        new Customer("username1","sd","sd","SDgds","dfsaf","sdf","customer",1923);
+        new Customer("username2","sd","sd","SDgds","dfsaf","sdf","customer",1923);
         arrayList.add("username1");
         arrayList.add("username2");
+        Assert.assertTrue(Customer.isThereCustomerWithUsername("username1"));
+        Assert.assertTrue(Customer.isThereCustomerWithUsername("username2"));
         String result = "";
         OffCode offCode2 = new OffCode("01-12-2020 20-20-20", "02-12-2020 20-20-20", 20, 1000, 2, arrayList);
+        System.out.println(offCode2.getOffCodeID());
         result += "Percentage: 20" + "\n";
         result += "Start Date: " + offCode2.start.toString() + "\n";
         result += "End Date: " + offCode2.end.toString() + "\n";

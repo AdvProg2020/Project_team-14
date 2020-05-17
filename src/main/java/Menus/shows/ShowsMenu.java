@@ -4,6 +4,8 @@ import Menus.Filters.FiltersMenu;
 import Menus.Menu;
 import Menus.Sorts.SortsMenu;
 
+import java.text.ParseException;
+
 public class ShowsMenu extends Menu {
     protected FiltersMenu filter;
     protected SortsMenu sort;
@@ -27,14 +29,14 @@ public class ShowsMenu extends Menu {
         return serverAnswer;
     }
 
-    public void getInfo(String type) {
+    public void getInfo(String type) throws ParseException {
         server.clientToServer("show " + type + "+" + username + "+" + filter.getFilters() + "+" + sort.getSort());
         this.serverAnswer = server.serverToClient();
         System.out.println(serverAnswer);
     }
 
     @Override
-    protected void show() {
+    protected void show() throws ParseException {
         super.show();
         getInfo(type);
     }

@@ -1,19 +1,23 @@
 package Controller.DataBase;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import Model.Account.Boss;
 import Model.Account.Customer;
 import Model.Account.Salesman;
+import Model.Cart.Cart;
 import Model.Category.Category;
 import Model.Log.BuyLog;
+import Model.Log.SellLog;
 import Model.Off.OffCode;
 import Model.Off.Sale;
 import Model.Off.SpecialOffCode;
 import Model.Product.Comment;
 import Model.Product.Point;
 import Model.Product.Product;
+import Model.Request.Request;
 import Model.Storage;
 
 import static Model.Storage.*;
@@ -32,6 +36,9 @@ public class EndOfProgramme extends DataBase implements Runnable {
         updateSales();
         updateSalesmen();
         updateSpecialOffCodes();
+        updateCarts();
+        updateSellLogs();
+        updateRequests();
     }
 
     @Override
@@ -115,12 +122,37 @@ public class EndOfProgramme extends DataBase implements Runnable {
     }
 
     @Override
+    void updateRequests() throws IOException {
+        String path = "src\\main\\resources\\DataBase\\Requests\\";
+        for (Request request : getAllRequests()) {
+            storeObjectInFile(request, path + request.getRequestID());
+        }
+
+    }
+
+    @Override
+    void updateSellLogs() throws IOException {
+        String path = "src\\main\\resources\\DataBase\\SellLogs\\";
+        for (SellLog sellLog : allSellLogs) {
+            storeObjectInFile(sellLog, path + sellLog.getSellLogID());
+        }
+
+    }
+
+    @Override
+    void updateCarts() throws IOException {
+        String path = "src\\main\\resources\\DataBase\\Carts\\";
+        for (Cart cart : allCarts) {
+            storeObjectInFile(cart, path + cart.getCartID());
+        }
+    }
+
+    @Override
     protected void updateSpecialOffCodes() throws IOException {
         String path = "src\\main\\resources\\DataBase\\SpecialOffCodes\\";
         for (SpecialOffCode specialOffCode : allSpecialOffCodes) {
             storeObjectInFile(specialOffCode, path + specialOffCode.getSpecialOffCodeID());
         }
-
     }
 
     @Override
@@ -132,7 +164,7 @@ public class EndOfProgramme extends DataBase implements Runnable {
             e.printStackTrace();
         }
         try {
-            Thread.sleep(TimeUnit.SECONDS.toMillis(10));
+            Thread.sleep(TimeUnit.SECONDS.toMillis(3));
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

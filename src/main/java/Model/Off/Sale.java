@@ -3,26 +3,22 @@ package Model.Off;
 import Model.Confirmation;
 import Model.Product.Product;
 import Model.RandomString;
-import Model.Storage;
-
 import java.io.Serializable;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Objects;
 
 import static Model.Storage.*;
 
 public class Sale extends Off implements Serializable {
-    private ArrayList<String> productIDs;
+    private ArrayList<String> productIDs=new ArrayList<>();
     private String saleID;
     private String salesmanID;
     private Confirmation confirmationState;
 
-    public Sale(String start, String end, int percentage, String salesmanID, ArrayList<String> productIDs) {
+    public Sale(String start, String end, int percentage, String salesmanID) {
         super(start, end, percentage);
         this.saleID = RandomString.createID("Sale");
         this.salesmanID = salesmanID;
-        this.productIDs = productIDs;
         confirmationState = Confirmation.CHECKING;
         allSales.add(this);
     }

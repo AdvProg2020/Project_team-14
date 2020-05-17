@@ -57,28 +57,16 @@ public class BossManager {
             return true;
         } else if (filter.contains("customer") && account.getRole().equals(Role.CUSTOMER)) {
             return true;
-        } else if (filter.contains("salesman") && account.getRole().equals(Role.SALESMAN)) {
-            return true;
-        } else {
-            return false;
-        }
+        } else return filter.contains("salesman") && account.getRole().equals(Role.SALESMAN);
     }
 
     private boolean checkMinCreditFilter(Account account, String filter) {
         if (account instanceof Boss) {
             return true;
         } else if (account instanceof Customer) {
-            if ((account).getCredit() >= Integer.parseInt(filter)) {
-                return true;
-            } else {
-                return false;
-            }
+            return (account).getCredit() >= Integer.parseInt(filter);
         } else if (account instanceof Salesman) {
-            if ((account).getCredit() >= Integer.parseInt(filter)) {
-                return true;
-            } else {
-                return false;
-            }
+            return (account).getCredit() >= Integer.parseInt(filter);
         }
         return false;
     }
@@ -87,23 +75,16 @@ public class BossManager {
         if (account instanceof Boss) {
             return true;
         } else if (account instanceof Customer) {
-            if (account.getCredit() <= Integer.parseInt(filter)) {
-                return true;
-            } else {
-                return false;
-            }
+            return account.getCredit() <= Integer.parseInt(filter);
         } else if (account instanceof Salesman) {
-            if (account.getCredit() <= Integer.parseInt(filter)) {
-                return true;
-            } else {
-                return false;
-            }
+            return account.getCredit() <= Integer.parseInt(filter);
         }
         return false;
     }
 
     public void viewAccount(String bossUsername, String username) {
         Account account = Storage.getAccountWithUsername(username);
+        assert account != null;
         Server.setAnswer(account.toString());
     }
 
@@ -118,17 +99,17 @@ public class BossManager {
     private boolean isAccountInFilter(Account account, ArrayList<Object> filters) {
         for (int i = 0; i < filters.size(); i += 2) {
             if (((String) filters.get(i)).equalsIgnoreCase("role")) {
-                if (checkRoleFilter(account, (String) filters.get(i + 1)) == false) {
+                if (!checkRoleFilter(account, (String) filters.get(i + 1))) {
                     return false;
                 }
             }
             if (((String) filters.get(i)).equalsIgnoreCase("minCredit")) {
-                if (checkMinCreditFilter(account, (String) filters.get(i + 1)) == false) {
+                if (!checkMinCreditFilter(account, (String) filters.get(i + 1))) {
                     return false;
                 }
             }
             if (((String) filters.get(i)).equalsIgnoreCase("maxCredit")) {
-                if (checkMaxCreditFilter(account, (String) filters.get(i + 1)) == false) {
+                if (!checkMaxCreditFilter(account, (String) filters.get(i + 1))) {
                     return false;
                 }
             }
@@ -147,7 +128,7 @@ public class BossManager {
         } else {
             for (Account account : accounts) {
                 if (!account.getUsername().equals(username) && isAccountInFilter(account, filters)) {
-                    answer.append(account.toStringForBoss() + "\n");
+                    answer.append(account.toStringForBoss()).append("\n");
                     count++;
                 }
             }
@@ -169,6 +150,7 @@ public class BossManager {
             Server.setAnswer("customer");
         } else {
             while (true) {
+                assert account != null;
                 String fatherBoss = ((Boss) account).getFatherBoss();
                 if (fatherBoss == null) {
                     Server.setAnswer("boss no");
@@ -213,22 +195,18 @@ public class BossManager {
     }
 
     private boolean checkRequestTypeFilter(Request request, String requestType) {
-        if (requestType.contains(request.getRequestType().toString())) {
-            return true;
-        } else {
-            return false;
-        }
+        return requestType.contains(request.getRequestType().toString());
     }
 
     private boolean isRequestInFilter(Request request, ArrayList<Object> filters) {
         for (int i = 0; i < filters.size(); i += 2) {
             if (((String) filters.get(i)).equalsIgnoreCase("username")) {
-                if (checkUsernameFilter(request, (String) filters.get(i + 1)) == false) {
+                if (!checkUsernameFilter(request, (String) filters.get(i + 1))) {
                     return false;
                 }
             }
             if (((String) filters.get(i)).equalsIgnoreCase("requestType")) {
-                if (checkRequestTypeFilter(request, (String) filters.get(i + 1)) == false) {
+                if (!checkRequestTypeFilter(request, (String) filters.get(i + 1))) {
                     return false;
                 }
             }
@@ -245,7 +223,7 @@ public class BossManager {
         } else {
             for (Request request : requests) {
                 if (isRequestInFilter(request, filters)) {
-                    answer.append(request.toStringForBoss() + "\n");
+                    answer.append(request.toStringForBoss()).append("\n");
                     count++;
                 }
             }
@@ -261,12 +239,14 @@ public class BossManager {
 
     public void viewRequest(String username, String requestID) {
         Request request = Storage.getRequestByID(requestID);
+        assert request != null;
         Server.setAnswer(request.toString());
     }
 
     public void searchRequest(String requestID) {
         if (Storage.isThereRequestByID(requestID)) {
             Request request = Storage.getRequestByID(requestID);
+            assert request != null;
             Server.setAnswer("search completed " + request.getRequestType());
         } else {
             Server.setAnswer("no request exists with such ID");

@@ -4,6 +4,7 @@ package Controller;
 //import Model.Category.Category;
 //import Model.Storage;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -11,8 +12,12 @@ import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import Controller.DataBase.startOfProgramme;
+import Menus.shows.ShowRequestsMenu;
 import Model.Account.Role;
+import Model.Category.Category;
 import Model.Confirmation;
+import Model.Request.Request;
 import Model.Storage;
 
 public class Server {
@@ -27,13 +32,15 @@ public class Server {
     //private HashMap<String, Cart> abstractCarts;
     static private String answer;
 
-    public Server() {
+    public Server() throws IOException, ClassNotFoundException {
         answer = "";
         this.accountManager = new AccountManager();
         this.bossManager = new BossManager();
         this.customerManager = new CustomerManager();
         this.salesmanManager = new SalesmanManager();
         this.productManager = new ProductManager();
+        startOfProgramme startOfProgramme=new startOfProgramme();
+        startOfProgramme.startProgramme();
         //abstractCarts = new HashMap<>();
     }
 
@@ -50,7 +57,7 @@ public class Server {
         return pattern.matcher(command);
     }
 
-    public void clientToServer(String command) {
+    public void clientToServer(String command) throws ParseException {
         Matcher matcher;
         if ((matcher = getMatcher("login\\+(\\w+)\\+(\\w+)", command)).find()) {
             this.login(matcher);
@@ -465,11 +472,15 @@ public class Server {
     }
 
     private void getRequestObjectID(String command) {
-        Server.setAnswer(Storage.getRequestByID(command.split("\\+")[1]).getObjectID());
+        Request request = Storage.getRequestByID(command.split("\\+")[1]);
+        assert request != null;
+        Server.setAnswer(request.getObjectID());
     }
 
     private void getRequestAccountUsername(String command) {
-        Server.setAnswer(Storage.getRequestByID(command.split("\\+")[1]).getAccountUsername());
+        Request request = Storage.getRequestByID(command.split("\\+")[1]);
+        assert request != null;
+        Server.setAnswer(request.getAccountUsername());
     }
 
     private void deleteRequest(String command) {
@@ -477,12 +488,16 @@ public class Server {
     }
 
     private void declineRequest(String command) {
-        Storage.getRequestByID(command.split("\\+")[2]).decline();
+        Request request = Storage.getRequestByID(command.split("\\+")[2]);
+        assert request != null;
+        request.decline();
         Server.setAnswer("declined successfully");
     }
 
-    private void acceptRequest(String command) {
-        Storage.getRequestByID(command.split("\\+")[2]).accept();
+    private void acceptRequest(String command) throws ParseException {
+        Request request = Storage.getRequestByID(command.split("\\+")[2]);
+        assert request != null;
+        request.accept();
         Server.setAnswer("accepted successfully");
     }
 
@@ -509,7 +524,9 @@ public class Server {
 
     private void isRequestStateChecking(String command) {
         String[] input = command.split("\\+");
-        if (Storage.getRequestByID(input[1]).getConfirmation().equals(Confirmation.CHECKING)) {
+        Request request = Storage.getRequestByID(input[1]);
+        assert request != null;
+        if (request.getConfirmation().equals(Confirmation.CHECKING)) {
             Server.setAnswer("yes");
         } else {
             Server.setAnswer("no");
@@ -795,11 +812,11 @@ public class Server {
     }
 
     public void listCategories(String sortFactor) {
-        /*StringBuilder ans = new StringBuilder("Here are all Categories name:");
-        for (Category category : Storage.allCategories) {
+        StringBuilder ans = new StringBuilder("Here are all Categories name:");
+        for (Category category : Storage.getAllCategories()) {
             ans.append("\n").append(category.getCategoryName());
         }
-        Server.setAnswer(ans.toString());*/
+        Server.setAnswer(ans.toString());
     }
 
 

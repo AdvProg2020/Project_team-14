@@ -2,6 +2,7 @@ package Model.Product;
 
 import Model.Account.Customer;
 import Model.Account.Salesman;
+import Model.Confirmation;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -19,13 +20,13 @@ public class CommentTest {
 
     Product product2 = new Product("name2", salesman.getUsername(), "brand2", "description2", 10, 10);
 
-    /*@Test
+    @Test
     public void getComment2() {
-        Comment comment = new Comment("text", customer.getUsername(), product.getProductID());
+        Comment comment = new Comment("title","text", customer.getUsername(), product.getProductID());
         Assert.assertTrue(comment.isChecking());
         Assert.assertNull(Comment.getCommentByID("aaaaaaaaaaaa"));
         Assert.assertNotNull(Comment.getCommentByID(comment.getCommentID()));
-    }*/
+    }
 
     @Test
     public void getCheckingComment() {
@@ -33,35 +34,35 @@ public class CommentTest {
         Assert.assertEquals(arrayList.size(), 1);
     }
 
-    /*@Test
+    @Test
     public void toStringForProductView() {
-        Comment comment = new Comment("text", customer.getUsername(), product.getProductID());
+        Comment comment = new Comment("title","text", customer.getUsername(), product.getProductID());
         String result = "Sender: customerUser" + "\n";
         result += "Message: text" + "\n";
         Assert.assertTrue(comment.toStringForProductView().contains(result));
-    }*/
+    }
 
-    /*@Test
+    @Test
     public void toStringForChecking() {
-        Comment comment = new Comment("text", customer.getUsername(), product.getProductID());
+        Comment comment = new Comment("title","text", customer.getUsername(), product.getProductID());
         String result = "Product Name: name";
         result += "Sender: customerUser" + "\n";
         result += "Message: text" + "\n";
         Assert.assertTrue(comment.toStringForChecking().contains(result));
-    }*/
+    }
 
-    /*@Test
+    @Test
     public void isThereCommentForProduct1() {
-        Comment comment = new Comment("text", customer.getUsername(), product.getProductID());
+        Comment comment = new Comment("title","text", customer.getUsername(), product.getProductID());
         Assert.assertFalse(comment.isConfirmed());
-        comment.setConfirmationState("ACCEPTED");
+        comment.setConfirmationState(Confirmation.ACCEPTED);
         Assert.assertTrue(Comment.isThereCommentForProduct(product.getProductID()));
-    }*/
+    }
 
-    /*@Test
+    @Test
     public void isThereCommentForProduct2() {
-        Comment comment = new Comment("text", customer.getUsername(), product.getProductID());
-        comment.setConfirmationState("DENIED");
+        Comment comment = new Comment("title","text", customer.getUsername(), product.getProductID());
+        comment.setConfirmationState(Confirmation.DENIED);
         Assert.assertFalse(Comment.isThereCommentForProduct(product.getProductID()));
     }
 
@@ -73,24 +74,24 @@ public class CommentTest {
 
     @Test
     public void getProductID() {
-        Comment comment = new Comment("text", customer.getUsername(), product.getProductID());
+        Comment comment = new Comment("title","text", customer.getUsername(), product.getProductID());
         Assert.assertEquals(product.getProductID(), comment.getProductID());
     }
 
     @Test
     public void createString() {
-        Comment comment = new Comment("text", customer.getUsername(), product.getProductID());
+        Comment comment = new Comment("title","text", customer.getUsername(), product.getProductID());
         Assert.assertTrue(comment.createID().startsWith("Comment---"));
     }
 
     @Test
     public void getCommentsForProduct() {
-        Comment comment = new Comment("text", customer.getUsername(), product.getProductID());
-        Comment comment2 = new Comment("text", customer.getUsername(), product.getProductID());
-        Comment comment3 = new Comment("text", customer.getUsername(), product.getProductID());
-        comment.setConfirmationState("ACCEPTED");
-        comment2.setConfirmationState("ACCEPTED");
-        comment3.setConfirmationState("ACCEPTED");
+        Comment comment = new Comment("title","text", customer.getUsername(), product.getProductID());
+        Comment comment2 = new Comment("title","text", customer.getUsername(), product.getProductID());
+        Comment comment3 = new Comment("title","text", customer.getUsername(), product.getProductID());
+        comment.setConfirmationState(Confirmation.ACCEPTED);
+        comment2.setConfirmationState(Confirmation.ACCEPTED);
+        comment3.setConfirmationState(Confirmation.ACCEPTED);
         ArrayList<String> arrayList = new ArrayList<>();
         arrayList.add(comment.getCommentID());
         arrayList.add(comment2.getCommentID());
@@ -100,15 +101,15 @@ public class CommentTest {
 
     @Test
     public void getCommentsForProductStringFormatted() {
-        Comment comment = new Comment("text", customer.getUsername(), product.getProductID());
-        Comment comment2 = new Comment("text", customer.getUsername(), product.getProductID());
-        Comment comment3 = new Comment("text", customer.getUsername(), product.getProductID());
-        comment.setConfirmationState("ACCEPTED");
-        comment2.setConfirmationState("ACCEPTED");
-        comment3.setConfirmationState("ACCEPTED");
+        Comment comment = new Comment("title","text", customer.getUsername(), product.getProductID());
+        Comment comment2 = new Comment("title","text", customer.getUsername(), product.getProductID());
+        Comment comment3 = new Comment("title","text", customer.getUsername(), product.getProductID());
+        comment.setConfirmationState(Confirmation.ACCEPTED);
+        comment2.setConfirmationState(Confirmation.ACCEPTED);
+        comment3.setConfirmationState(Confirmation.ACCEPTED);
         String result = comment.toStringForProductView() + comment2.toStringForProductView() + comment3.toStringForProductView();
         Assert.assertEquals(result, Comment.getCommentsForProductStringFormatted(product.getProductID()));
 
-    }*/
+    }
 
 }

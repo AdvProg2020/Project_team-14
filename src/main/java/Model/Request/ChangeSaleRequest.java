@@ -24,7 +24,8 @@ public class ChangeSaleRequest extends Request {
     }
 
     public void updateAttributeWithUpdatedInfo() throws ParseException {
-        Sale sale = Storage.getSaleById(objectID);
+        Sale sale = (Sale) object;
+        assert sale != null;
         if (attribute.equals(SaleAttributes.END_DATE)) {
             sale.setEnd(updatedInfo);
         } else if (attribute.equals(SaleAttributes.START_DATE)) {
@@ -35,7 +36,7 @@ public class ChangeSaleRequest extends Request {
     }
 
     public String toStringChangeSale() {
-        return "Salesman username: " + accountUsername + "\n" +
+        return "Salesman username: " + salesmanUsername + "\n" +
                 "Attribute to change: " + attribute.name().toLowerCase() + "\n"
                 + "New attribute value: " + updatedInfo
                 + "Confirmation State: " + confirmation.name() + "\n";

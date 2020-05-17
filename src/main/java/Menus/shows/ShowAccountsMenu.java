@@ -6,6 +6,7 @@ import Menus.Menu;
 import Menus.Sorts.AccountsSortMenu;
 import Menus.Views.ViewAccountMenu;
 
+import java.text.ParseException;
 import java.util.HashMap;
 
 public class ShowAccountsMenu extends ShowsMenu {
@@ -40,7 +41,7 @@ public class ShowAccountsMenu extends ShowsMenu {
             }
 
             @Override
-            public void execute() {
+            public void execute() throws ParseException {
                 if (hasBeenCalled) {
                     hasBeenCalled = false;
                 } else {

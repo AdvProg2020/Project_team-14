@@ -2,6 +2,7 @@ package Menus;
 
 import Controller.Server;
 
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -66,13 +67,13 @@ public class Menu {
         return this.menuName;
     }
 
-    public void checkBack(String command) {
+    public void checkBack(String command) throws ParseException {
         if (command.equalsIgnoreCase("back")) {
             fatherMenu.execute();
         }
     }
 
-    protected void show() {
+    protected void show() throws ParseException {
         System.out.println(this.menuName + ":");
         for (Integer menuNum : subMenus.keySet()) {
             System.out.println(menuNum + ". " + subMenus.get(menuNum).getMenuName());
@@ -83,7 +84,7 @@ public class Menu {
             System.out.println((subMenus.size() + 1) + ". Exit");
     }
 
-    public void execute() {
+    public void execute() throws ParseException {
         if (!isUserLogin && !logoutType) {
             if (fatherMenu instanceof AccountMenu) {
                 Menu.backFromAccountMenu = true;

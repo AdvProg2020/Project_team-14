@@ -5,10 +5,11 @@ import Menus.Manages.ManageProductsMenu;
 import Menus.Manages.ManageSalesMenu;
 import Menus.Views.ViewAccountMenu;
 
+import java.text.ParseException;
 import java.util.HashMap;
 
 public class SalesmanMenu extends Menu {
-    public SalesmanMenu(Menu fatherMenu, String menuName) {
+    public SalesmanMenu(Menu fatherMenu, String menuName) throws ParseException {
         super(fatherMenu, menuName);
         this.logoutType = false;
         HashMap<Integer, Menu> subMenus = new HashMap<Integer, Menu>();

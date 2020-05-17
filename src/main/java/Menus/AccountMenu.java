@@ -1,11 +1,12 @@
 package Menus;
 
+import java.text.ParseException;
 import java.util.HashMap;
 
 public class AccountMenu extends Menu {
     private HashMap<String, Menu> subMenus;
 
-    public AccountMenu(Menu fatherMenu, String menuName) {
+    public AccountMenu(Menu fatherMenu, String menuName) throws ParseException {
         super(fatherMenu, menuName);
         this.logoutType = false;
         HashMap<String, Menu> subMenus = new HashMap<String, Menu>();
@@ -17,7 +18,7 @@ public class AccountMenu extends Menu {
     }
 
     @Override
-    public void execute() {
+    public void execute() throws ParseException {
         if (Menu.backFromAccountMenu) {
             Menu.backFromAccountMenu = false;
             fatherMenu.execute();

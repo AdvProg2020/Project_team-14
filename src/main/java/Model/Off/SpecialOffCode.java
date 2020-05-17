@@ -37,6 +37,12 @@ public class SpecialOffCode extends RandomString implements Runnable, Serializab
         specialOffCodeID = createID("SpecialOffCode---");
     }
 
+    //----[ updated newly ]----- constructor has parameter, change class parameter
+    public SpecialOffCode() {
+        allSpecialOffCodes.add(this);
+        specialOffCodeID = createID("SpecialOffCode");
+    }
+
     public void activate() {
         activeness = true;
         run();
@@ -85,7 +91,7 @@ public class SpecialOffCode extends RandomString implements Runnable, Serializab
                 new OffCode(today, tomorrow, percentage, ceiling, numberOfTimesItCanBeUsed,
                         new ArrayList<>(Collections.singleton(Customer.getRandomUsername())));
             }
-        } catch (/*ParseException e*/Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         try {

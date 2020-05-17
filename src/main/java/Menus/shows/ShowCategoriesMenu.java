@@ -10,6 +10,7 @@ import Menus.Views.ViewAccountMenu;
 import Menus.Views.ViewCategoryMenu;
 import Menus.Views.ViewRequestMenu;
 
+import java.text.ParseException;
 import java.util.HashMap;
 
 public class ShowCategoriesMenu extends ShowsMenu {
@@ -55,7 +56,7 @@ public class ShowCategoriesMenu extends ShowsMenu {
             }
 
             @Override
-            public void execute() {
+            public void execute() throws ParseException {
                 if (hasBeenCalled) {
                     hasBeenCalled = false;
                 } else {

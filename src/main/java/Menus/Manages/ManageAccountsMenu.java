@@ -5,6 +5,7 @@ import Menus.Menu;
 import Menus.Views.ViewAccountMenu;
 import Menus.shows.ShowAccountsMenu;
 
+import java.text.ParseException;
 import java.util.HashMap;
 
 public class ManageAccountsMenu extends Menu {
@@ -28,10 +29,10 @@ public class ManageAccountsMenu extends Menu {
             }*/
 
             @Override
-            public void execute() {
+            public void execute() throws ParseException {
                 System.out.println(this.menuName);
                 System.out.println("if you input back we will go back");
-                String message = new String();
+                String message;
                 String firstName, lastName;
                 String username, password;
                 String Email, telephone;
@@ -71,7 +72,7 @@ public class ManageAccountsMenu extends Menu {
             boolean hasBeenCalled = true;
 
             @Override
-            public void execute() {
+            public void execute() throws ParseException {
                 if (hasBeenCalled) {
                     hasBeenCalled = false;
                 } else {
@@ -97,7 +98,7 @@ public class ManageAccountsMenu extends Menu {
     }
 
     @Override
-    public void execute() {
+    public void execute() throws ParseException {
         ((ShowAccountsMenu) this.subMenus.get(1)).resetFilters();
         ((ShowAccountsMenu) this.subMenus.get(1)).resetSorts();
         super.execute();
