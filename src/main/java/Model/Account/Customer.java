@@ -1,7 +1,9 @@
 package Model.Account;
 
 import Model.Cart.Cart;
+import Model.Off.Off;
 import Model.Off.OffCode;
+import Model.Storage;
 
 import java.io.*;
 import java.util.HashMap;
@@ -93,6 +95,21 @@ public class Customer extends Account implements Serializable {
 
     public void addOffCode(OffCode offCode) {
         customerOffCodes.put(offCode.getOffCodeID(), offCode.getNumberOfTimesCanBeUsed());
+    }
+
+    public String getOffCodeInfo(String offCodeID) {
+        /*if (!Storage.isThereOffCodeWithID(offCodeID)) {                           **redundant
+            return "ERROR: there isn't exist such a offCode";
+        }*/
+        OffCode offCode = Storage.getOffCodeById(offCodeID);
+        /*if (!offCode.canCustomerUseItWithUsername(this.getUsername())) {          **redundant
+            return "ERROR: you don't have access to this offCode";
+        }*/
+        if (customerOffCodes.containsKey(offCodeID)) {
+            return offCode.toString() + "Remaining time you can use it: " + customerOffCodes.get(offCodeID);
+        }
+        return offCode.toString() + "Remaining time you can use it: " + 0;
+
     }
 
     @Override

@@ -432,17 +432,26 @@ public class BossManager {
     }
 
     public void viewOffCode(String username, String offCodeID) {
+        Account account = Storage.getAccountWithUsername(username);
         if (!Storage.isThereOffCodeWithID(offCodeID)) {
-            Server.setAnswer("ERROR, no offCode found with this ID");
+            Server.setAnswer("ERROR: no offCode found with this ID");
         } else {
             OffCode offCode = Storage.getOffCodeById(offCodeID);
-            Server.setAnswer(offCode.toString());
+            if (account.equals(Role.CUSTOMER)) {
+                if (!offCode.canCustomerUseItWithUsername(username)) {
+                    Server.setAnswer("ERROR: you don't access to this offCode");
+                } else {
+                    Server.setAnswer(((Customer) account).getOffCodeInfo(offCodeID));
+                }
+            } else {
+                Server.setAnswer(offCode.toStringForBoss());
+            }
         }
     }
 
     public void showOffCodes(String username, ArrayList<Object> filters, String sortFactor, String sortType) {
         ArrayList<OffCode> allOffCodes;
-        if (Storage.getAccountWithUsername(username).getRole().equals("BOSS")) {
+        if (Storage.getAccountWithUsername(username).getRole().equals(Role.BOSS)) {
             allOffCodes = Storage.allOffCodes;
         } else {
             allOffCodes = OffCode.getAllCustomerOffCodesByUsername(username);
