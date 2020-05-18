@@ -7,16 +7,27 @@ import Menus.Sorts.ProductsSortMenu;
 import Menus.Views.ViewAccountMenu;
 import Menus.Views.ViewProductMenu;
 
+import javax.swing.text.View;
 import java.text.ParseException;
 import java.util.HashMap;
 
 public class ShowProductsMenu extends ShowsMenu {
+    private boolean canChangeSalesmanIDsFilter;
+
     public ShowProductsMenu(Menu fatherMenu, String menuName) {
         super(fatherMenu, menuName);
         this.type = "products";
         HashMap<Integer, Menu> subMenus = new HashMap<Integer, Menu>();
+        if (fatherMenu instanceof ViewAccountMenu) {
+            canChangeSalesmanIDsFilter = false;
+        } else {
+            canChangeSalesmanIDsFilter = true;
+        }
         filter = new ProductsFilterMenu(this, "Product Filter Menu");
         sort = new ProductsSortMenu(this, "Product Sort Menu");
+        if (fatherMenu instanceof ViewAccountMenu) {
+            ((ProductsFilterMenu) filter).setSalesmanIDs(((ViewAccountMenu) fatherMenu).getUsername());
+        }
         if (menuName.equalsIgnoreCase("Show My Products Menu")) {
 
         }
@@ -67,5 +78,9 @@ public class ShowProductsMenu extends ShowsMenu {
                 }
             }
         };
+    }
+
+    public boolean isCanChangeSalesmanIDsFilter() {
+        return canChangeSalesmanIDsFilter;
     }
 }

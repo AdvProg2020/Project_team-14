@@ -17,11 +17,7 @@ public class ViewAccountMenu extends Menu {
         if (whereItHasBeenCalled <= 3) {
             subMenus.put(1, new EditAccountMenu(this, "Edit Personal Info Menu"));
             subMenus.put(2, getDeleteAccountMenu());
-            if (whereItHasBeenCalled == 3) {
-                subMenus.put(3, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
-            } else {
-                subMenus.put(3, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
-            }
+            subMenus.put(3, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
         } else {
             server.clientToServer("see authorization+" + Menu.username + "+" + this.username);
             String serverAnswer = server.serverToClient();
@@ -31,12 +27,12 @@ public class ViewAccountMenu extends Menu {
                     subMenus.put(2, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
                 } else {
                     if (serverAnswer.equalsIgnoreCase("salesman")) {
-                        subMenus.put(1, new ShowProductsMenu(this, "Show Products Menu"));
-                        subMenus.put(2, new ShowRequestsMenu(this, "Show Requests Menu"));
+                        subMenus.put(1, new ShowProductsMenu(this, "Show Salesman Products Menu"));
+                        subMenus.put(2, new ShowRequestsMenu(this, "Show Salesman Requests Menu"));
                         subMenus.put(3, getDeleteAccountMenu());
                         subMenus.put(4, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
                     } else {
-                        subMenus.put(1, new ShowRequestsMenu(this, "Show Requests Menu"));
+                        subMenus.put(1, new ShowRequestsMenu(this, "Show Customer Requests Menu"));
                         subMenus.put(2, getDeleteAccountMenu());
                         subMenus.put(3, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
                     }

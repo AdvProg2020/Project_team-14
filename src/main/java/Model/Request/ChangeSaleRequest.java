@@ -1,9 +1,7 @@
 package Model.Request;
 
 import Model.Off.Sale;
-import Model.Product.Product;
 import Model.Request.Enum.*;
-import Model.Storage;
 
 import java.text.ParseException;
 
@@ -36,7 +34,7 @@ public class ChangeSaleRequest extends Request {
     }
 
     public String toStringChangeSale() {
-        return "Salesman username: " + salesmanUsername + "\n" +
+        return "Salesman username: " + accountUsername + "\n" +
                 "Attribute to change: " + attribute.name().toLowerCase() + "\n"
                 + "New attribute value: " + updatedInfo
                 + "Confirmation State: " + confirmation.name() + "\n";

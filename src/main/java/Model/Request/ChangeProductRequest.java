@@ -2,7 +2,6 @@ package Model.Request;
 
 import Model.Product.Product;
 import Model.Request.Enum.*;
-import Model.Storage;
 
 import java.text.ParseException;
 
@@ -39,7 +38,7 @@ public class ChangeProductRequest extends Request {
             product.setDescription(updatedInfo);
         } else if (attribute.equals(ProductAttributes.IS_ON_SALE)) {
             assert product != null;
-            product.setIsOnSale(salesmanUsername, Boolean.parseBoolean(updatedInfo));
+            product.setIsOnSale(accountUsername, Boolean.parseBoolean(updatedInfo));
         }
     }
 

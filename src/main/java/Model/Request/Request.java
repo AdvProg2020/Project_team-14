@@ -18,16 +18,16 @@ import static Model.RandomString.createID;
 
 public class Request implements Serializable {
     protected String requestID;
-    protected String salesmanUsername;
+    protected String accountUsername;
     protected Object object;
     protected RequestType requestType;
     protected Confirmation confirmation;
 
     //request for making/adding a product, note for changing a sale we shall use ChangeProductRequest class instead
 
-    public Request(String salesmanUsername, Product product, String type) {
+    public Request(String accountUsername, Product product, String type) {
         this.requestID = createID("Request");
-        this.salesmanUsername = salesmanUsername;
+        this.accountUsername = accountUsername;
         this.object = product;
         if (type.equalsIgnoreCase(String.valueOf(RequestType.CHANGE_PRODUCT))) {
             requestType = RequestType.CHANGE_PRODUCT;
@@ -42,9 +42,9 @@ public class Request implements Serializable {
 
     //request for making/adding a sale, note for changing a sale we shall use ChangeSaleRequest class instead
 
-    public Request(String salesmanUsername, Sale sale, String type) {
+    public Request(String accountUsername, Sale sale, String type) {
         this.requestID = createID("Request");
-        this.salesmanUsername = salesmanUsername;
+        this.accountUsername = accountUsername;
         this.object = sale;
         if (type.equalsIgnoreCase(String.valueOf(RequestType.CHANGE_SALE))) {
             requestType = RequestType.CHANGE_SALE;
@@ -59,9 +59,9 @@ public class Request implements Serializable {
 
     //request for registering a salesman
 
-    public Request(String salesmanUsername) {
+    public Request(String accountUsername) {
         this.requestID = createID("Request");
-        this.salesmanUsername = salesmanUsername;
+        this.accountUsername = accountUsername;
         this.object = null;
         this.requestType = RequestType.REGISTER_SALESMAN;
         Storage.getAllRequests().add(this);
@@ -72,6 +72,7 @@ public class Request implements Serializable {
 
     public Request(Comment comment) {
         this.requestID = createID("Request");
+        this.accountUsername = comment.getSenderUsername();
         this.object = comment;
         this.requestType = RequestType.COMMENT_CONFIRMATION;
         Storage.getAllRequests().add(this);
@@ -105,11 +106,11 @@ public class Request implements Serializable {
     }
 
     public String getAccountUsername() {
-        return salesmanUsername;
+        return accountUsername;
     }
 
     public void setAccountUsername(String accountUsername) {
-        this.salesmanUsername = accountUsername;
+        this.accountUsername = accountUsername;
     }
 
     //it accepts the request and makes the needed changes in objects as desired
@@ -131,11 +132,11 @@ public class Request implements Serializable {
         } else if (this.requestType.equals(RequestType.DELETE_PRODUCT)) {
             Product product = (Product) object;
             this.confirmation = Confirmation.ACCEPTED;
-            product.deleteForSalesman(salesmanUsername);
+            product.deleteForSalesman(accountUsername);
         } else if (this.requestType.equals(RequestType.ADD_NEW_PRODUCT)) {
             this.confirmation = Confirmation.ACCEPTED;
             Product product = (Product) object;
-            product.setConfirmationState(salesmanUsername, Confirmation.ACCEPTED);
+            product.setConfirmationState(accountUsername, Confirmation.ACCEPTED);
         } else if (this.requestType.equals(RequestType.CHANGE_PRODUCT)) {
             this.confirmation = Confirmation.ACCEPTED;
             if (this instanceof ChangeProductRequest) {
@@ -143,7 +144,7 @@ public class Request implements Serializable {
             }
         } else if (this.requestType.equals(RequestType.REGISTER_SALESMAN)) {
             this.confirmation = Confirmation.ACCEPTED;
-            Salesman salesman = (Salesman) Storage.getAccountWithUsername(salesmanUsername);
+            Salesman salesman = (Salesman) Storage.getAccountWithUsername(accountUsername);
             assert salesman != null;
             salesman.setConfirmationState(Confirmation.ACCEPTED);
         } else if (this.requestType.equals(RequestType.COMMENT_CONFIRMATION)) {
@@ -173,15 +174,15 @@ public class Request implements Serializable {
         } else if (this.requestType.equals(RequestType.ADD_NEW_PRODUCT)) {
             this.confirmation = Confirmation.DENIED;
             Product product = (Product) object;
-            product.setConfirmationState(salesmanUsername, Confirmation.DENIED);
+            product.setConfirmationState(accountUsername, Confirmation.DENIED);
         } else if (this.requestType.equals(RequestType.CHANGE_PRODUCT)) {
             this.confirmation = Confirmation.DENIED;
         } else if (this.requestType.equals(RequestType.REGISTER_SALESMAN)) {
             this.confirmation = Confirmation.DENIED;
-            Salesman salesman = (Salesman) Storage.getAccountWithUsername(salesmanUsername);
+            Salesman salesman = (Salesman) Storage.getAccountWithUsername(accountUsername);
             assert salesman != null;
             salesman.setConfirmationState(Confirmation.DENIED);
-            this.salesmanUsername = "deleted account";
+            this.accountUsername = "deleted account";
         } else if (this.requestType.equals(RequestType.COMMENT_CONFIRMATION)) {
             this.confirmation = Confirmation.DENIED;
             Comment comment = (Comment) object;
@@ -194,8 +195,8 @@ public class Request implements Serializable {
     }
 
     private String toStringRegisterSalesman() {
-        if (!this.salesmanUsername.equals("deleted account")) {
-            Salesman salesman = (Salesman) Storage.getAccountWithUsername(salesmanUsername);
+        if (!this.accountUsername.equals("deleted account")) {
+            Salesman salesman = (Salesman) Storage.getAccountWithUsername(accountUsername);
             String result = "";
             result += "General information of salesman: " + "\n";
             assert salesman != null;
@@ -211,7 +212,7 @@ public class Request implements Serializable {
 
     private String toStringAddNewProduct() {
         Product product = (Product) object;
-        Salesman salesman = (Salesman) Storage.getAccountWithUsername(salesmanUsername);
+        Salesman salesman = (Salesman) Storage.getAccountWithUsername(accountUsername);
         String result = "";
         result += "General information of salesman: " + "\n";
         assert salesman != null;
@@ -223,19 +224,19 @@ public class Request implements Serializable {
 
     private String toStringAddNewSale() {
         Sale sale = (Sale) object;
-        return "Salesman username: " + salesmanUsername + "\n" + "General information of sale: " + "\n"
+        return "Salesman username: " + accountUsername + "\n" + "General information of sale: " + "\n"
                 + ((Off) sale).toString() + "\n" + "Confirmation State: " + confirmation.name() + "\n";
     }
 
     private String toStringDeleteSale() {
         Sale sale = (Sale) object;
-        return "Salesman username: " + salesmanUsername + "\n" + "General information of sale: " + "\n"
+        return "Salesman username: " + accountUsername + "\n" + "General information of sale: " + "\n"
                 + sale.toString() + "\n";
     }
 
     private String toStringDeleteProduct() {
         Product product = (Product) object;
-        return "Salesman username: " + salesmanUsername + "\n" + "General information of product: " + "\n"
+        return "Salesman username: " + accountUsername + "\n" + "General information of product: " + "\n"
                 + product.toStringForBossView() + "\n";
     }
 

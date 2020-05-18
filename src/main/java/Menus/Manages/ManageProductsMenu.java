@@ -18,9 +18,9 @@ public class ManageProductsMenu extends Menu {
         if (fatherMenu instanceof BossMenu) {
             subMenus.put(1, new ShowProductsMenu(this, "Show Products Menu"));
             subMenus.put(2, getSearchProductMenu());
-            subMenus.put(3, new ShowRequestsMenu(this, "Add Products Requests"));
-            subMenus.put(4, new ShowRequestsMenu(this, "Delete Products Requests"));
-            subMenus.put(5, new ShowRequestsMenu(this, "Edit Products Requests"));
+            subMenus.put(3, new ShowRequestsMenu(this, "Show Add Products Requests"));
+            subMenus.put(4, new ShowRequestsMenu(this, "Show Delete Products Requests"));
+            subMenus.put(5, new ShowRequestsMenu(this, "Show Edit Products Requests"));
             subMenus.put(6, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
         } else if (fatherMenu instanceof SalesmanMenu) {
             subMenus.put(1, getAddProductMenu());

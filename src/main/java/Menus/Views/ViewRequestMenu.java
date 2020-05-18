@@ -11,13 +11,18 @@ public class ViewRequestMenu extends Menu {
     private int whereItHasBeenCalled;
     private String requestID;
     private String objectID;
+    private String productID;
     private String accountUsername;
 
     public void requestSubMenus() throws ParseException {
         HashMap<Integer, Menu> subMenus = new HashMap<Integer, Menu>();
-        if (whereItHasBeenCalled == 2) {
+        if (whereItHasBeenCalled >= 2) {
             server.clientToServer("what is request object ID+" + this.requestID);
             this.objectID = server.serverToClient();
+        }
+        if (whereItHasBeenCalled == 4) {
+            server.clientToServer("what is comment product ID+" + this.objectID);
+            this.productID = server.serverToClient();
         }
         server.clientToServer("what is request username+" + this.requestID);
         setAccountUsername(server.serverToClient());
@@ -31,6 +36,13 @@ public class ViewRequestMenu extends Menu {
                 if (whereItHasBeenCalled == 2) {
                     subMenus.put(4, new ViewProductMenu(this, "View Product Menu", objectID));
                     subMenus.put(5, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
+                } else if (whereItHasBeenCalled == 3) {
+                    subMenus.put(4, new ViewSalesMenu(this, "View Sales Menu", objectID));
+                    subMenus.put(5, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
+                } else if (whereItHasBeenCalled == 4) {
+                    subMenus.put(4, new ViewCommentMenu(this, "View Comment Menu", objectID));
+                    subMenus.put(5, new ViewProductMenu(this, "View Product Menu", productID));
+                    subMenus.put(6, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
                 } else {
                     subMenus.put(4, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
                 }
@@ -39,6 +51,15 @@ public class ViewRequestMenu extends Menu {
                     subMenus.put(1, new ViewProductMenu(this, "View Product Menu", objectID));
                     subMenus.put(2, getDeleteRequestMenu());
                     subMenus.put(3, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
+                } else if (whereItHasBeenCalled == 3) {
+                    subMenus.put(1, new ViewSalesMenu(this, "View Sales Menu", objectID));
+                    subMenus.put(2, getDeleteRequestMenu());
+                    subMenus.put(3, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
+                } else if (whereItHasBeenCalled == 4) {
+                    subMenus.put(1, new ViewCommentMenu(this, "View Comment Menu", objectID));
+                    subMenus.put(2, new ViewProductMenu(this, "View Product Menu", productID));
+                    subMenus.put(3, getDeleteRequestMenu());
+                    subMenus.put(4, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
                 } else {
                     subMenus.put(1, getDeleteRequestMenu());
                     subMenus.put(2, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
@@ -52,6 +73,15 @@ public class ViewRequestMenu extends Menu {
                     subMenus.put(2, new ViewProductMenu(this, "View Product Menu", objectID));
                     subMenus.put(3, getDeleteRequestMenu());
                     subMenus.put(4, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
+                } else if (whereItHasBeenCalled == 3) {
+                    subMenus.put(2, new ViewSalesMenu(this, "View Sales Menu", objectID));
+                    subMenus.put(3, getDeleteRequestMenu());
+                    subMenus.put(4, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
+                } else if (whereItHasBeenCalled == 4) {
+                    subMenus.put(2, new ViewCommentMenu(this, "View Comment Menu", objectID));
+                    subMenus.put(3, new ViewProductMenu(this, "View Product Menu", productID));
+                    subMenus.put(4, getDeleteRequestMenu());
+                    subMenus.put(5, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
                 } else {
                     subMenus.put(2, getDeleteRequestMenu());
                     subMenus.put(3, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
@@ -61,6 +91,15 @@ public class ViewRequestMenu extends Menu {
                     subMenus.put(1, new ViewProductMenu(this, "View Product Menu", objectID));
                     subMenus.put(2, getDeleteRequestMenu());
                     subMenus.put(3, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
+                } else if (whereItHasBeenCalled == 3) {
+                    subMenus.put(1, new ViewSalesMenu(this, "View Sales Menu", objectID));
+                    subMenus.put(2, getDeleteRequestMenu());
+                    subMenus.put(3, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
+                } else if (whereItHasBeenCalled == 4) {
+                    subMenus.put(1, new ViewCommentMenu(this, "View Comment Menu", objectID));
+                    subMenus.put(2, new ViewProductMenu(this, "View Product Menu", productID));
+                    subMenus.put(3, getDeleteRequestMenu());
+                    subMenus.put(4, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
                 } else {
                     subMenus.put(1, getDeleteRequestMenu());
                     subMenus.put(2, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
@@ -76,8 +115,22 @@ public class ViewRequestMenu extends Menu {
         this.logoutType = false;
         if (requestType.equalsIgnoreCase("Register_Salesman")) {
             this.whereItHasBeenCalled = 1;
-        } else if (requestType.equalsIgnoreCase("ADD_PRODUCT")) {
+        } else if (requestType.equalsIgnoreCase("ADD_NEW_PRODUCT")) {
             this.whereItHasBeenCalled = 2;
+        } else if (requestType.equalsIgnoreCase("DELETE_NEW PRODUCT")) {
+            this.whereItHasBeenCalled = 2;
+        } else if (requestType.equalsIgnoreCase("CHANGE_PRODUCT")) {
+            this.whereItHasBeenCalled = 2;
+        } else if (requestType.equalsIgnoreCase("ADD_NEW_SALE")) {
+            this.whereItHasBeenCalled = 3;
+        } else if (requestType.equalsIgnoreCase("CHANGE_SALE")) {
+            this.whereItHasBeenCalled = 3;
+        } else if (requestType.equalsIgnoreCase("DELETE_SALE")) {
+            this.whereItHasBeenCalled = 3;
+        } else if (requestType.equalsIgnoreCase("ADD_TO_PRODUCT")) {
+            this.whereItHasBeenCalled = 2;
+        } else if (requestType.equalsIgnoreCase("COMMENT_CONFIRMATION")) {
+            this.whereItHasBeenCalled = 4;
         }
         requestSubMenus();
     }

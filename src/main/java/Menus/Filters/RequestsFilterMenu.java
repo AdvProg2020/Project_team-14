@@ -82,7 +82,21 @@ public class RequestsFilterMenu extends FiltersMenu {
                 }
                 if (requestType.equals("REGISTER_SALESMAN")) {
                     return true;
-                } else if (requestType.equals("ADD_PRODUCT")) {
+                } else if (requestType.equals("ADD_TO_PRODUCT")) {
+                    return true;
+                } else if (requestType.equals("ADD_NEW_PRODUCT")) {
+                    return true;
+                } else if (requestType.equals("CHANGE_PRODUCT")) {
+                    return true;
+                } else if (requestType.equals("DELETE_PRODUCT")) {
+                    return true;
+                } else if (requestType.equals("ADD_NEW_SALE")) {
+                    return true;
+                } else if (requestType.equals("CHANGE_SALE")) {
+                    return true;
+                } else if (requestType.equals("DELETE_SALE")) {
+                    return true;
+                } else if (requestType.equals("COMMENT_CONFIRMATION")) {
                     return true;
                 } else {
                     return false;

@@ -221,10 +221,10 @@ public class Product implements Serializable {
     }
 
     public String toStringForBoss() {
-        return "Product ID: " + this.productID + "\n" +
-                "Name: " + this.name + "\n" +
-                "Price: " + this.getMinimumPrice() + "\n" +
-                "Average Point: " + this.getAveragePoint() + "\n" +
+        return "Product ID: " + this.productID + " " +
+                "Name: " + this.name + " " +
+                "Price: " + this.getMinimumPrice() + " " +
+                "Average Point: " + this.getAveragePoint() + " " +
                 "Confirmation State: " + this.getOverallConfirmation();
     }
 

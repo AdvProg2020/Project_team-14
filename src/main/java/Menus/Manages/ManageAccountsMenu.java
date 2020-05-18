@@ -22,11 +22,6 @@ public class ManageAccountsMenu extends Menu {
 
     private Menu getCreateNewBossMenu() {
         return new Menu(this, "Create Boss Menu") {
-            /*private void checkBack(String input) {
-                if (input.equals("back")) {
-                    fatherMenu.execute();
-                }
-            }*/
 
             @Override
             public void execute() throws ParseException {

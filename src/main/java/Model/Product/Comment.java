@@ -107,6 +107,17 @@ public class Comment implements Serializable {
         return result;
     }
 
+    @Override
+    public String toString() {
+        String result = "";
+        result += "Product Name: " + Objects.requireNonNull(Product.getProductWithID(productID)).getName();
+        result += "Sender: " + this.senderUsername + "\n";
+        result += "Title: " + this.title + "\n";
+        result += "Message: " + this.text + "\n";
+        result += "Date: " + this.date.toString() + "\n";
+        return result;
+    }
+
     public static boolean isThereCommentForProduct(String productID) {
         for (Comment comment : allComments) {
             if (comment.isConfirmed() && comment.productID.equals(productID)) {
@@ -118,6 +129,10 @@ public class Comment implements Serializable {
 
     public String getCommentID() {
         return commentID;
+    }
+
+    public String getSenderUsername() {
+        return senderUsername;
     }
 
     public String getProductID() {

@@ -14,6 +14,7 @@ import java.util.HashMap;
 public class ShowRequestsMenu extends ShowsMenu {
     //private String serverAnswer;
     private boolean canChangeUsernameFilter = true;
+    private boolean canChangeRequestTypeFilter;
 
     public ShowRequestsMenu(Menu fatherMenu, String menuName) {
         super(fatherMenu, menuName);
@@ -22,10 +23,24 @@ public class ShowRequestsMenu extends ShowsMenu {
         if (fatherMenu instanceof ViewAccountMenu) {
             canChangeUsernameFilter = false;
         }
+        if (menuName.equals("Show Add Products Requests") || menuName.equals("Show Delete Products Requests") ||
+                menuName.equals("Show Edit Products Requests")) {
+            canChangeRequestTypeFilter = false;
+        } else {
+            canChangeRequestTypeFilter = true;
+        }
         filter = new RequestsFilterMenu(this, "Request Filter Menu");
         sort = new RequestsSortMenu(this, "Request Sort Menu");
         if (fatherMenu instanceof ViewAccountMenu) {
             ((RequestsFilterMenu) filter).setUsernameFilter(((ViewAccountMenu) fatherMenu).getUsername());
+        }
+        if (menuName.equals("Show Add Products Requests")) {
+            ((RequestsFilterMenu) filter).setRequestType("ADD_NEW_PRODUCT");
+            ((RequestsFilterMenu) filter).setRequestType("ADD_TO_PRODUCT");
+        } else if (menuName.equals("Show Edit Products Requests")) {
+            ((RequestsFilterMenu) filter).setRequestType("DELETE_PRODUCT");
+        } else if (menuName.equals("Show Delete Products Requests")) {
+            ((RequestsFilterMenu) filter).setRequestType("CHANGE_PRODUCT");
         }
         subMenus.put(1, filter);
         subMenus.put(2, sort);
@@ -81,19 +96,7 @@ public class ShowRequestsMenu extends ShowsMenu {
         return canChangeUsernameFilter;
     }
 
-    /*public String getServerAnswer() {
-        return this.serverAnswer;
-    }*/
-
-    /*private void getInfo() {
-        server.clientToServer("show requests " + username + filter.getFilters());
-        this.serverAnswer = server.serverToClient();
-        System.out.println(serverAnswer);
-    }*/
-
-    /*@Override
-    protected void show() {
-        super.show();
-        getInfo();
-    }*/
+    public boolean isCanChangeRequestTypeFilter() {
+        return canChangeRequestTypeFilter;
+    }
 }
