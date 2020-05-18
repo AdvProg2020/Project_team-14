@@ -221,7 +221,7 @@ public class Server {
         if (isSaleInfoValid(info[2], info[3], info[4])) {
             Server.setAnswer("creation of sale successful");
             String productsID = info[5].substring(info[5].indexOf(":") + 1, info[5].length() - 1);
-            salesmanManager.createSale(info[1], info[2], info[3], Integer.parseInt(info[4])/*, convertStringToArray(productsID)*/);
+            salesmanManager.createSale(info[1], info[2], info[3], Integer.parseInt(info[4]), convertStringToArray(productsID));
         }
     }
 
