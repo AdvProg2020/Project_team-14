@@ -13,6 +13,7 @@ import java.util.HashMap;
 public class ManageOffCodesMenu extends Menu {
     public ManageOffCodesMenu(Menu fatherMenu, String menuName) {
         super(fatherMenu, menuName);
+        this.logoutType = false;
         HashMap<Integer, Menu> subMenus = new HashMap<>();
         subMenus.put(1, new ShowOffCodesMenu(this, "Show OffCodes Menu", 0));
         subMenus.put(2, getSearchOffCodeMenu());
@@ -103,13 +104,16 @@ public class ManageOffCodesMenu extends Menu {
             }
 
             private void addUsernameToArray(String username, ArrayList<String> array) throws ParseException, IOException {
-                //server.clientToServer("is user exist+" + username);
-                server.clientToServer("search account+" + Menu.username + "+" + username);
-                if (server.serverToClient().equalsIgnoreCase("search completed")) {
-                    array.add(username);
+                server.clientToServer("can add to offCode+" + Menu.username + "+" + username);
+                if (server.serverToClient().equalsIgnoreCase("yes")) {
+                    if (!array.contains(username)) {
+                        array.add(username);
+                    } else {
+                        System.err.println("you've already add this user to list");
+                    }
                 }
                 else {
-                    System.err.println("this user doesn't exist, try another one or type DONE to finish addition");
+                    System.err.println(server.serverToClient());
                 }
             }
 

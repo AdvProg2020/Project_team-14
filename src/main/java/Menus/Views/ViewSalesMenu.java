@@ -14,6 +14,7 @@ public class ViewSalesMenu extends Menu {
 
     public ViewSalesMenu(Menu fatherMenu, String menuName, String saleID) {
         super(fatherMenu, menuName);
+        this.logoutType = false;
         this.saleID = saleID;
         HashMap<Integer, Menu> subMenus = new HashMap<>();
         subMenus.put(1, new EditSaleMenu(this, "Edit Sale Menu", saleID));

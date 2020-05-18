@@ -15,6 +15,7 @@ public class ViewOffCodeMenu extends Menu {
 
     public ViewOffCodeMenu(Menu fatherMenu, String menuName, String offCodeID, int whereHasBeenCalled) {
         super(fatherMenu, menuName);
+        this.logoutType = false;
         this.offCodeID = offCodeID;
         this.whereHasBeenCalled = whereHasBeenCalled;
         setSubMenus();

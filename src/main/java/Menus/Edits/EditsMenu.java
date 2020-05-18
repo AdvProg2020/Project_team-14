@@ -4,6 +4,7 @@ import Menus.Menu;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.HashMap;
 
 public class EditsMenu extends Menu {
     private String itemID;
@@ -13,6 +14,7 @@ public class EditsMenu extends Menu {
 
     public EditsMenu(Menu fatherMenu, String menuName, String type, String itemID) {
         super(fatherMenu, menuName);
+        this.logoutType = false;
         this.type = type;
         this.itemID = itemID;
     }
@@ -51,11 +53,11 @@ public class EditsMenu extends Menu {
         };
     }
 
-    /*public Menu getAdditionSubMenu(Menu fatherMenu, String wantedAttribute) {
+    public Menu getAdditionSubMenu(Menu fatherMenu, String wantedAttribute) {
         return new Menu(fatherMenu, "Edit " + wantedAttribute + " Menu (Addable)") {
 
             @Override
-            public void execute() {
+            public void execute() throws IOException, ParseException {
                 System.out.println(menuName);
                 System.out.println("if you input back we will go back");
 
@@ -64,15 +66,22 @@ public class EditsMenu extends Menu {
                 ((EditsMenu) fatherMenu).setAttribute(wantedAttribute);
                 String currentItem = ((EditsMenu) fatherMenu).getListFromServer();
                 System.out.println(currentItem);
+                System.out.println("use this format to edit:\n\"[productID] -add\" : to add a product,\n" +
+                        "\"[productID] -remove\" : to remove a product\nDONE : to end editing");
+                //HashMap<String, String> = getInfo();
 
             }
-        };
-    }*/
 
-    /*public String getListFromServer() {
+            private HashMap<String, String> getInfo() {
+                return null;
+            }
+        };
+    }
+
+    public String getListFromServer() throws ParseException, IOException {
         server.clientToServer("list " + type + " " + attribute + "+" + itemID);
         return server.serverToClient();
-    }*/
+    }
 
     public String sendInfoToServerToChange() throws IOException, ParseException {
         server.clientToServer("edit " + type + "+" + itemID + "+" + attribute + "+" + updatedInfo);
