@@ -3,9 +3,11 @@ package Model.Account;
 import Model.RandomString;
 import Model.Storage;
 
+import java.io.Serializable;
+
 import static Model.Storage.*;
 
-public abstract class Account {
+public abstract class Account implements Serializable {
     private boolean isOnline;
     private String username;
     private String password;

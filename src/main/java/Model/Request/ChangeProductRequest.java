@@ -3,9 +3,10 @@ package Model.Request;
 import Model.Product.Product;
 import Model.Request.Enum.*;
 
+import java.io.Serializable;
 import java.text.ParseException;
 
-public class ChangeProductRequest extends Request {
+public class ChangeProductRequest extends Request implements Serializable {
     ProductAttributes attribute;
     String updatedInfo;
 

@@ -4,6 +4,7 @@ import Menus.LoginOrRegisterMenu;
 import Menus.Menu;
 import Menus.shows.ShowRequestsMenu;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -104,7 +105,7 @@ public class RequestsFilterMenu extends FiltersMenu {
             }
 
             @Override
-            public void execute() throws ParseException {
+            public void execute() throws ParseException, IOException {
                 System.out.println(this.getMenuName());
                 System.out.println("if you input back we will go back");
                 while (true) {
@@ -127,20 +128,16 @@ public class RequestsFilterMenu extends FiltersMenu {
 
     private Menu getChangeUsernameMenu() {
         return new Menu(this, "Change Username Menu") {
-            private boolean checkInputValidation(String username) throws ParseException {
+            private boolean checkInputValidation(String username) throws ParseException, IOException {
                 if (username.equals("clear")) {
                     return true;
                 }
                 server.clientToServer("is account requestable+" + username);
-                if (server.serverToClient().equalsIgnoreCase("yes")) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return server.serverToClient().equalsIgnoreCase("yes");
             }
 
             @Override
-            public void execute() throws ParseException {
+            public void execute() throws ParseException, IOException {
                 System.out.println(this.getMenuName());
                 System.out.println("if you input back we will go back");
                 while (true) {

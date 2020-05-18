@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import Controller.DataBase.EndOfProgramme;
 import Controller.DataBase.startOfProgramme;
 import Menus.shows.ShowRequestsMenu;
 import Model.Account.Role;
@@ -27,6 +28,7 @@ public class Server {
     private BossManager bossManager;
     private SalesmanManager salesmanManager;
     private CustomerManager customerManager;
+    private EndOfProgramme endOfProgramme=new EndOfProgramme();
 
     //first is username, second is a cart
     //private HashMap<String, Cart> abstractCarts;
@@ -336,10 +338,12 @@ public class Server {
 
     //info: create new normal offCode+percentage+ceiling+frequency+start+end+User:[...]
     //info: create new special offCode+percentage+ceiling+frequency+period
+
     private boolean checkOffCodeInfoCorrectness(String[] info) {
         StringBuilder error = new StringBuilder("ERRORS:");
 
         //check different part
+
         if (info[0].equals("create new normal offCode")) {
             error.append(isDateValid(info[4], "START TIME"));
             error.append(isDateValid(info[5], "END TIME"));
@@ -804,7 +808,8 @@ public class Server {
         }
     }
 
-    public String serverToClient() {
+    public String serverToClient() throws IOException {
+        endOfProgramme.updateFiles();
         return Server.answer;
     }
 

@@ -6,9 +6,10 @@ import Model.RandomString;
 import Model.Storage;
 
 import javax.xml.transform.sax.SAXResult;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class SellLog {
+public class SellLog implements Serializable {
     private String sellLogID;
     private BuyLog buyLog;
     private String productID;
@@ -43,6 +44,14 @@ public class SellLog {
         return buyLog.getDeliveryState().name();
     }
 
+    public void setSalesmanID(String salesmanID) {
+        this.salesmanID = salesmanID;
+    }
+
+    public String getSalesmanID() {
+        return salesmanID;
+    }
+
     public static ArrayList<SellLog> getSalesmanSellLogs(String salesmanID) {
         ArrayList<SellLog> arrayList = new ArrayList<>();
         for (SellLog sellLog : Storage.allSellLogs) {
@@ -51,6 +60,20 @@ public class SellLog {
             }
         }
         return arrayList;
+    }
+
+    private void updateSellLogsWithNewUsername(String oldUsername, String newUsername) {
+        if (this.customerID.equals(oldUsername)) {
+            customerID = newUsername;
+        } else if (this.salesmanID.equals(oldUsername)) {
+            salesmanID = newUsername;
+        }
+    }
+
+    public static void updateAllSellLogsWithNewUsername(String oldUsername,String newUsername){
+        for (SellLog sellLog:Storage.allSellLogs){
+            sellLog.updateSellLogsWithNewUsername(oldUsername,newUsername);
+        }
     }
 
     public static boolean hasSalesmanAnySellLog(String salesmanID) {

@@ -2,7 +2,6 @@ package Controller;
 
 import Controller.SortFactorEnum.ViewBuyersOfProductSortFactor;
 import Controller.SortFactorEnum.ProductSortFactor;
-import Exception.*;
 import Model.Account.Account;
 import Model.Account.Role;
 import Model.Log.Log;
@@ -35,7 +34,7 @@ public class ProductManager {
         } else {
             for (Product product : products) {
                 if (isProductInFilter(product, filters)) {
-                    answer.append(product.toStringForBoss() + "\n");
+                    answer.append(product.toStringForBoss()).append("\n");
                     count++;
                 }
             }
@@ -52,6 +51,8 @@ public class ProductManager {
     public void viewProduct(String username, String productID) {
         Account account = Storage.getAccountWithUsername(username);
         Product product = Storage.getProductById(productID);
+        assert product != null;
+        assert account != null;
         if (account.getRole().equals(Role.BOSS)) {
             Server.setAnswer(product.toStringForBossView());
         } else if (account.getRole().equals(Role.SALESMAN)) {
@@ -75,7 +76,7 @@ public class ProductManager {
     //I didn't actually know for what reason this method was going to be used but I designed this
     //for salesman to view their product with the sort factor they want
 
-    public String listProductsForSalesman(String salesmanUser, String sortFactor) throws SortFactorNotAvailableException {
+    public String listProductsForSalesman(String salesmanUser, String sortFactor) throws Exception {
         StringBuilder result = new StringBuilder();
         ArrayList<Product> products = new ArrayList<>(getProductsOfSalesman(salesmanUser));
         if (sortFactor.equalsIgnoreCase(valueOf(ProductSortFactor.ALPHABETICALLY))) {
@@ -89,7 +90,7 @@ public class ProductManager {
         } else if (sortFactor.equals("")) {
             products.sort((Comparator.comparingInt(Product::getSeenCount)));
         } else {
-            throw new SortFactorNotAvailableException("the sort factor isn't authentic " + "\n" +
+            throw new Exception("the sort factor isn't authentic " + "\n" +
                     "the available sort factors: " + ProductSortFactor.getValues() + "\n");
         }
         for (Product product : products) {
@@ -98,7 +99,7 @@ public class ProductManager {
         return result.toString();
     }
 
-    public String listProductsForCustomer(String sortFactor, ArrayList<String> productIDs) throws SortFactorNotAvailableException {
+    public String listProductsForCustomer(String sortFactor, ArrayList<String> productIDs) throws Exception {
         StringBuilder result = new StringBuilder();
         ArrayList<Product> products = new ArrayList<>(getArrayListOfProductsFromArrayListOfProductIDs(productIDs));
         if (sortFactor.equalsIgnoreCase(valueOf(ProductSortFactor.ALPHABETICALLY))) {
@@ -112,7 +113,7 @@ public class ProductManager {
         } else if (sortFactor.equalsIgnoreCase(valueOf(ProductSortFactor.HIGHEST_POINT))) {
             products.sort((Comparator.comparingDouble(Product::getAveragePoint)));
         } else {
-            throw new SortFactorNotAvailableException("the sort factor isn't authentic " + "\n" +
+            throw new Exception("the sort factor isn't authentic " + "\n" +
                     "the available sort factors: " + ProductSortFactor.getValues() + "\n");
         }
         for (Product product : products) {
@@ -129,7 +130,7 @@ public class ProductManager {
     }
 
 
-    public String viewBuyersOfProduct(String productID, String sortFactor) throws SortFactorNotAvailableException {
+    public String viewBuyersOfProduct(String productID, String sortFactor) throws Exception {
         StringBuilder result = new StringBuilder();
         ArrayList<String> buyers = new ArrayList<>(Log.getBuyerOfProduct(productID));
         ViewBuyersOfProductSortFactor.sort(sortFactor, buyers);
@@ -209,11 +210,6 @@ public class ProductManager {
         }
         return arrayList;
     }
-
-    /*public void addCommentForProduct(String text, String username, String productID) {
-        Comment comment = new Comment(text, username, productID);
-        new Request(comment);
-    }*/
 
     public boolean canUserCommentForProduct(String username, String productID) {
         return Comment.canUserCommentForProduct(username, productID);

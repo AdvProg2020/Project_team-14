@@ -1,16 +1,20 @@
 package Controller.DataBase;
 
+import Model.Account.Account;
 import Model.Account.Boss;
 import Model.Account.Customer;
 import Model.Account.Salesman;
+import Model.Cart.Cart;
 import Model.Category.Category;
 import Model.Log.BuyLog;
+import Model.Log.SellLog;
 import Model.Off.OffCode;
 import Model.Off.Sale;
 import Model.Off.SpecialOffCode;
 import Model.Product.Comment;
 import Model.Product.Point;
 import Model.Product.Product;
+import Model.Request.Request;
 import Model.Storage;
 
 import java.io.*;
@@ -22,8 +26,6 @@ public class startOfProgramme extends DataBase {
     public void startProgramme() throws IOException, ClassNotFoundException {
         makeDirectories();
         updateFiles();
-        EndOfProgramme endOfProgramme=new EndOfProgramme();
-        endOfProgramme.run();
     }
 
     private void updateFiles() throws IOException, ClassNotFoundException {
@@ -52,7 +54,7 @@ public class startOfProgramme extends DataBase {
         assert files != null;
         for (File file : files) {
             ObjectInputStream in = new ObjectInputStream(new FileInputStream(file.getAbsolutePath()));
-            Customer s = (Customer) in.readObject();
+            Account s = (Account) in.readObject();
             Storage.getAllAccounts().add(s);
         }
 
@@ -65,7 +67,7 @@ public class startOfProgramme extends DataBase {
         assert files != null;
         for (File file : files) {
             ObjectInputStream in = new ObjectInputStream(new FileInputStream(file.getAbsolutePath()));
-            Boss s = (Boss) in.readObject();
+            Account s = (Account) in.readObject();
             Storage.getAllAccounts().add(s);
         }
     }
@@ -77,15 +79,14 @@ public class startOfProgramme extends DataBase {
         assert files != null;
         for (File file : files) {
             ObjectInputStream in = new ObjectInputStream(new FileInputStream(file.getAbsolutePath()));
-            Salesman s = (Salesman) in.readObject();
+            Account s = (Account) in.readObject();
             Storage.getAllAccounts().add(s);
         }
-
     }
 
     @Override
     protected void updateCategories() throws IOException, ClassNotFoundException {
-        String path = "src\\main\\resources\\DataBase\\Sales";
+        String path = "src\\main\\resources\\DataBase\\Categories";
         File[] files = new File(path).listFiles();
         assert files != null;
         for (File file : files) {
@@ -186,39 +187,39 @@ public class startOfProgramme extends DataBase {
 
     @Override
     protected void updateRequests() throws IOException, ClassNotFoundException {
-        String path = "src\\main\\resources\\DataBase\\Comments";
+        String path = "src\\main\\resources\\DataBase\\Requests";
         File[] files = new File(path).listFiles();
         assert files != null;
         for (File file : files) {
             ObjectInputStream in = new ObjectInputStream(new FileInputStream(file.getAbsolutePath()));
-            Comment s = (Comment) in.readObject();
-            allComments.add(s);
+            Request s = (Request) in.readObject();
+            getAllRequests().add(s);
         }
     }
 
 
     @Override
     protected void updateCarts() throws IOException, ClassNotFoundException {
-        String path = "src\\main\\resources\\DataBase\\SpecialOffCodes";
+        String path = "src\\main\\resources\\DataBase\\Carts";
         File[] files = new File(path).listFiles();
         assert files != null;
         for (File file : files) {
             ObjectInputStream in = new ObjectInputStream(new FileInputStream(file.getAbsolutePath()));
-            SpecialOffCode s = (SpecialOffCode) in.readObject();
-            allSpecialOffCodes.add(s);
+            Cart s = (Cart) in.readObject();
+            allCarts.add(s);
         }
 
     }
 
     @Override
     protected void updateSellLogs() throws IOException, ClassNotFoundException {
-        String path = "src\\main\\resources\\DataBase\\Points";
+        String path = "src\\main\\resources\\DataBase\\SellLogs";
         File[] files = new File(path).listFiles();
         assert files != null;
         for (File file : files) {
             ObjectInputStream in = new ObjectInputStream(new FileInputStream(file.getAbsolutePath()));
-            Point s = (Point) in.readObject();
-            allPoints.add(s);
+            SellLog s = (SellLog) in.readObject();
+            allSellLogs.add(s);
         }
     }
 

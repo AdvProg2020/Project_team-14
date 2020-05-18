@@ -5,6 +5,7 @@ import Menus.Menu;
 import Menus.Views.ViewOffCodeMenu;
 import Menus.shows.ShowOffCodesMenu;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,7 +26,7 @@ public class ManageOffCodesMenu extends Menu {
         return new Menu(this, "Search OffCode Menu") {
 
             @Override
-            public void execute() throws ParseException {
+            public void execute() throws ParseException, IOException {
                 System.out.println(menuName);
                 System.out.println("if you input back we will go back");
                 System.out.println("please input offCode ID:");
@@ -47,7 +48,7 @@ public class ManageOffCodesMenu extends Menu {
         return new Menu(this, "Create Normal OffCode Menu") {
 
             @Override
-            public void execute() throws ParseException {
+            public void execute() throws ParseException, IOException {
                 System.out.println(this.menuName);
                 System.out.println("if you input back we will go back");
 
@@ -81,7 +82,7 @@ public class ManageOffCodesMenu extends Menu {
                 }
             }
 
-            private ArrayList<String> getUserNames() throws ParseException {
+            private ArrayList<String> getUserNames() throws ParseException, IOException {
                 System.out.println("-add [username] : to add\n-delete [username] : to delete in case of mistaken addition\n-DONE : to end addition");
                 ArrayList<String> ans = new ArrayList<>();
                 String command;
@@ -101,7 +102,7 @@ public class ManageOffCodesMenu extends Menu {
                 return ans;
             }
 
-            private void addUsernameToArray(String username, ArrayList<String> array) throws ParseException {
+            private void addUsernameToArray(String username, ArrayList<String> array) throws ParseException, IOException {
                 //server.clientToServer("is user exist+" + username);
                 server.clientToServer("search account+" + Menu.username + "+" + username);
                 if (server.serverToClient().equalsIgnoreCase("search completed")) {
@@ -127,7 +128,7 @@ public class ManageOffCodesMenu extends Menu {
         return new Menu(this, "Create Special OffCode Menu") {
 
             @Override
-            public void execute() throws ParseException {
+            public void execute() throws ParseException, IOException {
                 System.out.println(this.menuName);
                 System.out.println("if you input back we will go back");
 

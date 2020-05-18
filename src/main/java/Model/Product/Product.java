@@ -244,18 +244,16 @@ public class Product implements Serializable {
                     append(remainder.get(salesmanID)).append("\n");
         }
         result.append("Seen Count: ").append(this.seenCount).append("\n");
-        result.append("Average Point" + this.getAveragePoint() + "\n");
+        result.append("Average Point").append(this.getAveragePoint()).append("\n");
         return result.toString();
     }
 
     public String toStringForCustomerView() {
-        StringBuilder result = new StringBuilder();
-        result.append("Product ID: ").append(this.productID).append("\n");
-        result.append("Name: ").append(this.name).append("\n");
-        result.append("Brand: ").append(this.brand).append("\n");
-        result.append("Description: ").append(this.description).append("\n");
-        result.append("Price: ").append(getMinimumPrice()).append("\n");
-        return result.toString();
+        return "Product ID: " + this.productID + "\n" +
+                "Name: " + this.name + "\n" +
+                "Brand: " + this.brand + "\n" +
+                "Description: " + this.description + "\n" +
+                "Price: " + getMinimumPrice() + "\n";
     }
 
     public String toStringForSalesmanView(String salesmanUser) {
@@ -265,7 +263,7 @@ public class Product implements Serializable {
         result.append("Brand: ").append(this.brand).append("\n");
         result.append("Description: ").append(this.description).append("\n");
         if (salesmanIDs.contains(salesmanUser)) {
-            if (hasBeenDeleted.get(salesmanUser) == false) {
+            if (!hasBeenDeleted.get(salesmanUser)) {
                 result.append("Confirmation state for you: ").append(confirmationState.get(salesmanUser)).append("\n");
                 result.append("Your Price: ").append(price.get(salesmanUser)).append("\n");
                 result.append("Your remainder: ").append(remainder.get(salesmanUser)).append("\n");

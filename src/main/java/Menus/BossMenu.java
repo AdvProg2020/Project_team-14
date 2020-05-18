@@ -3,11 +3,12 @@ package Menus;
 import Menus.Manages.*;
 import Menus.Views.ViewAccountMenu;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.HashMap;
 
 public class BossMenu extends Menu {
-    public BossMenu(Menu fatherMenu, String menuName) throws ParseException {
+    public BossMenu(Menu fatherMenu, String menuName) throws ParseException, IOException {
         super(fatherMenu, menuName);
         this.logoutType = false;
         HashMap<Integer, Menu> subMenus = new HashMap<Integer, Menu>();

@@ -1,5 +1,7 @@
 package Model.Request.Enum;
 
-public enum ProductAttributes {
+import java.io.Serializable;
+
+public enum ProductAttributes implements Serializable {
     BRAND,NAME,DESCRIPTION,IS_ON_SALE;
 }

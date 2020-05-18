@@ -1,21 +1,20 @@
 package Controller;
 
-import Controller.SortFactorEnum.ProductSortFactor;
 import Model.Category.Category;
 import Model.Product.Product;
-import Exception.*;
 import Model.Storage;
 
 import java.util.ArrayList;
 
 public class PageManager {
+
     /*
      * -------[ this part is for all products ]-------
      */
 
     //filter factor: 0 -> [category name] , 1-> [be in sale:boolean]
 
-    public void showProducts(String sortFactor, ArrayList<String> filterFactor) throws SortFactorNotAvailableException {
+    public void showProducts(String sortFactor, ArrayList<String> filterFactor) {
         Category category = Storage.getCategoryByName(filterFactor.get(0));
         assert category != null;
         ArrayList<Product> products = new ArrayList<>(ProductManager.getArrayListOfProductsFromArrayListOfProductIDs(category.getAllProductIDs()));
@@ -27,10 +26,10 @@ public class PageManager {
         Server.setAnswer(ans.toString());
     }
 
-    public void goToProductPage(String productID) throws InvalidProductIDException {
+    public void goToProductPage(String productID) throws Exception {
         Product product = Product.getProductWithID(productID);
         if (product == null) {
-            throw new InvalidProductIDException("the product ID is invalid");
+            throw new Exception("the product ID is invalid");
         } else {
             product.increaseSeenCount();
             Server.setAnswer("successful");

@@ -15,6 +15,7 @@ public class BuyLog extends Log {
 
     //the first argument is productID and the second one is salesmanID the third one is product count
     //----[ new ]-----
+
     private ArrayList<Triplet<String, String, Integer>> allItems;
 
     //the first argument is productID and the second one is the prices with consideration of possible sales
@@ -87,6 +88,10 @@ public class BuyLog extends Log {
 
     public String getBuyLogID() {
         return buyLogID;
+    }
+
+    public void setCustomerUsername(String customerUsername) {
+        this.customerUsername = customerUsername;
     }
 
     //----[ new ]-----

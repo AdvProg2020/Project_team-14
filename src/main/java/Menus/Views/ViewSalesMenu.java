@@ -5,6 +5,7 @@ import Menus.Edits.EditSaleMenu;
 import Menus.LoginOrRegisterMenu;
 import Menus.Menu;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.HashMap;
 
@@ -20,13 +21,13 @@ public class ViewSalesMenu extends Menu {
         this.setSubMenus(subMenus);
     }
 
-    public void getInfo() throws ParseException {
+    public void getInfo() throws ParseException, IOException {
         server.clientToServer("view sale" + "+" + Menu.username + "+" + saleID);
         System.out.println(server.serverToClient());
     }
 
     @Override
-    protected void show() throws ParseException {
+    protected void show() throws ParseException, IOException {
         super.show();
         getInfo();
     }

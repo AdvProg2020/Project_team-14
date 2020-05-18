@@ -31,7 +31,7 @@ public class SaleTest {
         Date nowDate = new Date();
         Format formatter = new SimpleDateFormat("dd-MM-yyyy HH-mm-ss");
         String today = formatter.format(nowDate);
-        Sale sale = new Sale("01-12-2020 20-20-20", "01-12-2020 20-20-20", 20, salesman1.getUsername());
+        Sale sale = new Sale("01-12-2020 20-20-20", "01-12-2020 20-20-20", 20, salesman1.getUsername(),null);
         sale.addToProducts(product2.getProductID());
         sale.addToProducts(product.getProductID());
         sale.setConfirmationState(Confirmation.ACCEPTED);
@@ -54,7 +54,7 @@ public class SaleTest {
 
     @Test
     public void toStringTest() throws ParseException {
-        Sale sale = new Sale("01-12-2020 20-20-20", "01-12-2020 20-20-20", 20, salesman1.getUsername());
+        Sale sale = new Sale("01-12-2020 20-20-20", "01-12-2020 20-20-20", 20, salesman1.getUsername(),null);
         sale.addToProducts(product.getProductID());
         sale.addToProducts(product2.getProductID());
         String result = "";

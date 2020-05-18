@@ -24,6 +24,14 @@ public class Point implements Serializable {
         return getPointByID(pointID) != null;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public static Point getPointByID(String pointID) {
         for (Point point : allPoints) {
             if (point.pointID.equals(pointID)) {

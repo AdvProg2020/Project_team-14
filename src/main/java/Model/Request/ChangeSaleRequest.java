@@ -3,9 +3,10 @@ package Model.Request;
 import Model.Off.Sale;
 import Model.Request.Enum.*;
 
+import java.io.Serializable;
 import java.text.ParseException;
 
-public class ChangeSaleRequest extends Request {
+public class ChangeSaleRequest extends Request implements Serializable {
     SaleAttributes attribute;
     String updatedInfo;
 

@@ -5,6 +5,7 @@ import Menus.Menu;
 import Menus.Views.ViewSalesMenu;
 import Menus.shows.ShowSalesMenu;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,7 +24,7 @@ public class ManageSalesMenu extends Menu {
     private Menu getSearchSale() {
         return new Menu(this, "Search Sale Menu") {
             @Override
-            public void execute() throws ParseException {
+            public void execute() throws ParseException, IOException {
                 System.out.println(menuName);
                 System.out.println("if you input back we will go back");
 
@@ -46,7 +47,7 @@ public class ManageSalesMenu extends Menu {
         return new Menu(this, "Create New Sale Menu") {
 
             @Override
-            public void execute() throws ParseException {
+            public void execute() throws ParseException, IOException {
                 System.out.println(menuName);
                 System.out.println("if you input back we will go back");
 
@@ -73,7 +74,7 @@ public class ManageSalesMenu extends Menu {
                 }
             }
 
-            private ArrayList<String> getProductIDAndAddThemToSale() throws ParseException {
+            private ArrayList<String> getProductIDAndAddThemToSale() throws ParseException, IOException {
                 System.out.println("Here use this format to add product to Sale: (-add [ProductID]\n-remove [ProductID]\n-DONE)");
                 ArrayList<String> ans = new ArrayList<>();
                 String command;
@@ -91,7 +92,7 @@ public class ManageSalesMenu extends Menu {
                 return ans;
             }
 
-            private void addProductToSale(String productID, ArrayList<String> array) throws ParseException {
+            private void addProductToSale(String productID, ArrayList<String> array) throws ParseException, IOException {
                 server.clientToServer("can add product to sale" + "+" + Menu.username + "+" + productID);
                 if (server.serverToClient().equalsIgnoreCase("yes")) {
                     array.add(productID);

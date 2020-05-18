@@ -1,6 +1,8 @@
 package Model.Request.Enum;
 
-public enum SaleAttributes {
+import java.io.Serializable;
+
+public enum SaleAttributes implements Serializable {
     START_DATE, END_DATE, PERCENTAGE;
 }
 

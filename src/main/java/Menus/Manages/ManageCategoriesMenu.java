@@ -6,6 +6,7 @@ import Menus.Menu;
 import Menus.Views.ViewCategoryMenu;
 import Menus.shows.ShowCategoriesMenu;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.HashMap;
 
@@ -26,7 +27,7 @@ public class ManageCategoriesMenu extends Menu {
             boolean hasBeenCalled = true;
 
             @Override
-            public void execute() throws ParseException {
+            public void execute() throws ParseException, IOException {
                 if (hasBeenCalled) {
                     hasBeenCalled = false;
                 } else {
@@ -116,7 +117,7 @@ public class ManageCategoriesMenu extends Menu {
             }
 
             @Override
-            public void execute() throws ParseException {
+            public void execute() throws ParseException, IOException {
                 System.out.println(this.getMenuName());
                 System.out.println("if you input back we will go back");
                 String message = new String();

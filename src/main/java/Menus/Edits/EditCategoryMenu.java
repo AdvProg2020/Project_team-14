@@ -4,6 +4,7 @@ import Menus.Menu;
 import Menus.Views.ViewCategoryMenu;
 import Model.Account.Salesman;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.HashMap;
 
@@ -23,7 +24,7 @@ public class EditCategoryMenu extends Menu {
     private Menu getEditCategoryNameMenu() {
         return new Menu(this, "Edit Category Name Menu") {
             @Override
-            public void execute() throws ParseException {
+            public void execute() throws ParseException, IOException {
                 System.out.println(this.getMenuName());
                 System.out.println("if you input back we will go back");
                 System.out.println("insert the new category name:");
@@ -50,7 +51,7 @@ public class EditCategoryMenu extends Menu {
         return new Menu(this, "Edit Father Category Menu") {
 
             @Override
-            public void execute() throws ParseException {
+            public void execute() throws ParseException, IOException {
                 System.out.println(this.getMenuName());
                 System.out.println("if you input back we will go back");
                 System.out.println("insert the new father category name or none for making this " +
@@ -108,7 +109,7 @@ public class EditCategoryMenu extends Menu {
             }
 
             @Override
-            public void execute() throws ParseException {
+            public void execute() throws ParseException, IOException {
                 server.clientToServer("what is category attribute+" + ((ViewCategoryMenu) fatherMenu).getCategoryName());
                 String currentAttribute = server.serverToClient();
                 System.out.println(this.getMenuName());
@@ -161,7 +162,7 @@ public class EditCategoryMenu extends Menu {
 
 
             @Override
-            public void execute() throws ParseException {
+            public void execute() throws ParseException, IOException {
                 server.clientToServer("what is category attribute+" + ((ViewCategoryMenu) fatherMenu).getCategoryName());
                 String currentAttribute = server.serverToClient();
                 System.out.println(this.getMenuName());
@@ -214,7 +215,7 @@ public class EditCategoryMenu extends Menu {
 
 
             @Override
-            public void execute() throws ParseException {
+            public void execute() throws ParseException, IOException {
                 server.clientToServer("what is category attribute+" + ((ViewCategoryMenu) fatherMenu).getCategoryName());
                 String currentAttribute = server.serverToClient();
                 System.out.println(this.getMenuName());

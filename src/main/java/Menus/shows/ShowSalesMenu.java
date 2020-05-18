@@ -6,6 +6,7 @@ import Menus.Menu;
 import Menus.Sorts.SalesSortMenu;
 import Menus.Views.ViewSalesMenu;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.HashMap;
 
@@ -27,7 +28,7 @@ public class ShowSalesMenu extends ShowsMenu {
         return new Menu(this, "Select Sale Menu") {
 
             @Override
-            public void execute() throws ParseException {
+            public void execute() throws ParseException, IOException {
                 System.out.println(menuName);
                 System.out.println("if you input back we will go back");
 
