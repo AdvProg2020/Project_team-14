@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-import Exception.*;
-
 public enum ProductSortFactor {
     ALPHABETICALLY, PRICE, SEEN_COUNT, HIGHEST_POINT;
 

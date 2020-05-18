@@ -91,8 +91,8 @@ public class SalesmanManager {
         Server.setAnswer(ans);
     }
 
-    public void createSale(String salesmanID, String start, String end, int percentage /*(ArrayList<String> productID*/) {
-        Sale newSale = new Sale(start, end, percentage, salesmanID);
+    public void createSale(String salesmanID, String start, String end, int percentage ,ArrayList<String> productID) {
+        Sale newSale = new Sale(start, end, percentage, salesmanID,productID);
         new Request(salesmanID, newSale, "ADD_NEW_SALE");
     }
 

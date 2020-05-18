@@ -11,7 +11,7 @@ public enum AccountSortFactor {
     ALPHABETICALLY, CREDIT;
 
     public static String getValues() {
-        return "{Alphabetically,Credit}";
+        return "{Alphabetically, Credit}";
     }
 
     public static void sort(String sortFactor, String sortType, ArrayList<Account> accounts) {

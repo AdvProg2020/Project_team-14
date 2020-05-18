@@ -15,7 +15,6 @@ import Model.Product.Comment;
 import Model.Product.Point;
 import Model.Product.Product;
 import Model.Request.Request;
-import Exception.*;
 
 import java.util.ArrayList;
 

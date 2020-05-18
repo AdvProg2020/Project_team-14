@@ -4,9 +4,6 @@ import Model.Account.*;
 import Model.Confirmation;
 import Model.Request.Request;
 import Model.Storage;
-import Exception.*;
-
-import javax.print.DocFlavor;
 
 public class AccountManager {
 
@@ -39,6 +36,7 @@ public class AccountManager {
 
     public void logout(String username) {
         Account account = Storage.getAccountWithUsername(username);
+        assert account != null;
         account.setOnline(false);
         Server.setAnswer("logout successful");
     }
@@ -46,6 +44,7 @@ public class AccountManager {
     public void forgotPassword(String username) {
         if (Storage.isThereAccountWithUsername(username)) {
             Account account = Storage.getAccountWithUsername(username);
+            assert account != null;
             Server.setAnswer("here is your password: " + account.getPassword());
         } else {
             Server.setAnswer("the username doesn't exists");

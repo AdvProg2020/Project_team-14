@@ -2,6 +2,9 @@ package Menus.Edits;
 
 import Menus.Menu;
 
+import java.io.IOException;
+import java.text.ParseException;
+
 public class EditsMenu extends Menu {
     private String itemID;
     private String type;
@@ -26,7 +29,7 @@ public class EditsMenu extends Menu {
         return new Menu(fatherMenu, "Edit " + wantedAttribute + " Menu (Changeable)") {
 
             @Override
-            public void execute() {
+            public void execute() throws IOException, ParseException {
                 System.out.println(menuName);
                 System.out.println("if you input back we will go back");
 
@@ -71,7 +74,7 @@ public class EditsMenu extends Menu {
         return server.serverToClient();
     }*/
 
-    public String sendInfoToServerToChange() {
+    public String sendInfoToServerToChange() throws IOException, ParseException {
         server.clientToServer("edit " + type + "+" + itemID + "+" + attribute + "+" + updatedInfo);
         return server.serverToClient();
     }

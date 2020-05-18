@@ -3,6 +3,8 @@ package Menus.Manages;
 import Menus.LoginOrRegisterMenu;
 import Menus.Menu;
 
+import java.io.IOException;
+import java.text.ParseException;
 import java.util.HashMap;
 
 public class ManageBalanceMenu extends Menu {
@@ -18,7 +20,7 @@ public class ManageBalanceMenu extends Menu {
         return new Menu(this, "Increase Balance Menu") {
 
             @Override
-            public void execute() {
+            public void execute() throws IOException, ParseException {
                 System.out.println(menuName);
 
                 //get info
@@ -36,13 +38,13 @@ public class ManageBalanceMenu extends Menu {
         };
     }
 
-    private void getInfo() {
+    private void getInfo() throws IOException, ParseException {
         server.clientToServer("show balance" + "+" + Menu.username);
         System.out.println(server.serverToClient());
     }
 
     @Override
-    protected void show() {
+    protected void show() throws IOException, ParseException {
         super.show();
         getInfo();
     }

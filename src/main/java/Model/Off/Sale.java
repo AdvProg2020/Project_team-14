@@ -3,6 +3,7 @@ package Model.Off;
 import Model.Confirmation;
 import Model.Product.Product;
 import Model.RandomString;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -10,17 +11,20 @@ import java.util.Objects;
 import static Model.Storage.*;
 
 public class Sale extends Off implements Serializable {
-    private ArrayList<String> productIDs=new ArrayList<>();
+    private ArrayList<String> productIDs = new ArrayList<>();
     private String saleID;
     private String salesmanID;
     private Confirmation confirmationState;
 
-    public Sale(String start, String end, int percentage, String salesmanID) {
+    public Sale(String start, String end, int percentage, String salesmanID, ArrayList<String> productIDs) {
         super(start, end, percentage);
         this.saleID = RandomString.createID("Sale");
         this.salesmanID = salesmanID;
         confirmationState = Confirmation.CHECKING;
         allSales.add(this);
+        if (productIDs != null) {
+            this.productIDs.addAll(productIDs);
+        }
     }
 
     public String getSalesmanID() {
