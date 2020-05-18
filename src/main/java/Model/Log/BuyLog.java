@@ -9,6 +9,8 @@ import org.javatuples.Triplet;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.ListIterator;
 
 public class BuyLog extends Log {
 
@@ -90,8 +92,19 @@ public class BuyLog extends Log {
         return buyLogID;
     }
 
-    public void setCustomerUsername(String customerUsername) {
-        this.customerUsername = customerUsername;
+    public void updateUserNames(String oldUsername, String newUsername) {
+        if (customerUsername.equals(oldUsername)) customerUsername = newUsername;
+
+        ListIterator<Triplet<String, String, Integer>> iterator = allItems.listIterator();
+        while (iterator.hasNext()) {
+            Triplet<String, String, Integer> oldTriplet;
+            if ((oldTriplet = iterator.next()).getValue1().equals(oldUsername)) {
+                String productID = oldTriplet.getValue0();
+                Integer count = oldTriplet.getValue2();
+                iterator.remove();
+                iterator.add(new Triplet<>(productID, newUsername, count));
+            }
+        }
     }
 
     //----[ new ]-----

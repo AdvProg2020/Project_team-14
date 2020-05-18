@@ -47,6 +47,29 @@ public class Product implements Serializable {
         Storage.getAllProducts().add(this);
     }
 
+    public void updateUserNames(String oldUsername, String newUsername) {
+        ListIterator<String> salesmanIDIterator = salesmanIDs.listIterator();
+        while (salesmanIDIterator.hasNext()) {
+            if (salesmanIDIterator.next().equals(oldUsername)) {
+                salesmanIDIterator.remove();
+                salesmanIDIterator.add(newUsername);
+            }
+        }
+
+        updateUsernameInHashMap(oldUsername, newUsername, isOnSale);
+        updateUsernameInHashMap(oldUsername, newUsername, hasBeenDeleted);
+        updateUsernameInHashMap(oldUsername, newUsername, confirmationState);
+        updateUsernameInHashMap(oldUsername, newUsername, remainder);
+        updateUsernameInHashMap(oldUsername, newUsername, price);
+    }
+
+    private void updateUsernameInHashMap(String oldUsername, String newUsername, HashMap hashMap) {
+        if (hashMap.containsKey(oldUsername)) {
+            Object value = hashMap.remove(oldUsername);
+            hashMap.put(newUsername, value);
+        }
+    }
+
     public void setName(String name) {
         this.name = name;
     }

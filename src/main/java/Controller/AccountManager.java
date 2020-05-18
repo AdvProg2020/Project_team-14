@@ -3,6 +3,7 @@ package Controller;
 import Model.Account.*;
 import Model.Cart.Cart;
 import Model.Confirmation;
+import Model.Log.BuyLog;
 import Model.Log.SellLog;
 import Model.Off.OffCode;
 import Model.Off.Sale;
@@ -115,15 +116,20 @@ public class AccountManager {
                 point.setUsername(oldUsername);
             }
         }
-        for (Request request : Storage.getAllRequests()) {
-            if (request.getAccountUsername().equals(oldUsername)) {
-                request.setAccountUsername(newUsername);
-            }
-        }
         for (Cart cart : Storage.allCarts) {
             if (cart.getUsername().equals(oldUsername)) {
                 cart.setUsername(newUsername);
             }
+        }
+        for (Product product : Storage.getAllProducts()) {
+            product.updateUserNames(oldUsername, newUsername);
+        }
+        for (BuyLog buyLog : Storage.allBuyLogs) {
+            buyLog.updateUserNames(oldUsername, newUsername);
+        }
+        for (SellLog sellLog : Storage.allSellLogs) {
+            if (sellLog.getSalesmanID().equals(oldUsername)) sellLog.setSalesmanID(newUsername);
+            if (sellLog.getCustomerID().equals(oldUsername)) sellLog.setCustomerID(newUsername);
         }
     }
 
