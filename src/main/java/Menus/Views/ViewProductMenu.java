@@ -62,15 +62,44 @@ public class ViewProductMenu extends Menu {
 
     private Menu getDeleteProductMenu() {
         return new Menu(this, "Delete Product Menu") {
-
+            @Override
+            public void execute() throws ParseException, IOException {
+                System.out.println("are you sure you want to delete yourself from selling this product");
+                String input = scanner.nextLine();
+                if (input.equalsIgnoreCase("yes")) {
+                    System.out.println("delete product+" + Menu.username + "+" + productID);
+                    String serverAnswer = server.serverToClient();
+                    System.out.println(serverAnswer);
+                    fatherMenu.execute();
+                } else if (input.equalsIgnoreCase("no")) {
+                    fatherMenu.execute();
+                } else {
+                    System.out.println("error");
+                    this.execute();
+                }
+            }
         };
     }
 
     private Menu getAddProductMenu() {
         return new Menu(this, "Add Product Menu") {
-
+            @Override
+            public void execute() throws ParseException, IOException {
+                System.out.println("are you sure you want to add yourself to sell this product");
+                String input = scanner.nextLine();
+                if (input.equalsIgnoreCase("yes")) {
+                    System.out.println("add product+" + Menu.username + "+" + productID);
+                    String serverAnswer = server.serverToClient();
+                    System.out.println(serverAnswer);
+                    fatherMenu.execute();
+                } else if (input.equalsIgnoreCase("no")) {
+                    fatherMenu.execute();
+                } else {
+                    System.out.println("error");
+                    this.execute();
+                }
+            }
         };
-
     }
 
     private Menu getDeleteProductFromCategoryMenu() {

@@ -140,6 +140,12 @@ public class Server {
             this.showMyProducts(command);
         } else if (command.startsWith("view product+")) {
             this.viewProduct(command);
+        } else if (command.startsWith("add product+")) {
+            this.addProduct(command);
+        } else if (command.startsWith("delete product+")) {
+            this.deleteProduct(command);
+        } else if (command.startsWith("search product+")) {
+            this.searchProduct(command);
         } else if (command.startsWith("search offCod")) {
             this.searchOffCode(command);
         } else if (command.startsWith("create new normal offCode")) {
@@ -384,6 +390,18 @@ public class Server {
     /*
      * this is Product Part
      */
+
+    private void addProduct(String command) {
+
+    }
+
+    private void deleteProduct(String command) {
+
+    }
+
+    private void searchProduct(String command) {
+        
+    }
 
     private void viewProduct(String command) {
         productManager.viewProduct(command.split("\\+")[1], command.split("\\+")[2]);

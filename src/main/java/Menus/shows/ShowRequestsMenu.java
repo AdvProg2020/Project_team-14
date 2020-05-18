@@ -5,6 +5,7 @@ import Menus.LoginOrRegisterMenu;
 import Menus.Menu;
 import Menus.Sorts.RequestsSortMenu;
 import Menus.Views.ViewAccountMenu;
+import Menus.Views.ViewProductMenu;
 import Menus.Views.ViewRequestMenu;
 
 import javax.swing.text.View;
@@ -24,11 +25,15 @@ public class ShowRequestsMenu extends ShowsMenu {
         if (fatherMenu instanceof ViewAccountMenu) {
             canChangeUsernameFilter = false;
         }
-        if (menuName.equals("Show Add Products Requests") || menuName.equals("Show Delete Products Requests") ||
-                menuName.equals("Show Edit Products Requests")) {
-            canChangeRequestTypeFilter = false;
+        if (!(fatherMenu instanceof ViewProductMenu)) {
+            if (menuName.equals("Show Add Products Requests") || menuName.equals("Show Delete Products Requests") ||
+                    menuName.equals("Show Edit Products Requests")) {
+                canChangeRequestTypeFilter = false;
+            } else {
+                canChangeRequestTypeFilter = true;
+            }
         } else {
-            canChangeRequestTypeFilter = true;
+            canChangeRequestTypeFilter = false;
         }
         filter = new RequestsFilterMenu(this, "Request Filter Menu");
         sort = new RequestsSortMenu(this, "Request Sort Menu");
@@ -42,6 +47,11 @@ public class ShowRequestsMenu extends ShowsMenu {
             ((RequestsFilterMenu) filter).setRequestType("DELETE_PRODUCT");
         } else if (menuName.equals("Show Delete Products Requests")) {
             ((RequestsFilterMenu) filter).setRequestType("CHANGE_PRODUCT");
+        } else if (fatherMenu instanceof ViewProductMenu) {
+            ((RequestsFilterMenu)filter).setRequestType("ADD_NEW_PRODUCT");
+            ((RequestsFilterMenu)filter).setRequestType("ADD_TO_PRODUCT");
+            ((RequestsFilterMenu)filter).setRequestType("CHANGE_PRODUCT");
+            ((RequestsFilterMenu)filter).setRequestType("DELETE_PRODUCT");
         }
         subMenus.put(1, filter);
         subMenus.put(2, sort);

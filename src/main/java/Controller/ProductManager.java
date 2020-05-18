@@ -94,7 +94,6 @@ public class ProductManager {
         int count = 0;
         ArrayList<Product> products = Storage.getAllProducts();
         ProductSortFactor.sort(sortFactor, sortType, products);
-
         StringBuilder answer = new StringBuilder("");
         if (products.size() == 0) {
             Server.setAnswer("nothing found");
