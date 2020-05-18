@@ -488,7 +488,7 @@ public class Server {
         ArrayList<Object> filters;
         filters = getFilters(command);
         String[] input = command.split("\\+");
-        bossManager.showCategories(input[1], filters);
+        bossManager.showCategories(input[1], filters, getSortFactor(command), getSortType(command));
     }
 
     private void createCategory(String command) {

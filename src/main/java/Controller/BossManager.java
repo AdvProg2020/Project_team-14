@@ -8,6 +8,7 @@ package Controller;
 //import Model.Request.Request;
 
 import Controller.SortFactorEnum.AccountSortFactor;
+import Controller.SortFactorEnum.CategorySortFactor;
 import Controller.SortFactorEnum.OffCodesSortFactor;
 import Model.Account.*;
 import Model.Category.Category;
@@ -309,9 +310,10 @@ public class BossManager {
         return true;
     }
 
-    public void showCategories(String username, ArrayList<Object> filters) {
+    public void showCategories(String username, ArrayList<Object> filters, String sortFactor, String sortType) {
         int count = 0;
         ArrayList<Category> categories = Storage.getAllCategories();
+        CategorySortFactor.sort(sortFactor, sortType, categories);
 
         StringBuilder answer = new StringBuilder("");
         if (categories.size() == 0) {
