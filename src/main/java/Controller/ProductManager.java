@@ -1,7 +1,7 @@
 package Controller;
 
 import Controller.SortFactorEnum.ViewBuyersOfProductSortFactor;
-import Controller.SortFactorEnum.ListProductSortFactor;
+import Controller.SortFactorEnum.ProductSortFactor;
 import Exception.*;
 import Model.Account.Account;
 import Model.Account.Role;
@@ -12,7 +12,6 @@ import Model.Request.ChangeProductRequest;
 import Model.Request.Request;
 import Model.Storage;
 
-import javax.swing.text.View;
 import java.util.ArrayList;
 import java.util.Comparator;
 
@@ -25,9 +24,11 @@ public class ProductManager {
         return true;
     }
 
-    public void showProducts(String username, ArrayList<Object> filters) {
+    public void showProducts(String username, ArrayList<Object> filters, String sortFactor, String sortType) {
         int count = 0;
         ArrayList<Product> products = Storage.getAllProducts();
+        ProductSortFactor.sort(sortFactor, sortType, products);
+
         StringBuilder answer = new StringBuilder("");
         if (products.size() == 0) {
             Server.setAnswer("nothing found");
@@ -79,19 +80,19 @@ public class ProductManager {
     public String listProductsForSalesman(String salesmanUser, String sortFactor) throws SortFactorNotAvailableException {
         StringBuilder result = new StringBuilder();
         ArrayList<Product> products = new ArrayList<>(getProductsOfSalesman(salesmanUser));
-        if (sortFactor.equalsIgnoreCase(valueOf(ListProductSortFactor.ALPHABETICALLY))) {
+        if (sortFactor.equalsIgnoreCase(valueOf(ProductSortFactor.ALPHABETICALLY))) {
             products.sort(Comparator.comparing(Product::getName));
-        } else if (sortFactor.equalsIgnoreCase(valueOf(ListProductSortFactor.PRICE))) {
+        } else if (sortFactor.equalsIgnoreCase(valueOf(ProductSortFactor.PRICE))) {
             products.sort(Comparator.comparingInt(p -> p.getPriceBySalesmanID(salesmanUser)));
-        } else if (sortFactor.equalsIgnoreCase(valueOf(ListProductSortFactor.SEEN_COUNT))) {
+        } else if (sortFactor.equalsIgnoreCase(valueOf(ProductSortFactor.SEEN_COUNT))) {
             products.sort((Comparator.comparingInt(Product::getSeenCount)));
-        } else if (sortFactor.equalsIgnoreCase(valueOf(ListProductSortFactor.HIGHEST_POINT))) {
+        } else if (sortFactor.equalsIgnoreCase(valueOf(ProductSortFactor.HIGHEST_POINT))) {
             products.sort((Comparator.comparingDouble(Product::getAveragePoint)));
         } else if (sortFactor.equals("")) {
             products.sort((Comparator.comparingInt(Product::getSeenCount)));
         } else {
             throw new SortFactorNotAvailableException("the sort factor isn't authentic " + "\n" +
-                    "the available sort factors: " + ListProductSortFactor.getValues() + "\n");
+                    "the available sort factors: " + ProductSortFactor.getValues() + "\n");
         }
         for (Product product : products) {
             result.append(product.toStringForSalesmanView(salesmanUser));
@@ -102,19 +103,19 @@ public class ProductManager {
     public String listProductsForCustomer(String sortFactor, ArrayList<String> productIDs) throws SortFactorNotAvailableException {
         StringBuilder result = new StringBuilder();
         ArrayList<Product> products = new ArrayList<>(getArrayListOfProductsFromArrayListOfProductIDs(productIDs));
-        if (sortFactor.equalsIgnoreCase(valueOf(ListProductSortFactor.ALPHABETICALLY))) {
+        if (sortFactor.equalsIgnoreCase(valueOf(ProductSortFactor.ALPHABETICALLY))) {
             products.sort(Comparator.comparing(Product::getName));
-        } else if (sortFactor.equalsIgnoreCase(valueOf(ListProductSortFactor.PRICE))) {
+        } else if (sortFactor.equalsIgnoreCase(valueOf(ProductSortFactor.PRICE))) {
             products.sort(Comparator.comparingInt(Product::getMinimumPrice));
-        } else if (sortFactor.equalsIgnoreCase(valueOf(ListProductSortFactor.SEEN_COUNT))) {
+        } else if (sortFactor.equalsIgnoreCase(valueOf(ProductSortFactor.SEEN_COUNT))) {
             products.sort((Comparator.comparingInt(Product::getSeenCount)));
         } else if (sortFactor.equals("")) {
             products.sort((Comparator.comparingInt(Product::getSeenCount)));
-        } else if (sortFactor.equalsIgnoreCase(valueOf(ListProductSortFactor.HIGHEST_POINT))) {
+        } else if (sortFactor.equalsIgnoreCase(valueOf(ProductSortFactor.HIGHEST_POINT))) {
             products.sort((Comparator.comparingDouble(Product::getAveragePoint)));
         } else {
             throw new SortFactorNotAvailableException("the sort factor isn't authentic " + "\n" +
-                    "the available sort factors: " + ListProductSortFactor.getValues() + "\n");
+                    "the available sort factors: " + ProductSortFactor.getValues() + "\n");
         }
         for (Product product : products) {
             result.append(product.getName()).append("\n");

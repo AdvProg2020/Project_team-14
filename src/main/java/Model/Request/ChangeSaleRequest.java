@@ -3,6 +3,7 @@ package Model.Request;
 import Model.Off.Sale;
 import Model.Product.Product;
 import Model.Request.Enum.*;
+import Model.Storage;
 
 import java.io.Serializable;
 import java.text.ParseException;

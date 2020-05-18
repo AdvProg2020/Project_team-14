@@ -391,63 +391,6 @@ public class BossManager {
         }
     }
 
-    /*
-     * this is discount code part
-     */
-
-    public void searchOffCode(String offCodeID) {
-        if (Storage.isThereOffCodeWithID(offCodeID)) {
-            Server.setAnswer("search completed");
-        } else {
-            Server.setAnswer("no OffCode exist with such ID");
-        }
-    }
-
-    public void createNormalOffCode(String start, String end, int percentage, int ceiling, int frequency, ArrayList<String> users) {
-        new OffCode(start, end, percentage, ceiling, frequency, users);
-    }
-
-    public void createSpecialOffCode(int period, int percentage, int ceiling, int frequency) {
-        new SpecialOffCode(period, percentage, ceiling, frequency);
-    }
-
-    public void viewOffCode(String username, String offCodeID) {
-        if (!Storage.isThereOffCodeWithID(offCodeID)) {
-            Server.setAnswer("ERROR, no offCode found with this ID");
-        } else {
-            OffCode offCode = Storage.getOffCodeById(offCodeID);
-            Server.setAnswer(offCode.toString());
-        }
-    }
-
-    public void showOffCodes(String username, ArrayList<Object> filters, String sortFactor, String sortType) {
-        ArrayList<OffCode> allOffCodes;
-        if (Storage.getAccountWithUsername(username).getRole().equals("BOSS")) {
-            allOffCodes = Storage.allOffCodes;
-        } else {
-            allOffCodes = OffCode.getAllCustomerOffCodesByUsername(username);
-        }
-        OffCodesSortFactor.sort(sortFactor, sortType, allOffCodes);
-
-        StringBuilder ans = new StringBuilder("All OffCodes:");
-        boolean found = false;
-        for (OffCode offCode : allOffCodes) {
-            /*
-             * must check filter factor
-             */
-            if (doOffCodeHasFilterFactor()) {
-                ans.append("\n").append(offCode.getOffCodeID());
-                found = true;
-            }
-        }
-        ans.append("\n").append("What founded, listed above");
-        if (!found) {
-            Server.setAnswer("nothing found");
-        } else {
-            Server.setAnswer(ans.toString());
-        }
-    }
-
     public void editCategoryAttribute(String categoryName, String categoryNewAttribute) {
         Category category = Storage.getCategoryByName(categoryName);
         if (category.getAttribute().equals(categoryNewAttribute)) {
@@ -475,9 +418,92 @@ public class BossManager {
         Server.setAnswer("deleted successfully");
     }
 
+    /*
+     * this is discount code part
+     */
+
+    public void searchOffCode(String offCodeID) {
+        if (Storage.isThereOffCodeWithID(offCodeID)) {
+            Server.setAnswer("search completed");
+        } else {
+            Server.setAnswer("no OffCode exist with such ID");
+        }
+    }
+
+    public void createNormalOffCode(String start, String end, int percentage, int ceiling, int frequency, ArrayList<String> users) {
+        new OffCode(start, end, percentage, ceiling, frequency, users);
+    }
+
+    public void createSpecialOffCode(int period, int percentage, int ceiling, int frequency) {
+        new SpecialOffCode(period, percentage, ceiling, frequency);
+    }
+
+    public void viewOffCode(String username, String offCodeID) {
+        Account account = Storage.getAccountWithUsername(username);
+        if (!Storage.isThereOffCodeWithID(offCodeID)) {
+            Server.setAnswer("ERROR: no offCode found with this ID");
+        } else {
+            OffCode offCode = Storage.getOffCodeById(offCodeID);
+            if (account.equals(Role.CUSTOMER)) {
+                if (!offCode.canCustomerUseItWithUsername(username)) {
+                    Server.setAnswer("ERROR: you don't access to this offCode");
+                } else {
+                    Server.setAnswer(((Customer) account).getOffCodeInfo(offCodeID));
+                }
+            } else {
+                Server.setAnswer(offCode.toStringForBoss());
+            }
+        }
+    }
+
+    public void showOffCodes(String username, ArrayList<Object> filters, String sortFactor, String sortType) {
+        ArrayList<OffCode> allOffCodes;
+        if (Storage.getAccountWithUsername(username).getRole().equals(Role.BOSS)) {
+            allOffCodes = Storage.allOffCodes;
+        } else {
+            allOffCodes = OffCode.getAllCustomerOffCodesByUsername(username);
+        }
+        OffCodesSortFactor.sort(sortFactor, sortType, allOffCodes);
+
+        StringBuilder ans = new StringBuilder("All OffCodes:");
+        boolean found = false;
+        for (OffCode offCode : allOffCodes) {
+            /*
+             * must check filter factor
+             */
+            if (doOffCodeHasFilterFactor()) {
+                ans.append("\n").append(offCode.getOffCodeID());
+                found = true;
+            }
+        }
+        ans.append("\n").append("What founded, listed above");
+        if (!found) {
+            Server.setAnswer("nothing found");
+        } else {
+            Server.setAnswer(ans.toString());
+        }
+    }
+
     //still has word must implement it in OffCode Class
     public boolean doOffCodeHasFilterFactor() {
         return true;
+    }
+
+    public void editOffCode(String offCodeID, String attribute, String updatedInfo) {
+        if (!Storage.isThereOffCodeWithID(offCodeID)) {
+            Server.setAnswer("ERROR: there isn't any offCode with this ID");
+        } else {
+            OffCode offCode = Storage.getOffCodeById(offCodeID);
+            if (attribute.equalsIgnoreCase("start time")) {
+                offCode.setStart(updatedInfo);
+            } else if (attribute.equalsIgnoreCase("end time")) {
+                offCode.setEnd(updatedInfo);
+            } else if (attribute.equalsIgnoreCase("percentage")) {
+                offCode.setPercentage(updatedInfo);
+            } else if (attribute.equalsIgnoreCase("ceiling")) {
+                offCode.setCeiling(Integer.parseInt(updatedInfo));
+            }
+        }
     }
 
     /*public void listAllProducts(String sortFactor) throws SortFactorNotAvailableException {

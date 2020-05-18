@@ -25,14 +25,22 @@ public abstract class Off implements Serializable {
         this.percentage = percentage;
     }
 
-    public void setEnd(String end) throws ParseException {
+    public void setEnd(String end) /*throws ParseException*/ {
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH-mm-ss");
-        this.end = formatter.parse(end);
+        try {
+            this.end = formatter.parse(end);
+        } catch (ParseException e) {
+            //e.printStackTrace();
+        }
     }
 
-    public void setStart(String start) throws ParseException {
+    public void setStart(String start) /*throws ParseException*/ {
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH-mm-ss");
-        this.start = formatter.parse(start);
+        try {
+            this.start = formatter.parse(start);
+        } catch (ParseException e) {
+            //e.printStackTrace();
+        }
     }
 
     public Date getEnd() {

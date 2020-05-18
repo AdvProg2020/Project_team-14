@@ -159,6 +159,32 @@ public class Server {
             this.viewSale(command);
         } else if (command.startsWith("show sales")) {
             this.showSales(command);
+        } else if (command.startsWith("edit sale")) {
+            this.editSale(command);
+        }
+
+        //end parts
+        else if (command.startsWith("show balance")) {
+            this.showBalance(command);
+        }
+    }
+
+    private void editSale(String command) {
+        String[] input = command.split("\\+");
+
+        //check errors
+        StringBuilder error = new StringBuilder("ERRORS:");
+        if (input[2].equals("percentage")) {
+            error.append(isPercentageValid(input[3]));
+        } else if (input[2].contains("Date")) {
+            error.append(isDateValid(input[3], input[2]));
+        }
+
+        //set answer
+        if (error.toString().equals("ERRORS:")) {
+            salesmanManager.editSale(input[1], input[2], input[3]);
+        } else {
+            Server.setAnswer(error.toString());
         }
     }
 
@@ -189,31 +215,48 @@ public class Server {
         if (isSaleInfoValid(info[2], info[3], info[4])) {
             Server.setAnswer("creation of sale successful");
             String productsID = info[5].substring(info[5].indexOf(":") + 1, info[5].length() - 1);
-            salesmanManager.createSale(info[1], info[2], info[3], Integer.parseInt(info[4])/*convertStringToArray(productsID)*/);
+            salesmanManager.createSale(info[1], info[2], info[3], Integer.parseInt(info[4]), convertStringToArray(productsID));
         }
+    }
+
+    private String isPercentageValid(String percentage) {
+        try {
+            int interest = Integer.parseInt(percentage);
+            if (interest <= 0 | 100 < interest) {
+                return "\nPERCENTAGE: must be from 1 to 100";
+            }
+        } catch (Exception e) {
+            return "\nPERCENTAGE: invalid format";
+        }
+        return "";
+    }
+
+    private String isDateValid(String date, String type) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH-mm-ss");
+        try {
+            dateFormat.parse(date);
+        } catch (ParseException e) {
+            return "\n" + type.toUpperCase() + ": invalid format";
+        }
+        return "";
+    }
+
+    private String isNumericalValueValid(String value, String type) {
+        try {
+            Integer.parseInt(value);
+        } catch (Exception e) {
+            return "\n" + type.toUpperCase() + ": format is invalid";
+        }
+        return "";
     }
 
     private boolean isSaleInfoValid(String start, String end, String percentage) {
         StringBuilder checkResult = new StringBuilder("Errors:");
 
         //check errors
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH-mm-ss");
-        try {
-            dateFormat.parse(start);
-        } catch (ParseException e) {
-            checkResult.append("\n").append("START: invalid format");
-        }
-        try {
-            dateFormat.parse(end);
-        } catch (ParseException e) {
-            checkResult.append("\n").append("END: invalid format");
-        }
-        try {
-            int interest = Integer.parseInt(percentage);
-            if (interest <= 0 | 100 < interest) checkResult.append("\n").append("PERCENTAGE: must be from 1 to 100");
-        } catch (Exception e) {
-            checkResult.append("\n").append("PERCENTAGE: invalid format");
-        }
+        checkResult.append(isDateValid(start, "start"));
+        checkResult.append(isDateValid(end, "end"));
+        checkResult.append(isPercentageValid(percentage));
 
         //set answer
         if (checkResult.toString().equals("Errors:")) {
@@ -236,7 +279,22 @@ public class Server {
     }
 
     private void editOffCode(String command) {
-        //nothing yet
+        String[] input = command.split("\\+");
+        StringBuilder error = new StringBuilder("ERRORS:");
+        //check errors
+        if (input[2].equals("percentage")) {
+            error.append(isPercentageValid(input[3]));
+        } else if (input[2].contains("date")) {
+            error.append(isDateValid(input[3], input[2]));
+        } else if (input[2].equals("ceiling")) {
+            error.append(isNumericalValueValid(input[3], input[2]));
+        }
+        //set info
+        if (error.toString().equals("ERRORS:")) {
+            bossManager.editOffCode(input[1], input[2], input[3]);
+        } else {
+            Server.setAnswer(error.toString());
+        }
     }
 
     private void viewOffCode(String command) {
@@ -276,56 +334,33 @@ public class Server {
     //info: create new special offCode+percentage+ceiling+frequency+period
 
     private boolean checkOffCodeInfoCorrectness(String[] info) {
-        String checkResult = "Errors:";
+        StringBuilder error = new StringBuilder("ERRORS:");
 
         //check different part
 
         if (info[0].equals("create new normal offCode")) {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH-mm-ss");
-            try {
-                dateFormat.parse(info[4]);
-            } catch (ParseException e) {
-                checkResult += "\n" + "START TIME: format is invalid, check it and try again";
-            }
-            try {
-                dateFormat.parse(info[5]);
-            } catch (ParseException e) {
-                checkResult += "\n" + "END TIME: format is invalid, check it and try again";
-            }
+            error.append(isDateValid(info[4], "START TIME"));
+            error.append(isDateValid(info[5], "END TIME"));
         } else {
-            try {
-                Integer.parseInt(info[4]);
-            } catch (Exception e) {
-                checkResult += "\n" + "PERIOD: format is invalid, check it and trt again";
-            }
+            error.append(isNumericalValueValid(info[4], "PERIOD"));
         }
 
         //check same parts
-        try {
-            int interest = Integer.parseInt(info[1]);
-            if (interest <= 0 | 100 < interest)
-                checkResult += "\n" + "PERCENTAGE: this number must be between 1 and 100";
-        } catch (Exception e) {
-            checkResult += "\n" + "PERCENTAGE: format is invalid, check it and try again";
-        }
-        try {
-            Integer.parseInt(info[2]);
-        } catch (Exception e) {
-            checkResult += "\n" + "CEILING: format is invalid, check it and try again";
-        }
-        try {
-            Integer.parseInt(info[3]);
-        } catch (Exception e) {
-            checkResult += "\n" + "FREQUENCY: format is invalid, check it and try again";
-        }
+        error.append(isPercentageValid(info[1]));
+        error.append(isNumericalValueValid(info[2], "CEILING"));
+        error.append(isNumericalValueValid(info[3], "FREQUENCY"));
 
         //set answer
-        if (!checkResult.equals("Errors:")) {
-            setAnswer(checkResult);
+        if (!error.toString().equals("Errors:")) {
+            setAnswer(error.toString());
             return false;
         }
         return true;
     }
+
+    /*
+     * this is Product Part
+     */
 
     private void viewProduct(String command) {
         productManager.viewProduct(command.split("\\+")[1], command.split("\\+")[2]);
@@ -335,7 +370,7 @@ public class Server {
         ArrayList<Object> filters;
         filters = getFilters(command);
         String[] input = command.split("\\+");
-        productManager.showProducts(input[1], filters);
+        productManager.showProducts(input[1], filters, getSortFactor(command), getSortType(command));
     }
 
     private boolean checkProductNameFormat(String input) {
@@ -776,7 +811,8 @@ public class Server {
      * ---------[ here are common parts, server handel this by itself, no manager required ]--------
      */
 
-    public void showBalance(String username) {
+    public void showBalance(String command) {
+        String username = command.split("\\+")[1];
         Server.setAnswer("Your Balance is : " + Storage.getAccountWithUsername(username).getCredit());
     }
 

@@ -1,9 +1,7 @@
 package Controller;
 
-import Controller.SortFactorEnum.ListProductSortFactor;
-import Model.Cart.Cart;
+import Controller.SortFactorEnum.ProductSortFactor;
 import Model.Category.Category;
-import Model.Product.Comment;
 import Model.Product.Product;
 import Exception.*;
 import Model.Storage;
@@ -23,7 +21,7 @@ public class PageManager {
         assert category != null;
         ArrayList<Product> products = new ArrayList<>(ProductManager.getArrayListOfProductsFromArrayListOfProductIDs(category.getAllProductIDs()));
         StringBuilder ans = new StringBuilder("All Products in [" + filterFactor.get(0) + "] category:");
-        ListProductSortFactor.sort(sortFactor, products);
+        //ProductSortFactor.sort(sortFactor, products);
         for (Product product : products) {
             ans.append("\n").append(product.toStringForCustomerView());
         }

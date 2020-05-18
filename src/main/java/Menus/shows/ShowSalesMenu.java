@@ -21,6 +21,7 @@ public class ShowSalesMenu extends ShowsMenu {
         subMenus.put(2, sort);
         subMenus.put(3, getSelectSale());
         subMenus.put(4, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
+        this.setSubMenus(subMenus);
     }
 
     private Menu getSelectSale() {
