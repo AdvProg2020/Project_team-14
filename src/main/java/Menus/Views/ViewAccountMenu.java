@@ -6,6 +6,7 @@ import Menus.shows.ShowProductsMenu;
 import Menus.shows.ShowRequestsMenu;
 
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.HashMap;
 
@@ -13,7 +14,7 @@ public class ViewAccountMenu extends Menu {
     private int whereItHasBeenCalled;
     private String username;
 
-    private void PersonalInfoSubMenus(HashMap subMenus) throws ParseException {
+    private void PersonalInfoSubMenus(HashMap subMenus) throws ParseException, IOException {
         if (whereItHasBeenCalled <= 3) {
             subMenus.put(1, new EditAccountMenu(this, "Edit Personal Info Menu"));
             subMenus.put(2, getDeleteAccountMenu());
@@ -47,7 +48,7 @@ public class ViewAccountMenu extends Menu {
         }
     }
 
-    public ViewAccountMenu(Menu fatherMenu, String menuName) throws ParseException {
+    public ViewAccountMenu(Menu fatherMenu, String menuName) throws ParseException, IOException {
         super(fatherMenu, menuName);
         this.logoutType = false;
         HashMap<Integer, Menu> subMenus = new HashMap<Integer, Menu>();
@@ -69,7 +70,7 @@ public class ViewAccountMenu extends Menu {
     private Menu getDeleteAccountMenu() {
         return new Menu(this, "Delete Account Menu") {
             @Override
-            public void execute() throws ParseException {
+            public void execute() throws ParseException, IOException {
                 if (fatherMenu.getWhereItHasBeenCalled() <= 3) {
                     System.out.println("are you sure you want to delete your account?");
                 } else {
@@ -110,7 +111,7 @@ public class ViewAccountMenu extends Menu {
         return username;
     }
 
-    public void setAccount(String username) throws ParseException {
+    public void setAccount(String username) throws ParseException, IOException {
         this.username = username;
         HashMap<Integer, Menu> subMenus = new HashMap<Integer, Menu>();
         PersonalInfoSubMenus(subMenus);
@@ -121,14 +122,14 @@ public class ViewAccountMenu extends Menu {
         return whereItHasBeenCalled;
     }
 
-    private void getPersonalInfo() throws ParseException {
+    private void getPersonalInfo() throws ParseException, IOException {
         server.clientToServer("view personal info+" + Menu.username);
         String serverAnswer;
         serverAnswer = server.serverToClient();
         System.out.println(serverAnswer);
     }
 
-    private void getAccountInfo() throws ParseException {
+    private void getAccountInfo() throws ParseException, IOException {
         server.clientToServer("view account info+" + Menu.username + "+" + this.username);
         String serverAnswer;
         serverAnswer = server.serverToClient();
@@ -136,7 +137,7 @@ public class ViewAccountMenu extends Menu {
     }
 
     @Override
-    protected void show() throws ParseException {
+    protected void show() throws ParseException, IOException {
         super.show();
         if (whereItHasBeenCalled <= 3)
             this.getPersonalInfo();

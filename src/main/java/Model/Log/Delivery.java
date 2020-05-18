@@ -1,5 +1,7 @@
 package Model.Log;
 
-public enum Delivery {
+import java.io.Serializable;
+
+public enum Delivery implements Serializable {
     PROCESSING, SHIPPED, DELIVERED;
 }

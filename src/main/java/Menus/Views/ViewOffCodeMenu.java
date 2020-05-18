@@ -4,6 +4,7 @@ package Menus.Views;
 import Menus.LoginOrRegisterMenu;
 import Menus.Menu;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.HashMap;
 
@@ -29,14 +30,14 @@ public class ViewOffCodeMenu extends Menu {
         this.setSubMenus(subMenus);
     }
 
-    private void getOffCodeInfo() throws ParseException {
+    private void getOffCodeInfo() throws ParseException, IOException {
         server.clientToServer("view offCode" + "+" + Menu.username + "+" + offCodeID);
         String serverAnswer = server.serverToClient();
         System.out.println(serverAnswer);
     }
 
     @Override
-    protected void show() throws ParseException {
+    protected void show() throws ParseException, IOException {
         super.show();
         getOffCodeInfo();
     }

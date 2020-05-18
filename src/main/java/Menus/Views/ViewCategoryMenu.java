@@ -5,6 +5,7 @@ import Menus.LoginOrRegisterMenu;
 import Menus.Menu;
 import Menus.shows.ShowCategoriesMenu;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.HashMap;
 
@@ -30,7 +31,7 @@ public class ViewCategoryMenu extends Menu {
     private Menu getDeleteCategoryMenu() {
         return new Menu(this, "Delete Category Menu") {
             @Override
-            public void execute() throws ParseException {
+            public void execute() throws ParseException, IOException {
                 System.out.println("are you sure you want to delete this category");
                 String input = scanner.nextLine();
                 if (input.equalsIgnoreCase("yes")) {
@@ -61,14 +62,14 @@ public class ViewCategoryMenu extends Menu {
         this.categoryName = categoryName;
     }
 
-    private void getCategoryInfo() throws ParseException {
+    private void getCategoryInfo() throws ParseException, IOException {
         server.clientToServer("view category+" + Menu.username + "+" + categoryName);
         String serverAnswer = server.serverToClient();
         System.out.println(serverAnswer);
     }
 
     @Override
-    protected void show() throws ParseException {
+    protected void show() throws ParseException, IOException {
         super.show();
         getCategoryInfo();
     }

@@ -34,7 +34,7 @@ public class ProductManager {
         } else {
             for (Product product : products) {
                 if (isProductInFilter(product, filters)) {
-                    answer.append(product.toStringForBoss() + "\n");
+                    answer.append(product.toStringForBoss()).append("\n");
                     count++;
                 }
             }
@@ -51,6 +51,8 @@ public class ProductManager {
     public void viewProduct(String username, String productID) {
         Account account = Storage.getAccountWithUsername(username);
         Product product = Storage.getProductById(productID);
+        assert product != null;
+        assert account != null;
         if (account.getRole().equals(Role.BOSS)) {
             Server.setAnswer(product.toStringForBossView());
         } else if (account.getRole().equals(Role.SALESMAN)) {
@@ -208,11 +210,6 @@ public class ProductManager {
         }
         return arrayList;
     }
-
-    /*public void addCommentForProduct(String text, String username, String productID) {
-        Comment comment = new Comment(text, username, productID);
-        new Request(comment);
-    }*/
 
     public boolean canUserCommentForProduct(String username, String productID) {
         return Comment.canUserCommentForProduct(username, productID);

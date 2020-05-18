@@ -6,9 +6,10 @@ import Model.RandomString;
 import Model.Storage;
 
 import javax.xml.transform.sax.SAXResult;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class SellLog {
+public class SellLog implements Serializable {
     private String sellLogID;
     private BuyLog buyLog;
     private String productID;

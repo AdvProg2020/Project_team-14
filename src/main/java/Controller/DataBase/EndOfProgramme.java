@@ -22,7 +22,7 @@ import Model.Storage;
 
 import static Model.Storage.*;
 
-public class EndOfProgramme extends DataBase implements Runnable {
+public class EndOfProgramme extends DataBase {
 
     public void updateFiles() throws IOException {
         updateBosses();
@@ -155,7 +155,7 @@ public class EndOfProgramme extends DataBase implements Runnable {
         }
     }
 
-    @Override
+   /* @Override
     public void run() {
         try {
             clearFolder();
@@ -168,5 +168,5 @@ public class EndOfProgramme extends DataBase implements Runnable {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 }

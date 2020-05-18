@@ -17,6 +17,7 @@ import java.util.Comparator;
 import static java.lang.String.valueOf;
 
 public class SalesmanManager {
+
     /*
      * this is AccountManager part
      */
@@ -31,6 +32,7 @@ public class SalesmanManager {
     }
 
     //the order is 2-->name  1-->salesmanID  3-->brand  4-->description  5-->price  6-->remainder
+
     public void createProduct(String info) {
         String[] information = info.split("\\+");
         Product product = new Product(information[2], information[1], information[3], information[4],
@@ -49,6 +51,7 @@ public class SalesmanManager {
      */
 
     //default sort factor is percentage
+
     public void showSales(String salesmanID, ArrayList<Object> filters, String sortFactor, String sortType) {
         StringBuilder result = new StringBuilder("Here are All of your Sales:");
         ArrayList<Sale> sales = new ArrayList<>(Sale.getAllAuthenticSales(salesmanID));

@@ -1,5 +1,6 @@
 package Controller.DataBase;
 
+import Model.Account.Account;
 import Model.Account.Boss;
 import Model.Account.Customer;
 import Model.Account.Salesman;

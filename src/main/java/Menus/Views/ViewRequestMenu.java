@@ -4,6 +4,7 @@ import Controller.Server;
 import Menus.LoginOrRegisterMenu;
 import Menus.Menu;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.HashMap;
 
@@ -13,7 +14,7 @@ public class ViewRequestMenu extends Menu {
     private String objectID;
     private String accountUsername;
 
-    public void requestSubMenus() throws ParseException {
+    public void requestSubMenus() throws ParseException, IOException {
         HashMap<Integer, Menu> subMenus = new HashMap<Integer, Menu>();
         if (whereItHasBeenCalled == 2) {
             server.clientToServer("what is request object ID+" + this.requestID);
@@ -70,7 +71,7 @@ public class ViewRequestMenu extends Menu {
         this.setSubMenus(subMenus);
     }
 
-    public ViewRequestMenu(Menu fatherMenu, String menuName, String requestType, String requestID) throws ParseException {
+    public ViewRequestMenu(Menu fatherMenu, String menuName, String requestType, String requestID) throws ParseException, IOException {
         super(fatherMenu, menuName);
         this.requestID = requestID;
         this.logoutType = false;
@@ -85,7 +86,7 @@ public class ViewRequestMenu extends Menu {
     private Menu getAcceptRequestMenu() {
         return new Menu(this, "Accept Request Menu") {
             @Override
-            public void execute() throws ParseException {
+            public void execute() throws ParseException, IOException {
                 System.out.println("Are you sure you want to accept this request");
                 String input = scanner.nextLine();
                 if (input.equalsIgnoreCase("yes")) {
@@ -107,7 +108,7 @@ public class ViewRequestMenu extends Menu {
     private Menu getDeclineRequestMenu() {
         return new Menu(this, "Decline Request Menu") {
             @Override
-            public void execute() throws ParseException {
+            public void execute() throws ParseException, IOException {
                 System.out.println("Are you sure you want to decline this request");
                 String input = scanner.nextLine();
                 if (input.equalsIgnoreCase("yes")) {
@@ -129,7 +130,7 @@ public class ViewRequestMenu extends Menu {
     private Menu getDeleteRequestMenu() {
         return new Menu(this, "Delete Request Menu") {
             @Override
-            public void execute() throws ParseException {
+            public void execute() throws ParseException, IOException {
                 System.out.println("are you sure you want to delete this request");
                 String input = scanner.nextLine();
                 if (input.equalsIgnoreCase("yes")) {
@@ -164,14 +165,14 @@ public class ViewRequestMenu extends Menu {
         this.accountUsername = accountUsername;
     }
 
-    private void getRequestInfo() throws ParseException {
+    private void getRequestInfo() throws ParseException, IOException {
         server.clientToServer("view request+" + Menu.username + "+" + requestID);
         String serverAnswer = server.serverToClient();
         System.out.println(serverAnswer);
     }
 
     @Override
-    protected void show() throws ParseException {
+    protected void show() throws ParseException, IOException {
         super.show();
         getRequestInfo();
     }

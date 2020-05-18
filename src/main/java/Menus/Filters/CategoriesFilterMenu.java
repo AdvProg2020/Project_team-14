@@ -4,6 +4,7 @@ import Menus.LoginOrRegisterMenu;
 import Menus.Menu;
 import Menus.shows.ShowCategoriesMenu;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,7 +12,7 @@ import java.util.HashMap;
 public class CategoriesFilterMenu extends FiltersMenu {
     private void makeFilters() {
         filters.add("fatherCategory");
-        filters.add(new String());
+        filters.add("");
         filters.set(1, null);
     }
 
@@ -51,20 +52,16 @@ public class CategoriesFilterMenu extends FiltersMenu {
 
     private Menu getChangeFatherCategoryFilterMenu() {
         return new Menu(this, "Change Father Category Filter Menu") {
-            private boolean checkInputValidation(String categoryName) throws ParseException {
+            private boolean checkInputValidation(String categoryName) throws ParseException, IOException {
                 if (categoryName.equals("clear")) {
                     return true;
                 }
                 server.clientToServer("is category exists+" + categoryName);
-                if (server.serverToClient().equalsIgnoreCase("yes")) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return server.serverToClient().equalsIgnoreCase("yes");
             }
 
             @Override
-            public void execute() throws ParseException {
+            public void execute() throws ParseException, IOException {
                 System.out.println(this.getMenuName());
                 System.out.println("if you input back we will go back");
                 while (true) {

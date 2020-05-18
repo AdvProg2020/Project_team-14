@@ -2,11 +2,12 @@ package Model.Off;
 
 import Model.RandomString;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public abstract class Off {
+public abstract class Off implements Serializable {
     protected Date start;
     protected Date end;
     protected int percentage;

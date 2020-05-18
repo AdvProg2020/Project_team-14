@@ -11,6 +11,7 @@ import Model.Storage;
 import java.util.ArrayList;
 
 public class PageManager {
+
     /*
      * -------[ this part is for all products ]-------
      */

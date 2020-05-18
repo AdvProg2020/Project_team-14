@@ -1,5 +1,7 @@
 package Model;
 
-public enum Confirmation {
+import java.io.Serializable;
+
+public enum Confirmation implements Serializable {
         CHECKING, ACCEPTED, DENIED;
 }
