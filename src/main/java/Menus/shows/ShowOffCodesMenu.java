@@ -1,6 +1,7 @@
 package Menus.shows;
 
 //import Menus.Filters.OffCodesFilterMenu;
+import Menus.Filters.OffCodesFilterMenu;
 import Menus.LoginOrRegisterMenu;
 import Menus.Menu;
 import Menus.Sorts.OffCodesSortMenu;
@@ -18,17 +19,12 @@ public class ShowOffCodesMenu extends ShowsMenu {
         this.type = "offCodes";
         this.whereHasBeenCalled = whereHasBeenCalled;
         HashMap<Integer, Menu> subMenus = new HashMap<>();
-        //filter = new OffCodesFilterMenu(this, "OffCode Filter Menu");
+        filter = new OffCodesFilterMenu(this, "OffCode Filter Menu");
         sort = new OffCodesSortMenu(this, "OffCode Sort Menu");
         subMenus.put(1, filter);
         subMenus.put(2, sort);
-        if (whereHasBeenCalled == 0) {
-            subMenus.put(3, getSelectMenu());
-            subMenus.put(4, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
-        } else {
-            subMenus.put(3, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
-        }
-
+        subMenus.put(3, getSelectMenu());
+        subMenus.put(4, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
         this.setSubMenus(subMenus);
     }
 

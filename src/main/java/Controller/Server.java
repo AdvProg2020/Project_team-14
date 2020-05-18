@@ -15,6 +15,7 @@ import java.util.regex.Pattern;
 import Controller.DataBase.EndOfProgramme;
 import Controller.DataBase.startOfProgramme;
 import Menus.shows.ShowRequestsMenu;
+import Model.Account.Customer;
 import Model.Account.Role;
 import Model.Category.Category;
 import Model.Confirmation;
@@ -143,6 +144,8 @@ public class Server {
             this.createNormalOffCode(command);
         } else if (command.startsWith("create new special offCode")) {
             this.createSpecialOffCode(command);
+        } else if (command.startsWith("can add to offCode")) {
+            this.canAddUserToOffCode(command);
         } else if (command.startsWith("view offCode")) {
             this.viewOffCode(command);
         } else if (command.startsWith("edit offCode")) {
@@ -257,7 +260,7 @@ public class Server {
     }
 
     private boolean isSaleInfoValid(String start, String end, String percentage) {
-        StringBuilder checkResult = new StringBuilder("Errors:");
+        StringBuilder checkResult = new StringBuilder("ERRORS:");
 
         //check errors
         checkResult.append(isDateValid(start, "start"));
@@ -265,7 +268,7 @@ public class Server {
         checkResult.append(isPercentageValid(percentage));
 
         //set answer
-        if (checkResult.toString().equals("Errors:")) {
+        if (checkResult.toString().equals("ERRORS:")) {
             return true;
         } else {
             setAnswer(checkResult.toString());
@@ -357,11 +360,23 @@ public class Server {
         error.append(isNumericalValueValid(info[3], "FREQUENCY"));
 
         //set answer
-        if (!error.toString().equals("Errors:")) {
+        if (!error.toString().equals("ERRORS:")) {
             setAnswer(error.toString());
             return false;
         }
         return true;
+    }
+
+    public void canAddUserToOffCode(String command) {
+        String username = command.split("\\+")[2];
+        if (!Storage.isThereAccountWithUsername(username)) {
+            setAnswer("ERROR: there isn't exist any user with this username");
+        } else if (!Storage.getAccountWithUsername(username).getRole().equals(Role.CUSTOMER)) {
+            setAnswer("ERROR: this user is not a CUSTOMER, you must add customers to offCode");
+        } else {
+            setAnswer("yes");
+        }
+
     }
 
     /*

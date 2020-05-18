@@ -450,7 +450,7 @@ public class BossManager {
             Server.setAnswer("ERROR: no offCode found with this ID");
         } else {
             OffCode offCode = Storage.getOffCodeById(offCodeID);
-            if (account.equals(Role.CUSTOMER)) {
+            if (account.getRole().equals(Role.CUSTOMER)) {
                 if (!offCode.canCustomerUseItWithUsername(username)) {
                     Server.setAnswer("ERROR: you don't access to this offCode");
                 } else {
@@ -509,6 +509,7 @@ public class BossManager {
             } else if (attribute.equalsIgnoreCase("ceiling")) {
                 offCode.setCeiling(Integer.parseInt(updatedInfo));
             }
+            Server.setAnswer("edit successful");
         }
     }
 

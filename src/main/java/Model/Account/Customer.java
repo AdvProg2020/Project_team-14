@@ -93,20 +93,16 @@ public class Customer extends Account implements Serializable {
     }
 
     public String getOffCodeInfo(String offCodeID) {
-        /*if (!Storage.isThereOffCodeWithID(offCodeID)) {                           **redundant
-            return "ERROR: there isn't exist such a offCode";
-        }*/
         OffCode offCode = Storage.getOffCodeById(offCodeID);
-        /*if (!offCode.canCustomerUseItWithUsername(this.getUsername())) {          **redundant
-            return "ERROR: you don't have access to this offCode";
-        }*/
-        if (customerOffCodes.containsKey(offCodeID)) {
-            assert offCode != null;
-            return offCode.toString() + "Remaining time you can use it: " + customerOffCodes.get(offCodeID);
-        }
+        StringBuilder result = new StringBuilder("OffCode Info:\n");
         assert offCode != null;
-        return offCode.toString() + "Remaining time you can use it: " + 0;
-
+        result.append(offCode.toString());
+        if (customerOffCodes.containsKey(offCodeID)) {
+            result.append("Remaining time you can use it: ").append(customerOffCodes.get(offCodeID));
+        } else {
+            result.append("Remaining time you can use it: " + 0);
+        }
+        return result.toString();
     }
 
     @Override
