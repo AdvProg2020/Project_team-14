@@ -4,6 +4,8 @@ import Menus.LoginOrRegisterMenu;
 import Menus.Menu;
 import Menus.shows.ShowProductsMenu;
 
+import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -107,7 +109,7 @@ public class ProductsFilterMenu extends FiltersMenu {
         }
     }
 
-    public void serConfirmation(String confirmation) {
+    public void setConfirmation(String confirmation) {
         if (confirmation.equalsIgnoreCase("none")) {
             filters.set(7, null);
         } else {
@@ -121,26 +123,137 @@ public class ProductsFilterMenu extends FiltersMenu {
 
 
     private Menu getChangeSalesmanIDsMenu() {
-        return new Menu(this, "Change Salesman IDs Menu") {
+        return new Menu(this, "Change Seller IDs Menu") {
+            private boolean checkInputValidation(String username) throws ParseException, IOException {
+                if (username.equals("clear")) {
+                    return true;
+                }
+                server.clientToServer("what is accounts role+" + username);
+                return server.serverToClient().equalsIgnoreCase("salesman");
+            }
 
+            @Override
+            public void execute() throws ParseException, IOException {
+                System.out.println(this.getMenuName());
+                System.out.println("if you input back we will go back");
+                while (true) {
+                    System.out.println("your current sellers(s) is: " + getSalesmanIDs());
+                    System.out.println("please insert your new added salesman Username or clear for clearing current filter");
+                    String input = scanner.nextLine();
+                    if (input.equals("back")) {
+                        fatherMenu.execute();
+                    } else {
+                        if (checkInputValidation(input)) {
+                            setSalesmanIDs(input);
+                        } else {
+                            System.out.println("that's not a valid username for a salesman");
+                        }
+                    }
+                }
+            }
         };
     }
 
     private Menu getChangeCategoriesMenu() {
         return new Menu(this, "Change Categories Menu") {
+            private boolean checkInputValidation(String category) throws ParseException, IOException {
+                if (username.equals("clear")) {
+                    return true;
+                }
+                server.clientToServer("is category exists+" + category);
+                return server.serverToClient().equalsIgnoreCase("salesman");
+            }
 
+            @Override
+            public void execute() throws ParseException, IOException {
+                System.out.println(this.getMenuName());
+                System.out.println("if you input back we will go back");
+                while (true) {
+                    System.out.println("your current category(ies) is: " + getCategories());
+                    System.out.println("please insert your new added category or clear for clearing current filter");
+                    String input = scanner.nextLine();
+                    if (input.equals("back")) {
+                        fatherMenu.execute();
+                    } else {
+                        if (checkInputValidation(input)) {
+                            setCategories(input);
+                        } else {
+                            System.out.println("that's not a valid category name");
+                        }
+                    }
+                }
+            }
         };
     }
 
     private Menu getChangeRemainderMenu() {
         return new Menu(this, "Change Remainder Menu") {
+            private boolean checkInputValidation(String available) throws ParseException, IOException {
+                if (username.equals("clear")) {
+                    return true;
+                }
+                if (available.equalsIgnoreCase("available") || available.equalsIgnoreCase
+                        ("not available")) {
+                    return true;
+                }
+                return false;
+            }
 
+            @Override
+            public void execute() throws ParseException, IOException {
+                System.out.println(this.getMenuName());
+                System.out.println("if you input back we will go back");
+                while (true) {
+                    System.out.println("your current availability is: " + getRemainder());
+                    System.out.println("please insert available for seeing available ones or not available to see not" +
+                            " available ones or clear for clearing filter");
+                    String input = scanner.nextLine();
+                    if (input.equals("back")) {
+                        fatherMenu.execute();
+                    } else {
+                        if (checkInputValidation(input)) {
+                            setRemainder(input);
+                        } else {
+                            System.out.println("that's not a valid input");
+                        }
+                    }
+                }
+            }
         };
     }
 
     private Menu getChangeConfirmationMenu() {
         return new Menu(this, "Change Confirmation Menu") {
+            private boolean checkInputValidation(String confirmation) throws ParseException, IOException {
+                if (username.equals("clear")) {
+                    return true;
+                }
+                if (confirmation.equalsIgnoreCase("ACCEPTED") || confirmation.equalsIgnoreCase
+                        ("DENIED") || confirmation.equalsIgnoreCase("CHECKING")) {
+                    return true;
+                }
+                return false;
+            }
 
+            @Override
+            public void execute() throws ParseException, IOException {
+                System.out.println(this.getMenuName());
+                System.out.println("if you input back we will go back");
+                while (true) {
+                    System.out.println("your confirmation state(s) is: " + getConfirmation());
+                    System.out.println("please insert your new confirmation or clear for clearing this filter");
+                    String input = scanner.nextLine();
+                    if (input.equals("back")) {
+                        fatherMenu.execute();
+                    } else {
+                        if (checkInputValidation(input)) {
+                            setConfirmation(input);
+                        } else {
+                            System.out.println("that's not a valid category name");
+                        }
+                    }
+                }
+            }
         };
     }
 }

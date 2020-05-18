@@ -29,7 +29,7 @@ public class Server {
     private BossManager bossManager;
     private SalesmanManager salesmanManager;
     private CustomerManager customerManager;
-    private EndOfProgramme endOfProgramme=new EndOfProgramme();
+    private EndOfProgramme endOfProgramme = new EndOfProgramme();
 
     //first is username, second is a cart
     //private HashMap<String, Cart> abstractCarts;
@@ -136,6 +136,8 @@ public class Server {
             this.createProduct(command);
         } else if (command.startsWith("show products+")) {
             this.showProducts(command);
+        } else if (command.startsWith("show my products+")) {
+            this.showMyProducts(command);
         } else if (command.startsWith("view product+")) {
             this.viewProduct(command);
         } else if (command.startsWith("search offCod")) {
@@ -387,11 +389,18 @@ public class Server {
         productManager.viewProduct(command.split("\\+")[1], command.split("\\+")[2]);
     }
 
+    private void showMyProducts(String command) {
+        ArrayList<Object> filters;
+        filters = getFilters(command);
+        String[] input = command.split("\\+");
+        productManager.showProducts(input[1], filters, getSortFactor(command), getSortType(command), 1);
+    }
+
     private void showProducts(String command) {
         ArrayList<Object> filters;
         filters = getFilters(command);
         String[] input = command.split("\\+");
-        productManager.showProducts(input[1], filters, getSortFactor(command), getSortType(command));
+        productManager.showProducts(input[1], filters, getSortFactor(command), getSortType(command), 0);
     }
 
     private boolean checkProductNameFormat(String input) {
@@ -824,7 +833,7 @@ public class Server {
     }
 
     public String serverToClient() throws IOException {
-        endOfProgramme.updateFiles();
+        //endOfProgramme.updateFiles();
         return Server.answer;
     }
 

@@ -222,6 +222,18 @@ public class Request implements Serializable {
                 "Confirmation State: " + confirmation.name();
     }
 
+    private String toStringAddToProduct() {
+        Product product = (Product) object;
+        Salesman salesman = (Salesman) Storage.getAccountWithUsername(accountUsername);
+        String result = "";
+        result += "General information of salesman: " + "\n";
+        assert salesman != null;
+        result += salesman.toStringForRequest();
+        assert product != null;
+        return result + "General information of product: " + "\n" + product.toStringForAddToProduct(accountUsername) +
+                "\nConfirmation State: " + confirmation.name();
+    }
+
     private String toStringAddNewSale() {
         Sale sale = (Sale) object;
         return "Salesman username: " + accountUsername + "\n" + "General information of sale: " + "\n"
@@ -237,7 +249,7 @@ public class Request implements Serializable {
     private String toStringDeleteProduct() {
         Product product = (Product) object;
         return "Salesman username: " + accountUsername + "\n" + "General information of product: " + "\n"
-                + product.toStringForBossView() + "\n";
+                + product.toStringForBoss();
     }
 
     private String toStringCommentConfirmation() {
@@ -267,6 +279,8 @@ public class Request implements Serializable {
             return result + toStringRegisterSalesman();
         } else if (requestType.equals(RequestType.COMMENT_CONFIRMATION)) {
             return result + toStringCommentConfirmation();
+        } else if (requestType.equals(RequestType.ADD_TO_PRODUCT)) {
+            return result + toStringAddToProduct();
         }
         return null;
     }

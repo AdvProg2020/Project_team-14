@@ -243,6 +243,14 @@ public class Product implements Serializable {
         return Confirmation.DENIED;
     }
 
+    public String toStringForAddToProduct(String username) {
+        return "Product ID: " + this.productID + " " +
+                "Name: " + this.name + " " +
+                "Offered Price: " + this.price.get(username) + " " +
+                "Average Point: " + this.getAveragePoint() + " " +
+                "Confirmation State: " + this.confirmationState.get(username);
+    }
+
     public String toStringForBoss() {
         return "Product ID: " + this.productID + " " +
                 "Name: " + this.name + " " +

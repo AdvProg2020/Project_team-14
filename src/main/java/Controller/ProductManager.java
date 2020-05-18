@@ -19,11 +19,48 @@ import static java.lang.String.valueOf;
 public class ProductManager {
 
 
+    private boolean checkCategoryFilter(Product product, String categories) {
+
+    }
+
+    private boolean checkSalesmanFilter(Product product, String salesmanIDs) {
+        
+    }
+
+    private boolean checkConfirmationFilter(Product product, String s) {
+    }
+
+    private boolean checkRemainderFilter(Product product, String s) {
+    }
+
+
     private boolean isProductInFilter(Product product, ArrayList<Object> filters) {
+        for (int i = 0; i < filters.size(); i += 2) {
+            if (((String) filters.get(i)).equalsIgnoreCase("salesmanIDs")) {
+                if (!checkSalesmanFilter(product, (String) filters.get(i + 1))) {
+                    return false;
+                }
+            }
+            if (((String) filters.get(i)).equalsIgnoreCase("categories")) {
+                if (!checkCategoryFilter(product, (String) filters.get(i + 1))) {
+                    return false;
+                }
+            }
+            if (((String) filters.get(i)).equalsIgnoreCase("remainder")) {
+                if (!checkRemainderFilter(product, (String) filters.get(i + 1))) {
+                    return false;
+                }
+            }
+            if (((String) filters.get(i)).equalsIgnoreCase("Confirmation")) {
+                if (!checkConfirmationFilter(product, (String) filters.get(i + 1))) {
+                    return false;
+                }
+            }
+        }
         return true;
     }
 
-    public void showProducts(String username, ArrayList<Object> filters, String sortFactor, String sortType) {
+    public void showProducts(String username, ArrayList<Object> filters, String sortFactor, String sortType, int type) {
         int count = 0;
         ArrayList<Product> products = Storage.getAllProducts();
         ProductSortFactor.sort(sortFactor, sortType, products);

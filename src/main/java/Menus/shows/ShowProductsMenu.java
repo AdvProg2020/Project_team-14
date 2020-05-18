@@ -1,7 +1,10 @@
 package Menus.shows;
 
+import Menus.BossMenu;
 import Menus.Filters.ProductsFilterMenu;
 import Menus.LoginOrRegisterMenu;
+import Menus.Manages.ManageAccountsMenu;
+import Menus.Manages.ManageProductsMenu;
 import Menus.Menu;
 import Menus.Sorts.ProductsSortMenu;
 import Menus.Views.ViewAccountMenu;
@@ -17,19 +20,25 @@ public class ShowProductsMenu extends ShowsMenu {
     public ShowProductsMenu(Menu fatherMenu, String menuName) {
         super(fatherMenu, menuName);
         this.type = "products";
+        if (menuName.equalsIgnoreCase("Show My Products Menu")) {
+            this.type = "my products";
+        }
         HashMap<Integer, Menu> subMenus = new HashMap<Integer, Menu>();
         if (fatherMenu instanceof ViewAccountMenu) {
             canChangeSalesmanIDsFilter = false;
         } else {
             canChangeSalesmanIDsFilter = true;
         }
+        if (fatherMenu instanceof ManageAccountsMenu) {
+            canChangeSalesmanIDsFilter = false;
+            if (fatherMenu.getFatherMenu() instanceof BossMenu) {
+                canChangeSalesmanIDsFilter = true;
+            }
+        }
         filter = new ProductsFilterMenu(this, "Product Filter Menu");
         sort = new ProductsSortMenu(this, "Product Sort Menu");
         if (fatherMenu instanceof ViewAccountMenu) {
             ((ProductsFilterMenu) filter).setSalesmanIDs(((ViewAccountMenu) fatherMenu).getUsername());
-        }
-        if (menuName.equalsIgnoreCase("Show My Products Menu")) {
-
         }
         subMenus.put(1, filter);
         subMenus.put(2, sort);
