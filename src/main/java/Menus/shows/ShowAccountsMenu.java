@@ -5,6 +5,7 @@ import Menus.LoginOrRegisterMenu;
 import Menus.Menu;
 import Menus.Sorts.AccountsSortMenu;
 import Menus.Views.ViewAccountMenu;
+import Menus.Views.ViewProductMenu;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -19,6 +20,9 @@ public class ShowAccountsMenu extends ShowsMenu {
         HashMap<Integer, Menu> subMenus = new HashMap<Integer, Menu>();
         filter = new AccountsFilterMenu(this, "Account Filter Menu");
         sort = new AccountsSortMenu(this, "Account Sorts Menu");
+        if (fatherMenu instanceof ViewProductMenu) {
+            ((AccountsFilterMenu) filter).setProductSalesman(((ViewProductMenu) fatherMenu).getProductID());
+        }
         subMenus.put(1, filter);
         subMenus.put(2, sort);
         subMenus.put(3, getSelectMenu());

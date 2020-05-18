@@ -88,6 +88,26 @@ public class AccountsFilterMenu extends FiltersMenu {
         }
     }
 
+    public void setProductSalesman(String product) {
+        if (product.equals("clear")) {
+            filters.set(7, null);
+        } else {
+            if (this.filters.get(7) == null) {
+                filters.set(7, product);
+            } else {
+                filters.set(7, filters.get(7) + "," + product);
+            }
+        }
+    }
+
+    public String getProductSalesman() {
+        if (filters.get(7) == null) {
+            return "none";
+        } else {
+            return (String) filters.get(7);
+        }
+    }
+
     private Menu getChangeCreditLimitMenu(String type) {
         return new Menu(this, "Change " + type + " Credit Limit Menu") {
             @Override

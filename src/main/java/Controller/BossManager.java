@@ -14,8 +14,10 @@ import Model.Category.Category;
 import Model.Off.Off;
 import Model.Off.OffCode;
 import Model.Off.SpecialOffCode;
+import Model.Product.Product;
 import Model.Request.Request;
 import Model.Storage;
+
 import java.util.ArrayList;
 
 public class BossManager {
@@ -74,6 +76,18 @@ public class BossManager {
         return false;
     }
 
+    private boolean checkProductSellers(Account account, String filter) {
+        if (!(account instanceof Salesman)) {
+            return false;
+        }
+        Product product = Storage.getProductById(filter);
+        if (product.doesSalesmanSellProductWithUsername(account.getUsername())) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public void viewAccount(String bossUsername, String username) {
         Account account = Storage.getAccountWithUsername(username);
         assert account != null;
@@ -105,6 +119,11 @@ public class BossManager {
                     return false;
                 }
             }
+            if (((String) filters.get(i)).equalsIgnoreCase("ProductSalesman")) {
+                if (!checkProductSellers(account, (String) filters.get(i + 1))) {
+                    return false;
+                }
+            }
         }
         return true;
     }
@@ -113,7 +132,6 @@ public class BossManager {
         int count = 0;
         ArrayList<Account> accounts = Storage.getAllAccounts();
         AccountSortFactor.sort(sortFactor, sortType, accounts);
-
         StringBuilder answer = new StringBuilder("All Accounts Username:").append("\n");
         if (accounts.size() == 0) {
             Server.setAnswer("no account found with this username");
