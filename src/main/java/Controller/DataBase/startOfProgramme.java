@@ -23,8 +23,6 @@ public class startOfProgramme extends DataBase {
     public void startProgramme() throws IOException, ClassNotFoundException {
         makeDirectories();
         updateFiles();
-        EndOfProgramme endOfProgramme=new EndOfProgramme();
-        endOfProgramme.run();
     }
 
     private void updateFiles() throws IOException, ClassNotFoundException {
