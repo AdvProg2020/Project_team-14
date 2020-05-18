@@ -1,8 +1,6 @@
 package Controller.DataBase;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
 
 import Model.Account.Boss;
 import Model.Account.Customer;
@@ -25,6 +23,8 @@ import static Model.Storage.*;
 public class EndOfProgramme extends DataBase {
 
     public void updateFiles() throws IOException {
+        clearFolder();
+        makeDirectories();
         updateBosses();
         updateBuyLogs();
         updateCategories();
@@ -155,18 +155,4 @@ public class EndOfProgramme extends DataBase {
         }
     }
 
-   /* @Override
-    public void run() {
-        try {
-            clearFolder();
-            updateFiles();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            Thread.sleep(TimeUnit.SECONDS.toMillis(3));
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }*/
 }

@@ -81,11 +81,7 @@ public class BossManager {
             return false;
         }
         Product product = Storage.getProductById(filter);
-        if (product.doesSalesmanSellProductWithUsername(account.getUsername())) {
-            return true;
-        } else {
-            return false;
-        }
+        return product.doesSalesmanSellProductWithUsername(account.getUsername());
     }
 
     public void viewAccount(String bossUsername, String username) {

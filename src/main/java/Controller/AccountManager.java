@@ -12,6 +12,8 @@ import Model.Product.Product;
 import Model.Request.Request;
 import Model.Storage;
 
+import java.net.ServerSocket;
+
 public class AccountManager {
 
     public void login(String username, String password) {
@@ -173,6 +175,10 @@ public class AccountManager {
     }
 
     public void deleteAccount(String bossUsername, String username) {
+        if(bossUsername.equals(username)){
+            Server.setAnswer("you're not allowed to delete yourself :)");
+            return;
+        }
         Account account = Storage.getAccountWithUsername(username);
         if (account instanceof Boss) {
             BossManager.changeFathers(bossUsername, username);
