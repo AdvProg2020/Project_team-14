@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.regex.Matcher;
 
 public class ManageOffCodesMenu extends Menu {
     public ManageOffCodesMenu(Menu fatherMenu, String menuName) {
@@ -95,16 +96,13 @@ public class ManageOffCodesMenu extends Menu {
                 ArrayList<String> ans = new ArrayList<>();
                 String command;
                 while (!(command = scanner.nextLine()).equalsIgnoreCase("done")) {
-                    if (command.split("\\s").length != 2) {
-                        System.err.println("wrong order, use this format");
-                        System.err.println("-add [username] : to add\n-delete [username] : to delete in case of mistaken addition\n-DONE : to end addition");
-                    } else if (command.startsWith("add")) {
-                        addUsernameToArray(command.split("\\s")[1], ans);
-                    } else if (command.startsWith("delete")) {
-                        deleteUsernameFromArray(command.split("\\s")[1], ans);
+                    Matcher matcher;
+                    if ((matcher = getMatcher(command, "(add)( ){1}(\\S+)$")).find()) {
+                        addUsernameToArray(matcher.group(3), ans);
+                    } else if ((matcher = getMatcher(command, "(delete)( ){1}(\\S+)$")).find()) {
+                        deleteUsernameFromArray(matcher.group(3), ans);
                     } else {
-                        System.err.println("wrong order, use this format");
-                        System.err.println("-add [username] : to add\n-delete [username] : to delete in case of mistaken addition\n-DONE : to end addition");
+                        System.err.println("wrong input");
                     }
                 }
                 return ans;
@@ -167,12 +165,6 @@ public class ManageOffCodesMenu extends Menu {
                     this.execute();
                 }
             }
-
-            /*private void checkBack(String command) {
-                if (command.equalsIgnoreCase("back")) {
-                    fatherMenu.execute();
-                }
-            }*/
         };
     }
 }
