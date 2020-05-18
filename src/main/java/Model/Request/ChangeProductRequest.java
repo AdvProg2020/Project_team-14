@@ -1,7 +1,9 @@
 package Model.Request;
 
+import Model.Account.Salesman;
 import Model.Product.Product;
 import Model.Request.Enum.*;
+import Model.Storage;
 
 import java.io.Serializable;
 import java.text.ParseException;
@@ -45,12 +47,16 @@ public class ChangeProductRequest extends Request implements Serializable {
 
     public String toStringChangeProduct() {
         Product product = (Product) object;
+        Salesman salesman = (Salesman) Storage.getAccountWithUsername(accountUsername);
+        String result = "";
+        result += "General information of salesman: " + "\n";
+        assert salesman != null;
+        result += salesman.toStringForRequest();
         assert product != null;
-        return "Product Name:" + product.getName() + "\n" +
+        return result + "Product Name:" + product.getName() + "\n" +
                 "Attribute to change: " + attribute.name().toLowerCase() + "\n"
                 + "New attribute value: " + updatedInfo
                 + "Confirmation State: " + confirmation.name() + "\n";
-
     }
 
 }

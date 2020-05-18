@@ -19,11 +19,78 @@ import static java.lang.String.valueOf;
 public class ProductManager {
 
 
+    private boolean checkCategoryFilter(Product product, String categories) {
+        String[] categoriesName = categories.split(",");
+        for (String category : categoriesName) {
+            if (product.getCategoryName().equals(category)) return true;
+        }
+        return false;
+    }
+
+    private boolean checkSalesmanFilter(Product product, String salesmanIDs) {
+        String[] salesmanID = salesmanIDs.split(",");
+        for (String salesman : salesmanID) {
+            if (product.doesSalesmanSellProductWithUsername(salesman)) return true;
+        }
+        return false;
+    }
+
+    private boolean checkConfirmationFilter(Product product, String s) {
+        String[] allState = s.split(",");
+        for (String state : allState) {
+            if (product.getOverallConfirmation().equals(state)) return true;
+        }
+        return false;
+    }
+
+    private boolean checkRemainderFilter(Product product, String s) {
+        String[] remainderState = s.split(",");
+        int wantedAmount;
+        boolean ans;
+        if (remainderState.length == 2) {
+            return true;
+        }
+        if (remainderState[0].equals("not available")) {
+            wantedAmount = 0;
+            ans = false;
+        } else {
+            wantedAmount = 1;
+            ans = true;
+        }
+        for (String salesmanID : product.getSalesmanIDs()) {
+            if (product.isAvailableBySalesmanWithUsername(salesmanID, wantedAmount)) return ans;
+        }
+        return ans;
+    }
+
+
     private boolean isProductInFilter(Product product, ArrayList<Object> filters) {
+        for (int i = 0; i < filters.size(); i += 2) {
+            if (((String) filters.get(i)).equalsIgnoreCase("salesmanIDs")) {
+                if (!checkSalesmanFilter(product, (String) filters.get(i + 1))) {
+                    return false;
+                }
+            }
+            if (((String) filters.get(i)).equalsIgnoreCase("categories")) {
+                if (!checkCategoryFilter(product, (String) filters.get(i + 1))) {
+                    return false;
+                }
+            }
+            if (((String) filters.get(i)).equalsIgnoreCase("remainder")) {
+                if (!checkRemainderFilter(product, (String) filters.get(i + 1))) {
+                    return false;
+                }
+            }
+            if (((String) filters.get(i)).equalsIgnoreCase("Confirmation")) {
+                if (!checkConfirmationFilter(product, (String) filters.get(i + 1))) {
+                    return false;
+                }
+            }
+        }
         return true;
     }
 
-    public void showProducts(String username, ArrayList<Object> filters, String sortFactor, String sortType) {
+    public void showProducts(String username, ArrayList<Object> filters, String sortFactor, String sortType, int type) {
         int count = 0;
         ArrayList<Product> products = Storage.getAllProducts();
         ProductSortFactor.sort(sortFactor, sortType, products);
