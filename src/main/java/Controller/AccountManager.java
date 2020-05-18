@@ -1,7 +1,14 @@
 package Controller;
 
 import Model.Account.*;
+import Model.Cart.Cart;
 import Model.Confirmation;
+import Model.Log.SellLog;
+import Model.Off.OffCode;
+import Model.Off.Sale;
+import Model.Product.Comment;
+import Model.Product.Point;
+import Model.Product.Product;
 import Model.Request.Request;
 import Model.Storage;
 
@@ -84,9 +91,36 @@ public class AccountManager {
     }
 
     private void updateUsernameForModel(String oldUsername, String newUsername) {
+        SellLog.updateAllSellLogsWithNewUsername(oldUsername, newUsername);
+        OffCode.updateAllOffCodesWithNewUsername(oldUsername, newUsername);
         for (Request request : Storage.getAllRequests()) {
             if (request.getAccountUsername().equals(oldUsername)) {
                 request.setAccountUsername(newUsername);
+            }
+        }
+        for (Sale sale : Storage.allSales) {
+            if (sale.getSalesmanID().equals(oldUsername)) {
+                sale.setSalesmanID(newUsername);
+            }
+        }
+        for (Comment comment : Storage.allComments) {
+            if (comment.getSenderUsername().equals(oldUsername)) {
+                comment.setSenderUsername(newUsername);
+            }
+        }
+        for (Point point : Storage.allPoints) {
+            if (point.getUsername().equals(oldUsername)) {
+                point.setUsername(oldUsername);
+            }
+        }
+        for (Request request : Storage.getAllRequests()) {
+            if (request.getAccountUsername().equals(oldUsername)) {
+                request.setAccountUsername(newUsername);
+            }
+        }
+        for (Cart cart : Storage.allCarts) {
+            if (cart.getUsername().equals(oldUsername)) {
+                cart.setUsername(newUsername);
             }
         }
     }

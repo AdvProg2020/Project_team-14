@@ -101,8 +101,10 @@ public class Customer extends Account implements Serializable {
             return "ERROR: you don't have access to this offCode";
         }*/
         if (customerOffCodes.containsKey(offCodeID)) {
+            assert offCode != null;
             return offCode.toString() + "Remaining time you can use it: " + customerOffCodes.get(offCodeID);
         }
+        assert offCode != null;
         return offCode.toString() + "Remaining time you can use it: " + 0;
 
     }

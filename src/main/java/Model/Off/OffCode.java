@@ -27,10 +27,25 @@ public class OffCode extends Off implements Serializable {
         for (String username : userNamesCanUseIt) {
             Customer customer = ((Customer) Storage.getAccountWithUsername(username));
             assert customer != null;
-            customer.addOffCode(this.offCodeID,numberOfTimesCanBeUsed);
+            customer.addOffCode(this.offCodeID, numberOfTimesCanBeUsed);
         }
 
         //because IDs are generally too long I decided to to make the length the random String 5 in order for more comfort
+    }
+
+    private void updateWithNewUsername(String oldUsername, String newUsername) {
+        for (String username : userNamesCanUseIt) {
+            if (username.equals(oldUsername)) {
+                userNamesCanUseIt.remove(oldUsername);
+                userNamesCanUseIt.add(newUsername);
+            }
+        }
+    }
+
+    public static void updateAllOffCodesWithNewUsername(String oldUsername, String newUsername) {
+        for (OffCode offCode : allOffCodes) {
+            offCode.updateWithNewUsername(oldUsername, newUsername);
+        }
     }
 
     public static ArrayList<OffCode> getAllCustomerOffCodesByUsername(String username) {

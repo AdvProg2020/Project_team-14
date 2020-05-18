@@ -44,6 +44,14 @@ public class SellLog implements Serializable {
         return buyLog.getDeliveryState().name();
     }
 
+    public void setSalesmanID(String salesmanID) {
+        this.salesmanID = salesmanID;
+    }
+
+    public String getSalesmanID() {
+        return salesmanID;
+    }
+
     public static ArrayList<SellLog> getSalesmanSellLogs(String salesmanID) {
         ArrayList<SellLog> arrayList = new ArrayList<>();
         for (SellLog sellLog : Storage.allSellLogs) {
@@ -52,6 +60,20 @@ public class SellLog implements Serializable {
             }
         }
         return arrayList;
+    }
+
+    private void updateSellLogsWithNewUsername(String oldUsername, String newUsername) {
+        if (this.customerID.equals(oldUsername)) {
+            customerID = newUsername;
+        } else if (this.salesmanID.equals(oldUsername)) {
+            salesmanID = newUsername;
+        }
+    }
+
+    public static void updateAllSellLogsWithNewUsername(String oldUsername,String newUsername){
+        for (SellLog sellLog:Storage.allSellLogs){
+            sellLog.updateSellLogsWithNewUsername(oldUsername,newUsername);
+        }
     }
 
     public static boolean hasSalesmanAnySellLog(String salesmanID) {

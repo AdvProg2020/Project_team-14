@@ -136,6 +136,14 @@ public class Comment implements Serializable {
         this.confirmationState = confirmation;
     }
 
+    public String getSenderUsername() {
+        return senderUsername;
+    }
+
+    public void setSenderUsername(String senderUsername) {
+        this.senderUsername = senderUsername;
+    }
+
     String createID() {
         return RandomString.createID("Comment");
     }

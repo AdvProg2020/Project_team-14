@@ -7,6 +7,7 @@ import Model.Off.OffCode;
 import Model.Product.Point;
 import Model.Product.Product;
 import Model.Storage;
+import org.javatuples.Triplet;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,14 +28,18 @@ public class CustomerManager {
 
     public void viewDiscountCodes(String username, String sortFactor) {
         Customer customer = (Customer) Storage.getAccountWithUsername(username);
+        assert customer != null;
         HashMap<String, Integer> userOffCodes = customer.getCustomerOffCodes();
+
         /*
          * sort ArrayList
          */
+
         StringBuilder ans = new StringBuilder("Here are all of your Discount code:");
         for (String offCodeID : userOffCodes.keySet()) {
-            ans.append("\nOffCode ID: " + offCodeID + ", Percentage: " + OffCode.getOffCodeByID(offCodeID).getPercentage() +
-                    ", Remaining time of use: " + userOffCodes.get(offCodeID));
+
+            ans.append("\nOffCode ID: ").append(offCodeID).append(", Percentage: ").append(OffCode.getOffCodeByID(offCodeID).getPercentage())
+                    .append(", Remaining time of use: ").append(userOffCodes.get(offCodeID));
         }
         Server.setAnswer(ans.toString());
     }
@@ -106,16 +111,20 @@ public class CustomerManager {
     //public void createLog();          ->      doesn't match this logic
     //public void setInfoOfLog();       ->      doesn't match this logic
 
-    /*public void canUserContinuePurchase(String username) {
+    public void canUserContinuePurchase(String username) {
         HashMap<String, String> errorProductIDs = new HashMap<>();
         Cart customerCart = Cart.getCartBasedOnUsername(username);
+
         //find errors
+
         for (Triplet<String, String, Integer> item : customerCart.getAllItems()) {
             if (!Product.getProductWithID(item.getValue0()).isAvailableBySalesmanWithUsername(item.getValue1(), item.getValue2())) {
                 errorProductIDs.put(item.getValue0(), item.getValue1());
             }
         }
+
         //set answer to server
+
         if (errorProductIDs.size() == 0) {
             Server.setAnswer("you can continue your purchase");
         } else {
@@ -124,9 +133,9 @@ public class CustomerManager {
                 error.append("\n product [" + productID + "] is not available by [" + errorProductIDs.get(productID) + "]");
             }
         }
-    }*/
+    }
 
-    /*public void setOffCode(String username, String offCodeID) {
+    public void setOffCode(String username, String offCodeID) {
         StringBuilder ans = new StringBuilder("");
         OffCode offCode = OffCode.getOffCodeByID(offCodeID);
         if (offCodeID != null) {
@@ -141,9 +150,9 @@ public class CustomerManager {
         Customer customer = (Customer) Storage.getAccountWithUsername(username);
         assert customer != null;
         Server.setAnswer("Final Price:" + "\n" + customer.getCart().getTotalPrice(offCodeID));
-    }*/
+    }
 
-    /*public void buy(String username, String offCodeID) {
+    public void buy(String username, String offCodeID) {
         Customer customer = (Customer) Storage.getAccountWithUsername(username);
         assert customer != null;
         if (customer.getCart().buy(offCodeID)) {
@@ -151,5 +160,5 @@ public class CustomerManager {
         } else {
             Server.setAnswer("error, you don't have enough credit to purchase");
         }
-    }*/
+    }
 }

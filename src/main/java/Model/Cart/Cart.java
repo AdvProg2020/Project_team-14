@@ -15,7 +15,7 @@ import java.util.HashMap;
 
 public class Cart implements Serializable {
 
-//    private HashMap<String, String> productIDs = new HashMap<>();//when logs updated with Triplet, we delete this
+    //    private HashMap<String, String> productIDs = new HashMap<>();//when logs updated with Triplet, we delete this
     private String username;
     private String cartID;
 
@@ -136,6 +136,10 @@ public class Cart implements Serializable {
         return username;
     }
 
+    public void setUsername(String newUsername) {
+        this.username = newUsername;
+    }
+
     public String getCartID() {
         return cartID;
     }
@@ -145,7 +149,7 @@ public class Cart implements Serializable {
         HashMap<String, Integer> prices = new HashMap<>();
         for (Triplet<String, String, Integer> item : allItems) {
             Product product = Product.getProductWithID(item.getValue0());
-            assert  product != null;
+            assert product != null;
             prices.put(item.getValue0(), product.getPriceBySalesmanID(item.getValue1()));
         }
         return prices;

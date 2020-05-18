@@ -31,6 +31,10 @@ public class Sale extends Off implements Serializable {
         return salesmanID;
     }
 
+    public void setSalesmanID(String salesmanID) {
+        this.salesmanID = salesmanID;
+    }
+
     public static ArrayList<Sale> getAllSaleBySalesmanID(String salesmanID) {
         ArrayList<Sale> salesmanSale = new ArrayList<>();
         for (Sale sale : allSales) {
