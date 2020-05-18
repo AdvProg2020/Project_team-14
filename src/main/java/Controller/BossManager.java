@@ -312,6 +312,7 @@ public class BossManager {
     public void showCategories(String username, ArrayList<Object> filters) {
         int count = 0;
         ArrayList<Category> categories = Storage.getAllCategories();
+
         StringBuilder answer = new StringBuilder("");
         if (categories.size() == 0) {
             Server.setAnswer("nothing found");

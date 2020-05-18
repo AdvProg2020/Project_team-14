@@ -94,6 +94,10 @@ public class Product implements Serializable {
         seenCount++;
     }
 
+    public ArrayList<String> getSalesmanIDs() {
+        return salesmanIDs;
+    }
+
     public void setBrand(String brand) {
         this.brand = brand;
     }
@@ -229,7 +233,7 @@ public class Product implements Serializable {
         return null;
     }
 
-    private Confirmation getOverallConfirmation() {
+    public Confirmation getOverallConfirmation() {
         for (String salesmanID : this.salesmanIDs) {
             if (confirmationState.get(salesmanID).equals(Confirmation.ACCEPTED)) {
                 return Confirmation.ACCEPTED;

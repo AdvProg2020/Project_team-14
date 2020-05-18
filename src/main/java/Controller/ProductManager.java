@@ -20,17 +20,47 @@ public class ProductManager {
 
 
     private boolean checkCategoryFilter(Product product, String categories) {
-
+        String[] categoriesName = categories.split(",");
+        for (String category : categoriesName) {
+            if (product.getCategoryName().equals(category)) return true;
+        }
+        return false;
     }
 
     private boolean checkSalesmanFilter(Product product, String salesmanIDs) {
-        
+        String[] salesmanID = salesmanIDs.split(",");
+        for (String salesman : salesmanID) {
+            if (product.doesSalesmanSellProductWithUsername(salesman)) return true;
+        }
+        return false;
     }
 
     private boolean checkConfirmationFilter(Product product, String s) {
+        String[] allState = s.split(",");
+        for (String state : allState) {
+            if (product.getOverallConfirmation().equals(state)) return true;
+        }
+        return false;
     }
 
     private boolean checkRemainderFilter(Product product, String s) {
+        String[] remainderState = s.split(",");
+        int wantedAmount;
+        boolean ans;
+        if (remainderState.length == 2) {
+            return true;
+        }
+        if (remainderState[0].equals("not available")) {
+            wantedAmount = 0;
+            ans = false;
+        } else {
+            wantedAmount = 1;
+            ans = true;
+        }
+        for (String salesmanID : product.getSalesmanIDs()) {
+            if (product.isAvailableBySalesmanWithUsername(salesmanID, wantedAmount)) return ans;
+        }
+        return ans;
     }
 
 
