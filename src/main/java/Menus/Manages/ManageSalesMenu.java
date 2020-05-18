@@ -23,8 +23,16 @@ public class ManageSalesMenu extends Menu {
 
     private Menu getSearchSale() {
         return new Menu(this, "Search Sale Menu") {
+            private boolean hasBeenCalled = true;
+
             @Override
             public void execute() throws ParseException, IOException {
+                if (hasBeenCalled) {
+                    hasBeenCalled = false;
+                } else {
+                    hasBeenCalled = true;
+                    fatherMenu.execute();
+                }
                 System.out.println(menuName);
                 System.out.println("if you input back we will go back");
 
@@ -37,7 +45,7 @@ public class ManageSalesMenu extends Menu {
                 if (server.serverToClient().equalsIgnoreCase("search completed")) {
                     new ViewSalesMenu(this, "View Sale Menu", saleID).execute();
                 } else {
-                    fatherMenu.execute();
+                    this.execute();
                 }
             }
         };

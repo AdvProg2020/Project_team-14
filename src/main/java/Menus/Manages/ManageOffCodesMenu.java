@@ -25,9 +25,16 @@ public class ManageOffCodesMenu extends Menu {
 
     private Menu getSearchOffCodeMenu() {
         return new Menu(this, "Search OffCode Menu") {
+            private boolean hasBeenCalled = true;
 
             @Override
             public void execute() throws ParseException, IOException {
+                if (hasBeenCalled) {
+                    hasBeenCalled = false;
+                } else {
+                    hasBeenCalled = true;
+                    fatherMenu.execute();
+                }
                 System.out.println(menuName);
                 System.out.println("if you input back we will go back");
                 System.out.println("please input offCode ID:");
@@ -39,7 +46,7 @@ public class ManageOffCodesMenu extends Menu {
                     Menu viewOffCode = new ViewOffCodeMenu(this, "View OffCode Menu", offCodeID, 0);
                     viewOffCode.execute();
                 } else {
-                    fatherMenu.execute();
+                    this.execute();
                 }
             }
         };

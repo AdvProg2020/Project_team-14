@@ -26,9 +26,16 @@ public class ShowSalesMenu extends ShowsMenu {
 
     private Menu getSelectSale() {
         return new Menu(this, "Select Sale Menu") {
+            private boolean hasBeenCalled = true;
 
             @Override
             public void execute() throws ParseException, IOException {
+                if (hasBeenCalled) {
+                    hasBeenCalled = false;
+                } else {
+                    hasBeenCalled = true;
+                    fatherMenu.execute();
+                }
                 System.out.println(menuName);
                 System.out.println("if you input back we will go back");
 
@@ -42,8 +49,8 @@ public class ShowSalesMenu extends ShowsMenu {
                 if (isIdInTheList(allSale, saleID)) {
                     new ViewSalesMenu(this, "View Sale Menu", saleID).execute();
                 } else {
-                    System.err.println("we couldn't find requested ID the above list, try another ID");
-                    fatherMenu.execute();
+                    System.err.println("we couldn't find requested ID in the above list, try another ID");
+                    this.execute();
                 }
             }
 

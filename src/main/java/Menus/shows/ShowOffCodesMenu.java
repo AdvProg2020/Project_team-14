@@ -30,9 +30,16 @@ public class ShowOffCodesMenu extends ShowsMenu {
 
     private Menu getSelectMenu() {
         return new Menu(this, "Select OffCode Menu") {
+            private boolean hasBeenCalled = true;
 
             @Override
             public void execute() throws ParseException, IOException {
+                if (hasBeenCalled) {
+                    hasBeenCalled = false;
+                } else {
+                    hasBeenCalled = true;
+                    fatherMenu.execute();
+                }
                 System.out.println(menuName);
                 System.out.println("if you input back we will go back");
 
@@ -46,8 +53,8 @@ public class ShowOffCodesMenu extends ShowsMenu {
                 if (isIdInTheList(allOffCodes, offCodeID)) {
                     new ViewOffCodeMenu(this, "View OffCode Menu", offCodeID, whereHasBeenCalled).execute();
                 } else {
-                    System.out.println("we couldn't found this id the above list, try another one");
-                    fatherMenu.execute();
+                    System.out.println("we couldn't found this id in the above list, try another one");
+                    this.execute();
                 }
             }
 
