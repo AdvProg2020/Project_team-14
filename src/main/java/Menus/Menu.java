@@ -74,6 +74,11 @@ public class Menu {
         }
     }
 
+    protected Matcher getMatcher(String command, String regex) {
+        Pattern pattern = Pattern.compile(regex);
+        return pattern.matcher(command);
+    }
+
     protected void show() throws ParseException, IOException {
         System.out.println(this.menuName + ":");
         for (Integer menuNum : subMenus.keySet()) {

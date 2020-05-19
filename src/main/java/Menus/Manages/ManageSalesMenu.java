@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.regex.Matcher;
 
 public class ManageSalesMenu extends Menu {
     public ManageSalesMenu(Menu fatherMenu, String menuName) {
@@ -83,16 +84,15 @@ public class ManageSalesMenu extends Menu {
             }
 
             private ArrayList<String> getProductIDAndAddThemToSale() throws ParseException, IOException {
-                System.out.println("Here use this format to add product to Sale: (-add [ProductID]\n-remove [ProductID]\n-DONE)");
+                System.out.println("Here use this format to add product to Sale:\n-add [ProductID]\n-remove [ProductID]\n-DONE)");
                 ArrayList<String> ans = new ArrayList<>();
                 String command;
                 while (!(command = scanner.nextLine()).equalsIgnoreCase("done")) {
-                    if (command.split("\\s").length != 2) {
-                        System.err.println("wrong input");
-                    } else if (command.split("\\s")[0].equalsIgnoreCase("add")) {
-                        addProductToSale(command.split("\\s")[1], ans);
-                    } else if (command.split("\\s")[1].equalsIgnoreCase("remove")) {
-                        removeProductFromSale(command.split("\\s")[1], ans);
+                    Matcher matcher;
+                    if ((matcher = getMatcher(command, "(add)( ){1}(\\S+)$")).find()) {
+                        addProductToSale(matcher.group(3), ans);
+                    } else if ((matcher = getMatcher(command, "(remove)( ){1}(\\S+)$")).find()) {
+                        removeProductFromSale(matcher.group(3), ans);
                     } else {
                         System.err.println("wrong input");
                     }

@@ -48,6 +48,14 @@ public class Category implements Serializable {
         return attribute;
     }
 
+    public int getSeenCount() {
+        int seenCount = 0;
+        for (String productID : allProductIDs) {
+            seenCount += Storage.getProductById(productID).getSeenCount();
+        }
+        return seenCount;
+    }
+
     public boolean hasParentCategory() {
         return (this.parentCategoryName != null);
     }
