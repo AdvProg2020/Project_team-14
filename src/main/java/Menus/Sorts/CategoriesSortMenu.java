@@ -11,7 +11,7 @@ public class CategoriesSortMenu extends SortsMenu {
         HashMap<Integer, Menu> sunMenus = new HashMap<>();
         sunMenus.put(1, getResetSort(this));
         sunMenus.put(2, getSubMenuSelectFactor(this, "ALPHABETICALLY"));
-        sunMenus.put(3, getSubMenuSelectFactor(this, "PRODUCT COUNT"));
+        sunMenus.put(3, getSubMenuSelectFactor(this, "SEEN_COUNT"));
         sunMenus.put(4, new LoginOrRegisterMenu(this,"Login\\Register Menu"));
         this.setSubMenus(sunMenus);
     }
