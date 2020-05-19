@@ -392,15 +392,15 @@ public class Server {
      */
 
     private void addProduct(String command) {
-
+        productManager.addToProduct(command.split("\\+")[1], command.split("\\+")[2]);
     }
 
     private void deleteProduct(String command) {
-
+        productManager.deleteProduct(command.split("\\+")[1], command.split("\\+")[2]);
     }
 
     private void searchProduct(String command) {
-        
+        productManager.searchProduct(command.split("\\+")[1], command.split("\\+")[2]);
     }
 
     private void viewProduct(String command) {

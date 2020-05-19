@@ -129,12 +129,26 @@ public class ProductManager {
     }
 
 
+    public void addToProduct(String salesmanUser, String productID) {
+        Product product = Storage.getProductById(productID);
+        assert product != null;
+        new Request(salesmanUser, product, "ADD_TO_PRODUCT");
+    }
+
+    public void searchProduct(String salesmanUser, String productID) {
+        if (Storage.isThereProductWithID(productID)) {
+            Server.setAnswer("search completed");
+        } else {
+            Server.setAnswer("no product with this ID");
+        }
+    }
+
     public void editProduct(String productID, String salesmanID, String attribute, String updatedInfo) {
         new ChangeProductRequest(salesmanID, Product.getProductWithID(productID), attribute, updatedInfo);
     }
 
-    public void deleteProduct(String productID, String salesmanUser) {
-        Product product = Product.getProductWithID(productID);
+    public void deleteProduct(String salesmanUser, String productID) {
+        Product product = Storage.getProductById(productID);
         assert product != null;
         new Request(salesmanUser, product, "DELETE_PRODUCT");
     }
