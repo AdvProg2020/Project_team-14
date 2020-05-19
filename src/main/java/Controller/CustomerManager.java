@@ -118,7 +118,7 @@ public class CustomerManager {
         //find errors
 
         for (Triplet<String, String, Integer> item : customerCart.getAllItems()) {
-            if (!Product.getProductWithID(item.getValue0()).isAvailableBySalesmanWithUsername(item.getValue1(), item.getValue2())) {
+            if (!Storage.getProductById(item.getValue0()).isAvailableBySalesmanWithUsername(item.getValue1(), item.getValue2())) {
                 errorProductIDs.put(item.getValue0(), item.getValue1());
             }
         }

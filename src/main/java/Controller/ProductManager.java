@@ -129,9 +129,10 @@ public class ProductManager {
     }
 
 
-    public void addToProduct(String salesmanUser, String productID) {
+    public void addToProduct(String salesmanUser, String productID, String remainder, String money) {
         Product product = Storage.getProductById(productID);
         assert product != null;
+        product.addSalesman(salesmanUser, Integer.parseInt(remainder), Integer.parseInt(money));
         new Request(salesmanUser, product, "ADD_TO_PRODUCT");
     }
 
@@ -143,72 +144,18 @@ public class ProductManager {
         }
     }
 
-    public void editProduct(String productID, String salesmanID, String attribute, String updatedInfo) {
-        new ChangeProductRequest(salesmanID, Product.getProductWithID(productID), attribute, updatedInfo);
-    }
-
     public void deleteProduct(String salesmanUser, String productID) {
         Product product = Storage.getProductById(productID);
         assert product != null;
         new Request(salesmanUser, product, "DELETE_PRODUCT");
     }
 
+    public void editProduct(String productID, String salesmanID, String attribute, String updatedInfo) {
+        new ChangeProductRequest(salesmanID, Storage.getProductById(productID), attribute, updatedInfo);
+    }
+
     //I didn't actually know for what reason this method was going to be used but I designed this
     //for salesman to view their product with the sort factor they want
-
-    public String listProductsForSalesman(String salesmanUser, String sortFactor) throws Exception {
-        StringBuilder result = new StringBuilder();
-        ArrayList<Product> products = new ArrayList<>(getProductsOfSalesman(salesmanUser));
-        if (sortFactor.equalsIgnoreCase(valueOf(ProductSortFactor.ALPHABETICALLY))) {
-            products.sort(Comparator.comparing(Product::getName));
-        } else if (sortFactor.equalsIgnoreCase(valueOf(ProductSortFactor.PRICE))) {
-            products.sort(Comparator.comparingInt(p -> p.getPriceBySalesmanID(salesmanUser)));
-        } else if (sortFactor.equalsIgnoreCase(valueOf(ProductSortFactor.SEEN_COUNT))) {
-            products.sort((Comparator.comparingInt(Product::getSeenCount)));
-        } else if (sortFactor.equalsIgnoreCase(valueOf(ProductSortFactor.HIGHEST_POINT))) {
-            products.sort((Comparator.comparingDouble(Product::getAveragePoint)));
-        } else if (sortFactor.equals("")) {
-            products.sort((Comparator.comparingInt(Product::getSeenCount)));
-        } else {
-            throw new Exception("the sort factor isn't authentic " + "\n" +
-                    "the available sort factors: " + ProductSortFactor.getValues() + "\n");
-        }
-        for (Product product : products) {
-            result.append(product.toStringForSalesmanView(salesmanUser));
-        }
-        return result.toString();
-    }
-
-    public String listProductsForCustomer(String sortFactor, ArrayList<String> productIDs) throws Exception {
-        StringBuilder result = new StringBuilder();
-        ArrayList<Product> products = new ArrayList<>(getArrayListOfProductsFromArrayListOfProductIDs(productIDs));
-        if (sortFactor.equalsIgnoreCase(valueOf(ProductSortFactor.ALPHABETICALLY))) {
-            products.sort(Comparator.comparing(Product::getName));
-        } else if (sortFactor.equalsIgnoreCase(valueOf(ProductSortFactor.PRICE))) {
-            products.sort(Comparator.comparingInt(Product::getMinimumPrice));
-        } else if (sortFactor.equalsIgnoreCase(valueOf(ProductSortFactor.SEEN_COUNT))) {
-            products.sort((Comparator.comparingInt(Product::getSeenCount)));
-        } else if (sortFactor.equals("")) {
-            products.sort((Comparator.comparingInt(Product::getSeenCount)));
-        } else if (sortFactor.equalsIgnoreCase(valueOf(ProductSortFactor.HIGHEST_POINT))) {
-            products.sort((Comparator.comparingDouble(Product::getAveragePoint)));
-        } else {
-            throw new Exception("the sort factor isn't authentic " + "\n" +
-                    "the available sort factors: " + ProductSortFactor.getValues() + "\n");
-        }
-        for (Product product : products) {
-            result.append(product.getName()).append("\n");
-        }
-        return result.toString();
-    }
-
-
-    public String viewSingleProductDigest(String productID) {
-        Product product = Product.getProductWithID(productID);
-        assert product != null;
-        return product.toStringForCustomerView();
-    }
-
 
     public String viewBuyersOfProduct(String productID, String sortFactor) throws Exception {
         StringBuilder result = new StringBuilder();
@@ -221,7 +168,7 @@ public class ProductManager {
     }
 
     public static String getPointForProductStringFormatted(String productID) {
-        Product product = Product.getProductWithID(productID);
+        Product product = Storage.getProductById(productID);
         assert product != null;
         if (product.isThereAnyPoint()) {
             String result = "";
@@ -233,7 +180,7 @@ public class ProductManager {
     }
 
     public static String getCommentsForProductStringFormatted(String productID) {
-        Product product = Product.getProductWithID(productID);
+        Product product = Storage.getProductById(productID);
         assert product != null;
         if (product.isThereComment()) {
             return Comment.getCommentsForProductStringFormatted(productID);
@@ -243,7 +190,7 @@ public class ProductManager {
     }
 
     public static boolean isThereCommentForProduct(String productID) {
-        Product product = Product.getProductWithID(productID);
+        Product product = Storage.getProductById(productID);
         assert product != null;
         return product.isThereComment();
     }
@@ -262,7 +209,7 @@ public class ProductManager {
     }
 
     public static void addSalesmanToProduct(String productID, String salesmanUserName, int price, int remainder) {
-        Product product = Product.getProductWithID(productID);
+        Product product = Storage.getProductById(productID);
         assert product != null;
         product.addSalesman(salesmanUserName, remainder, price);
     }
@@ -278,7 +225,7 @@ public class ProductManager {
     }
 
     public boolean doesSalesmanSellProduct(String salesmanUserName, String productID) {
-        Product product = Product.getProductWithID(productID);
+        Product product = Storage.getProductById(productID);
         assert product != null;
         return product.doesSalesmanSellProductWithUsername(salesmanUserName);
     }
@@ -286,7 +233,7 @@ public class ProductManager {
     public static ArrayList<Product> getArrayListOfProductsFromArrayListOfProductIDs(ArrayList<String> productIDs) {
         ArrayList<Product> arrayList = new ArrayList<>();
         for (String productID : productIDs) {
-            arrayList.add(Product.getProductWithID(productID));
+            arrayList.add(Storage.getProductById(productID));
         }
         return arrayList;
     }

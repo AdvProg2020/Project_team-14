@@ -145,7 +145,7 @@ public class Product implements Serializable {
     }
 
     public static String getNameByID(String productID) {
-        return Objects.requireNonNull(Product.getProductWithID(productID)).getName();
+        return Objects.requireNonNull(Storage.getProductById(productID)).getName();
     }
 
     public String getProductID() {
@@ -218,19 +218,6 @@ public class Product implements Serializable {
 
     public void decreaseProductRemaining(String salesmanID, int wantedAmount) {
         remainder.replace(salesmanID, remainder.get(salesmanID) - wantedAmount);
-    }
-
-    public static boolean isThereProductWithID(String productID) {
-        return getProductWithID(productID) != null;
-    }
-
-    public static Product getProductWithID(String productID) {
-        for (Product product : Storage.getAllProducts()) {
-            if (product.getProductID().equals(productID)) {
-                return product;
-            }
-        }
-        return null;
     }
 
     public Confirmation getOverallConfirmation() {

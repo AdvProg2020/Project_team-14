@@ -82,12 +82,12 @@ public class Category implements Serializable {
 
     public void addProductToCategory(String productID) {
         this.allProductIDs.add(productID);
-        Product.getProductWithID(productID).setCategoryName(this.categoryName);
+        Storage.getProductById(productID).setCategoryName(this.categoryName);
     }
 
     public void deleteProductFromCategory(String productID) {
         this.allProductIDs.remove(productID);
-        Product.getProductWithID(productID).setCategoryName("");
+        Storage.getProductById(productID).setCategoryName("");
     }
 
     public boolean containsProduct(String productID) {

@@ -35,6 +35,8 @@ public class Request implements Serializable {
             requestType = RequestType.DELETE_PRODUCT;
         } else if (type.equalsIgnoreCase(String.valueOf(RequestType.ADD_NEW_PRODUCT))) {
             requestType = RequestType.ADD_NEW_PRODUCT;
+        } else if (type.equalsIgnoreCase(String.valueOf(RequestType.ADD_TO_PRODUCT))) {
+            requestType = RequestType.ADD_TO_PRODUCT;
         }
         Storage.getAllRequests().add(this);
         this.confirmation = Confirmation.CHECKING;
@@ -151,6 +153,10 @@ public class Request implements Serializable {
             this.confirmation = Confirmation.ACCEPTED;
             Comment comment = (Comment) object;
             comment.setConfirmationState(Confirmation.ACCEPTED);
+        } else if (this.requestType.equals(RequestType.ADD_TO_PRODUCT)) {
+            this.confirmation = Confirmation.ACCEPTED;
+            Product product = (Product) object;
+            product.setConfirmationState(accountUsername, Confirmation.ACCEPTED);
         }
     }
 
@@ -187,6 +193,10 @@ public class Request implements Serializable {
             this.confirmation = Confirmation.DENIED;
             Comment comment = (Comment) object;
             comment.setConfirmationState(Confirmation.DENIED);
+        } else if (this.requestType.equals(RequestType.ADD_TO_PRODUCT)) {
+            this.confirmation = Confirmation.ACCEPTED;
+            Product product = (Product) object;
+            product.setConfirmationState(accountUsername, Confirmation.DENIED);
         }
     }
 

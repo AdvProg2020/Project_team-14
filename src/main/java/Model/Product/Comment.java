@@ -4,6 +4,7 @@ import Model.Confirmation;
 import Model.Log.Log;
 import Model.RandomString;
 import Model.Request.Request;
+import Model.Storage;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -99,7 +100,7 @@ public class Comment implements Serializable {
 
     public String toStringForChecking() {
         String result = "";
-        result += "Product Name: " + Objects.requireNonNull(Product.getProductWithID(productID)).getName();
+        result += "Product Name: " + Objects.requireNonNull(Storage.getProductById(productID)).getName();
         result += "Sender: " + this.senderUsername + "\n";
         result += "Title: " + this.title + "\n";
         result += "Message: " + this.text + "\n";
@@ -110,7 +111,7 @@ public class Comment implements Serializable {
     @Override
     public String toString() {
         String result = "";
-        result += "Product Name: " + Objects.requireNonNull(Product.getProductWithID(productID)).getName();
+        result += "Product Name: " + Objects.requireNonNull(Storage.getProductById(productID)).getName();
         result += "Sender: " + this.senderUsername + "\n";
         result += "Title: " + this.title + "\n";
         result += "Message: " + this.text + "\n";

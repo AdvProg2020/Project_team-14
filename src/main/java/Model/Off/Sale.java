@@ -3,6 +3,7 @@ package Model.Off;
 import Model.Confirmation;
 import Model.Product.Product;
 import Model.RandomString;
+import Model.Storage;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -83,7 +84,7 @@ public class Sale extends Off implements Serializable {
     //after all possible sales
 
     public static int getPriceAfterSale(String productID, String salesmanID) {
-        int price = Objects.requireNonNull(Product.getProductWithID(productID)).getPriceBySalesmanID(salesmanID);
+        int price = Objects.requireNonNull(Storage.getProductById(productID)).getPriceBySalesmanID(salesmanID);
         if (isProductInSaleWithID(productID, salesmanID)) {
             return price - price * getMaxSalePercentage(productID, salesmanID) / 100;
         } else {

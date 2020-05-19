@@ -27,7 +27,7 @@ public class PageManager {
     }
 
     public void goToProductPage(String productID) throws Exception {
-        Product product = Product.getProductWithID(productID);
+        Product product = Storage.getProductById(productID);
         if (product == null) {
             throw new Exception("the product ID is invalid");
         } else {
@@ -41,13 +41,13 @@ public class PageManager {
      */
 
     public void showProductDigest(String productID) {
-        Product product = Product.getProductWithID(productID);
+        Product product = Storage.getProductById(productID);
         assert product != null;
         Server.setAnswer(product.toStringForCustomerView());
     }
 
     public void getProductSeller(String productID) {
-        Product product = Product.getProductWithID(productID);
+        Product product = Storage.getProductById(productID);
         if (product == null) {
             Server.setAnswer("error, product doesn't exist");
         } else {

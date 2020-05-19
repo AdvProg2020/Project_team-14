@@ -3,6 +3,7 @@ package Model.Product;
 import Model.Account.Customer;
 import Model.Account.Salesman;
 import Model.Confirmation;
+import Model.Storage;
 import org.junit.Assert;
 import org.junit.Test;
 import java.util.ArrayList;
@@ -74,10 +75,10 @@ public class ProductTest {
     @Test
     public void getNameByID() {
         Assert.assertEquals(Product.getNameByID(product.getProductID()), "name");
-        Assert.assertEquals(Product.getProductWithID(product.getProductID()), product);
-        Assert.assertEquals(Product.getProductWithID(product2.getProductID()), product2);
-        Assert.assertNull(Product.getProductWithID("fake ID"));
-        Assert.assertFalse(Product.isThereProductWithID("fake ID"));
+        Assert.assertEquals(Storage.getProductById(product.getProductID()), product);
+        Assert.assertEquals(Storage.getProductById(product2.getProductID()), product2);
+        Assert.assertNull(Storage.getProductById("fake ID"));
+        Assert.assertFalse(Storage.isThereProductWithID("fake ID"));
 
     }
 

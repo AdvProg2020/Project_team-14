@@ -122,11 +122,11 @@ public class SalesmanManager {
      */
 
     public void editProduct(String productID, String salesmanID, String attribute, String updatedInfo) {
-        new ChangeProductRequest(salesmanID, Product.getProductWithID(productID), attribute, updatedInfo);
+        new ChangeProductRequest(salesmanID, Storage.getProductById(productID), attribute, updatedInfo);
     }
 
     public void deleteProduct(String productID, String salesmanUser) {
-        Product product = Product.getProductWithID(productID);
+        Product product = Storage.getProductById(productID);
         assert product != null;
         new Request(salesmanUser, product, "DELETE_PRODUCT");
     }

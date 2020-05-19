@@ -85,19 +85,27 @@ public class ViewProductMenu extends Menu {
         return new Menu(this, "Add Product Menu") {
             @Override
             public void execute() throws ParseException, IOException {
-                System.out.println("are you sure you want to add yourself to sell this product");
-                String input = scanner.nextLine();
-                if (input.equalsIgnoreCase("yes")) {
-                    System.out.println("add product+" + Menu.username + "+" + productID);
-                    String serverAnswer = server.serverToClient();
-                    System.out.println(serverAnswer);
-                    fatherMenu.execute();
-                } else if (input.equalsIgnoreCase("no")) {
-                    fatherMenu.execute();
-                } else {
-                    System.out.println("error");
+                System.out.println("if you insert back we will go back");
+                System.out.println("please insert your remainder: ");
+                String remainder;
+                remainder = scanner.nextLine();
+                checkBack(remainder);
+                if (!remainder.matches("\\d+")) {
+                    System.out.println("wrong input type");
                     this.execute();
                 }
+                System.out.println("please insert your offered money for this product: ");
+                String money;
+                money = scanner.nextLine();
+                checkBack(money);
+                if (!money.matches("\\d+")) {
+                    System.out.println("wrong input type");
+                    this.execute();
+                }
+                System.out.println("add product+" + Menu.username + "+" + productID + "+" + remainder + "+" + money);
+                String serverAnswer = server.serverToClient();
+                System.out.println(serverAnswer);
+                fatherMenu.execute();
             }
         };
     }

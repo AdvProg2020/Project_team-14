@@ -392,7 +392,8 @@ public class Server {
      */
 
     private void addProduct(String command) {
-        productManager.addToProduct(command.split("\\+")[1], command.split("\\+")[2]);
+        productManager.addToProduct(command.split("\\+")[1], command.split("\\+")[2],
+                command.split("\\+")[3], command.split("\\+")[4]);
     }
 
     private void deleteProduct(String command) {

@@ -51,7 +51,7 @@ public class Cart implements Serializable {
     //updated with Triplet
     public void clearCart() {
         for (Triplet<String, String, Integer> item : allItems) {
-            Product.getProductWithID(item.getValue0()).decreaseProductRemaining(item.getValue1(), item.getValue2());
+            Storage.getProductById(item.getValue0()).decreaseProductRemaining(item.getValue1(), item.getValue2());
         }
         allItems.clear();
     }
@@ -80,14 +80,14 @@ public class Cart implements Serializable {
         assert cart != null;
         Triplet<String, String, Integer> item = getItem(productID, salesmanID);
         if (item != null) {
-            if (!Product.getProductWithID(productID).isAvailableBySalesmanWithUsername(salesmanID, getItemCount(productID, salesmanID) + 1)) {
+            if (!Storage.getProductById(productID).isAvailableBySalesmanWithUsername(salesmanID, getItemCount(productID, salesmanID) + 1)) {
                 return false;
             }
             allItems.remove(item);
             allItems.add(item.setAt2(item.getValue2() + 1));//Triplet is immutable :|
             return true;
         }
-        if (Product.getProductWithID(productID).isAvailableBySalesmanWithUsername(salesmanID, 1)) {
+        if (Storage.getProductById(productID).isAvailableBySalesmanWithUsername(salesmanID, 1)) {
             allItems.add(new Triplet<>(productID, salesmanID, 1));
             return true;
         }
@@ -148,7 +148,7 @@ public class Cart implements Serializable {
     public HashMap<String, Integer> getPrices() {
         HashMap<String, Integer> prices = new HashMap<>();
         for (Triplet<String, String, Integer> item : allItems) {
-            Product product = Product.getProductWithID(item.getValue0());
+            Product product = Storage.getProductById(item.getValue0());
             assert product != null;
             prices.put(item.getValue0(), product.getPriceBySalesmanID(item.getValue1()));
         }
@@ -159,7 +159,7 @@ public class Cart implements Serializable {
     public HashMap<String, Integer> getPricesAfterSale() {
         HashMap<String, Integer> prices = new HashMap<>();
         for (Triplet<String, String, Integer> item : allItems) {
-            Product product = Product.getProductWithID(item.getValue0());
+            Product product = Storage.getProductById(item.getValue0());
             assert product != null;
             prices.put(item.getValue0(), Sale.getPriceAfterSale(item.getValue0(), item.getValue1()));
         }
@@ -186,7 +186,7 @@ public class Cart implements Serializable {
 
     //updated with Triplet
     private String toStringSingleItem(Triplet<String, String, Integer> item) {
-        Product product = Product.getProductWithID(item.getValue0());
+        Product product = Storage.getProductById(item.getValue0());
         assert product != null;
         String result = "Product: " + product.getName() + "\n";
         result += "Salesman: " + item.getValue1() + "\n";
