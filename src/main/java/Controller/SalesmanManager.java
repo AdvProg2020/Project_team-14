@@ -25,6 +25,7 @@ public class SalesmanManager {
     public void register(String[] information) {
         if (Storage.isThereAccountWithUsername(information[3])) {
             Server.setAnswer("username is already taken, try something else");
+            return;
         }
         Server.setAnswer("register successful");
         new Salesman(information[3], information[4], information[1], information[2],
@@ -91,8 +92,8 @@ public class SalesmanManager {
         Server.setAnswer(ans);
     }
 
-    public void createSale(String salesmanID, String start, String end, int percentage ,ArrayList<String> productID) {
-        Sale newSale = new Sale(start, end, percentage, salesmanID,productID);
+    public void createSale(String salesmanID, String start, String end, int percentage, ArrayList<String> productID) {
+        Sale newSale = new Sale(start, end, percentage, salesmanID, productID);
         new Request(salesmanID, newSale, "ADD_NEW_SALE");
     }
 

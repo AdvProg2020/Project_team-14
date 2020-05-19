@@ -31,6 +31,7 @@ public class BossManager {
         if (information[0].equalsIgnoreCase("register")) {
             if (Storage.isThereAccountWithUsername(information[3])) {
                 Server.setAnswer("the username is already taken, try something else");
+                return;
             }
             Server.setAnswer("register successful");
             Server.setHasBoss(true);
@@ -39,6 +40,7 @@ public class BossManager {
         } else {
             if (Storage.isThereAccountWithUsername(information[3])) {
                 Server.setAnswer("the username is already taken, try something else");
+                return;
             }
             Server.setAnswer("register successful");
             Server.setHasBoss(true);

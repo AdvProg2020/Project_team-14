@@ -4,6 +4,7 @@ import Menus.Edits.EditCategoryMenu;
 import Menus.LoginOrRegisterMenu;
 import Menus.Menu;
 import Menus.shows.ShowCategoriesMenu;
+import Menus.shows.ShowProductsMenu;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -17,7 +18,8 @@ public class ViewCategoryMenu extends Menu {
         subMenus.put(1, new EditCategoryMenu(this, "Edit Category Menu"));
         subMenus.put(2, new ShowCategoriesMenu(this, "Show Sub Categories Menu"));
         subMenus.put(3, getDeleteCategoryMenu());
-        subMenus.put(4, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
+        subMenus.put(4, new ShowProductsMenu(this, "Show Category Products Menu"));
+        subMenus.put(5, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
         this.setSubMenus(subMenus);
     }
 

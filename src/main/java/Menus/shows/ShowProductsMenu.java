@@ -8,6 +8,7 @@ import Menus.Manages.ManageProductsMenu;
 import Menus.Menu;
 import Menus.Sorts.ProductsSortMenu;
 import Menus.Views.ViewAccountMenu;
+import Menus.Views.ViewCategoryMenu;
 import Menus.Views.ViewProductMenu;
 
 import java.io.IOException;
@@ -16,6 +17,7 @@ import java.util.HashMap;
 
 public class ShowProductsMenu extends ShowsMenu {
     private boolean canChangeSalesmanIDsFilter;
+    private boolean canChangeCategoryFilter;
 
     public ShowProductsMenu(Menu fatherMenu, String menuName) {
         super(fatherMenu, menuName);
@@ -24,6 +26,11 @@ public class ShowProductsMenu extends ShowsMenu {
             this.type = "my products";
         }
         HashMap<Integer, Menu> subMenus = new HashMap<Integer, Menu>();
+        if (fatherMenu instanceof ViewCategoryMenu) {
+            canChangeCategoryFilter = false;
+        } else {
+            canChangeCategoryFilter = true;
+        }
         if (fatherMenu instanceof ViewAccountMenu) {
             canChangeSalesmanIDsFilter = false;
         } else {
@@ -39,6 +46,9 @@ public class ShowProductsMenu extends ShowsMenu {
         sort = new ProductsSortMenu(this, "Product Sort Menu");
         if (fatherMenu instanceof ViewAccountMenu) {
             ((ProductsFilterMenu) filter).setSalesmanIDs(((ViewAccountMenu) fatherMenu).getUsername());
+        }
+        if(fatherMenu instanceof ViewCategoryMenu){
+            ((ProductsFilterMenu) filter).setCategories(((ViewCategoryMenu) fatherMenu).getCategoryName());
         }
         subMenus.put(1, filter);
         subMenus.put(2, sort);
@@ -87,6 +97,10 @@ public class ShowProductsMenu extends ShowsMenu {
                 }
             }
         };
+    }
+
+    public boolean isCanChangeCategoryFilter() {
+        return canChangeCategoryFilter;
     }
 
     public boolean isCanChangeSalesmanIDsFilter() {
