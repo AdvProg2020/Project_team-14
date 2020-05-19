@@ -19,6 +19,7 @@ import Model.Account.Customer;
 import Model.Account.Role;
 import Model.Category.Category;
 import Model.Confirmation;
+import Model.Product.Product;
 import Model.Request.Request;
 import Model.Storage;
 
@@ -146,6 +147,14 @@ public class Server {
             this.deleteProduct(command);
         } else if (command.startsWith("search product+")) {
             this.searchProduct(command);
+        } else if (command.startsWith("edit product price+")) {
+            this.editProductPrice(command);
+        } else if (command.startsWith("add product remainder+")) {
+            this.addProductRemainder(command);
+        } else if (command.startsWith("decrease product remainder")) {
+            this.decreaseProductRemainder(command);
+        } else if (command.startsWith("edit product+")) {
+            this.editProduct(command);
         } else if (command.startsWith("search offCod")) {
             this.searchOffCode(command);
         } else if (command.startsWith("create new normal offCode")) {
@@ -180,6 +189,7 @@ public class Server {
         else if (command.startsWith("show balance")) {
             this.showBalance(command);
         }
+
     }
 
     private void getCommentProductID(String command) {
@@ -390,6 +400,38 @@ public class Server {
     /*
      * this is Product Part
      */
+
+    private void editProduct(String command) {
+        productManager.editProduct(command.split("\\+")[3], command.split("\\+")[2],
+                command.split("\\+")[1], command.split("\\+")[4]);
+        setAnswer("request submitted");
+    }
+
+    private void addProductRemainder(String command) {
+        String[] input = command.split("\\+");
+        Product product = Storage.getProductById(input[1]);
+        product.setRemainderForSalesman(product.getRemainderForSalesman(input[1]) +
+                Integer.parseInt(input[3]), input[1]);
+        setAnswer("edit successful");
+    }
+
+    private void decreaseProductRemainder(String command) {
+        String[] input = command.split("\\+");
+        Product product = Storage.getProductById(input[1]);
+        if (Integer.parseInt(input[3]) > product.getRemainderForSalesman(input[1])) {
+            setAnswer("not enough remainder");
+            return;
+        }
+        product.setRemainderForSalesman(product.getRemainderForSalesman(input[1]) -
+                Integer.parseInt(input[3]), input[1]);
+        setAnswer("edit successful");
+    }
+
+    private void editProductPrice(String command) {
+        Product product = Storage.getProductById(command.split("\\+")[2]);
+        product.setPriceForSalesman(Integer.parseInt(command.split("\\+")[3]), command.split("\\+")[1]);
+        setAnswer("edit successful");
+    }
 
     private void addProduct(String command) {
         productManager.addToProduct(command.split("\\+")[1], command.split("\\+")[2],

@@ -110,6 +110,10 @@ public class Product implements Serializable {
         this.remainder.put(salesmanUser, remainder);
     }
 
+    public int getRemainderForSalesman(String salesmanUser) {
+        return this.remainder.get(salesmanUser);
+    }
+
     public void setPriceForSalesman(int price, String salesmanUser) {
         this.price.put(salesmanUser, price);
     }
