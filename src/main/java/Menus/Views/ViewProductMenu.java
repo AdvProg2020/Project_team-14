@@ -63,13 +63,36 @@ public class ViewProductMenu extends Menu {
 
     private Menu getAddToCartMenu() {
         return new Menu(this, "Add To Cart Menu") {
-
+            @Override
+            public void execute() throws ParseException, IOException {
+                super.execute();
+            }
         };
     }
 
     private Menu getCreateCommentMenu() {
         return new Menu(this, "Create Comment Menu") {
-
+            @Override
+            public void execute() throws ParseException, IOException {
+                System.out.println(this.getMenuName());
+                System.out.println("if you input back we will go back");
+                System.out.println("please insert your comment title:");
+                String commentTitle;
+                commentTitle = scanner.nextLine();
+                checkBack(commentTitle);
+                System.out.println("please insert your comment:");
+                String comment;
+                comment = scanner.nextLine();
+                checkBack(comment);
+                server.clientToServer("comment product+" + Menu.username + "+" +
+                        ((ViewProductMenu) fatherMenu).getProductID() + "+" + commentTitle + "+" + comment);
+                System.out.println(server.serverToClient());
+                if (server.serverToClient().equalsIgnoreCase("comment successful")) {
+                    fatherMenu.execute();
+                } else {
+                    this.execute();
+                }
+            }
         };
     }
 

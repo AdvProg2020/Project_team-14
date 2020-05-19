@@ -21,6 +21,7 @@ import Model.Account.Role;
 import Model.Account.Salesman;
 import Model.Category.Category;
 import Model.Confirmation;
+import Model.Product.Comment;
 import Model.Product.Product;
 import Model.Request.Request;
 import Model.Storage;
@@ -196,6 +197,8 @@ public class Server {
             this.editSale(command);
         } else if (command.startsWith("what is comment product ID+")) {
             this.getCommentProductID(command);
+        } else if (command.startsWith("comment product+")) {
+            this.commentProduct(command);
         }
 
         //end parts
@@ -207,6 +210,12 @@ public class Server {
 
     private void getCommentProductID(String command) {
 
+    }
+
+    private void commentProduct(String command) {
+        Comment comment = new Comment(command.split("\\+")[3], command.split("\\+")[4], command.split("\\+")[1],
+                command.split("\\+")[2]);
+        new Request(comment).setAccountUsername(command.split("\\+")[1]);
     }
 
     private void editSale(String command) {
@@ -760,8 +769,8 @@ public class Server {
     private ArrayList<Object> getFilters(String command) {
         ArrayList<Object> filters = new ArrayList<Object>();
         String[] input = command.split("\\+");
-        if (command.contains("filter")) {
-            for (int i = 3; i < getWordCount(command) - 2; i += 2) {
+        if (command.contains("filter:")) {
+            for (int i = 3; i < getWordCount(command); i += 2) {
                 if (input[i].equalsIgnoreCase("sort:")) {
                     break;
                 }
