@@ -20,17 +20,17 @@ public class FiltersMenu extends Menu {
     }
 
     public String getFilters() {
-        String filter = new String("");
+        StringBuilder filter = new StringBuilder("");
         for (int i = 0; i < filters.size(); i += 2) {
             if (filters.get(i + 1) != null) {
-                filter += "+";
-                filter += filters.get(i);
-                filter += "+";
-                filter += filters.get(i + 1);
+                filter.append("+");
+                filter.append(filters.get(i));
+                filter.append("+");
+                filter.append(filters.get(i + 1));
             }
         }
-        if (filter.equals("")) {
-            return filter;
+        if (filter.toString().equals("")) {
+            return filter.toString();
         } else {
             return "+filters:" + filter;
         }

@@ -11,22 +11,22 @@ import java.util.HashMap;
 public class AccountsFilterMenu extends FiltersMenu {
     private void makeFilters() {
         filters.add("role");
-        filters.add(new String());
+        filters.add("");
         filters.set(1, null);
         filters.add("minCredit");
-        filters.add(new String());
+        filters.add("");
         filters.set(3, null);
         filters.add("maxCredit");
-        filters.add(new String());
+        filters.add("");
         filters.set(5, null);
         filters.add("ProductsSalesman:");
-        filters.add(new String());
+        filters.add("");
         filters.set(7, null);
     }
 
     public AccountsFilterMenu(Menu fatherMenu, String menuName) {
         super(fatherMenu, menuName);
-        filters = new ArrayList<Object>();
+        filters = new ArrayList<>();
         makeFilters();
         HashMap<Integer, Menu> subMenus = new HashMap<Integer, Menu>();
         subMenus.put(1, getChangeRoleMenu());

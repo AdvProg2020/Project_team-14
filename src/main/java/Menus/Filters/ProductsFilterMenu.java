@@ -12,22 +12,22 @@ import java.util.HashMap;
 public class ProductsFilterMenu extends FiltersMenu {
     private void makeFilters() {
         filters.add("salesmanIDs");
-        filters.add(new String());
+        filters.add("");
         filters.set(1, null);
         filters.add("categories");
-        filters.add(new String());
+        filters.add("");
         filters.set(3, null);
         filters.add("remainder");
-        filters.add(new String());
+        filters.add("");
         filters.set(5, null);
         filters.add("Confirmation");
-        filters.add(new String());
+        filters.add("");
         filters.set(7, null);
     }
 
     public ProductsFilterMenu(Menu fatherMenu, String menuName) {
         super(fatherMenu, menuName);
-        filters = new ArrayList<Object>();
+        filters = new ArrayList<>();
         makeFilters();
         HashMap<Integer, Menu> subMenus = new HashMap<Integer, Menu>();
         if (((ShowProductsMenu) fatherMenu).isCanChangeSalesmanIDsFilter()) {
@@ -192,11 +192,8 @@ public class ProductsFilterMenu extends FiltersMenu {
                 if (username.equals("clear")) {
                     return true;
                 }
-                if (available.equalsIgnoreCase("available") || available.equalsIgnoreCase
-                        ("not available")) {
-                    return true;
-                }
-                return false;
+                return available.equalsIgnoreCase("available") || available.equalsIgnoreCase
+                        ("not available");
             }
 
             @Override
@@ -228,11 +225,8 @@ public class ProductsFilterMenu extends FiltersMenu {
                 if (username.equals("clear")) {
                     return true;
                 }
-                if (confirmation.equalsIgnoreCase("ACCEPTED") || confirmation.equalsIgnoreCase
-                        ("DENIED") || confirmation.equalsIgnoreCase("CHECKING")) {
-                    return true;
-                }
-                return false;
+                return confirmation.equalsIgnoreCase("ACCEPTED") || confirmation.equalsIgnoreCase
+                        ("DENIED") || confirmation.equalsIgnoreCase("CHECKING");
             }
 
             @Override

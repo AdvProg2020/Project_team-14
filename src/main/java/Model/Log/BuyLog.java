@@ -7,12 +7,13 @@ import Model.RandomString;
 import Model.Storage;
 import org.javatuples.Triplet;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
 
-public class BuyLog extends Log {
+public class BuyLog extends Log implements Serializable {
 
 
     //the first argument is productID and the second one is salesmanID the third one is product count

@@ -77,8 +77,37 @@ public abstract class DataBase {
         file.close();
     }
 
-    public static void clearFolder() throws IOException {
-     //   FileUtils.cleanDirectory(new File("src\\main\\resources\\DataBase"));
+    private static void clearFolder(String name) {
+        File file = new File("src\\main\\resources\\DataBase\\" + name);
+        if (!file.exists()) {
+            System.out.println("what the fuck");
+        }
+        String[] myFiles;
+        if (file.isDirectory()) {
+            myFiles = file.list();
+            assert myFiles != null;
+            for (String s : myFiles) {
+                File myFile = new File(file, s);
+                myFile.delete();
+            }
+        }
+    }
+
+    public static void clearFolder() {
+        clearFolder("Bosses");
+        clearFolder("Customers");
+        clearFolder("Salesmen");
+        clearFolder("Products");
+        clearFolder("Categories");
+        clearFolder("BuyLogs");
+        clearFolder("OffCodes");
+        clearFolder("Sales");
+        clearFolder("SpecialOffCodes");
+        clearFolder("Comments");
+        clearFolder("Points");
+        clearFolder("Requests");
+        clearFolder("Carts");
+        clearFolder("SellLogs");
     }
 
 }

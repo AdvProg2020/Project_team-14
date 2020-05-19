@@ -45,6 +45,7 @@ public class Server {
         this.productManager = new ProductManager();
         startOfProgramme startOfProgramme = new startOfProgramme();
         startOfProgramme.startProgramme();
+        hasBoss = (Storage.getAllBosses().size() != 0);
         //abstractCarts = new HashMap<>();
     }
 
@@ -418,6 +419,7 @@ public class Server {
     private void decreaseProductRemainder(String command) {
         String[] input = command.split("\\+");
         Product product = Storage.getProductById(input[1]);
+        assert product != null;
         if (Integer.parseInt(input[3]) > product.getRemainderForSalesman(input[1])) {
             setAnswer("not enough remainder");
             return;
@@ -429,6 +431,7 @@ public class Server {
 
     private void editProductPrice(String command) {
         Product product = Storage.getProductById(command.split("\\+")[2]);
+        assert product != null;
         product.setPriceForSalesman(Integer.parseInt(command.split("\\+")[3]), command.split("\\+")[1]);
         setAnswer("edit successful");
     }
@@ -697,7 +700,7 @@ public class Server {
         ArrayList<Object> filters = new ArrayList<Object>();
         String[] input = command.split("\\+");
         if (command.contains("filter")) {
-            for (int i = 3; i < getWordCount(command); i += 2) {
+            for (int i = 3; i < getWordCount(command) - 2; i += 2) {
                 if (input[i].equalsIgnoreCase("sort:")) {
                     break;
                 }
@@ -894,7 +897,7 @@ public class Server {
     }
 
     public String serverToClient() throws IOException {
-        //endOfProgramme.updateFiles();
+        endOfProgramme.updateFiles();
         return Server.answer;
     }
 
