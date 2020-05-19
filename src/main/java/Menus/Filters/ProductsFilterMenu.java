@@ -31,11 +31,18 @@ public class ProductsFilterMenu extends FiltersMenu {
         makeFilters();
         HashMap<Integer, Menu> subMenus = new HashMap<Integer, Menu>();
         if (((ShowProductsMenu) fatherMenu).isCanChangeSalesmanIDsFilter()) {
-            subMenus.put(1, getChangeSalesmanIDsMenu());
-            subMenus.put(2, getChangeCategoriesMenu());
-            subMenus.put(3, getChangeRemainderMenu());
-            subMenus.put(4, getChangeConfirmationMenu());
-            subMenus.put(5, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
+            if (((ShowProductsMenu) fatherMenu).isCanChangeCategoryFilter()) {
+                subMenus.put(1, getChangeSalesmanIDsMenu());
+                subMenus.put(2, getChangeCategoriesMenu());
+                subMenus.put(3, getChangeRemainderMenu());
+                subMenus.put(4, getChangeConfirmationMenu());
+                subMenus.put(5, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
+            } else {
+                subMenus.put(1, getChangeSalesmanIDsMenu());
+                subMenus.put(2, getChangeRemainderMenu());
+                subMenus.put(3, getChangeConfirmationMenu());
+                subMenus.put(4, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
+            }
         } else {
             subMenus.put(1, getChangeCategoriesMenu());
             subMenus.put(2, getChangeRemainderMenu());
