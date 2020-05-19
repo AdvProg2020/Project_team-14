@@ -47,7 +47,7 @@ public class ViewProductMenu extends Menu {
                     subMenus.put(3, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
                 }
             } else {
-                // we will ad comment and add to cart here later
+                //we will add this later
             }
         }
         setSubMenus(subMenus);

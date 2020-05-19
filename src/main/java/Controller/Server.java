@@ -204,55 +204,6 @@ public class Server {
 
     }
 
-    private void addProductCategory(String command) {
-        Product product = Storage.getProductById(command.split("\\+")[2]);
-        if (Storage.isThereCategoryWithName(command.split("\\+")[3])) {
-            setAnswer("added successfully");
-            product.setCategoryName(command.split("\\+")[3]);
-        } else {
-            setAnswer("there isn't category with this name");
-        }
-    }
-
-    private void deleteProductSalesman(String command) {
-        Product product = Storage.getProductById(command.split("\\+")[2]);
-        if (Storage.isThereAccountWithUsername(command.split("\\+")[3])) {
-            Account account = Storage.getAccountWithUsername(command.split("\\+")[3]);
-            if (account.getRole().equals(Role.SALESMAN)) {
-                if (product.doesSalesmanSellProductWithUsername(account.getUsername())) {
-                    product.deleteForSalesman(account.getUsername());
-                    setAnswer("deleted successfully");
-                } else {
-                    setAnswer("this salesman does'nt sell this product");
-                }
-            } else {
-                setAnswer("this username isn't a salesman username");
-            }
-        } else {
-            setAnswer("no account with this username");
-        }
-    }
-
-    private void deleteProductCategory(String command) {
-        Product product = Storage.getProductById(command.split("\\+")[2]);
-        product.setCategoryName(null);
-        Server.setAnswer("deleted successfully");
-    }
-
-    private void addProductView(String command) {
-        Product product = Storage.getProductById(command.split("\\+")[1]);
-        product.setSeenCount(product.getSeenCount() + 1);
-    }
-
-    private void whatIsProductCategory(String command) {
-        Product product = Storage.getProductById(command.split("\\+")[1]);
-        if (product.getCategoryName() == null) {
-            setAnswer("it doesn't have a category");
-        } else {
-            setAnswer(product.getCategoryName());
-        }
-    }
-
     private void getCommentProductID(String command) {
 
     }
@@ -461,6 +412,55 @@ public class Server {
     /*
      * this is Product Part
      */
+
+    private void addProductCategory(String command) {
+        Product product = Storage.getProductById(command.split("\\+")[2]);
+        if (Storage.isThereCategoryWithName(command.split("\\+")[3])) {
+            setAnswer("added successfully");
+            product.setCategoryName(command.split("\\+")[3]);
+        } else {
+            setAnswer("there isn't category with this name");
+        }
+    }
+
+    private void deleteProductSalesman(String command) {
+        Product product = Storage.getProductById(command.split("\\+")[2]);
+        if (Storage.isThereAccountWithUsername(command.split("\\+")[3])) {
+            Account account = Storage.getAccountWithUsername(command.split("\\+")[3]);
+            if (account.getRole().equals(Role.SALESMAN)) {
+                if (product.doesSalesmanSellProductWithUsername(account.getUsername())) {
+                    product.deleteForSalesman(account.getUsername());
+                    setAnswer("deleted successfully");
+                } else {
+                    setAnswer("this salesman does'nt sell this product");
+                }
+            } else {
+                setAnswer("this username isn't a salesman username");
+            }
+        } else {
+            setAnswer("no account with this username");
+        }
+    }
+
+    private void deleteProductCategory(String command) {
+        Product product = Storage.getProductById(command.split("\\+")[2]);
+        product.setCategoryName(null);
+        Server.setAnswer("deleted successfully");
+    }
+
+    private void addProductView(String command) {
+        Product product = Storage.getProductById(command.split("\\+")[1]);
+        product.setSeenCount(product.getSeenCount() + 1);
+    }
+
+    private void whatIsProductCategory(String command) {
+        Product product = Storage.getProductById(command.split("\\+")[1]);
+        if (product.getCategoryName() == null) {
+            setAnswer("it doesn't have a category");
+        } else {
+            setAnswer(product.getCategoryName());
+        }
+    }
 
     private void editProduct(String command) {
         productManager.editProduct(command.split("\\+")[3], command.split("\\+")[2],
