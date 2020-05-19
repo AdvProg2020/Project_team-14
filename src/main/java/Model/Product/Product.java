@@ -118,6 +118,10 @@ public class Product implements Serializable {
         this.price.put(salesmanUser, price);
     }
 
+    public void setSeenCount(int seenCount) {
+        this.seenCount = seenCount;
+    }
+
     public void deleteForSalesman(String salesmanUser) {
         hasBeenDeleted.put(salesmanUser, true);
     }

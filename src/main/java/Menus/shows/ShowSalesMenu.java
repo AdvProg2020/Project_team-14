@@ -17,7 +17,7 @@ public class ShowSalesMenu extends ShowsMenu {
         HashMap<Integer, Menu> subMenus = new HashMap<>();
         //filter = new SalesFilterMenu(this, "Sales Filter Menu");
         sort = new SalesSortMenu(this, "Sales Sort Menu");
-        subMenus.put(1, filter);
+        //subMenus.put(1, filter);
         subMenus.put(2, sort);
         subMenus.put(3, getSelectSale());
         subMenus.put(4, new LoginOrRegisterMenu(this, "Login\\Register Menu"));

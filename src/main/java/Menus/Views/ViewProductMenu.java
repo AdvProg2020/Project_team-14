@@ -47,7 +47,7 @@ public class ViewProductMenu extends Menu {
                     subMenus.put(3, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
                 }
             } else {
-                // we will ad comment and add to cart here later
+                //we will add this later
             }
         }
         setSubMenus(subMenus);
@@ -55,6 +55,7 @@ public class ViewProductMenu extends Menu {
 
     public ViewProductMenu(Menu fatherMenu, String menuName, String productID) throws ParseException, IOException {
         super(fatherMenu, menuName);
+        server.clientToServer("add product view+" + productID);
         this.productID = productID;
         this.logoutType = false;
         productSubMenus();
@@ -64,6 +65,7 @@ public class ViewProductMenu extends Menu {
         return new Menu(this, "Delete Product Menu") {
             @Override
             public void execute() throws ParseException, IOException {
+                System.out.println(this.getMenuName());
                 System.out.println("are you sure you want to delete yourself from selling this product");
                 String input = scanner.nextLine();
                 if (input.equalsIgnoreCase("yes")) {
@@ -85,6 +87,7 @@ public class ViewProductMenu extends Menu {
         return new Menu(this, "Add Product Menu") {
             @Override
             public void execute() throws ParseException, IOException {
+                System.out.println(this.getMenuName());
                 System.out.println("if you insert back we will go back");
                 System.out.println("please insert your remainder: ");
                 String remainder;
@@ -112,19 +115,65 @@ public class ViewProductMenu extends Menu {
 
     private Menu getDeleteProductFromCategoryMenu() {
         return new Menu(this, "Delete Product From Category Menu") {
-
+            @Override
+            public void execute() throws ParseException, IOException {
+                System.out.println(this.getMenuName());
+                System.out.println("are you sure you want to delete this product from category");
+                String input = scanner.nextLine();
+                if (input.equalsIgnoreCase("yes")) {
+                    System.out.println("delete product category+" + Menu.username + "+" + productID);
+                    String serverAnswer = server.serverToClient();
+                    System.out.println(serverAnswer);
+                    fatherMenu.execute();
+                } else if (input.equalsIgnoreCase("no")) {
+                    fatherMenu.execute();
+                } else {
+                    System.out.println("error");
+                    this.execute();
+                }
+            }
         };
     }
 
     private Menu getAddProductToCategoryMenu() {
         return new Menu(this, "Add Product To Category Menu") {
-
+            @Override
+            public void execute() throws ParseException, IOException {
+                System.out.println(this.getMenuName());
+                System.out.println("if you input back we will go back");
+                System.out.println("input the category name you want to add this to it");
+                String input = scanner.nextLine();
+                checkBack(input);
+                System.out.println("add product category+" + Menu.username + "+" + productID + "+" + input);
+                String serverAnswer = server.serverToClient();
+                System.out.println(serverAnswer);
+                if (serverAnswer.equalsIgnoreCase("added successfully")) {
+                    fatherMenu.execute();
+                } else {
+                    this.execute();
+                }
+            }
         };
     }
 
     private Menu getDeleteAccountFromSellingThisProductMenu() {
         return new Menu(this, "Delete Account From Selling Product Menu") {
-
+            @Override
+            public void execute() throws ParseException, IOException {
+                System.out.println(this.getMenuName());
+                System.out.println("if you input back we will go back");
+                System.out.println("input the salesman username you want to delete from selling this product");
+                String input = scanner.nextLine();
+                checkBack(input);
+                System.out.println("delete product salesman+" + Menu.username + "+" + productID + "+" + input);
+                String serverAnswer = server.serverToClient();
+                System.out.println(serverAnswer);
+                if (serverAnswer.equalsIgnoreCase("deleted successfully")) {
+                    fatherMenu.execute();
+                } else {
+                    this.execute();
+                }
+            }
         };
     }
 
