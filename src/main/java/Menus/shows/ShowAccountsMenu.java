@@ -18,11 +18,7 @@ public class ShowAccountsMenu extends ShowsMenu {
         super(fatherMenu, menuName);
         this.type = "accounts";
         HashMap<Integer, Menu> subMenus = new HashMap<Integer, Menu>();
-        if (fatherMenu instanceof ViewProductMenu) {
-            canChangeProductSalesmanFilter = false;
-        } else {
-            canChangeProductSalesmanFilter = true;
-        }
+        canChangeProductSalesmanFilter = !(fatherMenu instanceof ViewProductMenu);
         filter = new AccountsFilterMenu(this, "Account Filter Menu");
         sort = new AccountsSortMenu(this, "Account Sorts Menu");
         if (fatherMenu instanceof ViewProductMenu) {

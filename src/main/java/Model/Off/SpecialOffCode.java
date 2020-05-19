@@ -35,6 +35,7 @@ public class SpecialOffCode extends RandomString implements Runnable, Serializab
         this.numberOfTimesItCanBeUsed = numberOfTimesItCanBeUsed;
         allSpecialOffCodes.add(this);
         specialOffCodeID = createID("SpecialOffCode---");
+        this.run();
     }
 
     //----[ updated newly ]----- constructor has parameter, change class parameter
