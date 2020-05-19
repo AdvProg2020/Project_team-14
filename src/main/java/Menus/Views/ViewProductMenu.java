@@ -5,6 +5,7 @@ import Menus.LoginOrRegisterMenu;
 import Menus.Menu;
 import Menus.shows.ShowAccountsMenu;
 import Menus.shows.ShowCategoriesMenu;
+import Menus.shows.ShowCommentMenu;
 import Menus.shows.ShowRequestsMenu;
 
 import java.io.IOException;
@@ -17,7 +18,9 @@ public class ViewProductMenu extends Menu {
     private void productSubMenus() throws ParseException, IOException {
         HashMap<Integer, Menu> subMenus = new HashMap<Integer, Menu>();
         if (!Menu.isUserLogin) {
-            //we will add something here like add to cart menu
+            subMenus.put(1, getAddToCartMenu());
+            subMenus.put(2, new ShowCommentMenu(this, "Show Comment Menu", productID));
+            subMenus.put(3, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
         } else {
             server.clientToServer("what is account role+" + Menu.username);
             if (server.serverToClient().equalsIgnoreCase("boss")) {
@@ -47,10 +50,33 @@ public class ViewProductMenu extends Menu {
                     subMenus.put(3, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
                 }
             } else {
+                subMenus.put(1, getAddToCartMenu());
+                subMenus.put(2, getCreateCommentMenu());
+                subMenus.put(3, getCreatePointMenu());
+                subMenus.put(4, new ShowCommentMenu(this, "Show Comment Menu", productID));
+                subMenus.put(5, new LoginOrRegisterMenu(this, "Login\\Register Menu"));
                 //we will add this later
             }
         }
         setSubMenus(subMenus);
+    }
+
+    private Menu getAddToCartMenu() {
+        return new Menu(this, "Add To Cart Menu") {
+
+        };
+    }
+
+    private Menu getCreateCommentMenu() {
+        return new Menu(this, "Create Comment Menu") {
+
+        };
+    }
+
+    private Menu getCreatePointMenu() {
+        return new Menu(this, "Create Point Menu") {
+
+        };
     }
 
     public ViewProductMenu(Menu fatherMenu, String menuName, String productID) throws ParseException, IOException {
