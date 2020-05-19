@@ -15,8 +15,10 @@ import java.util.regex.Pattern;
 import Controller.DataBase.EndOfProgramme;
 import Controller.DataBase.startOfProgramme;
 import Menus.shows.ShowRequestsMenu;
+import Model.Account.Account;
 import Model.Account.Customer;
 import Model.Account.Role;
+import Model.Account.Salesman;
 import Model.Category.Category;
 import Model.Confirmation;
 import Model.Product.Product;
@@ -155,6 +157,16 @@ public class Server {
             this.decreaseProductRemainder(command);
         } else if (command.startsWith("edit product+")) {
             this.editProduct(command);
+        } else if (command.startsWith("what is product category+")) {
+            this.whatIsProductCategory(command);
+        } else if (command.startsWith("add product view+")) {
+            this.addProductView(command);
+        } else if (command.startsWith("delete product category+")) {
+            this.deleteProductCategory(command);
+        } else if (command.startsWith("add product category+")) {
+            this.addProductCategory(command);
+        } else if (command.startsWith("delete product salesman+")) {
+            this.deleteProductSalesman(command);
         } else if (command.startsWith("search offCod")) {
             this.searchOffCode(command);
         } else if (command.startsWith("create new normal offCode")) {
@@ -190,6 +202,55 @@ public class Server {
             this.showBalance(command);
         }
 
+    }
+
+    private void addProductCategory(String command) {
+        Product product = Storage.getProductById(command.split("\\+")[2]);
+        if (Storage.isThereCategoryWithName(command.split("\\+")[3])) {
+            setAnswer("added successfully");
+            product.setCategoryName(command.split("\\+")[3]);
+        } else {
+            setAnswer("there isn't category with this name");
+        }
+    }
+
+    private void deleteProductSalesman(String command) {
+        Product product = Storage.getProductById(command.split("\\+")[2]);
+        if (Storage.isThereAccountWithUsername(command.split("\\+")[3])) {
+            Account account = Storage.getAccountWithUsername(command.split("\\+")[3]);
+            if (account.getRole().equals(Role.SALESMAN)) {
+                if (product.doesSalesmanSellProductWithUsername(account.getUsername())) {
+                    product.deleteForSalesman(account.getUsername());
+                    setAnswer("deleted successfully");
+                } else {
+                    setAnswer("this salesman does'nt sell this product");
+                }
+            } else {
+                setAnswer("this username isn't a salesman username");
+            }
+        } else {
+            setAnswer("no account with this username");
+        }
+    }
+
+    private void deleteProductCategory(String command) {
+        Product product = Storage.getProductById(command.split("\\+")[2]);
+        product.setCategoryName(null);
+        Server.setAnswer("deleted successfully");
+    }
+
+    private void addProductView(String command) {
+        Product product = Storage.getProductById(command.split("\\+")[1]);
+        product.setSeenCount(product.getSeenCount() + 1);
+    }
+
+    private void whatIsProductCategory(String command) {
+        Product product = Storage.getProductById(command.split("\\+")[1]);
+        if (product.getCategoryName() == null) {
+            setAnswer("it doesn't have a category");
+        } else {
+            setAnswer(product.getCategoryName());
+        }
     }
 
     private void getCommentProductID(String command) {
