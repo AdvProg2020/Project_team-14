@@ -916,6 +916,7 @@ public class Server {
     //right now we won't change it but we can use + for separating different attributes of message from client
 
     private void register(String input) {
+        hasBoss = (Storage.getAllBosses().size() != 0);
         Server.answer = "";
         String[] attributes = input.split("\\+");
         if (!checkNameFormat(attributes[1])) {
