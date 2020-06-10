@@ -988,6 +988,4 @@ public class Server {
         }
         Server.setAnswer(ans.toString());
     }
-
-
 }
