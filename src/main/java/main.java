@@ -10,29 +10,25 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 public class main extends Application {
 
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        Parent root = FXMLLoader.load(getClass().getResource("GUI/Login/Login.fxml"));
+
+        primaryStage.setScene(new Scene(root));
+        primaryStage.show();
+    }
 
     public static void main(String[] args) throws ParseException, IOException, ClassNotFoundException {
+        launch(args);
         Server server = new Server();
         Menu.setServer(server);
-        //Menu.setScanner(new Scanner(System.in));
-        //MainMenu mainMenu = new MainMenu(null, "Main Menu");
-        launch(args);
-        //mainMenu.execute();
+        Menu.setScanner(new Scanner(System.in));
+        MainMenu mainMenu = new MainMenu(null, "Main Menu");
+        mainMenu.execute();
     }
 
 
-    @Override
-    public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("GUI/RegisterBoss/RegisterBoss.fxml"));
-        stage.setScene(new Scene(root, 1920, 1080));
-        stage.setTitle("RegisterForBossMenu");
-        stage.setResizable(false);
-        //stage.getIcons().add(new Image(getClass().getResourceAsStream("Pictures/logo.jpg")));
-        stage.initStyle(StageStyle.UNDECORATED);
-        stage.show();
-    }
 }
