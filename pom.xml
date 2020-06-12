@@ -63,6 +63,7 @@
         </dependency>
 
         <!-- for javafx -->
+        <!--
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
@@ -73,11 +74,13 @@
             <artifactId>javafx-fxml</artifactId>
             <version>14</version>
         </dependency>
+        -->
         <!-- end of javafx dependency -->
 
     </dependencies>
 
     <!-- for javafx -->
+    <!--
     <build>
         <plugins>
             <plugin>
@@ -98,6 +101,7 @@
             </plugin>
         </plugins>
     </build>
+    -->
     <!-- end of javafx configuration -->
 
 </project>
