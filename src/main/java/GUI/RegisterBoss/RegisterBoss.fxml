@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="694.0" prefWidth="919.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.RegisterBoss.Controller">
+   <children>
+      <ImageView fitHeight="771.0" fitWidth="938.0" layoutX="-16.0" layoutY="-25.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@resources/download.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="577.0" layoutY="47.0" prefHeight="57.0" prefWidth="127.0" text="username" textFill="#ec0f0f">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
+      <TextField layoutX="577.0" layoutY="97.0" opacity="0.84" prefHeight="39.0" prefWidth="199.0" promptText="enter username" />
+      <Label layoutX="577.0" layoutY="166.0" text="password" textFill="#f70909">
+         <font>
+            <Font name="System Italic" size="19.0" />
+         </font>
+      </Label>
+      <Label layoutX="577.0" layoutY="463.0" prefHeight="57.0" prefWidth="127.0" text="email" textFill="#ec0f0f">
+         <font>
+            <Font name="System Italic" size="19.0" />
+         </font>
+      </Label>
+      <TextField layoutX="577.0" layoutY="513.0" opacity="0.84" prefHeight="39.0" prefWidth="199.0" promptText="enter Email" />
+      <Label layoutX="577.0" layoutY="259.0" prefHeight="57.0" prefWidth="127.0" text="first name" textFill="#ec0f0f">
+         <font>
+            <Font name="System Italic" size="19.0" />
+         </font>
+      </Label>
+      <TextField layoutX="577.0" layoutY="308.0" opacity="0.84" prefHeight="39.0" prefWidth="199.0" promptText="enter first name" />
+      <Label layoutX="577.0" layoutY="363.0" prefHeight="57.0" prefWidth="127.0" text="surname" textFill="#ec0f0f">
+         <font>
+            <Font name="System Italic" size="19.0" />
+         </font>
+      </Label>
+      <TextField layoutX="577.0" layoutY="409.0" opacity="0.84" prefHeight="39.0" prefWidth="199.0" promptText="enter surname" />
+      <Button layoutX="577.0" layoutY="617.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="199.0" text="start the app" textFill="#100ce1">
+         <font>
+            <Font name="Arial" size="21.0" />
+         </font>
+      </Button>
+      <Label layoutX="126.0" layoutY="52.0" prefHeight="57.0" prefWidth="366.0" text="register first boss" textFill="#370aea">
+         <font>
+            <Font name="System Bold" size="36.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="28.0" fitWidth="40.0" layoutX="853.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@resources/png-transparent-computer-icons-exit-icon-miscellaneous-angle-text.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="618.0" fitWidth="541.0" layoutY="108.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@resources/12-120662_ipad-retina-red-flower-wallpaper-iphone.jpg" />
+         </image>
+      </ImageView>
+      <PasswordField layoutX="577.0" layoutY="208.0" opacity="0.84" prefHeight="39.0" prefWidth="199.0" promptText="enter password" />
+   </children>
+</AnchorPane>
