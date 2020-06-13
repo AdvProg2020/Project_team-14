@@ -8,7 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.InputMethodEvent;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
@@ -41,7 +41,7 @@ public class RegisterController {
         }
     }
 
-    public void openLoginMenu(ActionEvent actionEvent) {
+    public void openLoginMenu(ActionEvent actionEvent) throws IOException {
 
     }
 
@@ -144,5 +144,14 @@ public class RegisterController {
 
     private boolean checkTelephoneFormat(String number) {
         return getMatcher("0(\\d+)", number).matches() && number.length() == 11;
+    }
+
+    public void back(MouseEvent mouseEvent) throws IOException {
+        System.out.println("hi");
+        String path = MenuHandler.getLoginBackAddress();
+        System.out.println(path);
+        Parent root = FXMLLoader.load(getClass().getResource(path));
+        Stage stage = (Stage) ((ImageView) mouseEvent.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root));
     }
 }
