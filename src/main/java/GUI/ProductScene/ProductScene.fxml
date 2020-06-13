@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Pagination?>
@@ -11,9 +12,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" prefHeight="800.0" prefWidth="1200.0" spacing="5.0" style="-fx-background-color: #8d6262;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="TOP_CENTER" prefHeight="800.0" prefWidth="1200.0" spacing="5.0" styleClass="backgrounds" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <HBox alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="1200.0" spacing="5.0" style="-fx-background-color: #3C3F41; -fx-background-radius: 5;">
+      <HBox alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="1200.0" spacing="5.0" styleClass="tool-bar">
          <children>
             <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -33,7 +34,7 @@
                   <Image url="@resources/send.png" />
                </image>
             </ImageView>
-            <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="1060.0" text="Wellcome to Store" textFill="WHITE" />
+            <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="1060.0" styleClass="labels" text="Wellcome to Store" textFill="WHITE" />
             <ImageView fitHeight="45.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@resources/supermarket.png" />
@@ -49,11 +50,11 @@
             </ImageView>
          </children>
       </HBox>
-      <TabPane prefHeight="745.0" prefWidth="1200.0" stylesheets="@resources/style.css" tabClosingPolicy="UNAVAILABLE">
+      <TabPane prefHeight="745.0" prefWidth="1200.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="Home">
                <content>
-                  <VBox alignment="TOP_CENTER" prefHeight="600.0" prefWidth="500.0" spacing="10.0" style="-fx-background-color: #4d4545; -fx-background-radius: 0 0 10 10;">
+                  <VBox alignment="TOP_CENTER" prefHeight="600.0" prefWidth="500.0" spacing="10.0" styleClass="tab-Vbox-background">
                      <children>
                         <Pagination maxPageIndicatorCount="5" pageCount="5" prefHeight="200.0" prefWidth="200.0">
                            <VBox.margin>
@@ -75,9 +76,9 @@
             </Tab>
           <Tab text="Products">
                <content>
-                  <VBox spacing="10.0" style="-fx-background-radius: 0 0 10 10; -fx-background-color: #4d4545;">
+                  <VBox spacing="10.0" styleClass="tab-Vbox-background">
                      <children>
-                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="45.0" prefWidth="1180.0" text="Products" textFill="WHITE">
+                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="45.0" prefWidth="1180.0" styleClass="labels" text="Products" textFill="WHITE">
                            <font>
                               <Font size="30.0" />
                            </font>
@@ -107,4 +108,8 @@
          </VBox.margin>
       </TabPane>
    </children>
+   <stylesheets>
+      <URL value="@../StyleSheets/ProductSceneStyle.css" />
+      <URL value="@../StyleSheets/MainThemStyle.css" />
+   </stylesheets>
 </VBox>
