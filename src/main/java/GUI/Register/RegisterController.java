@@ -8,6 +8,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
@@ -47,6 +48,7 @@ public class RegisterController {
 
     public void checkSalesmanRole(MouseEvent mouseEvent) {
         System.out.println("hi");
+        if (role.getValue() == null) return;
         if (((String) role.getValue()).equalsIgnoreCase("salesman")) {
             companyLabel.setVisible(true);
             company.setVisible(true);
@@ -54,5 +56,9 @@ public class RegisterController {
             company.setVisible(false);
             companyLabel.setVisible(false);
         }
+    }
+
+    public void printFunc(InputMethodEvent inputMethodEvent) {
+        System.out.println("bye");
     }
 }
