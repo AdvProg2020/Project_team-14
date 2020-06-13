@@ -2,8 +2,6 @@ package GUI;
 
 import Controller.Server;
 
-import java.util.Scanner;
-
 public class MenuHandler {
     static private String username = null;
     static private Server server;
