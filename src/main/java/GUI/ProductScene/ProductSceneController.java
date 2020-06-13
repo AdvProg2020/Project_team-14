@@ -34,7 +34,7 @@ public class ProductSceneController {
                     e.printStackTrace();
                 }
                 stage.setScene(new Scene(root));
-                MenuHandler.setLoginBackAddress("GUI/ProductScene/ProductScene.fxml");
+                MenuHandler.setLoginBackAddress("/GUI/ProductScene/ProductScene.fxml");
                 popup.getScene().getWindow().hide();
             });
             popup.show(stage);

@@ -42,7 +42,9 @@ public class RegisterController {
     }
 
     public void openLoginMenu(ActionEvent actionEvent) throws IOException {
-
+        Parent root = FXMLLoader.load(getClass().getResource("/GUI/Login/Login.fxml"));
+        Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root));
     }
 
     public void register(ActionEvent actionEvent) throws ParseException, IOException {
@@ -147,9 +149,7 @@ public class RegisterController {
     }
 
     public void back(MouseEvent mouseEvent) throws IOException {
-        System.out.println("hi");
         String path = MenuHandler.getLoginBackAddress();
-        System.out.println(path);
         Parent root = FXMLLoader.load(getClass().getResource(path));
         Stage stage = (Stage) ((ImageView) mouseEvent.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
