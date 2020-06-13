@@ -1,115 +1,122 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.net.URL?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Pagination?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<VBox alignment="TOP_CENTER" prefHeight="800.0" prefWidth="1200.0" spacing="5.0" styleClass="backgrounds" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <HBox alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="1200.0" spacing="5.0" styleClass="tool-bar">
-         <children>
-            <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@resources/back.png" />
-               </image>
-               <HBox.margin>
-                  <Insets left="8.0" />
-               </HBox.margin>
-            </ImageView>
-            <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@resources/home.png" />
-               </image>
-            </ImageView>
-            <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@resources/send.png" />
-               </image>
-            </ImageView>
-            <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="1060.0" styleClass="labels" text="Wellcome to Store" textFill="WHITE" />
-            <ImageView fitHeight="45.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@resources/supermarket.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="45.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@resources/user.png" />
-               </image>
-               <HBox.margin>
-                  <Insets right="8.0" />
-               </HBox.margin>
-            </ImageView>
-         </children>
-      </HBox>
-      <TabPane prefHeight="745.0" prefWidth="1200.0" tabClosingPolicy="UNAVAILABLE">
-        <tabs>
-          <Tab text="Home">
-               <content>
-                  <VBox alignment="TOP_CENTER" prefHeight="600.0" prefWidth="500.0" spacing="10.0" styleClass="tab-Vbox-background">
-                     <children>
-                        <Pagination maxPageIndicatorCount="5" pageCount="5" prefHeight="200.0" prefWidth="200.0">
-                           <VBox.margin>
-                              <Insets bottom="5.0" top="30.0" />
-                           </VBox.margin>
-                        </Pagination>
-                        <Label text="Top Sell" textFill="WHITE">
-                           <VBox.margin>
-                              <Insets bottom="10.0" top="100.0" />
-                           </VBox.margin>
-                           <font>
-                              <Font size="30.0" />
-                           </font>
-                        </Label>
-                        <Pagination maxPageIndicatorCount="5" pageCount="10" prefHeight="200.0" prefWidth="200.0" />
-                     </children>
-                  </VBox>
-               </content>
-            </Tab>
-          <Tab text="Products">
-               <content>
-                  <VBox spacing="10.0" styleClass="tab-Vbox-background">
-                     <children>
-                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="45.0" prefWidth="1180.0" styleClass="labels" text="Products" textFill="WHITE">
-                           <font>
-                              <Font size="30.0" />
-                           </font>
-                           <VBox.margin>
-                              <Insets bottom="5.0" top="5.0" />
-                           </VBox.margin>
-                        </Label>
-                        <HBox prefHeight="645.0" prefWidth="1180.0" spacing="10.0">
-                           <children>
-                              <VBox prefHeight="641.0" prefWidth="890.0" style="-fx-background-color: #ffffff; -fx-background-radius: 10;">
-                                 <HBox.margin>
-                                    <Insets bottom="8.0" left="8.0" />
-                                 </HBox.margin></VBox>
-                              <VBox prefHeight="641.0" prefWidth="302.0" style="-fx-background-color: #ffffff; -fx-background-radius: 10;">
-                                 <HBox.margin>
-                                    <Insets bottom="8.0" right="8.0" />
-                                 </HBox.margin></VBox>
-                           </children>
-                        </HBox>
-                     </children>
-                  </VBox>
-               </content>
-            </Tab>
-        </tabs>
-         <VBox.margin>
-            <Insets bottom="10.0" left="10.0" right="10.0" />
-         </VBox.margin>
-      </TabPane>
-   </children>
-   <stylesheets>
-      <URL value="@../StyleSheets/ProductSceneStyle.css" />
-      <URL value="@../StyleSheets/MainThemStyle.css" />
-   </stylesheets>
+<VBox alignment="TOP_CENTER" prefHeight="800.0" prefWidth="1200.0" spacing="5.0" styleClass="backgrounds"
+      xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="GUI.ProductScene.ProductSceneController">
+    <children>
+        <HBox alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="1200.0" spacing="5.0" styleClass="tool-bar">
+            <children>
+                <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@resources/back.png"/>
+                    </image>
+                    <HBox.margin>
+                        <Insets left="8.0"/>
+                    </HBox.margin>
+                </ImageView>
+                <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@resources/home.png"/>
+                    </image>
+                </ImageView>
+                <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@resources/send.png"/>
+                    </image>
+                </ImageView>
+                <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="1060.0" styleClass="labels"
+                       text="Wellcome to Store" textFill="WHITE"/>
+                <ImageView fitHeight="45.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@resources/supermarket.png"/>
+                    </image>
+                </ImageView>
+                <ImageView fx:id="accountMenuButton" fitHeight="45.0" fitWidth="30.0" onMouseClicked="#openPopUp"
+                           pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@resources/user.png"/>
+                    </image>
+                    <HBox.margin>
+                        <Insets right="8.0"/>
+                    </HBox.margin>
+                </ImageView>
+            </children>
+        </HBox>
+        <TabPane prefHeight="745.0" prefWidth="1200.0" tabClosingPolicy="UNAVAILABLE">
+            <tabs>
+                <Tab text="Home">
+                    <content>
+                        <VBox alignment="TOP_CENTER" prefHeight="600.0" prefWidth="500.0" spacing="10.0"
+                              styleClass="tab-Vbox-background">
+                            <children>
+                                <Pagination maxPageIndicatorCount="5" pageCount="5" prefHeight="200.0"
+                                            prefWidth="200.0">
+                                    <VBox.margin>
+                                        <Insets bottom="5.0" top="30.0"/>
+                                    </VBox.margin>
+                                </Pagination>
+                                <Label text="Top Sell" textFill="WHITE">
+                                    <VBox.margin>
+                                        <Insets bottom="10.0" top="100.0"/>
+                                    </VBox.margin>
+                                    <font>
+                                        <Font size="30.0"/>
+                                    </font>
+                                </Label>
+                                <Pagination maxPageIndicatorCount="5" pageCount="10" prefHeight="200.0"
+                                            prefWidth="200.0"/>
+                            </children>
+                        </VBox>
+                    </content>
+                </Tab>
+                <Tab text="Products">
+                    <content>
+                        <VBox spacing="10.0" styleClass="tab-Vbox-background">
+                            <children>
+                                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="45.0" prefWidth="1180.0"
+                                       styleClass="labels" text="Products" textFill="WHITE">
+                                    <font>
+                                        <Font size="30.0"/>
+                                    </font>
+                                    <VBox.margin>
+                                        <Insets bottom="5.0" top="5.0"/>
+                                    </VBox.margin>
+                                </Label>
+                                <HBox prefHeight="645.0" prefWidth="1180.0" spacing="10.0">
+                                    <children>
+                                        <VBox prefHeight="641.0" prefWidth="890.0"
+                                              style="-fx-background-color: #ffffff; -fx-background-radius: 10;">
+                                            <HBox.margin>
+                                                <Insets bottom="8.0" left="8.0"/>
+                                            </HBox.margin>
+                                        </VBox>
+                                        <VBox prefHeight="641.0" prefWidth="302.0"
+                                              style="-fx-background-color: #ffffff; -fx-background-radius: 10;">
+                                            <HBox.margin>
+                                                <Insets bottom="8.0" right="8.0"/>
+                                            </HBox.margin>
+                                        </VBox>
+                                    </children>
+                                </HBox>
+                            </children>
+                        </VBox>
+                    </content>
+                </Tab>
+            </tabs>
+            <VBox.margin>
+                <Insets bottom="10.0" left="10.0" right="10.0"/>
+            </VBox.margin>
+        </TabPane>
+    </children>
+    <stylesheets>
+        <URL value="@../StyleSheets/ProductSceneStyle.css"/>
+        <URL value="@../StyleSheets/MainThemStyle.css"/>
+    </stylesheets>
 </VBox>

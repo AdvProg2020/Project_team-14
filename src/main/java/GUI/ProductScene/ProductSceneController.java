@@ -1,24 +1,29 @@
 package GUI.ProductScene;
 
-import com.google.common.eventbus.DeadEvent;
+import GUI.MenuHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class ProductSceneController {
 
-    public ImageView accountMenuButton;
+    protected ImageView accountMenuButton;
 
     public void openPopUp(MouseEvent mouseEvent) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/GUI/Register/Register.fxml"));
-        Stage stage = (Stage) ((Button) mouseEvent.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root));
+        Popup popup = new Popup();
+        Stage stage = (Stage) ((ImageView) mouseEvent.getSource()).getScene().getWindow();
+        if (MenuHandler.isIsUserLogin()) {
+
+        } else {
+            Parent registerLoginPopUp = FXMLLoader.load(getClass().getResource("/GUI/ProfileLayout//LoginRegisterPopup.fxml"));
+            popup.getContent().addAll(registerLoginPopUp);
+            popup.show(stage);
+        }
     }
 
     public void initialize() {
