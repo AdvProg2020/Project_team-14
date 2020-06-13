@@ -199,13 +199,24 @@ public class Server {
             this.getCommentProductID(command);
         } else if (command.startsWith("comment product+")) {
             this.commentProduct(command);
+        } else if (command.startsWith("is server has boss")) {
+            this.isServerHasBoss();
         }
+
 
         //end parts
         else if (command.startsWith("show balance")) {
             this.showBalance(command);
         }
 
+    }
+
+    private void isServerHasBoss() {
+        if (Server.hasBoss) {
+            Server.setAnswer("yes");
+        } else {
+            Server.setAnswer("no");
+        }
     }
 
     private void getCommentProductID(String command) {
@@ -968,7 +979,7 @@ public class Server {
     }
 
     public String serverToClient() throws IOException {
-        endOfProgramme.updateFiles();
+        //endOfProgramme.updateFiles();
         return Server.answer;
     }
 
