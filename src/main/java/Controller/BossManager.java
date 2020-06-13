@@ -12,7 +12,6 @@ import Controller.SortFactorEnum.CategorySortFactor;
 import Controller.SortFactorEnum.OffCodesSortFactor;
 import Model.Account.*;
 import Model.Category.Category;
-import Model.Off.Off;
 import Model.Off.OffCode;
 import Model.Off.SpecialOffCode;
 import Model.Product.Product;
@@ -34,6 +33,7 @@ public class BossManager {
                 return;
             }
             Server.setAnswer("register successful");
+            Server.setHasBoss(true);
             Server.setHasBoss(true);
             new Boss(information[3], information[4], information[1], information[2], information[6], information[7],
                     information[5]).setFatherBoss(null);

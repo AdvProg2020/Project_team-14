@@ -10,7 +10,6 @@ public class Boss extends Account implements Serializable {
 
     public Boss(String username, String password, String firstName, String secondName, String Email, String telephone, String role) {
         super(username, password, firstName, secondName, Email, telephone, role);
-        System.out.println(getAllBosses().size());
     }
 
     public String getFatherBoss() {

@@ -17,7 +17,7 @@
                 <Image url="@../Login/resources/12-120662_ipad-retina-red-flower-wallpaper-iphone.jpg" />
             </image>
         </ImageView>
-        <AnchorPane layoutX="584.0" onKeyPressed="#checkSalesmanRole" onMouseClicked="#checkSalesmanRole" prefHeight="800.0" prefWidth="618.0">
+        <AnchorPane layoutX="584.0" onKeyPressed="#checkSalesmanRole" onMouseClicked="#checkSalesmanRole" onMouseMoved="#checkSalesmanRole" onMouseReleased="#checkSalesmanRole" prefHeight="800.0" prefWidth="618.0">
             <children>
                 <Label layoutX="207.0" layoutY="81.0" prefHeight="73.0" prefWidth="204.0" text="Register" textFill="#ea0303">
                     <font>

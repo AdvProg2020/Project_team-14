@@ -4,9 +4,13 @@ import GUI.MenuHandler;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -17,7 +21,7 @@ public class RegisterController {
 
     public Label companyLabel;
     ObservableList<String> rolesIfHasNotBoss = FXCollections.observableArrayList("Boss", "Salesman", "Customer");
-    ObservableList<String> rolesIfHasBoss = FXCollections.observableArrayList("Salesman", "Customer");
+    ObservableList<String> rolesIfHasBoss = FXCollections.observableArrayList("Customer", "Salesman");
 
     public TextField firstName;
     public TextField lastName;
@@ -96,13 +100,16 @@ public class RegisterController {
                 (MenuHandler.getServer()).clientToServer(message);
                 String serverAnswer;
                 serverAnswer = (MenuHandler.getServer()).serverToClient();
-                if (serverAnswer.equalsIgnoreCase("username is already taken, try something else")) {
+                if (serverAnswer.equalsIgnoreCase("the username is already taken, try something else")) {
                     alert.setContentText("This Username Has Been Taken Please Try Something Else");
                 } else {
                     alert.setAlertType(Alert.AlertType.CONFIRMATION);
                     alert.setContentText("Your Register Was Successful");
                 }
                 alert.showAndWait();
+                Parent root = FXMLLoader.load(getClass().getResource("/GUI/Register/Register.fxml"));
+                Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+                stage.setScene(new Scene(root));
             }
         }
     }
