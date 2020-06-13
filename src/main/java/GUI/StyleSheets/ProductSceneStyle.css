@@ -1,3 +1,8 @@
+.tab-Vbox-background {
+	-fx-background-color:  #4d4545;
+	-fx-background-radius: 0 0 10 10;
+}
+
 .tab-pane .tab-header-area .tab-header-background {
 	-fx-background-color: #4d4545;
 	-fx-background-radius: 10 10 0 0;
@@ -8,6 +13,6 @@
 }
 
 .tab-pane .tab-header-area .headers-region .tab .tab-container .tab-label .text {
-	-fx-fill: #ed8d8d;
 	-fx-fill: #17223b;
+	-fx-font-family: "georgia";
 }

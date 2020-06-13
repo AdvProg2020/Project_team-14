@@ -1,0 +1,37 @@
+.tab-pane:left .tab-header-area .headers-region .tab:left {
+	-fx-rotate: 90;
+}
+
+.tab-pane:left .tab-header-area .headers-region {
+	-fx-pref-height: 100;
+}
+
+.info-part {
+	-fx-background-color:  #2c2828;
+	-fx-background-radius: 15;
+}
+
+
+/*
+ *  pup up style
+ */
+
+.pupUp-background {
+	-fx-background-color:  #053f5e;
+}
+
+.my-button {
+	-fx-background-color: #8d6262;
+	-fx-background-radius: 10;
+	-fx-font-family: Georgia;
+	-fx-font-size: 20;
+	-fx-effect: dropshadow(gaussian, #ed8d8d, 4, 0.0, 0, 4);
+}
+
+.my-button:hover {
+	-fx-background-color: #4d4545;
+}
+
+.my-button:pressed {
+	-fx-background-insets: 2 0 0 0,2 0 3 0, 2 0 4 0, 2 0 5 0;
+}

@@ -1,0 +1,13 @@
+.tool-bar {
+	-fx-background-color:  #3C3F41;
+	-fx-background-radius: 8;
+}
+
+.backgrounds {
+	-fx-background-color:  #8d6262;
+}
+
+.labels {
+	-fx-font-family: "georgia";
+	-fx-font-size: 20;
+}
