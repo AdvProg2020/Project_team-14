@@ -46,8 +46,7 @@ public class RegisterController {
 
     }
 
-    public void checkSalesmanRole(MouseEvent mouseEvent) {
-        System.out.println("hi");
+    public void checkSalesmanRole() {
         if (role.getValue() == null) return;
         if (((String) role.getValue()).equalsIgnoreCase("salesman")) {
             companyLabel.setVisible(true);
@@ -56,9 +55,5 @@ public class RegisterController {
             company.setVisible(false);
             companyLabel.setVisible(false);
         }
-    }
-
-    public void printFunc(InputMethodEvent inputMethodEvent) {
-        System.out.println("bye");
     }
 }
