@@ -13,6 +13,6 @@ public class LoginController {
     }
 
     public void openRegisterMenu(ActionEvent actionEvent) {
-
+        
     }
 }
