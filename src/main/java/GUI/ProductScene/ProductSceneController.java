@@ -20,7 +20,7 @@ public class ProductSceneController {
         if (MenuHandler.isIsUserLogin()) {
 
         } else {
-            Parent registerLoginPopUp = FXMLLoader.load(getClass().getResource("/GUI/ProfileLayout//LoginRegisterPopup.fxml"));
+            Parent registerLoginPopUp = FXMLLoader.load(getClass().getResource("GUI/ProfileLayout//LoginRegisterPopup.fxml"));
             popup.getContent().addAll(registerLoginPopUp);
             popup.show(stage);
         }
