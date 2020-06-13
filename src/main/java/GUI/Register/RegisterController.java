@@ -5,14 +5,17 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 import java.text.ParseException;
 
 public class RegisterController {
 
+    public Label companyLabel;
     ObservableList<String> rolesIfHasNotBoss = FXCollections.observableArrayList("Boss", "Salesman", "Customer");
     ObservableList<String> rolesIfHasBoss = FXCollections.observableArrayList("Salesman", "Customer");
 
@@ -40,5 +43,16 @@ public class RegisterController {
 
     public void register(ActionEvent actionEvent) {
 
+    }
+
+    public void checkSalesmanRole(MouseEvent mouseEvent) {
+        System.out.println("hi");
+        if (((String) role.getValue()).equalsIgnoreCase("salesman")) {
+            companyLabel.setVisible(true);
+            company.setVisible(true);
+        } else {
+            company.setVisible(false);
+            companyLabel.setVisible(false);
+        }
     }
 }
