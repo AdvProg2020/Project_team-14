@@ -23,19 +23,19 @@
                 <Font name="System Italic" size="19.0" />
             </font>
         </Label>
-        <Label layoutX="80.0" layoutY="341.0" prefHeight="57.0" prefWidth="127.0" text="email" textFill="#ec0f0f">
+        <Label layoutX="88.0" layoutY="343.0" prefHeight="57.0" prefWidth="127.0" text="email" textFill="#ec0f0f">
             <font>
                 <Font name="System Italic" size="19.0" />
             </font>
         </Label>
         <TextField layoutX="80.0" layoutY="391.0" opacity="0.84" prefHeight="39.0" prefWidth="199.0" promptText="enter Email" />
-        <Label layoutX="80.0" layoutY="239.0" prefHeight="57.0" prefWidth="127.0" text="first name" textFill="#ec0f0f">
+        <Label layoutX="88.0" layoutY="239.0" prefHeight="57.0" prefWidth="127.0" text="first name" textFill="#ec0f0f">
             <font>
                 <Font name="System Italic" size="19.0" />
             </font>
         </Label>
         <TextField layoutX="80.0" layoutY="287.0" opacity="0.84" prefHeight="39.0" prefWidth="199.0" promptText="enter first name" />
-        <Label layoutX="348.0" layoutY="239.0" prefHeight="57.0" prefWidth="127.0" text="surname" textFill="#ec0f0f">
+        <Label layoutX="357.0" layoutY="239.0" prefHeight="57.0" prefWidth="127.0" text="surname" textFill="#ec0f0f">
             <font>
                 <Font name="System Italic" size="19.0" />
             </font>
