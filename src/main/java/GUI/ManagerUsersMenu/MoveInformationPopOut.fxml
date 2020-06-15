@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+
+<AnchorPane prefHeight="599.0" prefWidth="602.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ManagerUsersMenu.MoveInformationPopOut">
+   <children>
+      <Label layoutX="188.0" layoutY="25.0" prefHeight="51.0" prefWidth="265.0" text="Personal Info" textFill="#f30f0f">
+         <font>
+            <Font name="System Bold Italic" size="35.0" />
+         </font>
+      </Label>
+      <Label layoutX="110.0" layoutY="264.0" text="Full Name:">
+         <font>
+            <Font name="System Italic" size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="112.0" layoutY="338.0" text="Email:">
+         <font>
+            <Font name="System Italic" size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="111.0" layoutY="132.0" text="Username:">
+         <font>
+            <Font name="System Italic" size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="109.0" layoutY="196.0" text="Password:">
+         <font>
+            <Font name="System Italic" size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="115.0" layoutY="415.0" text="Role">
+         <font>
+            <Font name="System Italic" size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="343.0" layoutY="132.0" text="Username:">
+         <font>
+            <Font name="System Italic" size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="343.0" layoutY="196.0" text="Password:">
+         <font>
+            <Font name="System Italic" size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="341.0" layoutY="273.0" text="Full Name:">
+         <font>
+            <Font name="System Italic" size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="341.0" layoutY="345.0" text="Email:">
+         <font>
+            <Font name="System Italic" size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="341.0" layoutY="415.0" text="Role">
+         <font>
+            <Font name="System Italic" size="24.0" />
+         </font>
+      </Label>
+      <Button layoutX="106.0" layoutY="502.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="137.0" text="REMOVE" />
+      <Button layoutX="335.0" layoutY="502.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="137.0" text="BACK" />
+   </children>
+</AnchorPane>
