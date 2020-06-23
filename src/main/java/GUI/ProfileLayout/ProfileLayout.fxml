@@ -7,79 +7,69 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1200.0" styleClass="backgrounds"
-            xmlns="http://javafx.com/javafx/10.0.2-internal">
+<AnchorPane prefHeight="800.0" prefWidth="1200.0" styleClass="backgrounds" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ProfileLayout.ProfileLayoutController">
     <children>
         <HBox alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="1200.0" spacing="5.0" styleClass="tool-bar">
             <children>
                 <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../ProductScene/resources/back.png"/>
+                        <Image url="@../ProductScene/resources/back.png" />
                     </image>
                     <HBox.margin>
-                        <Insets left="8.0"/>
+                        <Insets left="8.0" />
                     </HBox.margin>
                 </ImageView>
                 <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../ProductScene/resources/home.png"/>
+                        <Image url="@../ProductScene/resources/home.png" />
                     </image>
                 </ImageView>
                 <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../ProductScene/resources/send.png"/>
+                        <Image url="@../ProductScene/resources/send.png" />
                     </image>
                 </ImageView>
-                <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="1060.0" styleClass="labels"
-                       text="Wellcome to Store" textFill="WHITE"/>
+                <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="1060.0" styleClass="labels" text="Wellcome to Store" textFill="WHITE" />
                 <ImageView fitHeight="45.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../ProductScene/resources/supermarket.png"/>
+                        <Image url="@../ProductScene/resources/supermarket.png" />
                     </image>
                 </ImageView>
                 <ImageView fitHeight="45.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../ProductScene/resources/user.png"/>
+                        <Image url="@../ProductScene/resources/user.png" />
                     </image>
                     <HBox.margin>
-                        <Insets right="8.0"/>
+                        <Insets right="8.0" />
                     </HBox.margin>
                 </ImageView>
             </children>
         </HBox>
-        <ImageView fitHeight="400.0" fitWidth="300.0" layoutX="65.0" layoutY="82.0" pickOnBounds="true"
-                   preserveRatio="true">
+        <ImageView fitHeight="400.0" fitWidth="300.0" layoutX="65.0" layoutY="82.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../ProductScene/resources/user.png"/>
+                <Image url="@../ProductScene/resources/user.png" />
             </image>
         </ImageView>
         <VBox alignment="CENTER" layoutX="65.0" layoutY="430.0" prefHeight="300.0" prefWidth="300.0" spacing="10.0">
             <children>
-                <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="300.0" styleClass="my-button"
-                        text="Manage Personal Info" textFill="#e50d0d">
+                <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="300.0" styleClass="my-button" text="Manage Personal Info" textFill="#e50d0d">
                     <font>
-                        <Font name="System Italic" size="12.0"/>
+                        <Font name="System Italic" size="12.0" />
                     </font>
                 </Button>
-                <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="300.0" styleClass="my-button"
-                        text="Manage OffCodes" textFill="#ee1515"/>
-                <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="300.0" styleClass="my-button"
-                        text="Manage Categories" textFill="#e11a1a"/>
-                <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="300.0" styleClass="my-button"
-                        text="Manage User" textFill="#da1818"/>
-                <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="300.0" styleClass="my-button"
-                        text="Manage Products" textFill="#ea0404"/>
-                <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="300.0" styleClass="my-button" text="logOut"
-                        textFill="#ec0f0f"/>
+                <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="300.0" styleClass="my-button" text="Manage OffCodes" textFill="#ee1515" />
+                <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="300.0" styleClass="my-button" text="Manage Categories" textFill="#e11a1a" />
+                <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="300.0" styleClass="my-button" text="Manage User" textFill="#da1818" />
+                <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="300.0" styleClass="my-button" text="Manage Products" textFill="#ea0404" />
+                <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="300.0" styleClass="my-button" text="logOut" textFill="#ec0f0f" />
             </children>
         </VBox>
-        <Pane layoutX="413.0" layoutY="82.0" prefHeight="734.0" prefWidth="781.0" styleClass="info-part"
-              AnchorPane.bottomAnchor="11.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="55.0"/>
+        <Pane fx:id="pane" layoutX="413.0" layoutY="82.0" prefHeight="734.0" prefWidth="781.0" styleClass="info-part" AnchorPane.bottomAnchor="11.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="55.0" />
     </children>
     <stylesheets>
-        <URL value="@../StyleSheets/ProfileStyle.css"/>
-        <URL value="@../StyleSheets/MainThemStyle.css"/>
-        <URL value="@../StyleSheets/MainThemStyle.css"/>
-        <URL value="@../StyleSheets/MainThemStyle.css"/>
+        <URL value="@../StyleSheets/ProfileStyle.css" />
+        <URL value="@../StyleSheets/MainThemStyle.css" />
+        <URL value="@../StyleSheets/MainThemStyle.css" />
+        <URL value="@../StyleSheets/MainThemStyle.css" />
     </stylesheets>
 </AnchorPane>

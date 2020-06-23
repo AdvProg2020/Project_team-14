@@ -6,10 +6,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -18,7 +17,7 @@ import java.text.ParseException;
 public class LoginController {
 
     public TextField username;
-    public TextField password;
+    public PasswordField password;
 
     public void Login(ActionEvent actionEvent) throws ParseException, IOException {
         Alert alert = new Alert(Alert.AlertType.ERROR, "", ButtonType.OK);
@@ -29,7 +28,7 @@ public class LoginController {
             alert.setContentText("Password Field Must Not Be Empty");
             alert.showAndWait();
         } else {
-            MenuHandler.getServer().clientToServer("login+" + username + "+" + password);
+            MenuHandler.getServer().clientToServer("login+" + username.getText() + "+" + password.getText());
             String serverAnswer = MenuHandler.getServer().serverToClient();
             if (serverAnswer.startsWith("login successful ")) {
                 MenuHandler.setIsUserLogin(true);
@@ -41,6 +40,7 @@ public class LoginController {
                     MenuHandler.setUserType("SALESMAN");
                 }
                 MenuHandler.setUsername(serverAnswer.split("\\s")[4]);
+                alert.setAlertType(Alert.AlertType.INFORMATION);
                 alert.setContentText("Login Successful\n" +
                         "Welcome");
                 alert.showAndWait();
@@ -58,5 +58,20 @@ public class LoginController {
         Parent root = FXMLLoader.load(getClass().getResource("/GUI/Register/Register.fxml"));
         Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
+    }
+
+    public void back(MouseEvent mouseEvent) throws IOException {
+        String path = MenuHandler.getLoginBackAddress();
+        Parent root = FXMLLoader.load(getClass().getResource(path));
+        Stage stage = (Stage) ((ImageView) mouseEvent.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root));
+    }
+
+    public void exit(MouseEvent mouseEvent) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are You Sure You Want To Exit", ButtonType.YES, ButtonType.NO);
+        alert.showAndWait();
+        if (alert.getResult().equals(ButtonType.YES)) {
+            System.exit(23);
+        }
     }
 }
