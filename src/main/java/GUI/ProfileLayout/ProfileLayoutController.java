@@ -9,7 +9,6 @@ public class ProfileLayoutController {
     public Pane pane;
 
     public void initialize() throws IOException {
-        System.out.println("hi");
         pane.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/ProfileLayout/PersonalInfoLayout.fxml")));
     }
 }

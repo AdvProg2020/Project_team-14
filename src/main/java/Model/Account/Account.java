@@ -104,6 +104,7 @@ public abstract class Account implements Serializable {
     public String toString() {
         String result = "";
         result = result + "Username: " + this.getUsername() + "\n";
+        result = result + "Password: " + this.getPassword() + "\n";
         result = result + "Name: " + this.getFirstName() + " " + this.getSecondName() + "\n";
         result = result + "Email: " + this.getEmail() + "\n";
         result = result + "Telephone: " + this.getTelephone() + "\n";
