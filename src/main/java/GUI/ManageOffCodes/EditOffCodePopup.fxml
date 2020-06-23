@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label text="Edit Off Code">
+         <VBox.margin>
+            <Insets bottom="60.0" top="20.0" />
+         </VBox.margin>
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Label>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="25.0">
+         <children>
+            <VBox prefHeight="199.0" prefWidth="140.0">
+               <children>
+                  <Label text="Start Date :">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="15.0" top="15.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label text="End Date :">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="15.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label text="Percentage :">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="15.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label text="Max :">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="15.0" />
+                     </VBox.margin>
+                  </Label>
+               </children>
+            </VBox>
+            <VBox prefHeight="200.0" prefWidth="220.0">
+               <children>
+                  <DatePicker>
+                     <VBox.margin>
+                        <Insets bottom="15.0" top="15.0" />
+                     </VBox.margin>
+                  </DatePicker>
+                  <DatePicker>
+                     <VBox.margin>
+                        <Insets bottom="15.0" />
+                     </VBox.margin>
+                  </DatePicker>
+                  <TextField>
+                     <VBox.margin>
+                        <Insets bottom="15.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <TextField layoutX="10.0" layoutY="41.0">
+                     <VBox.margin>
+                        <Insets bottom="15.0" />
+                     </VBox.margin>
+                  </TextField>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="15.0">
+         <children>
+            <Button mnemonicParsing="false" text="Cancel" />
+            <Button mnemonicParsing="false" text="Save Changes" />
+         </children>
+         <VBox.margin>
+            <Insets top="25.0" />
+         </VBox.margin>
+      </HBox>
+   </children>
+</VBox>

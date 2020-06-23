@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="735.0" prefWidth="780.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label alignment="CENTER" layoutX="319.0" layoutY="23.0" prefHeight="55.0" prefWidth="145.0" text="OffCodes" AnchorPane.topAnchor="20.0">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="192.0" fitWidth="201.0" layoutX="127.0" layoutY="91.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@resources/sale.png" />
+         </image>
+      </ImageView>
+      <Button layoutX="523.0" layoutY="136.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="145.0" text="New OffCode" />
+      <Button layoutX="523.0" layoutY="195.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="145.0" text="Delete OffCode" />
+      <HBox layoutX="77.0" layoutY="357.0" prefHeight="407.0" prefWidth="760.0" spacing="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+         <children>
+            <VBox prefHeight="407.0" prefWidth="500.0" />
+            <VBox prefHeight="407.0" prefWidth="250.0" />
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>
