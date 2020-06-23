@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="496.0" prefWidth="591.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ManagerUsersMenu.NewManagerPopOut">
+    <ImageView fitHeight="542.0" fitWidth="717.0" layoutX="-47.0" layoutY="-24.0" pickOnBounds="true" preserveRatio="true">
+        <Image url="@resources/download.png" />
+    </ImageView>
+    <Label layoutX="80.0" layoutY="94.0" prefHeight="57.0" prefWidth="127.0" text="Name" textFill="#ec0f0f">
+        <font>
+            <Font name="System Italic" size="19.0" />
+        </font>
+    </Label>
+    <TextField layoutX="81.0" layoutY="146.0" opacity="0.84" prefHeight="48.0" prefWidth="213.0" promptText="enter name" />
+    <Label layoutX="81.0" layoutY="219.0" text="Parent Category" textFill="#f70909">
+        <font>
+            <Font name="System Italic" size="19.0" />
+        </font>
+    </Label>
+    <Button layoutX="87.0" layoutY="391.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="199.0" text="Done" textFill="#100ce1">
+        <font>
+            <Font name="Arial" size="21.0" />
+        </font>
+    </Button>
+    <Label layoutX="181.0" layoutY="12.0" prefHeight="57.0" prefWidth="268.0" text="New Category" textFill="#370aea">
+        <font>
+            <Font name="System Bold" size="36.0" />
+        </font>
+    </Label>
+    <ImageView fitHeight="28.0" fitWidth="40.0" layoutX="566.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
+        <image>
+            <Image url="@resources/png-transparent-computer-icons-exit-icon-miscellaneous-angle-text.png" />
+        </image>
+    </ImageView>
+    <PasswordField layoutX="81.0" layoutY="259.0" opacity="0.84" prefHeight="48.0" prefWidth="213.0" promptText="enter parent category" />
+   <VBox layoutX="350.0" layoutY="131.0" prefHeight="231.0" prefWidth="247.0">
+      <children>
+         <Label prefHeight="48.0" prefWidth="235.0" text="leave the parent category" textAlignment="CENTER" textFill="#17d14f" textOverrun="CENTER_ELLIPSIS">
+            <font>
+               <Font size="17.0" />
+            </font>
+         </Label>
+         <Label prefHeight="48.0" prefWidth="235.0" text="empty if it doesn't have one" textFill="#17d14f">
+            <font>
+               <Font size="17.0" />
+            </font>
+         </Label>
+         <Label prefHeight="48.0" prefWidth="235.0" text="the name is compulsory and" textFill="#17d14f">
+            <font>
+               <Font size="17.0" />
+            </font>
+         </Label>
+         <Label prefHeight="44.0" prefWidth="115.0" text="not recurring" textFill="#17d14f">
+            <font>
+               <Font size="17.0" />
+            </font>
+         </Label>
+      </children>
+   </VBox>
+</AnchorPane>

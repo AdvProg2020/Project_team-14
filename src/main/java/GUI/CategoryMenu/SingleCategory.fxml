@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="622.0" prefWidth="761.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.CategoryMenu.Controller">
+    <children>
+        <ScrollPane layoutX="27.0" layoutY="151.0" prefHeight="437.0" prefWidth="497.0">
+            <content>
+                <TableView prefHeight="423.0" prefWidth="510.0">
+                    <columns>
+                        <TableColumn prefWidth="152.66665267944336" text="Products" />
+                        <TableColumn prefWidth="166.6666717529297" text="remove" />
+                        <TableColumn minWidth="4.333343505859375" prefWidth="149.99996948242188" text="add" />
+                    </columns>
+                </TableView>
+            </content>
+        </ScrollPane>
+        <Button layoutX="562.0" layoutY="27.0" mnemonicParsing="false" opacity="0.87" prefHeight="50.0" prefWidth="151.0" text="change the name">
+            <font>
+                <Font name="System Bold Italic" size="13.0" />
+            </font></Button>
+      <Label layoutX="77.0" layoutY="46.0" text="category name:" textFill="#a91111">
+         <font>
+            <Font name="System Bold Italic" size="21.0" />
+         </font>
+      </Label>
+      <Button layoutX="562.0" layoutY="101.0" mnemonicParsing="false" opacity="0.87" prefHeight="50.0" prefWidth="151.0" text="back">
+         <font>
+            <Font name="System Bold Italic" size="13.0" />
+         </font>
+      </Button>
+      <Label layoutX="276.0" layoutY="46.0" text="Name here" textFill="#1513a8">
+         <font>
+            <Font name="System Bold Italic" size="21.0" />
+         </font>
+      </Label>
+      <VBox layoutX="562.0" layoutY="215.0" prefHeight="310.0" prefWidth="200.0">
+         <children>
+            <Label prefHeight="43.0" prefWidth="198.0" text="All products are here" textFill="#1eeb02">
+               <font>
+                  <Font name="System Italic" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="10.0" layoutY="10.0" prefHeight="43.0" prefWidth="198.0" text="add and remove the ones" textFill="#1eeb02">
+               <font>
+                  <Font name="System Italic" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="10.0" layoutY="53.0" prefHeight="43.0" prefWidth="198.0" text="you'd like and select" textFill="#1eeb02">
+               <font>
+                  <Font name="System Italic" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="10.0" layoutY="97.0" prefHeight="43.0" prefWidth="198.0" text="change name and enter" textFill="#1eeb02">
+               <font>
+                  <Font name="System Italic" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="10.0" layoutY="140.0" prefHeight="43.0" prefWidth="198.0" text="your new desired name" textFill="#1eeb02">
+               <font>
+                  <Font name="System Italic" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="10.0" layoutY="183.0" prefHeight="43.0" prefWidth="198.0" text="note recurring names are" textFill="#02eb7e">
+               <font>
+                  <Font name="System Italic" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="10.0" layoutY="227.0" prefHeight="43.0" prefWidth="198.0" text="not allowed !" textFill="#1eeb02">
+               <font>
+                  <Font name="System Italic" size="16.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+    </children>
+</AnchorPane>

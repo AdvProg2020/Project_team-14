@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="622.0" prefWidth="761.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.SaleMenu.Controller">
+    <children>
+        <ScrollPane layoutX="27.0" layoutY="49.0" prefHeight="539.0" prefWidth="497.0">
+            <content>
+                <TableView prefHeight="539.0" prefWidth="510.0">
+                    <columns>
+                        <TableColumn prefWidth="152.66665267944336" text="Products" />
+                        <TableColumn prefWidth="166.6666717529297" text="remove" />
+                        <TableColumn minWidth="4.333343505859375" prefWidth="149.99996948242188" text="add" />
+                    </columns>
+                </TableView>
+            </content>
+        </ScrollPane>
+      <VBox layoutX="560.0" layoutY="163.0" prefHeight="296.0" prefWidth="160.0">
+         <children>
+              <Button mnemonicParsing="false" opacity="0.87" prefHeight="50.0" prefWidth="151.0" text="change end time">
+                  <font>
+                      <Font name="System Bold Italic" size="13.0" />
+                  </font>
+              </Button>
+            <Button mnemonicParsing="false" opacity="0.87" prefHeight="50.0" prefWidth="151.0" text="change percentage">
+               <font>
+                  <Font name="System Bold Italic" size="13.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" opacity="0.87" prefHeight="50.0" prefWidth="151.0" text="delete">
+               <font>
+                  <Font name="System Bold Italic" size="13.0" />
+               </font>
+            </Button>
+              <Button mnemonicParsing="false" opacity="0.87" prefHeight="50.0" prefWidth="151.0" text="change start time">
+                  <font>
+                      <Font name="System Bold Italic" size="13.0" />
+                  </font>
+            </Button>
+            <Button mnemonicParsing="false" opacity="0.87" prefHeight="50.0" prefWidth="151.0" text="back">
+               <font>
+                  <Font name="System Bold Italic" size="13.0" />
+               </font>
+            </Button>
+         </children>
+      </VBox>
+    </children>
+</AnchorPane>

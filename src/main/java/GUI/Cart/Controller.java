@@ -1,4 +1,4 @@
-package GUI.help;
+package GUI.Cart;
 
 public class Controller {
 }

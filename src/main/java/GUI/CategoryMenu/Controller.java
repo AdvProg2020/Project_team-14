@@ -1,5 +1,4 @@
-package GUI.RegisterBoss;
-
+package GUI.CategoryMenu;
 
 public class Controller {
 }
