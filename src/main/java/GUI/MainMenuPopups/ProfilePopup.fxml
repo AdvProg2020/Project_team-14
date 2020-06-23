@@ -30,7 +30,7 @@
                <graphic>
                   <ImageView fitHeight="24.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@resources/loupe.png" />
+                        <Image url="@../../../resources/GUI/ProfileLayout/resources/loupe.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -39,7 +39,7 @@
                <graphic>
                   <ImageView fitHeight="24.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@resources/logout.png" />
+                        <Image url="@../../../resources/GUI/ProfileLayout/resources/logout.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -52,6 +52,6 @@
    </children>
    <stylesheets>
       <URL value="@../StyleSheets/ProfileStyle.css" />
-      <URL value="@../StyleSheets/MainThemStyle.css" />
+      <URL value="@../../../resources/GUI/StyleSheets/MainThemStyle.css" />
    </stylesheets>
 </VBox>

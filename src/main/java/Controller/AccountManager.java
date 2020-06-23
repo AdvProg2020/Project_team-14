@@ -25,10 +25,10 @@ public class AccountManager {
                 if (account.getRole().equals(Role.SALESMAN)) {
                     Salesman salesman = (Salesman) account;
                     if (!salesman.isConfirmed()) {
-                        Server.setAnswer("you're not a confirmed salesman yet");
+                        Server.setAnswer("You're Not A Confirmed Salesman Yet");
                         if (salesman.getConfirmationState().equals(Confirmation.DENIED)) {
-                            Server.setAnswer("you're request of registering has been denied so you're account will be " +
-                                    "deleted from now on");
+                            Server.setAnswer("Your Request Of Registering Has Been Denied So Your Account Will Be " +
+                                    "Deleted From Now On");
                             Storage.getAllAccounts().remove(account);
                         }
                         return;
@@ -37,10 +37,10 @@ public class AccountManager {
                 Server.setAnswer("login successful as " + account.getRole() + " " + username);
                 account.setOnline(true);
             } else {
-                Server.setAnswer("your password is incorrect");
+                Server.setAnswer("Your Password Is Incorrect");
             }
         } else {
-            Server.setAnswer("the username doesn't exists");
+            Server.setAnswer("The Username Doesn't Exists");
         }
     }
 

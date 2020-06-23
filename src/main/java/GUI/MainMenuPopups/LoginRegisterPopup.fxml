@@ -13,7 +13,7 @@
     <children>
         <ImageView fitHeight="361.0" fitWidth="368.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@resources/supermarket.png"/>
+                <Image url="@../ProfileLayout/resources/supermarket.png"/>
             </image>
             <VBox.margin>
                 <Insets top="25.0"/>
@@ -29,7 +29,7 @@
                     <graphic>
                         <ImageView fitHeight="24.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@resources/register.png"/>
+                                <Image url="@../../../resources/GUI/ProfileLayout/resources/register.png"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -39,7 +39,7 @@
                     <graphic>
                         <ImageView fitHeight="24.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@resources/login.png"/>
+                                <Image url="@../../../resources/GUI/ProfileLayout/resources/login.png"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -52,6 +52,6 @@
     </children>
     <stylesheets>
         <URL value="@../StyleSheets/ProfileStyle.css"/>
-        <URL value="@../StyleSheets/MainThemStyle.css"/>
+        <URL value="@../../../resources/GUI/StyleSheets/MainThemStyle.css"/>
     </stylesheets>
 </VBox>

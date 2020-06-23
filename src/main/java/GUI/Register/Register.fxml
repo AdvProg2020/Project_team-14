@@ -64,7 +64,7 @@
                         <Font name="System Italic" size="13.0" />
                     </font>
                 </Label>
-                <ImageView fitHeight="31.0" fitWidth="39.0" layoutX="559.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fitHeight="31.0" fitWidth="39.0" layoutX="559.0" layoutY="23.0" onMouseClicked="#exit" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@resources/png-transparent-computer-icons-exit-icon-miscellaneous-angle-text.png" />
                     </image>

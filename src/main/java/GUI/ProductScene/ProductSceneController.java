@@ -24,12 +24,23 @@ public class ProductSceneController {
         if (MenuHandler.isIsUserLogin()) {
 
         } else {
-            Parent registerLoginPopUp = FXMLLoader.load(getClass().getResource("/GUI/ProfileLayout/LoginRegisterPopup.fxml"));
+            Parent registerLoginPopUp = FXMLLoader.load(getClass().getResource("/GUI/MainMenuPopups/LoginRegisterPopup.fxml"));
             popup.getContent().addAll(registerLoginPopUp);
             ((Button) ((HBox) ((VBox) registerLoginPopUp).getChildren().get(1)).getChildren().get(0)).setOnAction(event -> {
                 Parent root = null;
                 try {
                     root = FXMLLoader.load(getClass().getResource("/GUI/Register/Register.fxml"));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                stage.setScene(new Scene(root));
+                MenuHandler.setLoginBackAddress("/GUI/ProductScene/ProductScene.fxml");
+                popup.getScene().getWindow().hide();
+            });
+            ((Button) ((HBox) ((VBox) registerLoginPopUp).getChildren().get(1)).getChildren().get(1)).setOnAction(event -> {
+                Parent root = null;
+                try {
+                    root = FXMLLoader.load(getClass().getResource("/GUI/Login/Login.fxml"));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
