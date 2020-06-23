@@ -3,55 +3,67 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="735.0" prefWidth="780.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <Label text="Manage Requests">
-         <font>
-            <Font size="30.0" />
-         </font>
-         <VBox.margin>
-            <Insets bottom="10.0" top="15.0" />
-         </VBox.margin>
-      </Label>
-      <HBox prefHeight="658.0" prefWidth="780.0" spacing="10.0">
-         <children>
-            <VBox prefHeight="645.0" prefWidth="521.0" style="-fx-background-color: #00ffaa;" />
-            <VBox prefHeight="645.0" prefWidth="291.0" spacing="10.0" style="-fx-background-color: #00ffdd;">
-               <children>
-                  <Label text="Sort Factor :" />
-                  <ComboBox layoutX="10.0" layoutY="83.0" prefHeight="31.0" prefWidth="241.0" />
-                  <Label text="Filters :">
-                     <VBox.margin>
-                        <Insets top="30.0" />
-                     </VBox.margin></Label>
-                  <ComboBox prefHeight="31.0" prefWidth="244.0" />
-                  <Label layoutX="20.0" layoutY="122.0" text="Chosen filter :">
-                     <VBox.margin>
-                        <Insets top="20.0" />
-                     </VBox.margin>
-                  </Label>
-                  <FlowPane hgap="5.0" prefHeight="386.0" prefWidth="240.0" style="-fx-background-color: #ff00dd;" vgap="5.0">
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                     <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </padding>
-                  </FlowPane>
-               </children>
-               <padding>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </padding>
-            </VBox>
-         </children>
-         <VBox.margin>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="20.0" />
-         </VBox.margin>
-      </HBox>
-   </children>
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+      prefHeight="735.0" prefWidth="780.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="GUI.ManageRequests.ManageRequestsController">
+    <children>
+        <Label text="Manage Requests">
+            <font>
+                <Font size="30.0"/>
+            </font>
+            <VBox.margin>
+                <Insets bottom="10.0" top="15.0"/>
+            </VBox.margin>
+        </Label>
+        <HBox prefHeight="658.0" prefWidth="780.0" spacing="10.0">
+            <children>
+                <ScrollPane hbarPolicy="NEVER" prefHeight="645.0" prefWidth="521.0"
+                            style="-fx-background-color: #00ffaa;" vbarPolicy="NEVER">
+                    <content>
+                        <VBox fx:id="requestList" prefHeight="633.0" prefWidth="490.0"
+                              style="-fx-background-color: #00ffaa;"/>
+                    </content>
+                </ScrollPane>
+                <VBox prefHeight="645.0" prefWidth="291.0" spacing="10.0" style="-fx-background-color: #00ffdd;">
+                    <children>
+                        <Label text="Sort Factor :"/>
+                        <ComboBox fx:id="sortFactor" layoutX="10.0" layoutY="83.0" onAction="#chooseSort"
+                                  prefHeight="31.0" prefWidth="241.0"/>
+                        <Label text="Filters :">
+                            <VBox.margin>
+                                <Insets top="30.0"/>
+                            </VBox.margin>
+                        </Label>
+                        <ComboBox fx:id="filter" onAction="#chooseFilter" prefHeight="31.0" prefWidth="244.0"/>
+                        <Label layoutX="20.0" layoutY="122.0" text="Chosen filter :">
+                            <VBox.margin>
+                                <Insets top="20.0"/>
+                            </VBox.margin>
+                        </Label>
+                        <FlowPane fx:id="filterList" hgap="5.0" prefHeight="386.0" prefWidth="240.0"
+                                  style="-fx-background-color: #ff00dd;" vgap="5.0">
+                            <VBox.margin>
+                                <Insets/>
+                            </VBox.margin>
+                            <padding>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                            </padding>
+                        </FlowPane>
+                    </children>
+                    <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                    </padding>
+                </VBox>
+            </children>
+            <VBox.margin>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="20.0"/>
+            </VBox.margin>
+        </HBox>
+    </children>
 </VBox>

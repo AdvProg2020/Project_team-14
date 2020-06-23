@@ -5,9 +5,18 @@ import Controller.Server;
 public class MenuHandler {
     static private String username = null;
     static private Server server;
+    static private String requestID = null;
     static private boolean isUserLogin = false;
     static private String userType = null;
     static private String loginBackAddress = null;
+
+    public static String getRequestID() {
+        return requestID;
+    }
+
+    public static void setRequestID(String requestID) {
+        MenuHandler.requestID = requestID;
+    }
 
     public static String getUsername() {
         return username;

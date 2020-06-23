@@ -23,7 +23,7 @@ public abstract class RandomString {
         String result = "";
         result += type;
         result += "---";
-        result += getRandomString(5);
+        result += getRandomString(23);
         return result;
     }
 }

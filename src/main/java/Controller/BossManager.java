@@ -518,6 +518,19 @@ public class BossManager {
         }
     }
 
+    public void requestUsername(String username) {
+        String ans = "";
+        for (Account account : Storage.getAllAccounts()) {
+            if (account.getRole().equals(Role.BOSS)) continue;
+            if (ans.equals("")) {
+                ans = account.getUsername();
+            } else {
+                ans += "+" + account.getUsername();
+            }
+        }
+        Server.setAnswer(ans);
+    }
+
     /*public void listAllProducts(String sortFactor) throws SortFactorNotAvailableException {
         ArrayList<Product> products = new ArrayList<>(Storage.allProducts);
         ListProductSortFactor.sort(sortFactor, products);

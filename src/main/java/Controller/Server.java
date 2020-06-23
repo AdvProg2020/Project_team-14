@@ -95,6 +95,8 @@ public class Server {
             this.makeNewBoss(command);
         } else if (command.startsWith("show requests+")) {
             this.showRequests(command);
+        } else if (command.startsWith("request username show+")) {
+            this.requestUsername(command);
         } else if (command.startsWith("view request+")) {
             this.viewRequest(command);
         } else if (command.startsWith("is request state checking+")) {
@@ -209,6 +211,11 @@ public class Server {
             this.showBalance(command);
         }
 
+    }
+
+    private void requestUsername(String command) {
+        String username = command.split("\\+")[1];
+        bossManager.requestUsername(username);
     }
 
     private void isServerHasBoss() {

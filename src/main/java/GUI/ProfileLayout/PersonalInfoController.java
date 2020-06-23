@@ -33,7 +33,6 @@ public class PersonalInfoController {
     public void initialize() throws ParseException, IOException {
         MenuHandler.getServer().clientToServer("view personal info+" + MenuHandler.getUsername());
         String serverAnswer = MenuHandler.getServer().serverToClient();
-        System.out.println(serverAnswer);
         String[] information = serverAnswer.split("\\s");
         username.setText(information[1]);
         password.setText(information[3]);
