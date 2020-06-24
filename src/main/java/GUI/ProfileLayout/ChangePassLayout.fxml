@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="363.0" prefWidth="535.0" style="-fx-background-color: #cccccc;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ProfileLayout.ChangePassController">
+   <children>
+      <Label text="Change Password">
+         <font>
+            <Font size="30.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="20.0" top="20.0" />
+         </VBox.margin>
+      </Label>
+      <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
+         <children>
+            <VBox prefHeight="138.0" prefWidth="173.0">
+               <children>
+                  <Label text="Old Pass :">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label text="New Pass :">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label text="New Pass again :">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </Label>
+               </children>
+            </VBox>
+            <AnchorPane fx:id="passPane" prefHeight="138.0" prefWidth="230.0">
+               <children>
+                  <PasswordField fx:id="pass1" layoutX="5.0" layoutY="15.0" prefHeight="31.0" prefWidth="218.0" />
+                  <TextField fx:id="text1" layoutX="5.0" layoutY="15.0" prefHeight="31.0" prefWidth="218.0" visible="false" />
+                  <PasswordField fx:id="pass2" layoutX="5.0" layoutY="61.0" prefHeight="31.0" prefWidth="218.0" />
+                  <TextField fx:id="text2" layoutX="5.0" layoutY="61.0" prefHeight="31.0" prefWidth="218.0" visible="false" />
+                  <PasswordField fx:id="pass3" layoutX="5.0" layoutY="107.0" onKeyReleased="#checkNewPass" prefHeight="31.0" prefWidth="218.0" />
+                  <TextField fx:id="text3" layoutX="5.0" layoutY="107.0" onKeyReleased="#checkNewPass" prefHeight="31.0" prefWidth="218.0" visible="false" />
+                  <ImageView fx:id="img1" fitHeight="23.0" fitWidth="30.0" layoutX="193.0" layoutY="19.0" onMouseClicked="#changePolicy" opacity="0.5" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@resources/showPass.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="img2" fitHeight="23.0" fitWidth="30.0" layoutX="193.0" layoutY="65.0" onMouseClicked="#changePolicy" opacity="0.5" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@resources/showPass.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="img3" fitHeight="23.0" fitWidth="30.0" layoutX="193.0" layoutY="111.0" onMouseClicked="#changePolicy" opacity="0.5" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@resources/showPass.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+         </children>
+         <VBox.margin>
+            <Insets top="30.0" />
+         </VBox.margin>
+      </HBox>
+      <Label fx:id="result" alignment="CENTER" textFill="RED">
+         <VBox.margin>
+            <Insets top="20.0" />
+         </VBox.margin>
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="15.0">
+         <children>
+            <Button mnemonicParsing="false" text="Cancel" />
+            <Button fx:id="doneButton" disable="true" mnemonicParsing="false" onMouseClicked="#changePass" text="Done" />
+         </children>
+         <padding>
+            <Insets top="10.0" />
+         </padding>
+      </HBox>
+   </children>
+</VBox>

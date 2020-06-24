@@ -81,6 +81,8 @@ public class Server {
             this.viewPersonalInfo(command);
         } else if (command.startsWith("edit personal info+")) {
             this.editPersonalInfo(command);
+        } else if (command.startsWith("change pass")) {
+            this.changePass(command);
         } else if (command.startsWith("show accounts+")) {
             this.showAccounts(command);
         } else if (command.startsWith("view account info+")) {
@@ -95,6 +97,8 @@ public class Server {
             this.makeNewBoss(command);
         } else if (command.startsWith("show requests+")) {
             this.showRequests(command);
+        } else if (command.startsWith("request username show+")) {
+            this.requestUsername(command);
         } else if (command.startsWith("view request+")) {
             this.viewRequest(command);
         } else if (command.startsWith("is request state checking+")) {
@@ -209,6 +213,16 @@ public class Server {
             this.showBalance(command);
         }
 
+    }
+
+    private void changePass(String command) {
+        String[] info = command.split("\\+");
+        accountManager.editPassword(info[1], info[2], info[3]);
+    }
+
+    private void requestUsername(String command) {
+        String username = command.split("\\+")[1];
+        bossManager.requestUsername(username);
     }
 
     private void isServerHasBoss() {
@@ -780,8 +794,8 @@ public class Server {
     private ArrayList<Object> getFilters(String command) {
         ArrayList<Object> filters = new ArrayList<Object>();
         String[] input = command.split("\\+");
-        if (command.contains("filter:")) {
-            for (int i = 3; i < getWordCount(command); i += 2) {
+        if (command.contains("filters:")) {
+            for (int i = 3; i < input.length; i += 2) {
                 if (input[i].equalsIgnoreCase("sort:")) {
                     break;
                 }

@@ -201,7 +201,7 @@ public class Request implements Serializable {
     }
 
     public String toStringForBoss() {
-        return "Request Type: " + this.requestType + " Request ID: " + this.requestID;
+        return "Request Type: " + this.requestType + " Request ID: " + this.requestID + " Username: " + accountUsername;
     }
 
     private String toStringRegisterSalesman() {

@@ -50,13 +50,13 @@ public class Salesman extends Account implements Serializable {
 
     public String toStringForRequest() {
         return "First Name: " + this.getFirstName() + " Last Name: " + this.getSecondName() +
-                " Username: " + this.getUsername();
+                " Username: " + this.getUsername() + " Company: " + this.getCompany();
     }
 
     public String toString() {
         String result = super.toString();
         result += "Company: " + this.getCompany() + "\n";
-        result += "Credit: " + credit+"\n";
+        result += "Credit: " + credit + "\n";
         result += "Confirmation State: " + this.confirmationState.toString() + "\n";
         return result;
     }

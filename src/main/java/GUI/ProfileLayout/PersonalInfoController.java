@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -33,7 +34,6 @@ public class PersonalInfoController {
     public void initialize() throws ParseException, IOException {
         MenuHandler.getServer().clientToServer("view personal info+" + MenuHandler.getUsername());
         String serverAnswer = MenuHandler.getServer().serverToClient();
-        System.out.println(serverAnswer);
         String[] information = serverAnswer.split("\\s");
         username.setText(information[1]);
         password.setText(information[3]);
@@ -144,8 +144,12 @@ public class PersonalInfoController {
         }
     }
 
-    public void changePassword(ActionEvent actionEvent) {
-
+    public void changePassword(ActionEvent actionEvent) throws IOException {
+        Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+        Parent root = FXMLLoader.load(getClass().getResource("ChangePassLayout.fxml"));
+        Popup popup = new Popup();
+        popup.getContent().add(root);
+        popup.show(stage);
     }
 
     private Matcher getMatcher(String regex, String command) {
