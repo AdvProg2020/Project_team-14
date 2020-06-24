@@ -6,13 +6,11 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -35,8 +33,6 @@ public class ManageRequestsController {
             "DELETE_PRODUCT", "ADD_NEW_PRODUCT", "CHANGE_PRODUCT", "REGISTER_SALESMAN", "COMMENT_CONFIRMATION",
             "ADD_TO_PRODUCT", "State:ACCEPTED", "State:DENIED", "State:CHECKING");
 
-
-    //521 width
 
     public void initialize() throws IOException, ParseException {
         MenuHandler.getServer().clientToServer("request username show+" + MenuHandler.getUsername());
@@ -152,7 +148,6 @@ public class ManageRequestsController {
 
     public void chooseFilter(ActionEvent actionEvent) throws IOException, ParseException {
         String s = filter.getValue();
-        System.out.println(s);
         for (Object object : filterList.getChildren()) {
             if (object instanceof HBox) {
                 Object object1 = ((HBox) object).getChildren().get(0);

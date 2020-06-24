@@ -796,7 +796,6 @@ public class Server {
                 filters.add(input[i + 1]);
             }
         }
-        System.out.println(filters);
         return filters;
     }
 

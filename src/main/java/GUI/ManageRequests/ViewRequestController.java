@@ -70,7 +70,7 @@ public class ViewRequestController {
                 stage.setScene(new Scene(root));
             }
         } else {
-            MenuHandler.getServer().clientToServer("delete request" + MenuHandler.getUsername() + "+" + requestID);
+            MenuHandler.getServer().clientToServer("delete request+" + MenuHandler.getUsername() + "+" + requestID);
             if (MenuHandler.getServer().serverToClient().equalsIgnoreCase("deleted successfully")) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, "Request Deleted Successfully", ButtonType.OK);
                 alert.showAndWait();

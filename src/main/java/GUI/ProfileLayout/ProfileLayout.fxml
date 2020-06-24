@@ -69,7 +69,7 @@
             <Button layoutX="10.0" layoutY="216.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="300.0" styleClass="my-button" text="Manage Sales" textFill="#ea0404" />
             <Button layoutX="10.0" layoutY="254.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="300.0" styleClass="my-button" text="Manage Logs" textFill="#ea0404" />
             <Button layoutX="10.0" layoutY="303.0" mnemonicParsing="false" onAction="#manageRequests" prefHeight="40.0" prefWidth="300.0" styleClass="my-button" text="Manage Requests" textFill="#ea0404" />
-                <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="300.0" styleClass="my-button" text="logOut" textFill="#ec0f0f" />
+                <Button mnemonicParsing="false" onAction="#logout" prefHeight="40.0" prefWidth="300.0" styleClass="my-button" text="logOut" textFill="#ec0f0f" />
             </children>
         </VBox>
         <Pane fx:id="pane" layoutX="413.0" layoutY="82.0" prefHeight="734.0" prefWidth="781.0" styleClass="info-part" AnchorPane.bottomAnchor="11.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="55.0" />
