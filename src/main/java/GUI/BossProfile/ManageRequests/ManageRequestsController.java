@@ -1,4 +1,4 @@
-package GUI.ManageRequests;
+package GUI.BossProfile.ManageRequests;
 
 import GUI.MenuHandler;
 import javafx.collections.FXCollections;
@@ -129,7 +129,7 @@ public class ManageRequestsController {
                 Stage stage = (Stage) ((HBox) mouseEvent.getSource()).getScene().getWindow();
                 Parent root = null;
                 try {
-                    root = FXMLLoader.load(getClass().getResource("/GUI/ManageRequests/ViewRequest.fxml"));
+                    root = FXMLLoader.load(getClass().getResource("/GUI/BossProfile/ManageRequests/ViewRequest.fxml"));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -167,7 +167,7 @@ public class ManageRequestsController {
         }*/
 //        HBox hBox = new HBox();
 //        hBox.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/MainTheme/ChosenItemLayout.fxml")));
-        Parent item = FXMLLoader.load(getClass().getResource("../MainTheme/chosenItemLayout.fxml"));
+        Parent item = FXMLLoader.load(getClass().getResource("/GUI/MainTheme/chosenItemLayout.fxml"));
         Label label = (Label) ((HBox) item).getChildren().get(0);
         label.setText(s);
         Button button = (Button) ((HBox) item).getChildren().get(1);

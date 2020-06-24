@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="496.0" prefWidth="591.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ManagerUsersMenu.NewManagerPopOut">
+<AnchorPane prefHeight="496.0" prefWidth="591.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.BossProfile.ManagerUsersMenu.NewManagerPopOut">
     <ImageView fitHeight="542.0" fitWidth="717.0" layoutX="-47.0" layoutY="-24.0" pickOnBounds="true" preserveRatio="true">
         <Image url="@resources/download.png" />
     </ImageView>

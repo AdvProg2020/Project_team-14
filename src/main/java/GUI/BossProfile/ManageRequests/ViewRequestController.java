@@ -1,4 +1,4 @@
-package GUI.ManageRequests;
+package GUI.BossProfile.ManageRequests;
 
 import GUI.MenuHandler;
 import javafx.event.ActionEvent;
@@ -54,7 +54,7 @@ public class ViewRequestController {
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Request Declined Successfully", ButtonType.OK);
             alert.showAndWait();
             Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
-            Parent root = FXMLLoader.load(getClass().getResource("/GUI/ManageRequests/ViewRequest.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/GUI/BossProfile/ManageRequests/ViewRequest.fxml"));
             stage.setScene(new Scene(root));
         }
     }
@@ -66,7 +66,7 @@ public class ViewRequestController {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, "Request Accepted Successfully", ButtonType.OK);
                 alert.showAndWait();
                 Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
-                Parent root = FXMLLoader.load(getClass().getResource("/GUI/ManageRequests/ViewRequest.fxml"));
+                Parent root = FXMLLoader.load(getClass().getResource("/GUI/BossProfile/ManageRequests/ViewRequest.fxml"));
                 stage.setScene(new Scene(root));
             }
         } else {

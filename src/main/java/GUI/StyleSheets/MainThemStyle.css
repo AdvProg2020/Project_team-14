@@ -20,7 +20,7 @@
 
 .chosen-item-button {
 	-fx-background-color : gray;
-	-fx-background-radius : 0 0 8 8;
+	-fx-background-radius : 0 8 8 0;
 	-fx-border-width: 0;
 }
 

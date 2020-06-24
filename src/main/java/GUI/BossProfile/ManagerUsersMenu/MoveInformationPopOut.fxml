@@ -5,7 +5,7 @@
 <?import javafx.scene.text.*?>
 
 
-<AnchorPane prefHeight="599.0" prefWidth="602.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ManagerUsersMenu.MoveInformationPopOut">
+<AnchorPane prefHeight="599.0" prefWidth="602.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.BossProfile.ManagerUsersMenu.MoveInformationPopOut">
    <children>
       <Label layoutX="188.0" layoutY="25.0" prefHeight="51.0" prefWidth="265.0" text="Personal Info" textFill="#f30f0f">
          <font>
