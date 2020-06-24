@@ -23,7 +23,6 @@ public class ViewRequestController {
     public void initialize() throws ParseException, IOException {
         MenuHandler.getServer().clientToServer("view request+" + MenuHandler.getUsername() + "+" + MenuHandler.getRequestID());
         String serverAnswer = MenuHandler.getServer().serverToClient();
-        System.out.println(serverAnswer);
         MenuHandler.getServer().clientToServer("is request state checking+" + MenuHandler.getRequestID());
         if (!MenuHandler.getServer().serverToClient().equalsIgnoreCase("yes")) {
             declineButton.setVisible(false);

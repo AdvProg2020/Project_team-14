@@ -32,12 +32,17 @@ public class ProductSceneController {
             ((Button) ((HBox) ((VBox) registerLoginPopUp).getChildren().get(2)).getChildren().get(0)).setOnAction(event -> {
                 Parent root = null;
                 try {
-                    root = FXMLLoader.load(getClass().getResource("/GUI/ProfileLayout/ProfileLayout.fxml"));
+                    if (MenuHandler.getUserType().equalsIgnoreCase("boss")) {
+                        root = FXMLLoader.load(getClass().getResource("/GUI/ProfileLayout/ProfileLayout.fxml"));
+                    } else if (MenuHandler.getUserType().equalsIgnoreCase("salesman")) {
+                        root = FXMLLoader.load(getClass().getResource("/GUI/SalesmanProfile/SalesmanProfileLayout.fxml"));
+                    } else {
+
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
                 stage.setScene(new Scene(root));
-                //MenuHandler.setLoginBackAddress("/GUI/ProductScene/ProductScene.fxml");
                 popup.getScene().getWindow().hide();
             });
             ((Button) ((HBox) ((VBox) registerLoginPopUp).getChildren().get(2)).getChildren().get(1)).setOnAction(event -> {

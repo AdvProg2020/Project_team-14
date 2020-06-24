@@ -55,6 +55,9 @@ public class PersonalInfoController {
             companyInfoLabel.setVisible(false);
             balanceLabel.setVisible(false);
             companyInfo.setVisible(false);
+        } else if (information[12].equalsIgnoreCase("salesman")) {
+            companyInfo.setText(information[14]);
+            balance.setText(information[16]);
         }
     }
 

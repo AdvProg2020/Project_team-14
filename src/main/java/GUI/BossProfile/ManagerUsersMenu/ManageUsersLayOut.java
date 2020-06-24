@@ -1,7 +1,6 @@
 package GUI.BossProfile.ManagerUsersMenu;
 
 import GUI.MenuHandler;
-import Menus.Menu;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
