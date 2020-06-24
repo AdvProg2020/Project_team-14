@@ -52,8 +52,8 @@
                   <TextField fx:id="text1" layoutX="5.0" layoutY="15.0" prefHeight="31.0" prefWidth="218.0" visible="false" />
                   <PasswordField fx:id="pass2" layoutX="5.0" layoutY="61.0" prefHeight="31.0" prefWidth="218.0" />
                   <TextField fx:id="text2" layoutX="5.0" layoutY="61.0" prefHeight="31.0" prefWidth="218.0" visible="false" />
-                  <PasswordField fx:id="pass3" layoutX="5.0" layoutY="107.0" prefHeight="31.0" prefWidth="218.0" />
-                  <TextField fx:id="text3" layoutX="5.0" layoutY="107.0" prefHeight="31.0" prefWidth="218.0" visible="false" />
+                  <PasswordField fx:id="pass3" layoutX="5.0" layoutY="107.0" onKeyReleased="#checkNewPass" prefHeight="31.0" prefWidth="218.0" />
+                  <TextField fx:id="text3" layoutX="5.0" layoutY="107.0" onKeyReleased="#checkNewPass" prefHeight="31.0" prefWidth="218.0" visible="false" />
                   <ImageView fx:id="img1" fitHeight="23.0" fitWidth="30.0" layoutX="193.0" layoutY="19.0" onMouseClicked="#changePolicy" opacity="0.5" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@resources/showPass.png" />
