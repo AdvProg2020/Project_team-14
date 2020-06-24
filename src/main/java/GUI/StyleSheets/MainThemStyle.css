@@ -11,3 +11,19 @@
 	-fx-font-family: "georgia";
 	-fx-font-size: 20;
 }
+
+.chosen-items {
+	-fx-background-color : gray;
+	-fx-background-radius : 8;
+	-fx-font-family: "georgia";
+}
+
+.chosen-item-button {
+	-fx-background-color : gray;
+	-fx-background-radius : 0 0 8 8;
+	-fx-border-width: 0;
+}
+
+.chosen-item-button:hover {
+	-fx-background-color: white;
+}

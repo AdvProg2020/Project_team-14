@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -148,7 +149,12 @@ public class ManageRequestsController {
 
     public void chooseFilter(ActionEvent actionEvent) throws IOException, ParseException {
         String s = filter.getValue();
-        for (Object object : filterList.getChildren()) {
+        try {
+            checkExistenceOfFilter(s);
+        } catch (Exception e) {
+            return;
+        }
+        /*for (Object object : filterList.getChildren()) {
             if (object instanceof HBox) {
                 Object object1 = ((HBox) object).getChildren().get(0);
                 if (object1 instanceof HBox) {
@@ -158,24 +164,30 @@ public class ManageRequestsController {
                     }
                 }
             }
-        }
-        HBox hBox = new HBox();
-        hBox.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/MainTheme/ChosenItemLayout.fxml")));
-        Label label = (Label) ((HBox) hBox.getChildren().get(0)).getChildren().get(0);
+        }*/
+//        HBox hBox = new HBox();
+//        hBox.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/MainTheme/ChosenItemLayout.fxml")));
+        Parent item = FXMLLoader.load(getClass().getResource("../MainTheme/chosenItemLayout.fxml"));
+        Label label = (Label) ((HBox) item).getChildren().get(0);
         label.setText(s);
-        Button button = (Button) ((HBox) hBox.getChildren().get(0)).getChildren().get(1);
+        Button button = (Button) ((HBox) item).getChildren().get(1);
         button.setOnAction(actionEvent2 -> {
-            filterList.getChildren().remove(hBox);
+            filterList.getChildren().remove(item);
             try {
                 updateList();
-            } catch (ParseException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
+            } catch (ParseException | IOException e) {
                 e.printStackTrace();
             }
         });
-        filterList.getChildren().add(hBox);
+        filterList.getChildren().add(item);
         updateList();
+    }
+
+    private void checkExistenceOfFilter(String filterFactor) throws Exception {
+        for (Node child : filterList.getChildren()) {
+            Label prevFactor = (Label) ((HBox) child).getChildren().get(0);
+            if (prevFactor.getText().equals(filterFactor)) throw new Exception("filter exist");
+        }
     }
 
     public void chooseSort(ActionEvent actionEvent) {
