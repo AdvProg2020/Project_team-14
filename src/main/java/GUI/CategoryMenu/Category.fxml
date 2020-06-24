@@ -4,28 +4,28 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="622.0" prefWidth="776.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.CategoryMenu.Controller">
-    <children>
-        <ScrollPane layoutX="52.0" layoutY="181.0" prefHeight="380.0" prefWidth="672.0">
-            <content>
-                <TableView prefHeight="377.0" prefWidth="670.0">
-                    <columns>
-                        <TableColumn prefWidth="118.66665267944336" text="Name" />
-                        <TableColumn prefWidth="179.33334350585938" text="Number of Products" />
-                        <TableColumn minWidth="4.333343505859375" prefWidth="132.0" text="Delete" />
-                        <TableColumn prefWidth="199.33331298828125" text="More Info And Change" />
-                    </columns>
-                </TableView>
-            </content>
-        </ScrollPane>
-        <Button layoutX="572.0" layoutY="75.0" mnemonicParsing="false" opacity="0.87" prefHeight="50.0" prefWidth="151.0" text="New Category">
-            <font>
-                <Font name="System Bold Italic" size="13.0" />
-            </font></Button>
-        <Label layoutX="156.0" layoutY="47.0" prefHeight="106.0" prefWidth="339.0" text="Let Us Make New Category" textFill="#ec0808">
-            <font>
-                <Font name="System Italic" size="29.0" />
-            </font>
-        </Label>
-    </children>
+<AnchorPane prefHeight="622.0" prefWidth="776.0" xmlns="http://javafx.com/javafx/10.0.2-internal"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.CategoryMenu.Controller">
+    <ScrollPane layoutX="52.0" layoutY="181.0" prefHeight="380.0" prefWidth="672.0">
+        <TableView prefHeight="377.0" prefWidth="670.0">
+            <columns>
+                <TableColumn prefWidth="118.66665267944336" text="Name"/>
+                <TableColumn prefWidth="179.33334350585938" text="Number of Products"/>
+                <TableColumn minWidth="4.333343505859375" prefWidth="132.0" text="Delete"/>
+                <TableColumn prefWidth="199.33331298828125" text="More Info And Change"/>
+            </columns>
+        </TableView>
+    </ScrollPane>
+    <Button layoutX="572.0" layoutY="75.0" mnemonicParsing="false" opacity="0.87" prefHeight="50.0" prefWidth="151.0"
+            text="New Category">
+        <font>
+            <Font name="System Bold Italic" size="13.0"/>
+        </font>
+    </Button>
+    <Label layoutX="156.0" layoutY="47.0" prefHeight="106.0" prefWidth="339.0" text="Let Us Make New Category"
+           textFill="#ec0808">
+        <font>
+            <Font name="System Italic" size="29.0"/>
+        </font>
+    </Label>
 </AnchorPane>
