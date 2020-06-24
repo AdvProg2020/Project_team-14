@@ -154,7 +154,7 @@ public class AccountManager {
             account.setPassword(newPassword);
             Server.setAnswer("edit successful");
         } else {
-            Server.setAnswer("your previous password isn't correct");
+            Server.setAnswer("Error:your previous password isn't correct");
         }
     }
 

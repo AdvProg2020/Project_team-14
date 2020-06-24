@@ -41,8 +41,7 @@ public class LoginController {
                 }
                 MenuHandler.setUsername(serverAnswer.split("\\s")[4]);
                 alert.setAlertType(Alert.AlertType.INFORMATION);
-                alert.setContentText("Login Successful\n" +
-                        "Welcome");
+                alert.setContentText("Login Successful" + "\n" + "Welcome");
                 alert.showAndWait();
                 Parent root = FXMLLoader.load(getClass().getResource(MenuHandler.getLoginBackAddress()));
                 Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
@@ -71,7 +70,7 @@ public class LoginController {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are You Sure You Want To Exit", ButtonType.YES, ButtonType.NO);
         alert.showAndWait();
         if (alert.getResult().equals(ButtonType.YES)) {
-            System.exit(23);
+            System.exit(1989);
         }
     }
 }
