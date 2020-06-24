@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox fx:id="pane" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="615.0" prefWidth="756.0" spacing="10.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.SalesmanProfile.ManageProduct.AddProductController">
+   <children>
+      <Label text="Sell New Product">
+         <font>
+            <Font size="30.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="50.0" top="20.0" />
+         </VBox.margin>
+      </Label>
+      <HBox prefHeight="366.0" prefWidth="553.0">
+         <children>
+            <VBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="189.0">
+               <children>
+                  <Label text="Name :">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label layoutX="10.0" layoutY="10.0" text="Brand :">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label layoutX="10.0" layoutY="31.0" text="Description :">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label layoutX="10.0" layoutY="52.0" text="Price :">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="140.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label layoutX="10.0" layoutY="94.0" text="Count :">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </Label>
+               </children>
+            </VBox>
+            <VBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="278.0">
+               <children>
+                  <TextField>
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <TextField layoutX="10.0" layoutY="10.0">
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <TextArea prefHeight="154.0" prefWidth="269.0">
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </TextArea>
+                  <TextField layoutX="10.0" layoutY="41.0">
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <Spinner prefHeight="31.0" prefWidth="132.0">
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </Spinner>
+               </children>
+               <padding>
+                  <Insets left="5.0" right="5.0" />
+               </padding>
+            </VBox>
+            <VBox alignment="CENTER" spacing="50.0">
+               <HBox.margin>
+                  <Insets left="30.0" />
+               </HBox.margin>
+               <children>
+                  <ImageView fx:id="img" fitHeight="223.0" fitWidth="226.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@resources/billboard.png" />
+                     </image>
+                  </ImageView>
+                  <Button mnemonicParsing="false" onMouseClicked="#uploadImg" text="Upload image" />
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="55.0" prefWidth="515.0" spacing="15.0">
+         <children>
+            <Button mnemonicParsing="false" prefHeight="33.0" prefWidth="99.0" text="Cancel" />
+            <Button layoutX="163.0" layoutY="44.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="99.0" text="Done" />
+         </children>
+         <VBox.margin>
+            <Insets top="40.0" />
+         </VBox.margin>
+      </HBox>
+   </children>
+</VBox>

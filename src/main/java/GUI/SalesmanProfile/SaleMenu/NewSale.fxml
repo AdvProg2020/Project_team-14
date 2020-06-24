@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="492.0" prefWidth="761.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.SaleMenu.Controller">
+<AnchorPane prefHeight="492.0" prefWidth="761.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.SalesmanProfile.SaleMenu.Controller">
     <children>
         <ScrollPane layoutX="27.0" layoutY="49.0" prefHeight="383.0" prefWidth="315.0">
             <content>
