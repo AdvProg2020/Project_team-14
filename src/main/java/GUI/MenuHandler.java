@@ -6,6 +6,7 @@ public class MenuHandler {
     static private String username = null;
     static private Server server;
     static private String requestID = null;
+    static private String seeingUsername = null;
     static private boolean isUserLogin = false;
     static private String userType = null;
     static private String loginBackAddress = null;
@@ -56,5 +57,13 @@ public class MenuHandler {
 
     public static void setLoginBackAddress(String loginBackAddress) {
         MenuHandler.loginBackAddress = loginBackAddress;
+    }
+
+    public static String getSeeingUsername() {
+        return seeingUsername;
+    }
+
+    public static void setSeeingUsername(String seeingUsername) {
+        MenuHandler.seeingUsername = seeingUsername;
     }
 }

@@ -52,28 +52,25 @@ public class ManageRequestsController {
         for (Object object : filterList.getChildren()) {
             if (object instanceof HBox) {
                 Object object1 = ((HBox) object).getChildren().get(0);
-                if (object1 instanceof HBox) {
-                    Object object2 = (((HBox) object1).getChildren().get(0));
-                    if (object2 instanceof Label) {
-                        String s = ((Label) object2).getText();
-                        if (s.startsWith("Username:")) {
-                            if (username.equals("")) {
-                                username = s.substring(9);
-                            } else {
-                                username += "," + s.substring(9);
-                            }
-                        } else if (s.startsWith("State:")) {
-                            if (state.equals("")) {
-                                state = s.substring(6);
-                            } else {
-                                state += "," + s.substring(6);
-                            }
+                if (object1 instanceof Label) {
+                    String s = ((Label) object1).getText();
+                    if (s.startsWith("Username:")) {
+                        if (username.equals("")) {
+                            username = s.substring(9);
                         } else {
-                            if (type.equals("")) {
-                                type = s;
-                            } else {
-                                type += "," + s;
-                            }
+                            username += "," + s.substring(9);
+                        }
+                    } else if (s.startsWith("State:")) {
+                        if (state.equals("")) {
+                            state = s.substring(6);
+                        } else {
+                            state += "," + s.substring(6);
+                        }
+                    } else {
+                        if (type.equals("")) {
+                            type = s;
+                        } else {
+                            type += "," + s;
                         }
                     }
                 }
@@ -154,19 +151,14 @@ public class ManageRequestsController {
         } catch (Exception e) {
             return;
         }
-        /*for (Object object : filterList.getChildren()) {
+        for (Object object : filterList.getChildren()) {
             if (object instanceof HBox) {
                 Object object1 = ((HBox) object).getChildren().get(0);
-                if (object1 instanceof HBox) {
-                    Object object2 = ((HBox) object1).getChildren().get(0);
-                    if (object2 instanceof Label) {
-                        if (((Label) object2).getText().equals(s)) return;
-                    }
+                if (object1 instanceof Label) {
+                    if (((Label) object1).getText().equals(s)) return;
                 }
             }
-        }*/
-//        HBox hBox = new HBox();
-//        hBox.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/MainTheme/ChosenItemLayout.fxml")));
+        }
         Parent item = FXMLLoader.load(getClass().getResource("/GUI/MainTheme/chosenItemLayout.fxml"));
         Label label = (Label) ((HBox) item).getChildren().get(0);
         label.setText(s);
