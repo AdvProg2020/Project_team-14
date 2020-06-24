@@ -6,8 +6,10 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -30,7 +32,8 @@ public class ManageRequestsController {
     private String requestUsername;
 
     ObservableList<String> list = FXCollections.observableArrayList("CHANGE_SALE", "DELETE_SALE", "ADD_NEW_SALE",
-            "DELETE_PRODUCT", "ADD_NEW_PRODUCT", "CHANGE_PRODUCT", "REGISTER_SALESMAN", "COMMENT_CONFIRMATION", "ADD_TO_PRODUCT");
+            "DELETE_PRODUCT", "ADD_NEW_PRODUCT", "CHANGE_PRODUCT", "REGISTER_SALESMAN", "COMMENT_CONFIRMATION",
+            "ADD_TO_PRODUCT", "State:ACCEPTED", "State:DENIED", "State:CHECKING");
 
 
     //521 width
@@ -42,8 +45,69 @@ public class ManageRequestsController {
         for (String s : requestUsername.split("\\+")) {
             filter.getItems().add("Username:" + s);
         }
-        MenuHandler.getServer().clientToServer("show requests+" + MenuHandler.getUsername());
+        updateList();
+    }
+
+    private void updateList() throws ParseException, IOException {
+        String username = new String("");
+        String type = new String("");
+        String state = new String("");
+        for (Object object : filterList.getChildren()) {
+            if (object instanceof HBox) {
+                Object object1 = ((HBox) object).getChildren().get(0);
+                if (object1 instanceof HBox) {
+                    Object object2 = (((HBox) object1).getChildren().get(0));
+                    if (object2 instanceof Label) {
+                        String s = ((Label) object2).getText();
+                        if (s.startsWith("Username:")) {
+                            if (username.equals("")) {
+                                username = s.substring(9);
+                            } else {
+                                username += "," + s.substring(9);
+                            }
+                        } else if (s.startsWith("State:")) {
+                            if (state.equals("")) {
+                                state = s.substring(6);
+                            } else {
+                                state += "," + s.substring(6);
+                            }
+                        } else {
+                            if (type.equals("")) {
+                                type = s;
+                            } else {
+                                type += "," + s;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        String command = "show requests+" + MenuHandler.getUsername();
+        if (state.equals("") && username.equals("") && type.equals("")) {
+
+        } else {
+            command += "+filters:";
+            if (!state.equals("")) {
+                command += "+state";
+                command += "+" + state;
+            }
+            if (!username.equals("")) {
+                command += "+username";
+                command += "+" + username;
+            }
+            if (!type.equals("")) {
+                command += "+requestType";
+                command += "+" + type;
+            }
+        }
+        for (int i = 1; i <= requestList.getChildren().size(); i++) {
+            Object object = requestList.getChildren().remove(0);
+        }
+        MenuHandler.getServer().clientToServer(command);
         String serverAnswer = MenuHandler.getServer().serverToClient();
+        if (serverAnswer.equals("nothing found")) {
+            return;
+        }
         for (String s : serverAnswer.split("\n")) {
             if (s.startsWith("here")) continue;
             HBox hBox = new HBox();
@@ -86,8 +150,37 @@ public class ManageRequestsController {
         }
     }
 
-    public void chooseFilter(ActionEvent actionEvent) {
-
+    public void chooseFilter(ActionEvent actionEvent) throws IOException, ParseException {
+        String s = filter.getValue();
+        System.out.println(s);
+        for (Object object : filterList.getChildren()) {
+            if (object instanceof HBox) {
+                Object object1 = ((HBox) object).getChildren().get(0);
+                if (object1 instanceof HBox) {
+                    Object object2 = ((HBox) object1).getChildren().get(0);
+                    if (object2 instanceof Label) {
+                        if (((Label) object2).getText().equals(s)) return;
+                    }
+                }
+            }
+        }
+        HBox hBox = new HBox();
+        hBox.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/MainTheme/ChosenItemLayout.fxml")));
+        Label label = (Label) ((HBox) hBox.getChildren().get(0)).getChildren().get(0);
+        label.setText(s);
+        Button button = (Button) ((HBox) hBox.getChildren().get(0)).getChildren().get(1);
+        button.setOnAction(actionEvent2 -> {
+            filterList.getChildren().remove(hBox);
+            try {
+                updateList();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        filterList.getChildren().add(hBox);
+        updateList();
     }
 
     public void chooseSort(ActionEvent actionEvent) {

@@ -194,8 +194,7 @@ public class BossManager {
 
     private boolean checkUsernameFilter(Request request, String username) {
         String[] usernames = username.split(",");
-        int usernameCount = countWordsBySemicolon(username);
-        for (int i = 0; i < usernameCount; i++) {
+        for (int i = 0; i < usernames.length; i++) {
             if (usernames[i].equals(request.getAccountUsername())) {
                 return true;
             }
@@ -207,6 +206,10 @@ public class BossManager {
         return requestType.contains(request.getRequestType().toString());
     }
 
+    private boolean checkStateFilter(Request request, String s) {
+        return s.contains(request.getConfirmation().toString());
+    }
+
     private boolean isRequestInFilter(Request request, ArrayList<Object> filters) {
         for (int i = 0; i < filters.size(); i += 2) {
             if (((String) filters.get(i)).equalsIgnoreCase("username")) {
@@ -216,6 +219,11 @@ public class BossManager {
             }
             if (((String) filters.get(i)).equalsIgnoreCase("requestType")) {
                 if (!checkRequestTypeFilter(request, (String) filters.get(i + 1))) {
+                    return false;
+                }
+            }
+            if (((String) filters.get(i)).equalsIgnoreCase("state")) {
+                if (!checkStateFilter(request, (String) filters.get(i + 1))) {
                     return false;
                 }
             }

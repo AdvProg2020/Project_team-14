@@ -787,8 +787,8 @@ public class Server {
     private ArrayList<Object> getFilters(String command) {
         ArrayList<Object> filters = new ArrayList<Object>();
         String[] input = command.split("\\+");
-        if (command.contains("filter:")) {
-            for (int i = 3; i < getWordCount(command); i += 2) {
+        if (command.contains("filters:")) {
+            for (int i = 3; i < input.length; i += 2) {
                 if (input[i].equalsIgnoreCase("sort:")) {
                     break;
                 }
@@ -796,6 +796,7 @@ public class Server {
                 filters.add(input[i + 1]);
             }
         }
+        System.out.println(filters);
         return filters;
     }
 
