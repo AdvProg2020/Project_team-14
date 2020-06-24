@@ -226,7 +226,7 @@ public class Request implements Serializable {
         String result = "";
         result += "General information of salesman: " + "\n";
         assert salesman != null;
-        result += salesman.toStringForRequest();
+        result += salesman.toStringForRequest() + "\n";
         assert product != null;
         return result + "General information of product: " + "\n" + product.toStringForBoss() +
                 "Confirmation State: " + confirmation.name();

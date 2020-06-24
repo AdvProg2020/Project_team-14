@@ -27,7 +27,7 @@ public class AddProductController {
     public TextArea description;
     public TextField price;
     public Spinner count;
-    private String path;
+    private String path = "";
 
     public void initialize() {
         SpinnerValueFactory<Integer> count = new SpinnerValueFactory.IntegerSpinnerValueFactory
@@ -94,14 +94,17 @@ public class AddProductController {
                     productName.getText() + "+" + brand.getText() + "+" + description.getText() + "+" + price.getText()
                     + "+" + count.getValue());
             String serverAnswer = MenuHandler.getServer().serverToClient();
-            System.out.println(serverAnswer);
-            if (serverAnswer.equals("product created")) {
+            if (serverAnswer.startsWith("product created")) {
                 alert.setAlertType(Alert.AlertType.INFORMATION);
                 alert.setContentText("Product Created");
             } else {
                 alert.setContentText(serverAnswer);
             }
             alert.showAndWait();
+            String productId = serverAnswer.split("\n")[1];
+            if (!path.equals("")) {
+                MenuHandler.getServer().clientToServer("product picture path+" + productId + "+" + path);
+            }
             reset(actionEvent);
         }
     }
@@ -113,7 +116,7 @@ public class AddProductController {
     }
 
     private boolean checkProductNameFormat(String input) {
-        return getMatcher("([\\d\\w_\\-,\\s])+", input).matches();
+        return getMatcher("([\\d\\w_\\-,\\s'])+", input).matches();
     }
 
     private boolean checkDescriptionFormat(String description) {

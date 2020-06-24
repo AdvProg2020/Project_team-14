@@ -39,7 +39,7 @@ public class SalesmanManager {
         Product product = new Product(information[2], information[1], information[3], information[4],
                 Integer.parseInt(information[5]), Integer.parseInt(information[6]));
         new Request(information[1], product, "ADD_NEW_PRODUCT");
-        Server.setAnswer("product created");
+        Server.setAnswer("product created\n" + product.getProductID());
     }
 
     public String getSalesHistory(String salesmanID) {

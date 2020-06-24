@@ -135,6 +135,8 @@ public class Server {
             this.whatIsCategoryAttribute(command);
         } else if (command.startsWith("add category attribute+")) {
             this.addCategoryAttribute(command);
+        } else if (command.startsWith("product picture path+")) {
+            this.addProductPicturePath(command);
         } else if (command.startsWith("delete category attribute+")) {
             this.deleteCategoryAttribute(command);
         } else if (command.startsWith("edit category attribute+")) {
@@ -213,6 +215,15 @@ public class Server {
             this.showBalance(command);
         }
 
+    }
+
+    private void addProductPicturePath(String command) {
+        String path = command.split("\\+")[2];
+        for (Product product : Storage.getAllProducts()) {
+            if (product.getProductID().equals(command.split("\\+")[1])) {
+                product.setPicPath(path);
+            }
+        }
     }
 
     private void changePass(String command) {
