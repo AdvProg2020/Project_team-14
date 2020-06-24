@@ -98,7 +98,7 @@ public abstract class Account implements Serializable {
     public abstract int getCredit();
 
     public String toStringForBoss() {
-        return "Username: " + this.getUsername() + " Role: " + this.getRole();
+        return "Username: " + this.getUsername() + " Role: " + this.getRole() + " Name: " + this.getFirstName() + " " + this.getSecondName();
     }
 
     public String toString() {
