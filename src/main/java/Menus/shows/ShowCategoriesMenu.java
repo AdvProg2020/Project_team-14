@@ -21,7 +21,7 @@ public class ShowCategoriesMenu extends ShowsMenu {
     public ShowCategoriesMenu(Menu fatherMenu, String menuName) {
         super(fatherMenu, menuName);
         this.type = "categories";
-        HashMap<Integer, Menu> subMenus = new HashMap<Integer, Menu>();
+        HashMap<Integer, Menu> subMenus = new HashMap<>();
         if (fatherMenu instanceof ViewCategoryMenu) {
             canChangeSubCategoryFilter = false;
         }
