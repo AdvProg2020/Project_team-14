@@ -27,7 +27,7 @@
                <graphic>
                   <ImageView fitHeight="24.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../resources/GUI/ProfileLayout/resources/loupe.png" />
+                        <Image url="@resources/loupe.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -36,7 +36,7 @@
                <graphic>
                   <ImageView fitHeight="24.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../resources/GUI/ProfileLayout/resources/logout.png" />
+                        <Image url="@resources/logout.png" />
                      </image>
                   </ImageView>
                </graphic>
