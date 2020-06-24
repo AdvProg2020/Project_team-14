@@ -81,6 +81,8 @@ public class Server {
             this.viewPersonalInfo(command);
         } else if (command.startsWith("edit personal info+")) {
             this.editPersonalInfo(command);
+        } else if (command.startsWith("change pass")) {
+            this.changePass(command);
         } else if (command.startsWith("show accounts+")) {
             this.showAccounts(command);
         } else if (command.startsWith("view account info+")) {
@@ -211,6 +213,11 @@ public class Server {
             this.showBalance(command);
         }
 
+    }
+
+    private void changePass(String command) {
+        String[] info = command.split("\\+");
+        accountManager.editPassword(info[1], info[2], info[3]);
     }
 
     private void requestUsername(String command) {
