@@ -17,7 +17,16 @@ public class Product implements Serializable {
     private String brand;
     private String description;
     private int seenCount;
+    private String picPath;
     private String categoryName;
+
+    public String getPicPath() {
+        return picPath;
+    }
+
+    public void setPicPath(String picPath) {
+        this.picPath = picPath;
+    }
 
     //the first argument is salesmanID and the second one is whether is's on sale by that salesman
     private HashMap<String, Boolean> isOnSale = new HashMap<>();

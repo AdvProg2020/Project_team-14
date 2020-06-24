@@ -21,6 +21,8 @@ public class ViewRequestController {
     private String requestID;
 
     public void initialize() throws ParseException, IOException {
+        requestContent.setDisable(false);
+        requestContent.setEditable(false);
         MenuHandler.getServer().clientToServer("view request+" + MenuHandler.getUsername() + "+" + MenuHandler.getRequestID());
         String serverAnswer = MenuHandler.getServer().serverToClient();
         MenuHandler.getServer().clientToServer("is request state checking+" + MenuHandler.getRequestID());
@@ -28,6 +30,7 @@ public class ViewRequestController {
             declineButton.setVisible(false);
             acceptButton.setText("Delete");
         }
+        System.out.println(serverAnswer);
         requestTypeField.setText(serverAnswer.split("\\s")[1]);
         requestID = MenuHandler.getRequestID();
         if (serverAnswer.split("\\s")[1].equals("REGISTER_SALESMAN")) {
@@ -42,8 +45,26 @@ public class ViewRequestController {
             ans += serverAnswer.split("\n")[3].split("\\s")[8] + " " + serverAnswer.split("\n")[3].split("\\s")[9] + "\n";
             ans += "Request ID: " + requestID;
             requestContent.setText(ans);
-        } else {
-
+        } else if (serverAnswer.split("\\s")[1].equals("ADD_NEW_PRODUCT")) {
+            viewOtherButton.setText("View Product");
+            viewOtherButton.setVisible(true);
+            String ans = serverAnswer.split("\n")[1] + "\n";
+            ans += serverAnswer.split("\n")[2] + "\n";
+            ans += serverAnswer.split("\n")[3].split("\\s")[0] + " " + serverAnswer.split("\n")[3].
+                    split("\\s")[1] + " " + serverAnswer.split("\n")[3].split("\\s")[2] + "\n";
+            ans += serverAnswer.split("\n")[3].split("\\s")[3] + " " + serverAnswer.split("\n")[3].split("\\s")[4] + " " +
+                    serverAnswer.split("\n")[3].split("\\s")[5] + "\n";
+            ans += serverAnswer.split("\n")[3].split("\\s")[6] + " " + serverAnswer.split("\n")[3].split("\\s")[7] + "\n";
+            ans += serverAnswer.split("\n")[3].split("\\s")[8] + " " + serverAnswer.split("\n")[3].split("\\s")[9] + "\n";
+            ans += serverAnswer.split("\n")[4] + "\n";
+            ans += serverAnswer.split("\n")[5].split("\\s")[0] + " " + serverAnswer.split("\n")[5].split("\\s")[1] + " " +
+                    serverAnswer.split("\n")[5].split("\\s")[2] + "\n";
+            ans += "Product " + serverAnswer.split("\n")[5].split("\\s")[3] + " " + serverAnswer.split("\n")[5].split("\\s")[4] + "\n";
+            ans += "Product " + serverAnswer.split("\n")[5].split("\\s")[5] + " " + serverAnswer.split("\n")[5].split("\\s")[6] + "\n";
+            ans += serverAnswer.split("\n")[5].split("\\s")[7] + " " + serverAnswer.split("\n")[5].split("\\s")[8] + " " +
+                    serverAnswer.split("\n")[5].split("\\s")[9] + "\n";
+            ans += "Request ID: " + requestID;
+            requestContent.setText(ans);
         }
     }
 
