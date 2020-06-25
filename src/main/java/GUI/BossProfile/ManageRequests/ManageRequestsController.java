@@ -46,50 +46,50 @@ public class ManageRequestsController {
     }
 
     private void updateList() throws ParseException, IOException {
-        String username = new String("");
-        String type = new String("");
-        String state = new String("");
+        StringBuilder username = new StringBuilder(new String(""));
+        StringBuilder type = new StringBuilder(new String(""));
+        StringBuilder state = new StringBuilder(new String(""));
         for (Object object : filterList.getChildren()) {
             if (object instanceof HBox) {
                 Object object1 = ((HBox) object).getChildren().get(0);
                 if (object1 instanceof Label) {
                     String s = ((Label) object1).getText();
                     if (s.startsWith("Username:")) {
-                        if (username.equals("")) {
-                            username = s.substring(9);
+                        if (username.toString().equals("")) {
+                            username = new StringBuilder(s.substring(9));
                         } else {
-                            username += "," + s.substring(9);
+                            username.append(",").append(s.substring(9));
                         }
                     } else if (s.startsWith("State:")) {
-                        if (state.equals("")) {
-                            state = s.substring(6);
+                        if (state.toString().equals("")) {
+                            state = new StringBuilder(s.substring(6));
                         } else {
-                            state += "," + s.substring(6);
+                            state.append(",").append(s.substring(6));
                         }
                     } else {
-                        if (type.equals("")) {
-                            type = s;
+                        if (type.toString().equals("")) {
+                            type = new StringBuilder(s);
                         } else {
-                            type += "," + s;
+                            type.append(",").append(s);
                         }
                     }
                 }
             }
         }
         String command = "show requests+" + MenuHandler.getUsername();
-        if (state.equals("") && username.equals("") && type.equals("")) {
+        if (state.toString().equals("") && username.toString().equals("") && type.toString().equals("")) {
 
         } else {
             command += "+filters:";
-            if (!state.equals("")) {
+            if (!state.toString().equals("")) {
                 command += "+state";
                 command += "+" + state;
             }
-            if (!username.equals("")) {
+            if (!username.toString().equals("")) {
                 command += "+username";
                 command += "+" + username;
             }
-            if (!type.equals("")) {
+            if (!type.toString().equals("")) {
                 command += "+requestType";
                 command += "+" + type;
             }

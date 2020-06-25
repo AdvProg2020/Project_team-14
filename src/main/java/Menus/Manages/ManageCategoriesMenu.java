@@ -120,7 +120,7 @@ public class ManageCategoriesMenu extends Menu {
             public void execute() throws ParseException, IOException {
                 System.out.println(this.getMenuName());
                 System.out.println("if you input back we will go back");
-                String message = new String();
+                String message = "";
                 String categoryName, fatherCategoryName = "";
                 String categoryAttributes = "";
                 System.out.println("please enter the category name:");

@@ -36,10 +36,10 @@ public class ManageUsersLayOut {
     private void update() throws ParseException, IOException {
         String command = "show accounts+" + MenuHandler.getUsername();
         String minCredit = "", maxCredit = "", role = "";
-        if (this.minCredit.getText() != "") {
+        if (!this.minCredit.getText().equals("")) {
             minCredit = this.minCredit.getText();
         }
-        if (this.maxCredit.getText() != "") {
+        if (!this.maxCredit.getText().equals("")) {
             maxCredit = this.maxCredit.getText();
         }
         if (this.bossRole.isSelected()) {

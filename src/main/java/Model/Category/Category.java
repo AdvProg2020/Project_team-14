@@ -32,7 +32,6 @@ public class Category implements Serializable {
         ArrayList<Category> categories = new ArrayList<>();
         for (Category category : Storage.getAllCategories()) {
             if (category.getParentCategoryName() == null) {
-                continue;
             } else if (category.getParentCategoryName().equals(this.getCategoryName())) {
                 categories.add(category);
             }

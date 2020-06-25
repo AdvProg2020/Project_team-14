@@ -23,27 +23,27 @@
                               <Font size="20.0" />
                            </font>
                         </Label>
-                        <Button contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" text="Button">
+                        <Button contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" prefHeight="55.0" prefWidth="58.0" text="Button">
                            <graphic>
-                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="50.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@resources/star.png" />
                                  </image>
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Button contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" text="Button">
+                        <Button contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" prefHeight="55.0" prefWidth="72.0" text="Button">
                            <graphic>
-                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="37.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@resources/compare.png" />
                                  </image>
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Button contentDisplay="GRAPHIC_ONLY" layoutX="309.0" layoutY="43.0" mnemonicParsing="false" text="Button">
+                        <Button contentDisplay="GRAPHIC_ONLY" layoutX="309.0" layoutY="43.0" mnemonicParsing="false" prefHeight="57.0" prefWidth="79.0" text="Button">
                            <graphic>
-                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="43.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@resources/download.jpg" />
                                  </image>
