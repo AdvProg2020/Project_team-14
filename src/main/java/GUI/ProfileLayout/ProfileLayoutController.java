@@ -56,4 +56,9 @@ public class ProfileLayoutController {
         pane.getChildren().remove(pane.getChildren().get(0));
         pane.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/BossProfile/ManageOffCodes/ManageOffCodeLayout.fxml")));
     }
+
+    public void categoryClicked(MouseEvent mouseEvent) throws IOException {
+        pane.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/CategoryMenu/CategoryMenu.fxml")));
+    }
+
 }

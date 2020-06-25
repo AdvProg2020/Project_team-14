@@ -58,7 +58,7 @@
                     </font>
                 </Button>
                 <Button mnemonicParsing="false" onMouseClicked="#manageOffCodes" prefHeight="40.0" prefWidth="300.0" styleClass="my-button" text="Manage OffCodes" textFill="#ee1515" />
-                <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="300.0" styleClass="my-button" text="Manage Categories" textFill="#e11a1a" />
+                <Button mnemonicParsing="false" onMouseClicked="#categoryClicked" prefHeight="40.0" prefWidth="300.0" styleClass="my-button" text="Manage Categories" textFill="#e11a1a" />
                 <Button mnemonicParsing="false" onAction="#manageAccounts" prefHeight="40.0" prefWidth="300.0" styleClass="my-button" text="Manage User" textFill="#da1818" />
                 <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="300.0" styleClass="my-button" text="Manage Products" textFill="#ea0404" />
             <Button layoutX="10.0" layoutY="216.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="300.0" styleClass="my-button" text="Manage Sales" textFill="#ea0404" />
