@@ -187,8 +187,7 @@ public class Server {
             this.canAddUserToOffCode(command);
         } else if (command.startsWith("get all offCodeAble user")) {
             this.getAllOffCodeAbleUser(command);
-        }
-        else if (command.startsWith("view offCode")) {
+        } else if (command.startsWith("view offCode")) {
             this.viewOffCode(command);
         } else if (command.startsWith("edit offCode")) {
             this.editOffCode(command);
@@ -216,14 +215,19 @@ public class Server {
             this.getMinPrice(command);
         } else if (command.startsWith("get product sellers+")) {
             this.getProductSellers(command);
+        } else if (command.startsWith("show the salesman+")) {
+            this.showSalesman(command);
         }
-
 
         //end parts
         else if (command.startsWith("show balance")) {
             this.showBalance(command);
         }
 
+    }
+
+    private void showSalesman(String command) {
+        productManager.showSalesman(command.split("\\+")[1]);
     }
 
     private void getProductSellers(String command) {

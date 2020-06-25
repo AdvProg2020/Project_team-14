@@ -242,4 +242,13 @@ public class ProductManager {
         return Comment.canUserCommentForProduct(username, productID);
     }
 
+    public void showSalesman(String s) {
+        String ans = "here are\n";
+        for (Account account : Storage.getAllAccounts()) {
+            if (account.getRole().equals(Role.SALESMAN)) {
+                ans += account.getUsername() + "\n";
+            }
+        }
+        Server.setAnswer(ans);
+    }
 }

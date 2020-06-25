@@ -152,6 +152,15 @@ public class PersonalInfoController {
         Parent root = FXMLLoader.load(getClass().getResource("ChangePassLayout.fxml"));
         Popup popup = new Popup();
         popup.getContent().add(root);
+        popup.setOnHiding(event -> {
+            try {
+                initialize();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
         popup.show(stage);
     }
 
