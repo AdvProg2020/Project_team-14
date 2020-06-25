@@ -1,264 +1,291 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DialogPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="740.0" prefWidth="1180.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ProductView.Controller">
-   <children>
-      <HBox layoutX="10.0" layoutY="10.0" prefHeight="360.0" prefWidth="850.0" spacing="10.0" style="-fx-background-color: #dddddd;" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
-         <children>
-            <VBox prefHeight="360.0" prefWidth="590.0" style="-fx-background-color: #cccccc;">
-               <children>
-                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
-                     <children>
-                        <Label text="Product Name">
-                           <HBox.margin>
-                              <Insets left="15.0" right="100.0" />
-                           </HBox.margin>
-                           <font>
-                              <Font size="20.0" />
-                           </font>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="740.0" prefWidth="1180.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ProductView.Controller">
+    <children>
+        <HBox layoutX="10.0" layoutY="10.0" prefHeight="360.0" prefWidth="850.0" spacing="10.0" style="-fx-background-color: #dddddd;" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+            <children>
+                <VBox prefHeight="360.0" prefWidth="590.0" style="-fx-background-color: #cccccc;">
+                    <children>
+                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                            <children>
+                                <Label text="Product Name">
+                                    <HBox.margin>
+                                        <Insets left="15.0" right="100.0" />
+                                    </HBox.margin>
+                                    <font>
+                                        <Font size="20.0" />
+                                    </font>
+                                </Label>
+                                <Button fx:id="starButton" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#starPopup" prefHeight="55.0" prefWidth="58.0" text="Button">
+                                    <graphic>
+                                        <ImageView fitHeight="42.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@resources/star.png" />
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                </Button>
+                                <Button contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" prefHeight="55.0" prefWidth="72.0" text="Button">
+                                    <graphic>
+                                        <ImageView fitHeight="37.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@resources/compare.png" />
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                </Button>
+                                <Button contentDisplay="GRAPHIC_ONLY" layoutX="309.0" layoutY="43.0" mnemonicParsing="false" onAction="#showVideo" prefHeight="57.0" prefWidth="65.0" text="Button">
+                                    <graphic>
+                                        <ImageView fitHeight="40.0" fitWidth="82.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@resources/download.jpg" />
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                </Button>
+                            </children>
+                        </HBox>
+                        <Label text="Info :">
+                            <VBox.margin>
+                                <Insets left="15.0" />
+                            </VBox.margin>
+                            <font>
+                                <Font size="20.0" />
+                            </font>
                         </Label>
-                        <Button contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" prefHeight="55.0" prefWidth="58.0" text="Button">
-                           <graphic>
-                              <ImageView fitHeight="42.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@resources/star.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
+                        <DialogPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="143.0" prefWidth="591.0">
+                            <header>
+                                <AnchorPane fx:id="info" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="320.0" />
+                            </header>
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="320.0" />
+                            </content>
+                            <expandableContent>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="320.0" />
+                            </expandableContent>
+                        </DialogPane>
+                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="15.0">
+                            <children>
+                                <Label fx:id="chooseSellerField" text="Seller :">
+                                    <HBox.margin>
+                                        <Insets left="15.0" />
+                                    </HBox.margin>
+                                    <font>
+                                        <Font size="20.0" />
+                                    </font>
+                                </Label>
+                                <ComboBox fx:id="chooseSeller" onAction="#changeSeller" prefHeight="31.0" prefWidth="167.0" />
+                                <Label fx:id="countField" text="Count :">
+                                    <font>
+                                        <Font size="20.0" />
+                                    </font>
+                                    <HBox.margin>
+                                        <Insets left="30.0" />
+                                    </HBox.margin>
+                                </Label>
+                                <Spinner fx:id="count" prefHeight="31.0" prefWidth="88.0" />
+                            </children>
+                        </HBox>
+                    </children>
+                    <effect>
+                        <DropShadow />
+                    </effect>
+                </VBox>
+                <VBox alignment="TOP_CENTER" prefHeight="360.0" prefWidth="250.0" spacing="25.0" style="-fx-background-color: #cccccc;">
+                    <children>
+                        <HBox prefHeight="263.0" prefWidth="250.0" spacing="10.0">
+                            <children>
+                                <VBox alignment="CENTER" prefHeight="263.0" prefWidth="132.0">
+                                    <children>
+                                        <Label fx:id="sellerField" text="Seller :">
+                                            <VBox.margin>
+                                                <Insets top="20.0" />
+                                            </VBox.margin>
+                                            <font>
+                                                <Font size="20.0" />
+                                            </font>
+                                        </Label>
+                                        <Label fx:id="priceField" text="Seller Price :">
+                                            <VBox.margin>
+                                                <Insets top="20.0" />
+                                            </VBox.margin>
+                                            <font>
+                                                <Font size="20.0" />
+                                            </font>
+                                        </Label>
+                                        <Label fx:id="remainderField" text="Remainder :">
+                                            <VBox.margin>
+                                                <Insets top="20.0" />
+                                            </VBox.margin>
+                                            <font>
+                                                <Font size="20.0" />
+                                            </font>
+                                        </Label>
+                                        <Label fx:id="confirmationStateField" text="Confirmation :">
+                                            <font>
+                                                <Font size="20.0" />
+                                            </font>
+                                            <VBox.margin>
+                                                <Insets top="20.0" />
+                                            </VBox.margin>
+                                        </Label>
+                                    </children>
+                                </VBox>
+                                <VBox alignment="CENTER" prefHeight="200.0" prefWidth="120.0">
+                                    <children>
+                                        <Label fx:id="seller" text="None">
+                                            <font>
+                                                <Font size="20.0" />
+                                            </font>
+                                            <VBox.margin>
+                                                <Insets top="20.0" />
+                                            </VBox.margin>
+                                        </Label>
+                                        <Label fx:id="price" text="0$">
+                                            <font>
+                                                <Font size="20.0" />
+                                            </font>
+                                            <VBox.margin>
+                                                <Insets top="20.0" />
+                                            </VBox.margin>
+                                        </Label>
+                                        <Label fx:id="remainder" text="0">
+                                            <font>
+                                                <Font size="20.0" />
+                                            </font>
+                                            <VBox.margin>
+                                                <Insets top="20.0" />
+                                            </VBox.margin>
+                                        </Label>
+                                        <Label fx:id="confirmationState" text="None">
+                                            <VBox.margin>
+                                                <Insets top="20.0" />
+                                            </VBox.margin>
+                                            <font>
+                                                <Font size="20.0" />
+                                            </font>
+                                        </Label>
+                                    </children>
+                                </VBox>
+                            </children>
+                        </HBox>
+                        <Button fx:id="addButton" graphicTextGap="15.0" mnemonicParsing="false" onAction="#addToCart" prefHeight="47.0" prefWidth="219.0" text="Add to Cart">
+                            <graphic>
+                                <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../ProductScene/resources/supermarket.png" />
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                            <font>
+                                <Font size="18.0" />
+                            </font>
                         </Button>
-                        <Button contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" prefHeight="55.0" prefWidth="72.0" text="Button">
-                           <graphic>
-                              <ImageView fitHeight="37.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@resources/compare.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
-                        <Button contentDisplay="GRAPHIC_ONLY" layoutX="309.0" layoutY="43.0" mnemonicParsing="false" prefHeight="57.0" prefWidth="65.0" text="Button">
-                           <graphic>
-                              <ImageView fitHeight="40.0" fitWidth="82.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@resources/download.jpg" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
-                     </children>
-                  </HBox>
-                  <Label text="Info :">
-                     <VBox.margin>
-                        <Insets left="15.0" />
-                     </VBox.margin>
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </Label>
-                  <DialogPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="143.0" prefWidth="591.0">
-                      <header>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="320.0" />
-                      </header>
-                      <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="320.0" />
-                      </content>
-                      <expandableContent>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="320.0" />
-                      </expandableContent>
-                  </DialogPane>
-                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="15.0">
-                     <children>
-                        <Label text="Seller :">
-                           <HBox.margin>
-                              <Insets left="15.0" />
-                           </HBox.margin>
-                           <font>
-                              <Font size="20.0" />
-                           </font>
+                    </children>
+                    <effect>
+                        <DropShadow />
+                    </effect>
+                </VBox>
+            </children>
+        </HBox>
+        <VBox alignment="TOP_CENTER" layoutX="879.0" layoutY="67.0" prefHeight="360.0" prefWidth="300.0" spacing="10.0" style="-fx-background-color: #cccccc;" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+            <children>
+                <ImageView fx:id="imageView" fitHeight="276.0" fitWidth="291.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../ProductScene/resources/home.png" />
+                    </image>
+                </ImageView>
+                <HBox alignment="CENTER" spacing="30.0">
+                    <VBox.margin>
+                        <Insets top="15.0" />
+                    </VBox.margin>
+                    <children>
+                        <Label fx:id="minPriceField" text="Min Price :">
+                            <font>
+                                <Font size="20.0" />
+                            </font>
                         </Label>
-                        <ComboBox prefHeight="31.0" prefWidth="167.0" />
-                        <Label text="Count :">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                           <HBox.margin>
-                              <Insets left="30.0" />
-                           </HBox.margin>
+                        <Label fx:id="minPrice" prefHeight="30.0" prefWidth="114.0" text="450$">
+                            <font>
+                                <Font size="20.0" />
+                            </font>
                         </Label>
-                        <Spinner prefHeight="31.0" prefWidth="88.0" />
-                     </children>
-                  </HBox>
-               </children>
-               <effect>
-                  <DropShadow />
-               </effect>
-            </VBox>
-            <VBox alignment="TOP_CENTER" prefHeight="360.0" prefWidth="250.0" spacing="25.0" style="-fx-background-color: #cccccc;">
-               <children>
-                  <HBox prefHeight="263.0" prefWidth="250.0" spacing="10.0">
-                     <children>
-                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="120.0">
-                           <children>
-                              <Label text="Seller :">
-                                 <VBox.margin>
-                                    <Insets top="20.0" />
-                                 </VBox.margin>
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font>
-                              </Label>
-                              <Label text="Seller Price :">
-                                 <VBox.margin>
-                                    <Insets top="20.0" />
-                                 </VBox.margin>
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font>
-                              </Label>
-                              <Label text="Remainder :">
-                                 <VBox.margin>
-                                    <Insets top="20.0" />
-                                 </VBox.margin>
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </VBox>
-                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="120.0">
-                           <children>
-                              <Label text="Dgkala">
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets top="20.0" />
-                                 </VBox.margin>
-                              </Label>
-                              <Label text="500$">
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets top="20.0" />
-                                 </VBox.margin>
-                              </Label>
-                              <Label text="10">
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets top="20.0" />
-                                 </VBox.margin>
-                              </Label>
-                           </children>
-                        </VBox>
-                     </children>
-                  </HBox>
-                  <Button graphicTextGap="15.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="148.0" text="Add to Cart">
-                     <graphic>
-                        <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../ProductScene/resources/supermarket.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Button>
-               </children>
-               <effect>
-                  <DropShadow />
-               </effect>
-            </VBox>
-         </children>
-      </HBox>
-      <VBox alignment="TOP_CENTER" layoutX="879.0" layoutY="67.0" prefHeight="360.0" prefWidth="300.0" spacing="10.0" style="-fx-background-color: #cccccc;" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
-         <children>
-            <ImageView fx:id="imageView" fitHeight="276.0" fitWidth="291.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../ProductScene/resources/home.png" />
-               </image>
-            </ImageView>
-            <HBox alignment="CENTER" spacing="30.0">
-               <VBox.margin>
-                  <Insets top="15.0" />
-               </VBox.margin>
-               <children>
-                  <Label text="Min Price :">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </Label>
-                  <Label text="450$">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </Label>
-               </children>
-            </HBox>
-         </children>
-         <effect>
-            <DropShadow />
-         </effect>
-      </VBox>
-      <HBox layoutX="120.0" layoutY="320.0" prefHeight="341.0" prefWidth="1160.0" spacing="20.0" style="-fx-background-color: #cccccc;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
-         <children>
-            <VBox alignment="TOP_CENTER" prefHeight="342.0" prefWidth="646.0">
-               <children>
-                  <ScrollPane prefHeight="320.0" prefWidth="646.0">
-                     <VBox.margin>
-                        <Insets bottom="8.0" left="8.0" top="25.0" />
-                     </VBox.margin>
-                     <content>
-                        <FlowPane prefHeight="308.0" prefWidth="618.0" />
-                     </content>
-                  </ScrollPane>
-               </children>
-               <HBox.margin>
-                  <Insets />
-               </HBox.margin>
-            </VBox>
-            <VBox alignment="TOP_CENTER" layoutX="10.0" layoutY="10.0" prefHeight="341.0" prefWidth="494.0" spacing="10.0">
-               <children>
-                  <TextField promptText="title">
-                     <VBox.margin>
-                        <Insets right="8.0" top="25.0" />
-                     </VBox.margin>
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </TextField>
-                  <TextArea prefHeight="200.0" prefWidth="200.0" promptText="Write your comment here">
-                     <VBox.margin>
-                        <Insets right="8.0" />
-                     </VBox.margin>
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </TextArea>
-                  <Button mnemonicParsing="false" text="Comment">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Button>
-               </children>
-            </VBox>
-         </children>
-         <effect>
-            <DropShadow />
-         </effect>
-      </HBox>
-      <Label alignment="CENTER" layoutX="36.0" layoutY="374.0" prefHeight="30.0" prefWidth="105.0" style="-fx-background-color: #ffffff; -fx-background-radius: 15;" text="Comments">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Label>
-   </children>
+                    </children>
+                </HBox>
+            </children>
+            <effect>
+                <DropShadow />
+            </effect>
+        </VBox>
+        <HBox layoutX="120.0" layoutY="320.0" prefHeight="341.0" prefWidth="1160.0" spacing="20.0" style="-fx-background-color: #cccccc;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+            <children>
+                <VBox alignment="TOP_CENTER" prefHeight="342.0" prefWidth="646.0">
+                    <children>
+                        <ScrollPane prefHeight="320.0" prefWidth="646.0">
+                            <VBox.margin>
+                                <Insets bottom="8.0" left="8.0" top="25.0" />
+                            </VBox.margin>
+                            <content>
+                                <FlowPane fx:id="comments" prefHeight="308.0" prefWidth="618.0" />
+                            </content>
+                        </ScrollPane>
+                    </children>
+                    <HBox.margin>
+                        <Insets />
+                    </HBox.margin>
+                </VBox>
+                <VBox alignment="TOP_CENTER" layoutX="10.0" layoutY="10.0" prefHeight="341.0" prefWidth="494.0" spacing="10.0">
+                    <children>
+                        <TextField fx:id="commentTitle" promptText="title">
+                            <VBox.margin>
+                                <Insets right="8.0" top="25.0" />
+                            </VBox.margin>
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </TextField>
+                        <TextArea fx:id="comment" prefHeight="200.0" prefWidth="200.0" promptText="Write your comment here">
+                            <VBox.margin>
+                                <Insets right="8.0" />
+                            </VBox.margin>
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </TextArea>
+                        <Button fx:id="commentButton" mnemonicParsing="false" onAction="#doComment" text="Comment">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Button>
+                    </children>
+                </VBox>
+            </children>
+            <effect>
+                <DropShadow />
+            </effect>
+        </HBox>
+        <Label alignment="CENTER" layoutX="36.0" layoutY="374.0" prefHeight="30.0" prefWidth="105.0" style="-fx-background-color: #ffffff; -fx-background-radius: 15;" text="Comments">
+            <font>
+                <Font size="20.0" />
+            </font>
+        </Label>
+    </children>
 </AnchorPane>

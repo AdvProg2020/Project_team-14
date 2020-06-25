@@ -1,14 +1,11 @@
 package Model.Product;
 
-import Model.Category.Category;
 import Model.Confirmation;
 import Model.RandomString;
 import Model.Storage;
 
 import java.io.Serializable;
 import java.util.*;
-
-import static Model.Storage.*;
 
 public class Product implements Serializable {
     private ArrayList<String> salesmanIDs = new ArrayList<>();

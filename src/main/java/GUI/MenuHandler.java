@@ -1,15 +1,18 @@
 package GUI;
 
 import Controller.Server;
+import javafx.scene.layout.Pane;
 
 public class MenuHandler {
     static private String username = null;
     static private Server server;
+    static private String productID = null;
     static private String requestID = null;
     static private String seeingUsername = null;
     static private boolean isUserLogin = false;
     static private String userType = null;
     static private String loginBackAddress = null;
+    static private Pane pane;
 
     public static String getRequestID() {
         return requestID;
@@ -65,5 +68,21 @@ public class MenuHandler {
 
     public static void setSeeingUsername(String seeingUsername) {
         MenuHandler.seeingUsername = seeingUsername;
+    }
+
+    public static String getProductID() {
+        return productID;
+    }
+
+    public static void setProductID(String productID) {
+        MenuHandler.productID = productID;
+    }
+
+    public static Pane getPane() {
+        return pane;
+    }
+
+    public static void setPane(Pane pane) {
+        MenuHandler.pane = pane;
     }
 }

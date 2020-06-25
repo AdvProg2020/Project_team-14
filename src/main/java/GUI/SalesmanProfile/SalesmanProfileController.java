@@ -17,6 +17,7 @@ public class SalesmanProfileController {
     public Pane pane;
 
     public void initialize() throws IOException {
+        MenuHandler.setPane(pane);
         pane.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/ProfileLayout/PersonalInfoLayout.fxml")));
     }
 

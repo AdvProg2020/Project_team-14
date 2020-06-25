@@ -209,6 +209,10 @@ public class Server {
             this.commentProduct(command);
         } else if (command.startsWith("is server has boss")) {
             this.isServerHasBoss();
+        } else if (command.startsWith("get product min price+")) {
+            this.getMinPrice(command);
+        } else if (command.startsWith("get product sellers+")) {
+            this.getProductSellers(command);
         }
 
 
@@ -217,6 +221,23 @@ public class Server {
             this.showBalance(command);
         }
 
+    }
+
+    private void getProductSellers(String command) {
+        for (Product product : Storage.getAllProducts()) {
+            if (product.getProductID().equals(command.split("\\+")[1])) {
+                Server.setAnswer(product.getSalesmanIDs().toString());
+            }
+        }
+    }
+
+    private void getMinPrice(String command) {
+        String productId = command.split("\\+")[1];
+        for (Product product : Storage.getAllProducts()) {
+            if (product.getProductID().equals(productId)) {
+                Server.setAnswer(String.valueOf(product.getMinimumPrice()));
+            }
+        }
     }
 
     private void getProfilePicturePath(String command) {

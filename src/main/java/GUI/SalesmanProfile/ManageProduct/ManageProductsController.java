@@ -26,10 +26,8 @@ public class ManageProductsController {
     public TilePane products;
 
     public void newProductMenu(ActionEvent actionEvent) throws IOException {
-        Parent root = null;
-        root = FXMLLoader.load(getClass().getResource("/GUI/SalesmanProfile/ManageProduct/NewProductLayout.fxml"));
-        Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root));
+        MenuHandler.getPane().getChildren().remove(MenuHandler.getPane().getChildren().get(0));
+        MenuHandler.getPane().getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/SalesmanProfile/ManageProduct/NewProductLayout.fxml")));
     }
 
     public void initialize() throws ParseException, IOException {
@@ -62,7 +60,15 @@ public class ManageProductsController {
                 stage.getScene().setCursor(Cursor.DEFAULT);
             });
             ((VBox) object).setOnMouseClicked(event -> {
-                //open view product
+                MenuHandler.setProductID(s.split("\\s")[2]);
+                Stage stage = (Stage) ((VBox) event.getSource()).getScene().getWindow();
+                Parent root = null;
+                try {
+                    root = FXMLLoader.load(getClass().getResource("/GUI/ProductView/ProductViewLayout.fxml"));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                stage.setScene(new Scene(root));
             });
             String productId = s.split("\\s")[2];
             MenuHandler.getServer().clientToServer("get product picture path+" + productId);
@@ -74,30 +80,14 @@ public class ManageProductsController {
                 path = "file:\\F:\\AP\\AP\\Project_team-23\\src\\main\\resources\\Pictures\\default.png";
             }
             ImageView imageView = (ImageView) ((VBox) object).getChildren().get(0);
-            System.out.println(s);
-            System.out.println(path);
             imageView.setImage(new Image(path));
+            imageView.setFitWidth(170);
+            imageView.setFitHeight(140);
+            ((VBox) object).setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;"
+                    + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
+                    + "-fx-border-radius: 5;" + "-fx-border-color: black;");
         }
-
-        /*for (String s : serverAnswer.split("\n")) {
-            if (s.startsWith("here")) continue;
-            HBox hBox = new HBox();
-            hBox.setPrefWidth(490);
-            Label label = new Label();
-            label.setText("Request Type: " + s.split("\\s")[2] + " Username: " + s.split("\\s")[7]);
-            label.setFont(Font.font(15));
-            hBox.getChildren().add(label);
-            MenuHandler.getServer().clientToServer("is request state checking+" + s.split("\\s")[5]);
-            String respond = MenuHandler.getServer().serverToClient();
-            if (respond.equalsIgnoreCase("yes")) {
-                hBox.setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;"
-                        + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
-                        + "-fx-border-radius: 5;" + "-fx-border-color: blue;");
-            } else {
-                hBox.setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;"
-                        + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
-                        + "-fx-border-radius: 5;" + "-fx-border-color: red;");
-            }
+        /*
             hBox.setOnMouseClicked(mouseEvent -> {
                 MenuHandler.setRequestID(s.split("\\s")[5]);
                 Stage stage = (Stage) ((HBox) mouseEvent.getSource()).getScene().getWindow();

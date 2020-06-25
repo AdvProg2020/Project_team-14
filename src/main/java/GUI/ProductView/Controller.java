@@ -1,15 +1,47 @@
 package GUI.ProductView;
 
+import GUI.MenuHandler;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.FlowPane;
+
+import java.io.IOException;
+import java.text.ParseException;
 
 public class Controller {
 
     public ImageView imageView;
     private static final int MIN_PIXELS = 10;
+    public TextArea comment;
+    public TextField commentTitle;
+    public FlowPane comments;
+    public Label minPrice;
+    public Label minPriceField;
+    public Label remainder;
+    public Label price;
+    public Label seller;
+    public Label remainderField;
+    public Label priceField;
+    public Label sellerField;
+    public Spinner count;
+    public Label countField;
+    public ComboBox chooseSeller;
+    public Label chooseSellerField;
+    public AnchorPane info;
+    public Button starButton;
+    public Label confirmationStateField;
+    public Label confirmationState;
+    public Button addButton;
+    public Button commentButton;
 
     private void reset(ImageView imageView, double width, double height) {
         imageView.setViewport(new Rectangle2D(0, 0, width, height));
@@ -18,8 +50,8 @@ public class Controller {
     private void shift(ImageView imageView, Point2D delta) {
         Rectangle2D viewport = imageView.getViewport();
 
-        double width = imageView.getImage().getWidth() ;
-        double height = imageView.getImage().getHeight() ;
+        double width = imageView.getImage().getWidth();
+        double height = imageView.getImage().getHeight();
 
         double maxX = width - viewport.getWidth();
         double maxY = height - viewport.getHeight();
@@ -47,7 +79,15 @@ public class Controller {
     }
 
 
-    public void initialize() {
+    public void initialize() throws ParseException, IOException {
+        String productId = MenuHandler.getProductID();
+        MenuHandler.getServer().clientToServer("get product picture path+" + productId);
+        String path = MenuHandler.getServer().serverToClient();
+        if (path != null) {
+            imageView.setImage(new Image(path));
+        }
+        MenuHandler.getServer().clientToServer("view product+" + MenuHandler.getUsername() + "+" + productId);
+        String serverAnswer = MenuHandler.getServer().serverToClient();
         double width = imageView.getFitWidth();
         double height = imageView.getFitHeight();
 
@@ -90,6 +130,150 @@ public class Controller {
                 reset(imageView, width, height);
             }
         });
+
+        if (MenuHandler.isIsUserLogin() == false) {
+            customerLoad(serverAnswer);
+        } else {
+            if (MenuHandler.getUserType().equalsIgnoreCase("Boss")) {
+                bossLoad(serverAnswer);
+            } else if (MenuHandler.getUserType().equalsIgnoreCase("Salesman")) {
+                salesmanLoad(serverAnswer);
+            } else {
+                customerLoad(serverAnswer);
+            }
+        }
+
     }
 
+    private void customerLoad(String serverAnswer) throws ParseException, IOException {
+        MenuHandler.getServer().clientToServer("get product min price+" + MenuHandler.getProductID());
+        minPrice.setText(MenuHandler.getServer().serverToClient() + "$");
+        MenuHandler.getServer().clientToServer("get product sellers+" + MenuHandler.getProductID());
+        boolean yourProduct = false;
+        for (String seller : MenuHandler.getServer().serverToClient().split(",")) {
+            if (seller.startsWith("[")) {
+                seller = seller.substring(1);
+            }
+            if (seller.contains("]")) {
+                seller = seller.substring(0, seller.length() - 1);
+            }
+            if (seller.equals(MenuHandler.getUsername())) {
+                yourProduct = true;
+            }
+            sellers.add(seller);
+        }
+        chooseSeller.getItems().addAll(sellers);
+        addButton.setText("Add To Cart");
+        updateSeller();
+    }
+
+    private void bossLoad(String serverAnswer) throws ParseException, IOException {
+        comment.setEditable(false);
+        starButton.setDisable(true);
+        commentTitle.setEditable(false);
+        MenuHandler.getServer().clientToServer("get product min price+" + MenuHandler.getProductID());
+        minPrice.setText(MenuHandler.getServer().serverToClient() + "$");
+        MenuHandler.getServer().clientToServer("get product sellers+" + MenuHandler.getProductID());
+        boolean yourProduct = false;
+        for (String seller : MenuHandler.getServer().serverToClient().split(",")) {
+            if (seller.startsWith("[")) {
+                seller = seller.substring(1);
+            }
+            if (seller.contains("]")) {
+                seller = seller.substring(0, seller.length() - 1);
+            }
+            if (seller.equals(MenuHandler.getUsername())) {
+                yourProduct = true;
+            }
+            sellers.add(seller);
+        }
+        chooseSeller.getItems().addAll(sellers);
+        addButton.setText("Delete Product");
+        commentButton.setDisable(true);
+        count.setVisible(false);
+        countField.setVisible(false);
+        updateSeller();
+    }
+
+    ObservableList<String> sellers = FXCollections.observableArrayList();
+
+    private void salesmanLoad(String serverAnswer) throws ParseException, IOException {
+        comment.setEditable(false);
+        starButton.setDisable(true);
+        commentTitle.setEditable(false);
+        MenuHandler.getServer().clientToServer("get product min price+" + MenuHandler.getProductID());
+        minPrice.setText(MenuHandler.getServer().serverToClient() + "$");
+        MenuHandler.getServer().clientToServer("get product sellers+" + MenuHandler.getProductID());
+        boolean yourProduct = false;
+        for (String seller : MenuHandler.getServer().serverToClient().split(",")) {
+            if (seller.startsWith("[")) {
+                seller = seller.substring(1);
+            }
+            if (seller.contains("]")) {
+                seller = seller.substring(0, seller.length() - 1);
+            }
+            if (seller.equals(MenuHandler.getUsername())) {
+                yourProduct = true;
+            }
+            sellers.add(seller);
+        }
+        chooseSeller.getItems().addAll(sellers);
+        if (yourProduct) {
+            chooseSeller.setValue(MenuHandler.getUsername());
+            addButton.setText("Edit Your Info");
+        } else {
+            addButton.setText("Add Product");
+        }
+        commentButton.setDisable(true);
+        count.setVisible(false);
+        countField.setVisible(false);
+        updateSeller();
+    }
+
+    private void updateSeller() throws ParseException, IOException {
+        String s = (String) chooseSeller.getValue();
+        if (s == null) return;
+        if (s.equals("")) return;
+        MenuHandler.getServer().clientToServer("view product+" + s + "+" + MenuHandler.getProductID());
+        String respond = MenuHandler.getServer().serverToClient();
+        seller.setText(s);
+        for (String string : respond.split("\n")) {
+            if (string.startsWith("Your Price")) {
+                price.setText(string.split("\\s")[2] + "$");
+            } else if (string.startsWith("Your remainder")) {
+                remainder.setText(string.split("\\s")[2]);
+            } else if (string.startsWith("Confirmation")) {
+                confirmationState.setText(string.split("\\s")[4]);
+            }
+        }
+        count.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.parseInt(remainder.getText()), 0));
+    }
+
+    public void doComment(ActionEvent actionEvent) {
+        //comment
+    }
+
+    public void addToCart(ActionEvent actionEvent) {
+        if (addButton.getText().equalsIgnoreCase("Add To Cart")) {
+            //add to cart
+        } else if (addButton.getText().startsWith("Edit")) {
+            //edit product
+        } else if (addButton.getText().startsWith("Add")) {
+            //Add product
+        } else {
+            //delete product
+        }
+    }
+
+    public void showVideo(ActionEvent mouseEvent) {
+        //video show
+    }
+
+    public void starPopup(ActionEvent mouseEvent) {
+        //star popup
+    }
+
+    public void changeSeller(ActionEvent actionEvent) throws IOException, ParseException {
+        updateSeller();
+    }
 }
