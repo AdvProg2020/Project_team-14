@@ -53,6 +53,7 @@ public class Product implements Serializable {
         this.isOnSale.put(salesmanID, false);
         this.salesmanIDs.add(salesmanID);
         this.price.put(salesmanID, price);
+        this.picPath = "none";
         Storage.getAllProducts().add(this);
     }
 

@@ -12,51 +12,42 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="735.0"
-            prefWidth="780.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="GUI.SalesmanProfile.ManageProduct.ManageProductsController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="735.0" prefWidth="780.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.SalesmanProfile.ManageProduct.ManageProductsController">
     <children>
-        <Label alignment="CENTER" layoutX="300.0" layoutY="21.0" prefHeight="68.0" prefWidth="180.0" text="Products"
-               AnchorPane.topAnchor="10.0">
+        <Label alignment="CENTER" layoutX="300.0" layoutY="21.0" prefHeight="68.0" prefWidth="180.0" text="Products" AnchorPane.topAnchor="10.0">
             <font>
-                <Font size="30.0"/>
+                <Font size="30.0" />
             </font>
         </Label>
-        <Button layoutX="602.0" layoutY="44.0" mnemonicParsing="false" onAction="#newProductMenu" prefHeight="48.0"
-                prefWidth="164.0" text="Add new Product"/>
-        <HBox layoutX="14.0" layoutY="209.0" prefHeight="601.0" prefWidth="760.0" spacing="10.0"
-              style="-fx-background-color: #aaaaaa;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0"
-              AnchorPane.rightAnchor="10.0">
+        <Button layoutX="602.0" layoutY="44.0" mnemonicParsing="false" onAction="#newProductMenu" prefHeight="48.0" prefWidth="164.0" text="Add new Product" />
+        <HBox layoutX="14.0" layoutY="209.0" prefHeight="601.0" prefWidth="760.0" spacing="10.0" style="-fx-background-color: #aaaaaa;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
             <children>
-                <ScrollPane hbarPolicy="NEVER" prefHeight="601.0" prefWidth="545.0"
-                            style="-fx-background-color: #aaddaa;" vbarPolicy="NEVER">
+                <ScrollPane hbarPolicy="NEVER" prefHeight="601.0" prefWidth="545.0" style="-fx-background-color: #aaddaa;" vbarPolicy="NEVER">
                     <content>
-                        <TilePane hgap="5.0" prefColumns="3" prefHeight="601.0" prefTileHeight="210.0"
-                                  prefTileWidth="170.0" prefWidth="537.0" style="-fx-background-color: #aaddaa;"
-                                  vgap="5.0">
+                        <TilePane fx:id="products" hgap="5.0" prefColumns="3" prefHeight="601.0" prefTileHeight="210.0" prefTileWidth="170.0" prefWidth="537.0" style="-fx-background-color: #aaddaa;" vgap="5.0">
                             <padding>
-                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                             </padding>
                         </TilePane>
                     </content>
                 </ScrollPane>
                 <VBox prefHeight="601.0" prefWidth="253.0" spacing="10.0" style="-fx-background-color: #dddddd;">
                     <children>
-                        <Label text="Sort Factor: "/>
-                        <ComboBox prefHeight="31.0" prefWidth="215.0"/>
-                        <Label text="Filters:"/>
-                        <ComboBox prefHeight="31.0" prefWidth="212.0"/>
-                        <ScrollPane prefHeight="450.0" prefWidth="209.0">
+                        <Label text="Sort Factor: " />
+                        <ComboBox prefHeight="31.0" prefWidth="215.0" />
+                        <Label text="Filters:" />
+                        <ComboBox prefHeight="31.0" prefWidth="212.0" />
+                        <ScrollPane hbarPolicy="NEVER" prefHeight="450.0" prefWidth="209.0" vbarPolicy="NEVER">
                             <content>
-                                <FlowPane prefHeight="435.0" prefWidth="209.0"/>
+                                <FlowPane prefHeight="435.0" prefWidth="209.0" />
                             </content>
                         </ScrollPane>
                     </children>
                     <HBox.margin>
-                        <Insets/>
+                        <Insets />
                     </HBox.margin>
                     <padding>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                     </padding>
                 </VBox>
             </children>
