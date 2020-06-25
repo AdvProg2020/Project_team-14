@@ -2,6 +2,7 @@ package GUI.Media;
 
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
 
 import java.io.File;
 
@@ -17,6 +18,8 @@ public class Audio {
             return;
         }
         mediaPlayer.setAutoPlay(true);
+        mediaPlayer.setOnEndOfMedia(() -> mediaPlayer.seek(Duration.ZERO));
+
     }
 
     public static void playClick1() {

@@ -86,7 +86,7 @@ public class LoginController {
     }
 
     public void initialize() {
-        String path = "C:\\Users\\TnrCo\\IdeaProjects\\Project_team\\src\\main\\java\\GUI\\Login\\resources\\mp4 (1).mp4";
+        String path = "src/main/java/GUI/Login/resources/mp4 (1).mp4";
         Media media = new Media(new File(path).toURI().toString());
         MediaPlayer mediaPlayer = new MediaPlayer(media);
         costure.setMediaPlayer(mediaPlayer);

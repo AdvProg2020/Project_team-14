@@ -16,7 +16,7 @@
                 <Image url="@../Login/resources/12-120662_ipad-retina-red-flower-wallpaper-iphone.jpg" />
             </image>
         </ImageView>
-        <AnchorPane layoutX="584.0" layoutY="7.0" onKeyPressed="#checkSalesmanRole" onMouseClicked="#checkSalesmanRole" onMouseMoved="#checkSalesmanRole" onMouseReleased="#checkSalesmanRole" prefHeight="800.0" prefWidth="618.0">
+        <AnchorPane layoutX="594.0" layoutY="-19.0" onKeyPressed="#checkSalesmanRole" onMouseClicked="#checkSalesmanRole" onMouseMoved="#checkSalesmanRole" onMouseReleased="#checkSalesmanRole" prefHeight="825.0" prefWidth="618.0" style="-fx-background-color: White;">
             <children>
                 <Label layoutX="207.0" layoutY="56.0" prefHeight="73.0" prefWidth="204.0" text="Register" textFill="#ea0303">
                     <font>
@@ -160,7 +160,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </ImageView>
-            <MediaView fx:id="mediaView" fitHeight="100.0" fitWidth="100.0" layoutX="455.0" layoutY="492.0" />
+            <MediaView fx:id="mediaView" fitHeight="100.0" fitWidth="100.0" layoutX="462.0" layoutY="513.0" />
             </children>
          <cursor>
             <Cursor fx:constant="DEFAULT" />
