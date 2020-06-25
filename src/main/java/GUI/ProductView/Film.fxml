@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.media.MediaView?>
+
+<AnchorPane prefHeight="608.0" prefWidth="895.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ProductView.Film">
+   <children>
+      <ImageView fx:id="exit" fitHeight="59.0" fitWidth="42.0" layoutX="826.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Register/resources/png-transparent-computer-icons-exit-icon-miscellaneous-angle-text.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <MediaView fx:id="MediaView" fitHeight="500.0" fitWidth="600.0" layoutX="156.0" layoutY="66.0" />
+   </children>
+</AnchorPane>
