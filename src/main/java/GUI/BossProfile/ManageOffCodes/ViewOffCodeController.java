@@ -1,5 +1,6 @@
 package GUI.BossProfile.ManageOffCodes;
 
+import GUI.Media.Audio;
 import GUI.MenuHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -7,6 +8,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 
+import javax.sound.sampled.AudioInputStream;
 import java.io.IOException;
 import java.text.ParseException;
 import java.time.Instant;
@@ -59,9 +61,11 @@ public class ViewOffCodeController {
 
     public void back(MouseEvent mouseEvent) {
         usersList.getScene().getWindow().hide();
+        Audio.playClick1();
     }
 
     public void saveChanges(MouseEvent mouseEvent) throws ParseException, IOException {
+        Audio.playClick6();
         try {
             isChangeValid();
         } catch (Exception e) {

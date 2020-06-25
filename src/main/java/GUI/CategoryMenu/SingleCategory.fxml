@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="679.0" prefWidth="762.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.CategoryMenu.SingleCategory">
+<AnchorPane prefHeight="679.0" prefWidth="762.0" style="-fx-background-color: Cyan;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.CategoryMenu.SingleCategory">
     <children>
         <ScrollPane layoutX="27.0" layoutY="143.0" prefHeight="236.0" prefWidth="497.0">
             <content>
@@ -17,47 +18,53 @@
                 </TableView>
             </content>
         </ScrollPane>
-        <Button id="ChangeNameButton" layoutX="562.0" layoutY="27.0" mnemonicParsing="false" onMouseClicked="#ChangeNameClicked" onMouseEntered="#MouseEntered" onMouseExited="#MouseExited" opacity="0.87" prefHeight="50.0" prefWidth="151.0" text="change the name">
-            <font>
-                <Font name="System Bold Italic" size="13.0" />
-            </font></Button>
-        <Button id="BackButton" layoutX="562.0" layoutY="101.0" mnemonicParsing="false" onMouseClicked="#BackClicked" onMouseEntered="#MouseEntered" onMouseExited="#MouseExited" opacity="0.87" prefHeight="50.0" prefWidth="151.0" text="back">
+        <Button id="ChangeNameButton" layoutX="562.0" layoutY="27.0" mnemonicParsing="false" onMouseClicked="#ChangeNameClicked" opacity="0.87" prefHeight="50.0" prefWidth="151.0" text="change the name" textFill="#d61212">
             <font>
                 <Font name="System Bold Italic" size="13.0" />
             </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+        <Button id="BackButton" layoutX="562.0" layoutY="101.0" mnemonicParsing="false" onMouseClicked="#BackClicked" opacity="0.87" prefHeight="50.0" prefWidth="151.0" text="back" textFill="#f30202">
+            <font>
+                <Font name="System Bold Italic" size="13.0" />
+            </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
         </Button>
         <VBox layoutX="562.0" layoutY="215.0" prefHeight="310.0" prefWidth="200.0">
-            <Label prefHeight="43.0" prefWidth="198.0" text="All products are here" textFill="#1eeb02">
+            <Label prefHeight="43.0" prefWidth="198.0" text="All products are here" textFill="#3902eb">
                 <font>
                     <Font name="System Italic" size="16.0" />
                 </font>
             </Label>
-            <Label layoutX="10.0" layoutY="10.0" prefHeight="43.0" prefWidth="198.0" text="add and remove the ones" textFill="#1eeb02">
+            <Label layoutX="10.0" layoutY="10.0" prefHeight="43.0" prefWidth="198.0" text="add and remove the ones" textFill="#5302eb">
                 <font>
                     <Font name="System Italic" size="16.0" />
                 </font>
             </Label>
-            <Label layoutX="10.0" layoutY="53.0" prefHeight="43.0" prefWidth="198.0" text="you'd like and select" textFill="#1eeb02">
+            <Label layoutX="10.0" layoutY="53.0" prefHeight="43.0" prefWidth="198.0" text="you'd like and select" textFill="#2e02eb">
                 <font>
                     <Font name="System Italic" size="16.0" />
                 </font>
             </Label>
-            <Label layoutX="10.0" layoutY="97.0" prefHeight="43.0" prefWidth="198.0" text="change name and enter" textFill="#1eeb02">
+            <Label layoutX="10.0" layoutY="97.0" prefHeight="43.0" prefWidth="198.0" text="change name and enter" textFill="#3502eb">
                 <font>
                     <Font name="System Italic" size="16.0" />
                 </font>
             </Label>
-            <Label layoutX="10.0" layoutY="140.0" prefHeight="43.0" prefWidth="198.0" text="your new desired name" textFill="#1eeb02">
+            <Label layoutX="10.0" layoutY="140.0" prefHeight="43.0" prefWidth="198.0" text="your new desired name" textFill="#3c02eb">
                 <font>
                     <Font name="System Italic" size="16.0" />
                 </font>
             </Label>
-            <Label layoutX="10.0" layoutY="183.0" prefHeight="43.0" prefWidth="198.0" text="note recurring names are" textFill="#02eb7e">
+            <Label layoutX="10.0" layoutY="183.0" prefHeight="43.0" prefWidth="198.0" text="note recurring names are" textFill="#3202eb">
                 <font>
                     <Font name="System Italic" size="16.0" />
                 </font>
             </Label>
-            <Label layoutX="10.0" layoutY="227.0" prefHeight="43.0" prefWidth="198.0" text="not allowed !" textFill="#1eeb02">
+            <Label layoutX="10.0" layoutY="227.0" prefHeight="43.0" prefWidth="198.0" text="not allowed !" textFill="#0700e3">
                 <font>
                     <Font name="System Italic" size="16.0" />
                 </font>

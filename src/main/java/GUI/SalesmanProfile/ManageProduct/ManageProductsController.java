@@ -1,5 +1,6 @@
 package GUI.SalesmanProfile.ManageProduct;
 
+import GUI.Media.Audio;
 import GUI.MenuHandler;
 import Menus.Menu;
 import javafx.collections.FXCollections;
@@ -31,6 +32,7 @@ public class ManageProductsController {
             "Confirmation:CHECKING", "Available", "Not Available");
 
     public void newProductMenu(ActionEvent actionEvent) throws IOException {
+        Audio.playClick5();
         MenuHandler.getPane().getChildren().remove(MenuHandler.getPane().getChildren().get(0));
         MenuHandler.getPane().getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/SalesmanProfile/ManageProduct/NewProductLayout.fxml")));
     }

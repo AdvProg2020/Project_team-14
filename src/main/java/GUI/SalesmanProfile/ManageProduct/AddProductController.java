@@ -1,5 +1,6 @@
 package GUI.SalesmanProfile.ManageProduct;
 
+import GUI.Media.Audio;
 import GUI.MenuHandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -28,6 +29,7 @@ public class AddProductController {
     public TextField price;
     public Spinner count;
     private String path = "";
+    private String pathVid = "";
 
     public void initialize() {
         SpinnerValueFactory<Integer> count = new SpinnerValueFactory.IntegerSpinnerValueFactory
@@ -36,6 +38,7 @@ public class AddProductController {
     }
 
     public void uploadImg(MouseEvent mouseEvent) {
+        Audio.playClick5();
         Stage stage = (Stage) pane.getScene().getWindow();
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Upload Product Picture");
@@ -45,6 +48,25 @@ public class AddProductController {
         path = String.valueOf(chosenFile.toURI());
     }
 
+    public void uploadVid(MouseEvent mouseEvent) {
+        Audio.playClick5();
+        Stage stage = (Stage) pane.getScene().getWindow();
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Upload Product Video (MP4 only)");
+        File chosenFile = fileChooser.showOpenDialog(stage);
+        if (chosenFile != null) {
+            if (String.valueOf(chosenFile.toURI()).endsWith("4")) {
+                pathVid = String.valueOf(chosenFile.toURI());
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "", ButtonType.OK);
+                alert.setContentText("something went wrong");
+                alert.showAndWait();
+            }
+        }
+
+    }
+
+
     private void reset(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/GUI/SalesmanProfile/ManageProduct/NewProductLayout.fxml"));
         Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
@@ -52,20 +74,21 @@ public class AddProductController {
     }
 
     public void newProduct(ActionEvent actionEvent) throws IOException, ParseException {
+        Audio.playClick2();
         Alert alert = new Alert(Alert.AlertType.ERROR, "", ButtonType.OK);
         if (productName.getText().equalsIgnoreCase("")) {
             alert.setContentText("You Should Choose A Name For Product");
             alert.showAndWait();
             reset(actionEvent);
-        } else if (brand.equals("")) {
+        } else if (brand.getText().equals("")) {
             alert.setContentText("You Should Choose A Brand For Product");
             alert.showAndWait();
             reset(actionEvent);
-        } else if (description.equals("")) {
+        } else if (description.getText().equals("")) {
             alert.setContentText("You Should Write A Description For Product");
             alert.showAndWait();
             reset(actionEvent);
-        } else if (price.equals("")) {
+        } else if (price.getText().equals("")) {
             alert.setContentText("You Should Choose A Price For Product");
             alert.showAndWait();
             reset(actionEvent);
@@ -105,11 +128,15 @@ public class AddProductController {
             if (!path.equals("")) {
                 MenuHandler.getServer().clientToServer("product picture path+" + productId + "+" + path);
             }
+            if (!pathVid.equals("")) {
+                MenuHandler.getServer().clientToServer("set product video+" + productId + "+" + pathVid);
+            }
             reset(actionEvent);
         }
     }
 
     public void back(ActionEvent actionEvent) throws IOException {
+        Audio.playClick4();
         Parent root = FXMLLoader.load(getClass().getResource("/GUI/SalesmanProfile/SalesmanProfileLayout.fxml"));
         Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));

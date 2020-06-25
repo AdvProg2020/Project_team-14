@@ -18,17 +18,6 @@ public class Controller {
         //MenuHandler.getServer().clientToServer();
     }
 
-
-    public void MouseEntered(MouseEvent mouseEvent) {
-        Stage stage = (Stage) ((Button) mouseEvent.getSource()).getScene().getWindow();
-        stage.getScene().setCursor(Cursor.HAND);
-    }
-
-    public void MouseExited(MouseEvent mouseEvent) {
-        Stage stage = (Stage) ((Button) mouseEvent.getSource()).getScene().getWindow();
-        stage.getScene().setCursor(Cursor.DEFAULT);
-    }
-
     public void NewCategoryClicked(MouseEvent mouseEvent) throws IOException {
         Audio.playClick4();
         Parent root = FXMLLoader.load(getClass().getResource("/GUI/CategoryMenu/NewCategory.fxml"));

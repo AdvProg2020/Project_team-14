@@ -1,5 +1,6 @@
 package GUI.ProductView;
 
+import GUI.Media.Audio;
 import GUI.MenuHandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -24,6 +25,7 @@ public class AddProductController {
     }
 
     public void sendRequest(ActionEvent actionEvent) throws IOException, ParseException {
+        Audio.playClick4();
         if (price.getText().matches("\\d+") && price.getText().length() <= 8) {
             if (count.getText().matches("\\d+") && count.getText().length() <= 5) {
                 MenuHandler.getServer().clientToServer("add product+" + MenuHandler.getUsername() + "+" +
@@ -45,6 +47,7 @@ public class AddProductController {
     }
 
     public void exitPopup(ActionEvent actionEvent) throws IOException {
+        Audio.playClick6();
         Popup popup = (Popup) ((Button) actionEvent.getSource()).getScene().getWindow();
         popup.hide();
         Parent root = FXMLLoader.load(getClass().getResource("/GUI/ProductView/ProductViewLayout.fxml"));

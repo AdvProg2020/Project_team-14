@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
@@ -14,26 +15,41 @@
                <image>
                   <Image url="@resources/whiteStar.png" />
                </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </ImageView>
             <ImageView fx:id="star2" fitHeight="93.0" fitWidth="124.0" layoutX="284.0" layoutY="23.0" onMouseClicked="#setRate" onMouseEntered="#changeStars" onMouseExited="#backToNormal" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@resources/whiteStar.png" />
                </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </ImageView>
             <ImageView fx:id="star3" fitHeight="93.0" fitWidth="124.0" layoutX="237.0" layoutY="23.0" onMouseClicked="#setRate" onMouseEntered="#changeStars" onMouseExited="#backToNormal" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@resources/whiteStar.png" />
                </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </ImageView>
             <ImageView fx:id="star4" fitHeight="93.0" fitWidth="124.0" layoutX="191.0" layoutY="23.0" onMouseClicked="#setRate" onMouseEntered="#changeStars" onMouseExited="#backToNormal" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@resources/whiteStar.png" />
                </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </ImageView>
             <ImageView fx:id="star5" fitHeight="93.0" fitWidth="124.0" layoutX="144.0" layoutY="23.0" onMouseClicked="#setRate" onMouseEntered="#changeStars" onMouseExited="#backToNormal" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@resources/whiteStar.png" />
                </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </ImageView>
          </children>
       </HBox>

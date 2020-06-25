@@ -1,5 +1,6 @@
 package GUI.SalesmanProfile;
 
+import GUI.Media.Audio;
 import GUI.MenuHandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -22,11 +23,13 @@ public class SalesmanProfileController {
     }
 
     public void manageProducts(ActionEvent actionEvent) throws IOException {
+        Audio.playClick4();
         pane.getChildren().remove(pane.getChildren().get(0));
         pane.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/SalesmanProfile/ManageProduct/ManageProductsLayout.fxml")));
     }
 
     public void logout(ActionEvent actionEvent) throws IOException {
+        Audio.playClick5();
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are You Sure You Want To Logout?", ButtonType.YES, ButtonType.NO);
         alert.showAndWait();
         if (alert.getResult().equals(ButtonType.YES)) {

@@ -7,9 +7,9 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="622.0" prefWidth="776.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.CategoryMenu.Controller">
+<AnchorPane prefHeight="622.0" prefWidth="776.0" style="-fx-background-color: DarkTurquoise;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.CategoryMenu.Controller">
     <ScrollPane layoutX="52.0" layoutY="181.0" prefHeight="380.0" prefWidth="672.0">
-        <TableView prefHeight="377.0" prefWidth="670.0">
+        <TableView prefHeight="377.0" prefWidth="670.0" style="-fx-background-color: Cyan;">
             <columns>
                 <TableColumn prefWidth="118.66665267944336" text="Name" />
                 <TableColumn prefWidth="179.33334350585938" text="Number of Products" />
@@ -18,7 +18,7 @@
             </columns>
         </TableView>
     </ScrollPane>
-    <Button id="NewCategory" layoutX="572.0" layoutY="75.0" mnemonicParsing="false" onMouseClicked="#NewCategoryClicked" onMouseEntered="#MouseEntered" onMouseExited="#MouseExited" opacity="0.87" prefHeight="50.0" prefWidth="151.0" text="New Category" textFill="RED">
+    <Button id="NewCategory" layoutX="572.0" layoutY="75.0" mnemonicParsing="false" onMouseClicked="#NewCategoryClicked" opacity="0.87" prefHeight="50.0" prefWidth="151.0" text="New Category" textFill="RED">
         <font>
             <Font name="System Bold Italic" size="13.0" />
         </font>

@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="734.0" prefWidth="816.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.BossProfile.ManagerUsersMenu.MoveInformationPopOut">
+<AnchorPane prefHeight="734.0" prefWidth="816.0" style="-fx-background-color: Cyan;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.BossProfile.ManagerUsersMenu.MoveInformationPopOut">
    <children>
       <Label alignment="CENTER" layoutX="273.0" layoutY="26.0" prefHeight="51.0" prefWidth="265.0" text="Personal Info" textFill="#f30f0f">
          <font>
             <Font name="System Bold Italic" size="35.0" />
          </font>
       </Label>
-      <HBox layoutX="71.0" layoutY="192.0" prefHeight="280.0" prefWidth="553.0">
+      <HBox layoutX="57.0" layoutY="190.0" prefHeight="280.0" prefWidth="553.0">
          <children>
             <VBox alignment="CENTER_LEFT" prefHeight="280.0" prefWidth="246.0">
                <children>
@@ -108,12 +106,48 @@
       </HBox>
       <HBox layoutX="18.0" layoutY="571.0" prefHeight="100.0" prefWidth="781.0">
          <children>
-            <Button fx:id="removeButton" mnemonicParsing="false" onAction="#remove" prefHeight="51.0" prefWidth="137.0" text="REMOVE" />
-            <Button fx:id="viewRequests" mnemonicParsing="false" onAction="#viewRequests" prefHeight="51.0" prefWidth="137.0" text="View Requests" />
-            <Button fx:id="viewProducts" mnemonicParsing="false" onAction="#ViewProducts" prefHeight="51.0" prefWidth="137.0" text="View Products" />
-            <Button mnemonicParsing="false" onAction="#back" prefHeight="51.0" prefWidth="137.0" text="BACK" />
-            <Button fx:id="acceptRequestButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#acceptRequest" prefHeight="51.0" prefWidth="133.0" text="AccpetReuqest" />
-            <Button fx:id="declineRequestButton" layoutX="507.0" layoutY="10.0" mnemonicParsing="false" onAction="#declineRequest" prefHeight="51.0" prefWidth="133.0" text="Decline Request" />
+            <Button fx:id="removeButton" mnemonicParsing="false" onAction="#remove" prefHeight="51.0" prefWidth="137.0" style="-fx-background-color: Fuchsia;" text="REMOVE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <font>
+                  <Font size="15.0" />
+               </font></Button>
+            <Button fx:id="viewRequests" mnemonicParsing="false" onAction="#viewRequests" prefHeight="51.0" prefWidth="137.0" style="-fx-background-color: LawnGreen;" text="View Requests">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <font>
+                  <Font size="15.0" />
+               </font></Button>
+            <Button fx:id="viewProducts" mnemonicParsing="false" onAction="#ViewProducts" prefHeight="51.0" prefWidth="137.0" style="-fx-background-color: Fuchsia;" text="View Products">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <font>
+                  <Font size="15.0" />
+               </font></Button>
+            <Button mnemonicParsing="false" onAction="#back" prefHeight="51.0" prefWidth="137.0" style="-fx-background-color: LawnGreen;" text="BACK">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <font>
+                  <Font size="15.0" />
+               </font></Button>
+            <Button fx:id="acceptRequestButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#acceptRequest" prefHeight="51.0" prefWidth="133.0" style="-fx-background-color: Fuchsia;" text="AccpetReuqest" textFill="#0f0f0f">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <font>
+                  <Font size="15.0" />
+               </font></Button>
+            <Button fx:id="declineRequestButton" layoutX="507.0" layoutY="10.0" mnemonicParsing="false" onAction="#declineRequest" prefHeight="51.0" prefWidth="133.0" style="-fx-background-color: LawnGreen;" text="Decline Request">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <font>
+                  <Font size="15.0" />
+               </font></Button>
          </children>
       </HBox>
    </children>

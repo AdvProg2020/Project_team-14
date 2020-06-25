@@ -270,6 +270,7 @@ public class Controller {
     }
 
     public void addToCart(ActionEvent actionEvent) throws IOException {
+        Audio.playClick6();
         if (addButton.getText().equalsIgnoreCase("Add To Cart")) {
             //add to cart
         } else if (addButton.getText().startsWith("Edit")) {
@@ -297,14 +298,17 @@ public class Controller {
     }
 
     public void starPopup(ActionEvent mouseEvent) {
+        Audio.playClick5();
         //star popup
     }
 
     public void changeSeller(ActionEvent actionEvent) throws IOException, ParseException {
+        Audio.playClick2();
         updateSeller();
     }
 
     public void back(ActionEvent actionEvent) throws IOException {
+        Audio.playClick7();
         Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
         Parent root = FXMLLoader.load(getClass().getResource(MenuHandler.getBackProduct()));
         stage.setScene(new Scene(root));
