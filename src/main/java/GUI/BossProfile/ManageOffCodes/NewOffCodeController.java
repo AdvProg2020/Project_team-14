@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Paint;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -68,6 +69,8 @@ public class NewOffCodeController {
         }
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, respond, ButtonType.OK);
+        ((Stage) alert.getDialogPane().getScene().getWindow()).setAlwaysOnTop(true);
+        ((Stage) alert.getDialogPane().getScene().getWindow()).toFront();
         alert.showAndWait();
         ((Button) mouseEvent.getSource()).getScene().getWindow().hide();
     }
