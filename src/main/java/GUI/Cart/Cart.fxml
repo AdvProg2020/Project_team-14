@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
@@ -13,16 +15,22 @@
                         <TableColumn prefWidth="118.66665267944336" text="product" />
                         <TableColumn prefWidth="118.66667175292969" text="price" />
                         <TableColumn prefWidth="113.33331298828125" text="was on sale" />
-                        <TableColumn minWidth="4.333343505859375" prefWidth="122.99996948242188" text="salesman" />
-                        <TableColumn prefWidth="186.33331298828125" text="remove" />
+                        <TableColumn minWidth="4.333343505859375" prefWidth="146.33334350585938" text="salesman" />
+                        <TableColumn prefWidth="163.66668701171875" text="remove" />
                     </columns>
                 </TableView>
             </content>
         </ScrollPane>
-        <Button layoutX="104.0" layoutY="690.0" mnemonicParsing="false" opacity="0.87" prefHeight="50.0" prefWidth="253.0" text="conntinue purchase" textFill="#190ce8">
+        <Button layoutX="104.0" layoutY="690.0" mnemonicParsing="false" onMouseClicked="#back" opacity="0.87" prefHeight="50.0" prefWidth="253.0" text="conntinue purchase" textFill="#190ce8">
             <font>
                 <Font name="System Bold Italic" size="22.0" />
-            </font></Button>
+            </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <effect>
+            <SepiaTone />
+         </effect></Button>
         <Label layoutX="277.0" layoutY="32.0" prefHeight="62.0" prefWidth="291.0" text="here's your cart" textFill="#ec0808">
             <font>
                 <Font name="System Bold" size="29.0" />
@@ -38,10 +46,16 @@
             <Font name="System Italic" size="21.0" />
          </font>
       </Label>
-      <Button layoutX="572.0" layoutY="526.0" mnemonicParsing="false" opacity="0.87" prefHeight="50.0" prefWidth="151.0" text="use an off code" textFill="#3c06ff" underline="true">
+      <Button layoutX="572.0" layoutY="526.0" mnemonicParsing="false" onMouseClicked="#useOffCode" opacity="0.87" prefHeight="50.0" prefWidth="151.0" text="use an off code" textFill="#3c06ff" underline="true">
          <font>
             <Font name="System Bold Italic" size="13.0" />
          </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <effect>
+            <SepiaTone />
+         </effect>
       </Button>
       <Label layoutX="133.0" layoutY="593.0" prefHeight="31.0" prefWidth="179.0" text="final price:" textFill="#f50b0b">
          <font>
@@ -53,10 +67,16 @@
             <Font name="System Italic" size="21.0" />
          </font>
       </Label>
-      <Button layoutX="423.0" layoutY="690.0" mnemonicParsing="false" opacity="0.87" prefHeight="50.0" prefWidth="253.0" text="finalise it!" textFill="#190ce8">
+      <Button layoutX="423.0" layoutY="690.0" mnemonicParsing="false" onMouseClicked="#buy" opacity="0.87" prefHeight="50.0" prefWidth="253.0" text="finalise it!" textFill="#190ce8">
          <font>
             <Font name="System Bold Italic" size="22.0" />
          </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <effect>
+            <SepiaTone />
+         </effect>
       </Button>
     </children>
 </AnchorPane>

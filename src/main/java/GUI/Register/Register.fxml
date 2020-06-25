@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
 <AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Register.RegisterController">
@@ -90,10 +93,24 @@
                         <Font size="15.0" />
                     </font>
                 </TextField>
-                <Button contentDisplay="CENTER" layoutX="212.0" layoutY="513.0" mnemonicParsing="false" onAction="#register" prefHeight="77.0" prefWidth="195.0" text="Register">
+                <Button contentDisplay="CENTER" layoutX="212.0" layoutY="513.0" mnemonicParsing="false" onAction="#register" prefHeight="77.0" prefWidth="195.0" text="Register" textFill="#0c2ee8">
                     <font>
                         <Font name="System Bold" size="36.0" />
                     </font>
+               <effect>
+                  <Lighting diffuseConstant="2.0">
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant>
+                           <color>
+                              <Color red="0.07999999821186066" green="1.0" blue="0.23701922595500946" />
+                           </color>
+                        </Light.Distant>
+                     </light>
+                  </Lighting>
+               </effect>
                 </Button>
                 <Label fx:id="companyLabel" layoutX="457.0" layoutY="381.0" prefHeight="19.0" prefWidth="55.0" text="Company" visible="false">
                     <font>
@@ -116,7 +133,41 @@
                         <Image url="@resources/computer-icons-download-back-icon.jpg" />
                     </image>
                 </ImageView>
+            <ImageView fitHeight="39.0" fitWidth="45.0" layoutX="190.0" layoutY="626.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@resources/Twitter_bird_logo_2012.svg.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="37.0" fitWidth="62.0" layoutX="384.0" layoutY="626.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@resources/download.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+            <ImageView fitHeight="46.0" fitWidth="45.0" layoutX="286.0" layoutY="622.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@resources/google-logo.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
             </children>
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor>
         </AnchorPane>
+      <ImageView fitHeight="528.0" fitWidth="480.0" layoutX="62.0" layoutY="100.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@resources/avatar.png" />
+         </image>
+      </ImageView>
     </children>
 </AnchorPane>
