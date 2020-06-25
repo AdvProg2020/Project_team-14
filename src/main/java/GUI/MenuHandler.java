@@ -9,6 +9,7 @@ public class MenuHandler {
     static private String productID = null;
     static private String requestID = null;
     static private String seeingUsername = null;
+    static private String seeingOffCode = null;
     static private boolean isUserLogin = false;
     static private String userType = null;
     static private String loginBackAddress = null;
@@ -68,6 +69,14 @@ public class MenuHandler {
 
     public static void setSeeingUsername(String seeingUsername) {
         MenuHandler.seeingUsername = seeingUsername;
+    }
+
+    public static String getSeeingOffCode() {
+        return seeingOffCode;
+    }
+
+    public static void setSeeingOffCode(String seeingOffCode) {
+        MenuHandler.seeingOffCode = seeingOffCode;
     }
 
     public static String getProductID() {
