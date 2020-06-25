@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+
+<HBox alignment="CENTER_LEFT" maxHeight="40.0" maxWidth="484.0" minHeight="40.0" minWidth="484.0" prefWidth="484.0" spacing="10.0" style="-fx-background-color: #dddddd; -fx-background-radius: 10;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label text="Code :">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label text="Label">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label text="Percentage :">
+         <HBox.margin>
+            <Insets left="50.0" />
+         </HBox.margin>
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label text="Label">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+   </children>
+   <padding>
+      <Insets left="8.0" right="8.0" />
+   </padding>
+</HBox>

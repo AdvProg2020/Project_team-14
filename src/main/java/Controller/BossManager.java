@@ -491,7 +491,7 @@ public class BossManager {
              * must check filter factor
              */
             if (doOffCodeHasFilterFactor()) {
-                ans.append("\n").append(offCode.getOffCodeID());
+                ans.append("\n").append(offCode.getOffCodeID()).append("+").append(offCode.getPercentage());
                 found = true;
             }
         }
