@@ -16,6 +16,7 @@ public class Product implements Serializable {
     private int seenCount;
     private String picPath;
     private String categoryName;
+    private String videoPath;
 
     public String getPicPath() {
         return picPath;
@@ -23,6 +24,14 @@ public class Product implements Serializable {
 
     public void setPicPath(String picPath) {
         this.picPath = picPath;
+    }
+
+    public String getVideoPath() {
+        return videoPath;
+    }
+
+    public void setVideoPath(String videoPath) {
+        this.videoPath = videoPath;
     }
 
     //the first argument is salesmanID and the second one is whether is's on sale by that salesman

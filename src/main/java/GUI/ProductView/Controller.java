@@ -1,18 +1,23 @@
 package GUI.ProductView;
 
+import GUI.Media.Audio;
 import GUI.MenuHandler;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -270,8 +275,11 @@ public class Controller {
         }
     }
 
-    public void showVideo(ActionEvent mouseEvent) {
-        //video show
+    public void showVideo(ActionEvent mouseEvent) throws IOException {
+        Audio.playClick4();
+        Parent root = FXMLLoader.load(getClass().getResource("/GUI/ProductView/Film/Film.fxml"));
+        Stage stage = (Stage) ((Button) mouseEvent.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root));
     }
 
     public void starPopup(ActionEvent mouseEvent) {

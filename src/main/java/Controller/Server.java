@@ -5,6 +5,7 @@ package Controller;
 //import Model.Storage;
 
 import java.io.IOException;
+import java.net.ServerSocket;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -217,6 +218,10 @@ public class Server {
             this.getProductSellers(command);
         } else if (command.startsWith("show the salesman+")) {
             this.showSalesman(command);
+        } else if (command.startsWith("get product video+")) {
+            this.getProductVideo(command);
+        } else if (command.startsWith("set product video+")) {
+            this.setProductVideo(command);
         }
 
         //end parts
@@ -224,6 +229,29 @@ public class Server {
             this.showBalance(command);
         }
 
+    }
+
+    private void setProductVideo(String command) {
+        String productId = command.split("\\+")[1];
+        for (Product product : Storage.getAllProducts()) {
+            if (product.getProductID().equals(productId)) {
+                product.setVideoPath(command.split("\\+")[2]);
+                Server.setAnswer("successful");
+            }
+        }
+    }
+
+    private void getProductVideo(String command) {
+        String productId = command.split("\\+")[1];
+        for (Product product : Storage.getAllProducts()) {
+            if (product.getProductID().equals(productId)) {
+                if (product.getVideoPath() != null) {
+                    Server.setAnswer(product.getVideoPath());
+                } else {
+                    Server.setAnswer("no video found");
+                }
+            }
+        }
     }
 
     private void showSalesman(String command) {
