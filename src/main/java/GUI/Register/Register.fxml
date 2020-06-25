@@ -5,6 +5,7 @@
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.media.*?>
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
@@ -159,6 +160,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </ImageView>
+            <MediaView fx:id="mediaView" fitHeight="100.0" fitWidth="100.0" layoutX="455.0" layoutY="492.0" />
             </children>
          <cursor>
             <Cursor fx:constant="DEFAULT" />

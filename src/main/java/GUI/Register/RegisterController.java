@@ -10,8 +10,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.regex.Matcher;
@@ -20,6 +25,7 @@ import java.util.regex.Pattern;
 public class RegisterController {
 
     public Label companyLabel;
+    public MediaView mediaView;
     ObservableList<String> rolesIfHasNotBoss = FXCollections.observableArrayList("Boss", "Salesman", "Customer");
     ObservableList<String> rolesIfHasBoss = FXCollections.observableArrayList("Customer", "Salesman");
 
@@ -33,6 +39,13 @@ public class RegisterController {
     public TextField company;
 
     public void initialize() throws ParseException, IOException {
+        String path = "C:\\Users\\TnrCo\\IdeaProjects\\Project_team\\src\\main\\java\\GUI\\Login\\resources\\mp4.mp4";
+        Media media = new Media(new File(path).toURI().toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(media);
+        mediaView.setMediaPlayer(mediaPlayer);
+        mediaPlayer.setAutoPlay(true);
+        mediaPlayer.setOnEndOfMedia(() -> mediaPlayer.seek(Duration.ZERO));
+
         MenuHandler.getServer().clientToServer("is server has boss");
         if (MenuHandler.getServer().serverToClient().equalsIgnoreCase("yes")) {
             role.setItems(rolesIfHasBoss);

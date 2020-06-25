@@ -10,8 +10,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 
@@ -19,6 +24,7 @@ public class LoginController {
 
     public TextField username;
     public PasswordField password;
+    public MediaView costure;
 
     public void Login(ActionEvent actionEvent) throws ParseException, IOException {
         Audio.playClick7();
@@ -77,5 +83,14 @@ public class LoginController {
         if (alert.getResult().equals(ButtonType.YES)) {
             System.exit(1989);
         }
+    }
+
+    public void initialize() {
+        String path = "C:\\Users\\TnrCo\\IdeaProjects\\Project_team\\src\\main\\java\\GUI\\Login\\resources\\mp4 (1).mp4";
+        Media media = new Media(new File(path).toURI().toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(media);
+        costure.setMediaPlayer(mediaPlayer);
+        mediaPlayer.setAutoPlay(true);
+        mediaPlayer.setOnEndOfMedia(() -> mediaPlayer.seek(Duration.ZERO));
     }
 }
