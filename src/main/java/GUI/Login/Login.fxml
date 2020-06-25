@@ -108,13 +108,13 @@
                 <Font size="15.0" />
             </font>
         </TextField>
-        <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="527.0" layoutY="23.0" onMouseClicked="#back" pickOnBounds="true" preserveRatio="true">
-            <image>
-                <Image url="@resources/computer-icons-download-back-icon.jpg" />
-            </image>
-        </ImageView>
         <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
         <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="515.0" fitWidth="480.0" layoutX="54.0" layoutY="107.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Register/resources/avatar.png" />
+         </image>
+      </ImageView>
 
     </children>
 </AnchorPane>

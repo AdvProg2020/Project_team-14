@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="740.0" prefWidth="1180.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="740.0" prefWidth="1180.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ProductView.Controller">
    <children>
       <HBox layoutX="10.0" layoutY="10.0" prefHeight="360.0" prefWidth="850.0" spacing="10.0" style="-fx-background-color: #dddddd;" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
          <children>
@@ -181,7 +181,7 @@
       </HBox>
       <VBox alignment="TOP_CENTER" layoutX="879.0" layoutY="67.0" prefHeight="360.0" prefWidth="300.0" spacing="10.0" style="-fx-background-color: #cccccc;" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
          <children>
-            <ImageView fitHeight="276.0" fitWidth="291.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="imageView" fitHeight="276.0" fitWidth="291.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../ProductScene/resources/home.png" />
                </image>

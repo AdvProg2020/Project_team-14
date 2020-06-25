@@ -164,5 +164,10 @@
             <Cursor fx:constant="DEFAULT" />
          </cursor>
         </AnchorPane>
+      <ImageView fitHeight="528.0" fitWidth="480.0" layoutX="62.0" layoutY="100.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@resources/avatar.png" />
+         </image>
+      </ImageView>
     </children>
 </AnchorPane>
