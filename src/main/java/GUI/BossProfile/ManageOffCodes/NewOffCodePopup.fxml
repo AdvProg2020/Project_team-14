@@ -1,17 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="790.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="790.0" prefWidth="600.0" style="-fx-background-color: #aaaaaa;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.BossProfile.ManageOffCodes.NewOffCodeController">
    <children>
       <Label text="New Off Code">
          <VBox.margin>
@@ -69,27 +63,27 @@
             </VBox>
             <VBox prefHeight="245.0" prefWidth="220.0">
                <children>
-                  <DatePicker>
+                  <DatePicker fx:id="startDate">
                      <VBox.margin>
                         <Insets bottom="15.0" top="15.0" />
                      </VBox.margin>
                   </DatePicker>
-                  <DatePicker>
+                  <DatePicker fx:id="endDate">
                      <VBox.margin>
                         <Insets bottom="15.0" />
                      </VBox.margin>
                   </DatePicker>
-                  <TextField alignment="CENTER">
+                  <TextField fx:id="percentage" alignment="CENTER" prefHeight="26.0" prefWidth="176.0" promptText="enter percentage">
                      <VBox.margin>
                         <Insets bottom="15.0" />
                      </VBox.margin>
                   </TextField>
-                  <TextField alignment="CENTER">
+                  <TextField fx:id="max" alignment="CENTER" promptText="enter max">
                      <VBox.margin>
                         <Insets bottom="15.0" />
                      </VBox.margin>
                   </TextField>
-                  <TextField alignment="CENTER">
+                  <TextField fx:id="frequency" alignment="CENTER" promptText="enter frequency">
                      <VBox.margin>
                         <Insets bottom="15.0" />
                      </VBox.margin>
@@ -102,17 +96,26 @@
          <children>
             <VBox prefHeight="145.0" prefWidth="294.0">
                <children>
-                  <ListView prefHeight="303.0" prefWidth="301.0" />
+                  <Pane prefHeight="284.0" prefWidth="294.0">
+                     <children>
+                        <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="281.0" prefWidth="294.0">
+                          <items>
+                              <ListView fx:id="allUsers" onMouseClicked="#setWantedUsername" prefHeight="112.0" prefWidth="293.0" />
+                              <ListView fx:id="addedUsers" onMouseClicked="#setWantedUsername" prefHeight="200.0" prefWidth="200.0" />
+                          </items>
+                        </SplitPane>
+                     </children>
+                  </Pane>
                </children>
             </VBox>
             <VBox alignment="CENTER" prefHeight="295.0" prefWidth="165.0">
                <children>
-                  <TextField alignment="CENTER" promptText="user name">
+                  <TextField fx:id="wantedUsername" alignment="CENTER" editable="false" promptText="user name">
                      <VBox.margin>
                         <Insets bottom="10.0" />
                      </VBox.margin>
                   </TextField>
-                  <Label alignment="CENTER" prefWidth="165.0" text="result">
+                  <Label fx:id="additionResult" alignment="CENTER">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -120,12 +123,12 @@
                         <Insets bottom="40.0" />
                      </VBox.margin>
                   </Label>
-                  <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="58.0" text="add">
+                  <Button mnemonicParsing="false" onMouseClicked="#addToList" prefHeight="31.0" prefWidth="58.0" text="add">
                      <VBox.margin>
                         <Insets bottom="10.0" />
                      </VBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" text="delete" />
+                  <Button mnemonicParsing="false" onMouseClicked="#deleteFromList" text="delete" />
                </children>
             </VBox>
          </children>
@@ -133,10 +136,18 @@
             <Insets bottom="10.0" top="20.0" />
          </VBox.margin>
       </HBox>
+      <Label fx:id="warning" textFill="RED">
+         <VBox.margin>
+            <Insets top="10.0" />
+         </VBox.margin>
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
       <HBox alignment="CENTER" prefHeight="92.0" prefWidth="595.0" spacing="15.0">
          <children>
-            <Button mnemonicParsing="false" text="Cancel" />
-            <Button mnemonicParsing="false" text="Done" />
+            <Button mnemonicParsing="false" onMouseClicked="#cancel" text="Cancel" />
+            <Button mnemonicParsing="false" onMouseClicked="#doneCreating" text="Done" />
          </children>
       </HBox>
    </children>

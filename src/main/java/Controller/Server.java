@@ -185,7 +185,10 @@ public class Server {
             this.createSpecialOffCode(command);
         } else if (command.startsWith("can add to offCode")) {
             this.canAddUserToOffCode(command);
-        } else if (command.startsWith("view offCode")) {
+        } else if (command.startsWith("get all offCodeAble user")) {
+            this.getAllOffCodeAbleUser(command);
+        }
+        else if (command.startsWith("view offCode")) {
             this.viewOffCode(command);
         } else if (command.startsWith("edit offCode")) {
             this.editOffCode(command);
@@ -327,7 +330,7 @@ public class Server {
     }
 
     private String isDateValid(String date, String type) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH-mm-ss");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
         try {
             dateFormat.parse(date);
         } catch (ParseException e) {
@@ -398,6 +401,15 @@ public class Server {
 
     private void searchOffCode(String command) {
         bossManager.searchOffCode(command.split("\\+")[2]);
+    }
+
+    private void getAllOffCodeAbleUser(String command) {
+        StringBuilder ans = new StringBuilder("users:");
+        for (Account account : Storage.getAllAccounts()) {
+            if (account.getRole().equals(Role.CUSTOMER)) ans.append("+").append(account.getUsername());
+        }
+        if (ans.equals("users:")) setAnswer("nothing found");
+        else setAnswer(ans.toString());
     }
 
     private void createSpecialOffCode(String command) {

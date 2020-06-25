@@ -15,7 +15,7 @@ public abstract class Off implements Serializable {
     //start and end must be in format "dd-MM-yyyy HH-mm-ss" otherwise exception will be thrown
 
     public Off(String start, String end, int percentage) {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH-mm-ss");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
         try {
             this.start = formatter.parse(start);
             this.end = formatter.parse(end);
@@ -26,7 +26,7 @@ public abstract class Off implements Serializable {
     }
 
     public void setEnd(String end) /*throws ParseException*/ {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH-mm-ss");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
         try {
             this.end = formatter.parse(end);
         } catch (ParseException e) {
@@ -35,7 +35,7 @@ public abstract class Off implements Serializable {
     }
 
     public void setStart(String start) /*throws ParseException*/ {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH-mm-ss");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
         try {
             this.start = formatter.parse(start);
         } catch (ParseException e) {

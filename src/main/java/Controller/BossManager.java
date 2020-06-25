@@ -495,7 +495,7 @@ public class BossManager {
                 found = true;
             }
         }
-        ans.append("\n").append("What founded, listed above");
+//        ans.append("\n").append("What founded, listed above");
         if (!found) {
             Server.setAnswer("nothing found");
         } else {
