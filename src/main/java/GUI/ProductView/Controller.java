@@ -1,5 +1,6 @@
 package GUI.ProductView;
 
+import GUI.Media.Audio;
 import GUI.MenuHandler;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -17,6 +18,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Popup;
+import javafx.stage.Stage;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -248,7 +250,6 @@ public class Controller {
         String s = (String) chooseSeller.getValue();
         if (s == null) return;
         if (s.equals("")) return;
-        s = s.trim();
         MenuHandler.getServer().clientToServer("view product+" + s + "+" + MenuHandler.getProductID());
         String respond = MenuHandler.getServer().serverToClient();
         seller.setText(s);
@@ -288,8 +289,11 @@ public class Controller {
         }
     }
 
-    public void showVideo(ActionEvent mouseEvent) {
-        //video show
+    public void showVideo(ActionEvent mouseEvent) throws IOException {
+        Audio.playClick4();
+        Parent root = FXMLLoader.load(getClass().getResource("/GUI/ProductView/Film/Film.fxml"));
+        Stage stage = (Stage) ((Button) mouseEvent.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root));
     }
 
     public void starPopup(ActionEvent mouseEvent) {
