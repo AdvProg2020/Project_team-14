@@ -24,22 +24,26 @@
             <children>
                 <ScrollPane hbarPolicy="NEVER" prefHeight="601.0" prefWidth="545.0" style="-fx-background-color: #aaddaa;" vbarPolicy="NEVER">
                     <content>
-                        <TilePane fx:id="products" hgap="5.0" prefColumns="3" prefHeight="601.0" prefTileHeight="210.0" prefTileWidth="170.0" prefWidth="537.0" style="-fx-background-color: #aaddaa;" vgap="5.0">
+                        <TilePane fx:id="products" hgap="5.0" prefColumns="3" prefHeight="601.0" prefTileHeight="210.0" prefTileWidth="170.0" prefWidth="552.0" style="-fx-background-color: #aaddaa;" vgap="5.0">
                             <padding>
                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                             </padding>
                         </TilePane>
                     </content>
                 </ScrollPane>
-                <VBox prefHeight="601.0" prefWidth="253.0" spacing="10.0" style="-fx-background-color: #dddddd;">
+                <VBox prefHeight="601.0" prefWidth="207.0" spacing="10.0" style="-fx-background-color: #dddddd;">
                     <children>
                         <Label text="Sort Factor: " />
-                        <ComboBox prefHeight="31.0" prefWidth="215.0" />
+                        <ComboBox fx:id="sortFactor" prefHeight="31.0" prefWidth="215.0" />
                         <Label text="Filters:" />
-                        <ComboBox prefHeight="31.0" prefWidth="212.0" />
+                        <ComboBox fx:id="filter" onAction="#chooseFilter" prefHeight="31.0" prefWidth="212.0" />
                         <ScrollPane hbarPolicy="NEVER" prefHeight="450.0" prefWidth="209.0" vbarPolicy="NEVER">
                             <content>
-                                <FlowPane prefHeight="435.0" prefWidth="209.0" />
+                                <ScrollPane>
+                                    <content>
+                                        <FlowPane fx:id="filterList" prefHeight="435.0" prefWidth="209.0" />
+                                    </content>
+                                </ScrollPane>
                             </content>
                         </ScrollPane>
                     </children>
