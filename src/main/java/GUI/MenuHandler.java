@@ -2,6 +2,7 @@ package GUI;
 
 import Controller.Server;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 public class MenuHandler {
     static private String username = null;
@@ -12,8 +13,10 @@ public class MenuHandler {
     static private String seeingOffCode = null;
     static private boolean isUserLogin = false;
     static private String userType = null;
+    static private Stage stage;
     static private String loginBackAddress = null;
     static private Pane pane;
+    static private String backProduct = null;
 
     public static String getRequestID() {
         return requestID;
@@ -93,5 +96,21 @@ public class MenuHandler {
 
     public static void setPane(Pane pane) {
         MenuHandler.pane = pane;
+    }
+
+    public static String getBackProduct() {
+        return backProduct;
+    }
+
+    public static void setBackProduct(String backProduct) {
+        MenuHandler.backProduct = backProduct;
+    }
+
+    public static Stage getStage() {
+        return stage;
+    }
+
+    public static void setStage(Stage stage) {
+        MenuHandler.stage = stage;
     }
 }

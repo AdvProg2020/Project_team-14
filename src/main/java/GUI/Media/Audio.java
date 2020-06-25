@@ -8,7 +8,7 @@ import java.io.File;
 public class Audio {
 
     private static boolean muteness = false;
-    private static String path = "src/main/java/GUI/Media/resources/@Santurist_Tasnif_Jame_Madhoushi.mp3";
+    private static String path = "src/main/java/GUI/Media/resources/1.mp3";
     private static Media media = new Media(new File(path).toURI().toString());
     private static MediaPlayer mediaPlayer = new MediaPlayer(media);
 

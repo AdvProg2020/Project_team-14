@@ -6,13 +6,18 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
+import javafx.stage.Popup;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -42,6 +47,7 @@ public class Controller {
     public Label confirmationState;
     public Button addButton;
     public Button commentButton;
+    public TextArea infoText;
 
     private void reset(ImageView imageView, double width, double height) {
         imageView.setViewport(new Rectangle2D(0, 0, width, height));
@@ -121,7 +127,6 @@ public class Controller {
                 reset(imageView, width, height);
             }
         });
-
     }
 
 
@@ -135,7 +140,12 @@ public class Controller {
         zoom();
         MenuHandler.getServer().clientToServer("view product+" + MenuHandler.getUsername() + "+" + productId);
         String serverAnswer = MenuHandler.getServer().serverToClient();
-
+        String ans = "";
+        for (int i = 0; i < serverAnswer.split("\n").length - 4; i++) {
+            ans += serverAnswer.split("\n")[i] + "\n";
+        }
+        infoText.setText(ans);
+        infoText.setEditable(false);
         if (!MenuHandler.isIsUserLogin()) {
             customerLoad(serverAnswer);
         } else {
@@ -147,7 +157,6 @@ public class Controller {
                 customerLoad(serverAnswer);
             }
         }
-
     }
 
     private void customerLoad(String serverAnswer) throws ParseException, IOException {
@@ -239,6 +248,7 @@ public class Controller {
         String s = (String) chooseSeller.getValue();
         if (s == null) return;
         if (s.equals("")) return;
+        s = s.trim();
         MenuHandler.getServer().clientToServer("view product+" + s + "+" + MenuHandler.getProductID());
         String respond = MenuHandler.getServer().serverToClient();
         seller.setText(s);
@@ -258,13 +268,21 @@ public class Controller {
         //comment
     }
 
-    public void addToCart(ActionEvent actionEvent) {
+    public void addToCart(ActionEvent actionEvent) throws IOException {
         if (addButton.getText().equalsIgnoreCase("Add To Cart")) {
             //add to cart
         } else if (addButton.getText().startsWith("Edit")) {
-            //edit product
+            javafx.stage.Popup popup = new Popup();
+            Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+            Parent addProductPopup = FXMLLoader.load(getClass().getResource("/GUI/ProductView/EditProductLayout.fxml"));
+            popup.getContent().addAll(addProductPopup);
+            popup.show(stage);
         } else if (addButton.getText().startsWith("Add")) {
-            //Add product
+            javafx.stage.Popup popup = new Popup();
+            Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+            Parent addProductPopup = FXMLLoader.load(getClass().getResource("/GUI/ProductView/JoinSellerLayout.fxml"));
+            popup.getContent().addAll(addProductPopup);
+            popup.show(stage);
         } else {
             //delete product
         }
@@ -280,5 +298,11 @@ public class Controller {
 
     public void changeSeller(ActionEvent actionEvent) throws IOException, ParseException {
         updateSeller();
+    }
+
+    public void back(ActionEvent actionEvent) throws IOException {
+        Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+        Parent root = FXMLLoader.load(getClass().getResource(MenuHandler.getBackProduct()));
+        stage.setScene(new Scene(root));
     }
 }
