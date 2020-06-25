@@ -137,6 +137,8 @@ public class Server {
             this.addCategoryAttribute(command);
         } else if (command.startsWith("product picture path+")) {
             this.addProductPicturePath(command);
+        } else if (command.startsWith("get product picture path+")) {
+            this.getProfilePicturePath(command);
         } else if (command.startsWith("delete category attribute+")) {
             this.deleteCategoryAttribute(command);
         } else if (command.startsWith("edit category attribute+")) {
@@ -215,6 +217,14 @@ public class Server {
             this.showBalance(command);
         }
 
+    }
+
+    private void getProfilePicturePath(String command) {
+        for (Product product : Storage.getAllProducts()) {
+            if (product.getProductID().equals(command.split("\\+")[1])) {
+                Server.setAnswer(product.getPicPath());
+            }
+        }
     }
 
     private void addProductPicturePath(String command) {
