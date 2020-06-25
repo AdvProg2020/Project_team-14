@@ -1,5 +1,6 @@
 package GUI.RegisterBoss;
 
+import GUI.Media.Audio;
 import GUI.MenuHandler;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -36,6 +37,7 @@ public class Controller {
 
 
     public void register(ActionEvent actionEvent) throws ParseException, IOException {
+        Audio.playClick4();
         Alert alert = new Alert(Alert.AlertType.ERROR, "", ButtonType.OK);
         if (username.getText().equals("")) {
             alert.setContentText("Username Field Must Not Be Empty");
@@ -114,14 +116,8 @@ public class Controller {
         return getMatcher("0(\\d+)", number).matches() && number.length() == 11;
     }
 
-    public void back(MouseEvent mouseEvent) throws IOException {
-        String path = MenuHandler.getLoginBackAddress();
-        Parent root = FXMLLoader.load(getClass().getResource(path));
-        Stage stage = (Stage) ((ImageView) mouseEvent.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root));
-    }
-
     public void exit(MouseEvent mouseEvent) {
+        Audio.playClick1();
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are You Sure You Want To Exit", ButtonType.YES, ButtonType.NO);
         alert.showAndWait();
         if (alert.getResult().equals(ButtonType.YES)) {
