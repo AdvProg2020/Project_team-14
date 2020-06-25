@@ -1,5 +1,6 @@
 package GUI.CategoryMenu;
 
+import GUI.Media.Audio;
 import GUI.MenuHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
@@ -29,6 +30,7 @@ public class Controller {
     }
 
     public void NewCategoryClicked(MouseEvent mouseEvent) throws IOException {
+        Audio.playClick4();
         Parent root = FXMLLoader.load(getClass().getResource("/GUI/CategoryMenu/NewCategory.fxml"));
         Stage stage = (Stage) ((Button) mouseEvent.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));

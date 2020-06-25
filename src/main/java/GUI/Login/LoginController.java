@@ -1,5 +1,6 @@
 package GUI.Login;
 
+import GUI.Media.Audio;
 import GUI.MenuHandler;
 import Menus.Menu;
 import javafx.event.ActionEvent;
@@ -20,6 +21,7 @@ public class LoginController {
     public PasswordField password;
 
     public void Login(ActionEvent actionEvent) throws ParseException, IOException {
+        Audio.playClick7();
         Alert alert = new Alert(Alert.AlertType.ERROR, "", ButtonType.OK);
         if (username.getText().equals("")) {
             alert.setContentText("Username Field Must Not Be Empty");
@@ -54,12 +56,14 @@ public class LoginController {
     }
 
     public void openRegisterMenu(ActionEvent actionEvent) throws IOException {
+        Audio.playClick3();
         Parent root = FXMLLoader.load(getClass().getResource("/GUI/Register/Register.fxml"));
         Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
     }
 
     public void back(MouseEvent mouseEvent) throws IOException {
+        Audio.playClick2();
         String path = MenuHandler.getLoginBackAddress();
         Parent root = FXMLLoader.load(getClass().getResource(path));
         Stage stage = (Stage) ((ImageView) mouseEvent.getSource()).getScene().getWindow();
@@ -67,6 +71,7 @@ public class LoginController {
     }
 
     public void exit(MouseEvent mouseEvent) {
+        Audio.playClick1();
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are You Sure You Want To Exit", ButtonType.YES, ButtonType.NO);
         alert.showAndWait();
         if (alert.getResult().equals(ButtonType.YES)) {

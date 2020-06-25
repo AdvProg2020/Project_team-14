@@ -1,5 +1,6 @@
 package GUI.CategoryMenu;
 
+import GUI.Media.Audio;
 import GUI.MenuHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,12 +18,14 @@ public class NewCategory {
     public TextField attribute;
 
     public void closeNewCategory(MouseEvent mouseEvent) throws IOException {
+        Audio.playClick1();
         Parent root = FXMLLoader.load(getClass().getResource("/GUI/CategoryMenu/CategoryMenu.fxml"));
         Stage stage = (Stage) ((Button) mouseEvent.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
     }
 
     public void createNewCategory(MouseEvent mouseEvent) throws ParseException, IOException {
+        Audio.playClick5();
         Alert alert = new Alert(Alert.AlertType.ERROR, "", ButtonType.OK);
         String parent_category = parentCategory.getText();
         String category_name = name.getText();

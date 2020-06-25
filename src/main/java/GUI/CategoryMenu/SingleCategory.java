@@ -1,5 +1,6 @@
 package GUI.CategoryMenu;
 
+import GUI.Media.Audio;
 import GUI.MenuHandler;
 import Menus.Menu;
 import Menus.Views.ViewCategoryMenu;
@@ -11,6 +12,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
+import javax.sound.sampled.AudioInputStream;
 import java.io.IOException;
 import java.text.ParseException;
 
@@ -20,6 +22,7 @@ public class SingleCategory {
     public Label attribute;
 
     public void ChangeNameClicked(MouseEvent mouseEvent) throws ParseException, IOException {
+        Audio.playClick5();
         TextInputDialog td = new TextInputDialog("enter the new name without space");
         td.setHeaderText("type here ...");
         td.showAndWait();
@@ -50,6 +53,7 @@ public class SingleCategory {
     }
 
     public void BackClicked(MouseEvent mouseEvent) throws IOException {
+        Audio.playClick4();
         Parent root = FXMLLoader.load(getClass().getResource("/GUI/CategoryMenu/CategoryMenu.fxml"));
         Stage stage = (Stage) ((Button) mouseEvent.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));

@@ -78,21 +78,12 @@ public class Controller {
                 viewport.getMinY() + yProportion * viewport.getHeight());
     }
 
-
-    public void initialize() throws ParseException, IOException {
-        String productId = MenuHandler.getProductID();
-        MenuHandler.getServer().clientToServer("get product picture path+" + productId);
-        String path = MenuHandler.getServer().serverToClient();
-        if (path != null) {
-            imageView.setImage(new Image(path));
-        }
-        MenuHandler.getServer().clientToServer("view product+" + MenuHandler.getUsername() + "+" + productId);
-        String serverAnswer = MenuHandler.getServer().serverToClient();
+    private void zoom() {
         double width = imageView.getFitWidth();
         double height = imageView.getFitHeight();
 
         imageView.setPreserveRatio(true);
-        reset(imageView, width / 2, height / 2);
+        reset(imageView, 291.0, 276.0);
 
         ObjectProperty<Point2D> mouseDown = new SimpleObjectProperty<>();
 
@@ -131,7 +122,21 @@ public class Controller {
             }
         });
 
-        if (MenuHandler.isIsUserLogin() == false) {
+    }
+
+
+    public void initialize() throws ParseException, IOException {
+        String productId = MenuHandler.getProductID();
+        MenuHandler.getServer().clientToServer("get product picture path+" + productId);
+        String path = MenuHandler.getServer().serverToClient();
+        if (path != null) {
+            imageView.setImage(new Image(path));
+        }
+        zoom();
+        MenuHandler.getServer().clientToServer("view product+" + MenuHandler.getUsername() + "+" + productId);
+        String serverAnswer = MenuHandler.getServer().serverToClient();
+
+        if (!MenuHandler.isIsUserLogin()) {
             customerLoad(serverAnswer);
         } else {
             if (MenuHandler.getUserType().equalsIgnoreCase("Boss")) {
