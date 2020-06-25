@@ -64,6 +64,8 @@ public class NewOffCodeController {
 
         if (respond.startsWith("ERROR")) {
             Alert alert = new Alert(Alert.AlertType.ERROR, respond, ButtonType.OK);
+            ((Stage) alert.getDialogPane().getScene().getWindow()).setAlwaysOnTop(true);
+            ((Stage) alert.getDialogPane().getScene().getWindow()).toFront();
             alert.showAndWait();
             return;
         }
