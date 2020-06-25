@@ -512,17 +512,22 @@ public class BossManager {
         if (!Storage.isThereOffCodeWithID(offCodeID)) {
             Server.setAnswer("ERROR: there isn't any offCode with this ID");
         } else {
+            StringBuilder ans = new StringBuilder("OffCode Edited Successfully");
             OffCode offCode = Storage.getOffCodeById(offCodeID);
-            if (attribute.equalsIgnoreCase("start time")) {
+            if (attribute.equalsIgnoreCase("start date")) {
+                ans.append("\n").append("START DATE edited");
                 offCode.setStart(updatedInfo);
-            } else if (attribute.equalsIgnoreCase("end time")) {
+            } else if (attribute.equalsIgnoreCase("end date")) {
+                ans.append("\n").append("END DATE edited");
                 offCode.setEnd(updatedInfo);
             } else if (attribute.equalsIgnoreCase("percentage")) {
+                ans.append("\n").append("PERCENTAGE edited");
                 offCode.setPercentage(updatedInfo);
             } else if (attribute.equalsIgnoreCase("ceiling")) {
+                ans.append("\n").append("MAX edited");
                 offCode.setCeiling(Integer.parseInt(updatedInfo));
             }
-            Server.setAnswer("edit successful");
+            Server.setAnswer(ans.toString());
         }
     }
 

@@ -142,8 +142,9 @@ public class OffCode extends Off implements Serializable {
 
     public String toStringForBoss() {
         StringBuilder result = new StringBuilder(super.toString());
-        result.append("Number Of Times Can Be Still Used: ").append(numberOfTimesCanBeUsed).append("\n");
-        result.append("Users That Can Use It: " + "\n");
+        result.append("Max:").append(ceiling).append("\n");
+        result.append("Number Of Times Can Be Still Used:").append(numberOfTimesCanBeUsed).append("\n");
+        result.append("Users That Can Use It:" + "\n");
         for (String user : userNamesCanUseIt) {
             result.append(user).append("\n");
         }

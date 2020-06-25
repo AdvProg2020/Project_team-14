@@ -80,7 +80,33 @@ public class ManageOffCodesController {
             offCodeId.setText(ansLines[i].split("\\+")[0]);
             percentage.setText(ansLines[i].split("\\+")[1]);
             offCodeList.getChildren().add(root);
+
+            root.setOnMouseClicked(this::viewOffCode);
         }
+    }
+
+    private void viewOffCode(MouseEvent mouseEvent) {
+        HBox hBox = (HBox) mouseEvent.getSource();
+        MenuHandler.setSeeingOffCode(((Label) hBox.getChildren().get(1)).getText());
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/GUI/BossProfile/ManageOffCodes/ViewOffCodePopup.fxml"));
+            Popup popup = new Popup();
+            popup.getContent().add(root);
+            popup.setOnHiding(e -> {
+                try {
+                    updateContent();
+                } catch (ParseException ex) {
+                    ex.printStackTrace();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            });
+            popup.show((Stage) offCodeList.getScene().getWindow());
+        } catch (IOException e) {
+            System.err.println("exception in loading ViewOffCodePopup.fxml ManageOffCodesController class");
+            e.printStackTrace();
+        }
+
     }
 
     public void changeSortType(MouseEvent mouseEvent) throws IOException, ParseException {
@@ -93,7 +119,7 @@ public class ManageOffCodesController {
 
     public void createNewOffCode(MouseEvent mouseEvent) throws IOException {
         Stage parent = (Stage) ((Button) mouseEvent.getSource()).getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("NewOffCodePopup.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/GUI/BossProfile/ManageOffCodes/NewOffCodePopup.fxml"));
         Popup popup = new Popup();
         popup.getContent().add(root);
         popup.setOnHiding(e -> {

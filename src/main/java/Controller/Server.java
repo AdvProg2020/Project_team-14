@@ -330,7 +330,7 @@ public class Server {
     }
 
     private String isDateValid(String date, String type) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         try {
             dateFormat.parse(date);
         } catch (ParseException e) {

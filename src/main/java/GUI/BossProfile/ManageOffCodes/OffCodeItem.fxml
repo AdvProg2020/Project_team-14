@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.*?>
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-
 
 <HBox alignment="CENTER_LEFT" maxHeight="40.0" maxWidth="484.0" minHeight="40.0" minWidth="484.0" prefWidth="484.0" spacing="10.0" style="-fx-background-color: #dddddd; -fx-background-radius: 10;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1">
    <children>
@@ -35,4 +35,7 @@
    <padding>
       <Insets left="8.0" right="8.0" />
    </padding>
+   <cursor>
+      <Cursor fx:constant="HAND" />
+   </cursor>
 </HBox>
