@@ -16,11 +16,9 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.text.Annotation;
 import java.text.ParseException;
 
 public class ManageProductsController {
@@ -80,6 +78,7 @@ public class ManageProductsController {
                 stage.getScene().setCursor(Cursor.DEFAULT);
             });
             ((AnchorPane) object).setOnMouseClicked(event -> {
+                MenuHandler.setBackProduct("/GUI/SalesmanProfile/SalesmanProfileLayout.fxml");
                 MenuHandler.setProductID(s.split("\\s")[2]);
                 Stage stage = (Stage) ((AnchorPane) event.getSource()).getScene().getWindow();
                 Parent root = null;

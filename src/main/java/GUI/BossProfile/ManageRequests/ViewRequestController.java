@@ -65,6 +65,47 @@ public class ViewRequestController {
                     serverAnswer.split("\n")[5].split("\\s")[9] + "\n";
             ans += "Request ID: " + requestID;
             requestContent.setText(ans);
+        } else if (serverAnswer.split("\\s")[1].equals("ADD_TO_PRODUCT")) {
+            viewOtherButton.setText("View Product");
+            viewOtherButton.setVisible(true);
+            String ans = serverAnswer.split("\n")[1] + "\n";
+            ans += serverAnswer.split("\n")[2] + "\n";
+            ans += serverAnswer.split("\n")[3].split("\\s")[0] + " " + serverAnswer.split("\n")[3].
+                    split("\\s")[1] + " " + serverAnswer.split("\n")[3].split("\\s")[2] + "\n";
+            ans += serverAnswer.split("\n")[3].split("\\s")[3] + " " + serverAnswer.split("\n")[3].split("\\s")[4] + " " +
+                    serverAnswer.split("\n")[3].split("\\s")[5] + "\n";
+            ans += serverAnswer.split("\n")[3].split("\\s")[6] + " " + serverAnswer.split("\n")[3].split("\\s")[7] + "\n";
+            ans += serverAnswer.split("\n")[3].split("\\s")[8] + " " + serverAnswer.split("\n")[3].split("\\s")[9] + "\n";
+            ans += serverAnswer.split("\n")[4] + "\n";
+            ans += serverAnswer.split("\n")[5].split("\\s")[0] + " " + serverAnswer.split("\n")[5].split("\\s")[1] + " " +
+                    serverAnswer.split("\n")[5].split("\\s")[2] + "\n";
+            ans += "Product " + serverAnswer.split("\n")[5].split("\\s")[3] + " " + serverAnswer.split("\n")[5].split("\\s")[4] + "\n";
+            ans += "Offered " + serverAnswer.split("\n")[5].split("\\s")[6] + " " + serverAnswer.split("\n")[5].split("\\s")[7] + "\n";
+            ans += serverAnswer.split("\n")[5].split("\\s")[8] + " " + serverAnswer.split("\n")[5].split("\\s")[9] + " " +
+                    serverAnswer.split("\n")[5].split("\\s")[10] + "\n";
+            ans += "Request ID: " + requestID;
+            requestContent.setText(ans);
+        } else if (serverAnswer.split("\\s")[1].equals("CHANGE_PRODUCT")) {
+            viewOtherButton.setText("View Product");
+            viewOtherButton.setVisible(true);
+            String ans = serverAnswer.split("\n")[1] + "\n";
+            ans += serverAnswer.split("\n")[2] + "\n";
+            ans += serverAnswer.split("\n")[3].split("\\s")[0] + " " + serverAnswer.split("\n")[3].
+                    split("\\s")[1] + " " + serverAnswer.split("\n")[3].split("\\s")[2] + "\n";
+            ans += serverAnswer.split("\n")[3].split("\\s")[3] + " " + serverAnswer.split("\n")[3].split("\\s")[4] + " " +
+                    serverAnswer.split("\n")[3].split("\\s")[5] + "\n";
+            ans += serverAnswer.split("\n")[3].split("\\s")[6] + " " + serverAnswer.split("\n")[3].split("\\s")[7] + "\n";
+            ans += serverAnswer.split("\n")[3].split("\\s")[8] + " " + serverAnswer.split("\n")[3].split("\\s")[9] + "\n";
+            ans += serverAnswer.split("\n")[4].split("\\s")[0] + " " + serverAnswer.split("\n")[4].split("\\s")[1] + " " +
+                    serverAnswer.split("\n")[4].split("\\s")[2] + "\n";
+            ans += serverAnswer.split("\n")[5].split("\\s")[0] + " " + serverAnswer.split("\n")[5].split("\\s")[1] + " " +
+                    serverAnswer.split("\n")[5].split("\\s")[2] + "\n";
+            ans += serverAnswer.split("\n")[6].split("\\s")[0] + " " + serverAnswer.split("\n")[6].split("\\s")[1] + " " +
+                    serverAnswer.split("\n")[6].split("\\s")[2] + "\n";
+            ans += serverAnswer.split("\n")[7].split("\\s")[0] + " " + serverAnswer.split("\n")[7].split("\\s")[1] + " " +
+                    serverAnswer.split("\n")[7].split("\\s")[2] + " " + serverAnswer.split("\n")[8].split("\\s")[3] + "\n";
+            ans += "Request ID: " + requestID;
+            requestContent.setText(ans);
         }
     }
 

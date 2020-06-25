@@ -151,6 +151,7 @@ public class ProductManager {
     }
 
     public void editProduct(String productID, String salesmanID, String attribute, String updatedInfo) {
+        Product p = Storage.getProductById(productID);
         new ChangeProductRequest(salesmanID, Storage.getProductById(productID), attribute, updatedInfo);
     }
 

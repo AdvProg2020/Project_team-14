@@ -47,7 +47,6 @@ public class ProfileLayoutController {
     }
 
     public void manageAccounts(ActionEvent actionEvent) throws IOException {
-        System.out.println("JK FF");
         pane.getChildren().remove(pane.getChildren().get(0));
         pane.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/BossProfile/ManagerUsersMenu/ManageUsersLayOut.fxml")));
     }
@@ -58,6 +57,7 @@ public class ProfileLayoutController {
     }
 
     public void categoryClicked(MouseEvent mouseEvent) throws IOException {
+        pane.getChildren().remove(pane.getChildren().get(0));
         pane.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/CategoryMenu/CategoryMenu.fxml")));
     }
 

@@ -591,7 +591,7 @@ public class Server {
 
     private void addProductRemainder(String command) {
         String[] input = command.split("\\+");
-        Product product = Storage.getProductById(input[1]);
+        Product product = Storage.getProductById(input[2]);
         product.setRemainderForSalesman(product.getRemainderForSalesman(input[1]) +
                 Integer.parseInt(input[3]), input[1]);
         setAnswer("edit successful");

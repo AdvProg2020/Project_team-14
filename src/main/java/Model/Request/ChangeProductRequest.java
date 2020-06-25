@@ -51,9 +51,10 @@ public class ChangeProductRequest extends Request implements Serializable {
         String result = "";
         result += "General information of salesman: " + "\n";
         assert salesman != null;
-        result += salesman.toStringForRequest();
+        result += salesman.toStringForRequest() + "\n";
         assert product != null;
-        return result + "Product Name:" + product.getName() + "\n" +
+        return result + "Product Name: " + product.getName() + "\n" +
+                "Product ID: " + product.getProductID() + "\n" +
                 "Attribute to change: " + attribute.name().toLowerCase() + "\n"
                 + "New attribute value: " + updatedInfo
                 + "Confirmation State: " + confirmation.name() + "\n";
