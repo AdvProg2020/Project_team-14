@@ -7,12 +7,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.stage.FileChooser;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 
-import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.regex.Matcher;
@@ -62,14 +59,26 @@ public class PersonalInfoController {
         } else if (information[12].equalsIgnoreCase("salesman")) {
             companyInfo.setText(information[14]);
             balance.setText(information[16]);
+        } else {
+            companyInfoLabel.setVisible(false);
+            companyInfo.setVisible(false);
         }
     }
 
     public void chargeWallet(ActionEvent actionEvent) throws IOException {
         Audio.playClick3();
-        Parent root = FXMLLoader.load(getClass().getResource("/GUI/ProfileLayout/ChargeWalet.fxml"));
-        Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root));
+        Popup popup = new Popup();
+        popup.getContent().add(FXMLLoader.load(getClass().getResource("/GUI/ProfileLayout/ChargeWallet.fxml")));
+        popup.show(((Button) actionEvent.getSource()).getScene().getWindow());
+        popup.setOnHiding(e -> {
+            try {
+                initialize();
+            } catch (ParseException ex) {
+                ex.printStackTrace();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
     }
 
     public void returnable(ActionEvent actionEvent) throws IOException {
@@ -150,7 +159,8 @@ public class PersonalInfoController {
         } else {
             Alert alert = new Alert(Alert.AlertType.INFORMATION, message, ButtonType.OK);
             alert.showAndWait();
-            returnable(actionEvent);
+//            returnable(actionEvent);
+            initialize();
         }
     }
 
