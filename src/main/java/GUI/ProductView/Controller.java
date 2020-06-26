@@ -21,6 +21,8 @@ import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.stage.Stage;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 
@@ -51,6 +53,16 @@ public class Controller {
     public Button commentButton;
     public TextArea infoText;
     public Button similarIcon;
+    public ImageView status;
+
+    private void setStatus() throws FileNotFoundException {
+        // if it is on sale
+        status.setImage(new Image(new FileInputStream("src/main/java/GUI/ProductView/resources/sale.jpg")));
+        // if it is normal
+        status.setImage(new Image(new FileInputStream("src/main/java/GUI/ProductView/resources/images.png")));
+        // if it it not available
+        status.setImage(new Image(new FileInputStream("src/main/java/GUI/ProductView/resources/images (1).png")));
+    }
 
     private void reset(ImageView imageView, double width, double height) {
         imageView.setViewport(new Rectangle2D(0, 0, width, height));

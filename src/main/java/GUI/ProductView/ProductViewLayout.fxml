@@ -8,11 +8,11 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="740.0" prefWidth="1180.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ProductView.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="740.0" prefWidth="1180.0" style="-fx-background-color: yellow;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ProductView.Controller">
     <children>
-        <HBox layoutX="10.0" layoutY="10.0" prefHeight="360.0" prefWidth="850.0" spacing="10.0" style="-fx-background-color: #dddddd;" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+        <HBox layoutX="10.0" layoutY="10.0" prefHeight="360.0" prefWidth="850.0" spacing="10.0" style="-fx-background-color: yellow;" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
             <children>
-                <VBox prefHeight="360.0" prefWidth="590.0" style="-fx-background-color: #cccccc;">
+                <VBox prefHeight="360.0" prefWidth="590.0" style="-fx-background-color: royalblue;">
                     <children>
                         <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                             <children>
@@ -26,7 +26,7 @@
                                 </Label>
                                 <Button mnemonicParsing="false" onAction="#back" prefHeight="52.0" prefWidth="157.0" text="Back">
                                     <font>
-                                        <Font name="System Bold Italic" size="20.0" />
+                                        <Font name="Book Antiqua Bold" size="20.0" />
                                     </font>
                                 </Button>
                                 <Button fx:id="starButton" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#starPopup" prefHeight="55.0" prefWidth="58.0" text="Button">
@@ -101,7 +101,7 @@
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="320.0" />
                             </expandableContent>
                         </DialogPane>
-                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="15.0">
+                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="15.0" style="-fx-background-color: royalblue;">
                             <children>
                                 <Label fx:id="chooseSellerField" text="Seller :">
                                     <HBox.margin>
@@ -128,7 +128,7 @@
                         <DropShadow />
                     </effect>
                 </VBox>
-                <VBox alignment="TOP_CENTER" prefHeight="360.0" prefWidth="250.0" spacing="25.0" style="-fx-background-color: #cccccc;">
+                <VBox alignment="TOP_CENTER" prefHeight="360.0" prefWidth="250.0" spacing="25.0" style="-fx-background-color: royalblue;">
                     <children>
                         <HBox prefHeight="263.0" prefWidth="250.0" spacing="10.0">
                             <children>
@@ -206,7 +206,7 @@
                                 </VBox>
                             </children>
                         </HBox>
-                        <Button fx:id="addButton" graphicTextGap="15.0" mnemonicParsing="false" onAction="#addToCart" prefHeight="47.0" prefWidth="219.0" text="Add to Cart">
+                        <Button fx:id="addButton" graphicTextGap="15.0" mnemonicParsing="false" onAction="#addToCart" prefHeight="47.0" prefWidth="219.0" style="-fx-background-color: green;" text="Add to Cart">
                             <graphic>
                                 <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
@@ -217,6 +217,9 @@
                             <font>
                                 <Font size="18.0" />
                             </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                         </Button>
                     </children>
                     <effect>
@@ -225,7 +228,7 @@
                 </VBox>
             </children>
         </HBox>
-        <VBox alignment="TOP_CENTER" layoutX="879.0" layoutY="67.0" prefHeight="360.0" prefWidth="300.0" spacing="10.0" style="-fx-background-color: #cccccc;" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+        <VBox alignment="TOP_CENTER" layoutX="879.0" layoutY="67.0" prefHeight="360.0" prefWidth="300.0" spacing="10.0" style="-fx-background-color: royalblue;" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
             <children>
                 <ImageView fx:id="imageView" fitHeight="276.0" fitWidth="291.0" pickOnBounds="true" preserveRatio="true">
                     <image>
@@ -254,11 +257,11 @@
                 <DropShadow />
             </effect>
         </VBox>
-        <HBox layoutX="120.0" layoutY="320.0" prefHeight="341.0" prefWidth="1160.0" spacing="20.0" style="-fx-background-color: #cccccc;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+        <HBox layoutX="120.0" layoutY="320.0" prefHeight="341.0" prefWidth="1160.0" spacing="20.0" style="-fx-background-color: royalblue;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
             <children>
                 <VBox alignment="TOP_CENTER" prefHeight="342.0" prefWidth="646.0">
                     <children>
-                        <ScrollPane prefHeight="320.0" prefWidth="646.0">
+                        <ScrollPane prefHeight="320.0" prefWidth="646.0" style="-fx-background-color: blue;">
                             <VBox.margin>
                                 <Insets bottom="8.0" left="8.0" top="25.0" />
                             </VBox.margin>
@@ -289,10 +292,13 @@
                                 <Font size="18.0" />
                             </font>
                         </TextArea>
-                        <Button fx:id="commentButton" mnemonicParsing="false" onAction="#doComment" text="Comment">
+                        <Button fx:id="commentButton" mnemonicParsing="false" onAction="#doComment" style="-fx-background-color: green;" text="Comment">
                             <font>
                                 <Font size="18.0" />
                             </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                         </Button>
                     </children>
                 </VBox>
@@ -306,6 +312,11 @@
                 <Font size="20.0" />
             </font>
         </Label>
+      <ImageView fx:id="status" fitHeight="71.0" fitWidth="77.0" layoutX="250.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@resources/images%20(1).png" />
+         </image>
+      </ImageView>
     </children>
    <effect>
       <SepiaTone level="0.19" />
