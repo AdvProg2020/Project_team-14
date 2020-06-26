@@ -246,6 +246,10 @@ public class Server {
             isFinished(command);
         } else if (command.startsWith("is product on sale+")) {
             isOnSale(command);
+        } else if (command.startsWith("product min price with name+")) {
+            getMinPriceWithName(command);
+        } else if (command.startsWith("is there product name+")) {
+            isThereProductName(command);
         }
         //end parts
         else if (command.startsWith("show balance")) {
@@ -303,6 +307,15 @@ public class Server {
                 return;
             }
         }*/
+    }
+
+    private void isThereProductName(String command) {
+        for (Product product : Storage.getAllProducts()) {
+            if (product.equals(command.split("\\+")[1])) {
+                Server.setAnswer("true");
+            }
+        }
+        Server.setAnswer("false");
     }
 
     private void isFinished(String command) {
@@ -472,6 +485,16 @@ public class Server {
             }
         }
     }
+
+    private void getMinPriceWithName(String command) {
+        String name = command.split("\\+")[1];
+        for (Product product : Storage.getAllProducts()) {
+            if (product.getName().equals(name)) {
+                Server.setAnswer(String.valueOf(product.getMinimumPrice()));
+            }
+        }
+    }
+
 
     private void getProfilePicturePath(String command) {
         for (Product product : Storage.getAllProducts()) {

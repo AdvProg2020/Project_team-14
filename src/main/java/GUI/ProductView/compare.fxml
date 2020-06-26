@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="490.0" prefWidth="677.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ProductView.Compare">
+   <children>
+      <Button layoutX="399.0" layoutY="111.0" mnemonicParsing="false" onAction="#search" prefHeight="36.0" prefWidth="89.0" text="search" />
+      <Label layoutX="270.0" layoutY="35.0" text="comparing" textFill="#ff1111">
+         <font>
+            <Font name="System Bold Italic" size="22.0" />
+         </font>
+      </Label>
+      <Label layoutX="88.0" layoutY="265.0" text="minimum price:" textFill="#0bad20">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="88.0" layoutY="312.0" text="product name:" textFill="#2db626">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="296.0" layoutY="208.0" text="first" textFill="#0300b6">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="465.0" layoutY="208.0" text="second" textFill="#070090">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <TextField fx:id="text" layoutX="108.0" layoutY="113.0" prefHeight="32.0" prefWidth="201.0" promptText="enter the other product name" />
+      <Label fx:id="name1" layoutX="276.0" layoutY="312.0" text="-----------">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="name2" layoutX="455.0" layoutY="312.0" text="-----------">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="minPrice2" layoutX="455.0" layoutY="265.0" text="-----------">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="minPrice1" layoutX="276.0" layoutY="265.0" text="-----------">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Button layoutX="557.0" layoutY="33.0" mnemonicParsing="false" onAction="#back" prefHeight="36.0" prefWidth="89.0" text="back" />
+   </children>
+</AnchorPane>

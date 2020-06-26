@@ -137,10 +137,12 @@ public class ViewRequestController {
         MenuHandler.getServer().clientToServer("decline request+" + MenuHandler.getUsername() + "+" + requestID);
         if (MenuHandler.getServer().serverToClient().equalsIgnoreCase("declined successfully")) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Request Declined Successfully", ButtonType.OK);
+            ((Stage) alert.getDialogPane().getScene().getWindow()).setAlwaysOnTop(true);
+            ((Stage) alert.getDialogPane().getScene().getWindow()).toFront();
             alert.showAndWait();
-            Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+            /*Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
             Parent root = FXMLLoader.load(getClass().getResource("/GUI/BossProfile/ManageRequests/ViewRequest.fxml"));
-            stage.setScene(new Scene(root));
+            stage.setScene(new Scene(root));*/
         }
     }
 
@@ -150,19 +152,23 @@ public class ViewRequestController {
             MenuHandler.getServer().clientToServer("accept request+" + MenuHandler.getUsername() + "+" + requestID);
             if (MenuHandler.getServer().serverToClient().equalsIgnoreCase("accepted successfully")) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, "Request Accepted Successfully", ButtonType.OK);
+                ((Stage) alert.getDialogPane().getScene().getWindow()).setAlwaysOnTop(true);
+                ((Stage) alert.getDialogPane().getScene().getWindow()).toFront();
                 alert.showAndWait();
-                Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+                /*Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
                 Parent root = FXMLLoader.load(getClass().getResource("/GUI/BossProfile/ManageRequests/ViewRequest.fxml"));
-                stage.setScene(new Scene(root));
+                stage.setScene(new Scene(root));*/
             }
         } else {
             MenuHandler.getServer().clientToServer("delete request+" + MenuHandler.getUsername() + "+" + requestID);
             if (MenuHandler.getServer().serverToClient().equalsIgnoreCase("deleted successfully")) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, "Request Deleted Successfully", ButtonType.OK);
+                ((Stage) alert.getDialogPane().getScene().getWindow()).setAlwaysOnTop(true);
+                ((Stage) alert.getDialogPane().getScene().getWindow()).toFront();
                 alert.showAndWait();
-                Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+                /*Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
                 Parent root = FXMLLoader.load(getClass().getResource("/GUI/ProfileLayout/ProfileLayout.fxml"));
-                stage.setScene(new Scene(root));
+                stage.setScene(new Scene(root));*/
             }
         }
     }
@@ -177,8 +183,9 @@ public class ViewRequestController {
 
     public void back(ActionEvent actionEvent) throws IOException {
         Audio.playClick1();
-        Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+        ((Button) actionEvent.getSource()).getScene().getWindow().hide();
+        /*Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
         Parent root = FXMLLoader.load(getClass().getResource("/GUI/ProfileLayout/ProfileLayout.fxml"));
-        stage.setScene(new Scene(root));
+        stage.setScene(new Scene(root));*/
     }
 }
