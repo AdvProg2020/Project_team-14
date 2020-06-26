@@ -409,7 +409,7 @@ public class Server {
         String[] info = command.split("\\+");//1-->salesmanID    2--> start     3-->end     4-->percentage     5-->productIDs
         if (isSaleInfoValid(info[2], info[3], info[4])) {
             Server.setAnswer("creation of sale successful");
-            String productsID = info[5].substring(info[5].indexOf(":") + 1, info[5].length() - 1);
+            String productsID = info[5].substring(info[5].indexOf(":") + 2, info[5].length() - 1);//info[5]-->Products:[...]
             salesmanManager.createSale(info[1], info[2], info[3], Integer.parseInt(info[4]), convertStringToArray(productsID));
         }
     }

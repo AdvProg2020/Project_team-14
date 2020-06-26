@@ -26,6 +26,7 @@ public class ManageSaleController {
     public TableColumn endDate;
     public TableColumn status;
     public TableColumn moreInfo;
+    public Label viewError;
 
 
     @FXML
@@ -144,5 +145,28 @@ public class ManageSaleController {
                 ex.printStackTrace();
             }
         });
+    }
+
+    public void viewSale(MouseEvent mouseEvent) throws IOException {
+        Audio.playClick2();
+        SaleRow item = (SaleRow) saleTable.getSelectionModel().getSelectedItem();
+        if (item == null) {
+            viewError.setText("please select one of the below sale");
+            return;
+        }
+
+        MenuHandler.setSeeingSale(item.getMoreInfo());
+        Popup popup = new Popup();
+        popup.getContent().add(FXMLLoader.load(getClass().getResource("/GUI/SalesmanProfile/ManageSale/ViewSale.fxml")));
+        popup.show(((Button) mouseEvent.getSource()).getScene().getWindow());
+        /*popup.setOnHiding(e -> {
+            try {
+                update();
+            } catch (ParseException ex) {
+                ex.printStackTrace();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });*/
     }
 }

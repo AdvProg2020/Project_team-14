@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="484.0" prefWidth="824.0" style="-fx-background-color: #28518a; -fx-background-radius: 20;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.SalesmanProfile.ManageSale.ViewSaleManager">
+   <children>
+      <VBox alignment="TOP_CENTER" layoutX="54.0" layoutY="111.0" prefHeight="249.0" prefWidth="356.0">
+         <children>
+            <HBox prefHeight="155.0" prefWidth="344.0">
+               <children>
+                  <VBox prefHeight="155.0" prefWidth="198.0">
+                     <children>
+                        <Label text="Start Date :" textFill="WHITE">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="15.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label layoutX="10.0" layoutY="10.0" text="End Date :" textFill="WHITE">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="15.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label layoutX="10.0" layoutY="31.0" text="Percentage :" textFill="WHITE">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="15.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label layoutX="10.0" layoutY="115.0" text="Confirmation :" textFill="WHITE">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="15.0" />
+                           </VBox.margin>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <VBox alignment="TOP_CENTER" layoutX="10.0" layoutY="10.0" prefHeight="155.0" prefWidth="272.0">
+                     <children>
+                        <DatePicker fx:id="startDate">
+                           <VBox.margin>
+                              <Insets top="15.0" />
+                           </VBox.margin>
+                        </DatePicker>
+                        <DatePicker fx:id="endDate" layoutX="10.0" layoutY="41.0">
+                           <VBox.margin>
+                              <Insets top="15.0" />
+                           </VBox.margin>
+                        </DatePicker>
+                        <TextField fx:id="percentage">
+                           <VBox.margin>
+                              <Insets top="15.0" />
+                           </VBox.margin>
+                        </TextField>
+                        <TextField fx:id="confirmationStatus" disable="true" editable="false" layoutX="10.0" layoutY="117.0">
+                           <VBox.margin>
+                              <Insets top="15.0" />
+                           </VBox.margin>
+                        </TextField>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <Label fx:id="errorsLabel" textFill="RED">
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </Label>
+         </children>
+      </VBox>
+      <Label layoutX="349.0" layoutY="25.0" text="View Sale" textFill="WHITE">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Label>
+      <Button layoutX="248.0" layoutY="391.0" mnemonicParsing="false" onMouseClicked="#saveChanges" prefHeight="31.0" prefWidth="119.0" text="Save Changes" />
+      <Button layoutX="122.0" layoutY="391.0" mnemonicParsing="false" onMouseClicked="#back" prefHeight="31.0" prefWidth="119.0" text="Back" />
+      <ListView fx:id="productList" disable="true" layoutX="457.0" layoutY="111.0" prefHeight="311.0" prefWidth="330.0" />
+   </children>
+</AnchorPane>

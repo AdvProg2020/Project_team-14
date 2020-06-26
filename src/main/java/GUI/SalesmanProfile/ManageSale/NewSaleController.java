@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -42,11 +43,13 @@ public class NewSaleController {
 
         String[] productInfo = respond.split("\n");
         for (int i = 0; i < productInfo.length - 1; i++) {
-            Matcher matcher = getMatcher(productInfo[i], "Name: (\\w+)");
+            Matcher matcher = getMatcher(productInfo[i], "Product ID: (.[^ ]+) Name: (\\w+)");
+            System.out.println(productInfo[i]);
             if (matcher.find()) {
-                String productName = matcher.group(1);
-                CheckBox item = new CheckBox(productName);
-                productList.getItems().add(item);
+                String productId = matcher.group(1);
+                String productName = matcher.group(2);
+
+                productList.getItems().add(new CheckBox(productName + " : " + productId));
             }
         }
     }
@@ -69,7 +72,7 @@ public class NewSaleController {
         toServer.append("+").append(startDate.getValue().toString());
         toServer.append("+").append(endDate.getValue().toString());
         toServer.append("+").append(percentage.getText());
-        toServer.append("+Products:").append(chosenProduct());
+        toServer.append("+Products:").append(chosenProductId());
 
         MenuHandler.getServer().clientToServer(toServer.toString());
         String respond = MenuHandler.getServer().serverToClient();
@@ -89,10 +92,14 @@ public class NewSaleController {
         doneButton.getScene().getWindow().hide();
     }
 
-    private String chosenProduct() {
+    private String chosenProductId() {
         ArrayList<String> chosenProduct = new ArrayList<>();
         for (CheckBox item : productList.getItems()) {
-            if (item.isSelected()) chosenProduct.add(item.getText());
+            if (item.isSelected()) {
+                String text = item.getText();
+                int separator = text.indexOf(":");
+                chosenProduct.add(text.substring(separator + 2));
+            }
         }
         return chosenProduct.toString();
     }
@@ -100,7 +107,7 @@ public class NewSaleController {
     private void checkValidation() throws Exception {
         if (startDate.getValue() == null | endDate.getValue() == null | percentage.getText().equals("")) throw new Exception("Please completely fill up the form!!");
         if (startDate.getValue().isAfter(endDate.getValue())) throw new Exception("End date must be after Start Date");
-        if (chosenProduct().equals("[]")) throw new Exception("Please select at least one of your products!!");
+        if (chosenProductId().equals("[]")) throw new Exception("Please select at least one of your products!!");
     }
 
     public void back(MouseEvent mouseEvent) {
