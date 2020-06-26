@@ -22,7 +22,7 @@
                         <Insets left="8.0"/>
                     </HBox.margin>
                 </ImageView>
-                <ImageView fitWidth="30.0" onMouseClicked="#home" pickOnBounds="true" preserveRatio="true">
+                <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../ProductScene/resources/home.png"/>
                     </image>
@@ -95,9 +95,6 @@
                 <Button layoutX="10.0" layoutY="216.0" mnemonicParsing="false" onAction="#manageSales" prefHeight="40.0"
                         prefWidth="300.0" style="-fx-background-color: green;" styleClass="my-button"
                         text="Manage Sales" textFill="#ea0404">
-                <Button layoutX="10.0" layoutY="216.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="300.0"
-                        style="-fx-background-color: green;" styleClass="my-button" text="Manage Sales"
-                        textFill="#ea0404">
                     <cursor>
                         <Cursor fx:constant="HAND"/>
                     </cursor>

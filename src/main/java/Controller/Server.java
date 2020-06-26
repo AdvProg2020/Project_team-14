@@ -1216,7 +1216,7 @@ public class Server {
     }
 
     public String serverToClient() throws IOException {
-        endOfProgramme.updateFiles();
+        //endOfProgramme.updateFiles();
         return Server.answer;
     }
 
