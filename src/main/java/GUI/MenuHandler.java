@@ -1,8 +1,12 @@
 package GUI;
 
 import Controller.Server;
+import GUI.CategoryMenu.Category;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import org.javatuples.Triplet;
+
+import java.util.ArrayList;
 
 public class MenuHandler {
     static private String username = null;
@@ -17,6 +21,8 @@ public class MenuHandler {
     static private String loginBackAddress = null;
     static private Pane pane;
     static private String backProduct = null;
+    static private ArrayList<Triplet<String, String, Integer>> cart = new ArrayList<>();
+    public static String selectedCategory;
 
     public static String getRequestID() {
         return requestID;
@@ -112,5 +118,21 @@ public class MenuHandler {
 
     public static void setStage(Stage stage) {
         MenuHandler.stage = stage;
+    }
+
+    public static String getSelectedCategory() {
+        return selectedCategory;
+    }
+
+    public static void setSelectedCategory(String selectedCategory) {
+        MenuHandler.selectedCategory = selectedCategory;
+    }
+
+    public static ArrayList<Triplet<String, String, Integer>> getCart() {
+        return cart;
+    }
+
+    public static void setCart(ArrayList<Triplet<String, String, Integer>> cart) {
+        MenuHandler.cart = cart;
     }
 }

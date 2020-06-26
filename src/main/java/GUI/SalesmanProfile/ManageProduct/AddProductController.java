@@ -105,6 +105,7 @@ public class AddProductController {
             if (!path.equals("")) {
                 MenuHandler.getServer().clientToServer("product picture path+" + productId + "+" + path);
             }
+
             reset(actionEvent);
         }
     }

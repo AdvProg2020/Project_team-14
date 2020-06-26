@@ -29,7 +29,7 @@ public class SingleCategory {
         String newName = td.getEditor().getText();
         if (!newName.contains(" ")) {
             MenuHandler.getServer().clientToServer("edit category name+" + MenuHandler.getUsername() + "+" +
-                    Category.selected_category.getCategoryName() + "+" + newName);
+                    MenuHandler.getSelectedCategory() + "+" + newName);
             String answer = MenuHandler.getServer().serverToClient();
             if (answer.equals("edit successful")) {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Successful", ButtonType.OK);
@@ -60,8 +60,6 @@ public class SingleCategory {
     }
 
     public void initialize() {
-        parentCategory.setText(Category.selected_category.getParentCategoryName());
-        categoryName.setText(Category.selected_category.getCategoryName());
-        attribute.setText(Category.selected_category.getAttribute());
+
     }
 }

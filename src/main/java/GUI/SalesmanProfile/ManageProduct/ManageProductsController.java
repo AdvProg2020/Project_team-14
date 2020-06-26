@@ -56,9 +56,10 @@ public class ManageProductsController {
         MenuHandler.getServer().clientToServer("show products+" + MenuHandler.getUsername());
         String serverAnswer = MenuHandler.getServer().serverToClient();
 
-        for (int i = 1; i <= products.getChildren().size(); i++) {
+        for (int i = 1; i <= products.getChildren().size(); ) {
             Object object = products.getChildren().remove(0);
         }
+        System.out.println(products.getChildren().size());
         if (serverAnswer.equals("nothing found")) {
             return;
         }

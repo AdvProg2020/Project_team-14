@@ -94,7 +94,7 @@ public class ManageRequestsController {
                 command += "+" + type;
             }
         }
-        for (int i = 1; i <= requestList.getChildren().size(); i++) {
+        for (int i = 1; i <= requestList.getChildren().size(); ) {
             Object object = requestList.getChildren().remove(0);
         }
         MenuHandler.getServer().clientToServer(command);

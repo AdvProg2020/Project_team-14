@@ -39,7 +39,7 @@ public class RegisterController {
     public TextField company;
 
     public void initialize() throws ParseException, IOException {
-        String path = "C:\\Users\\TnrCo\\IdeaProjects\\Project_team\\src\\main\\java\\GUI\\Login\\resources\\mp4.mp4";
+        String path = "F:\\AP\\AP\\Project_team-23\\src\\main\\java\\GUI\\Login\\resources\\mp4.mp4";
         Media media = new Media(new File(path).toURI().toString());
         MediaPlayer mediaPlayer = new MediaPlayer(media);
         mediaView.setMediaPlayer(mediaPlayer);

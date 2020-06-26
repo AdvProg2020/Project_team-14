@@ -50,6 +50,7 @@ public class Controller {
     public Button addButton;
     public Button commentButton;
     public TextArea infoText;
+    public Button similarIcon;
 
     private void reset(ImageView imageView, double width, double height) {
         imageView.setViewport(new Rectangle2D(0, 0, width, height));
@@ -137,7 +138,9 @@ public class Controller {
         MenuHandler.getServer().clientToServer("get product picture path+" + productId);
         String path = MenuHandler.getServer().serverToClient();
         if (path != null) {
-            imageView.setImage(new Image(path));
+            if (!path.equalsIgnoreCase("none")) {
+                imageView.setImage(new Image(path));
+            }
         }
         zoom();
         MenuHandler.getServer().clientToServer("view product+" + MenuHandler.getUsername() + "+" + productId);
@@ -308,5 +311,8 @@ public class Controller {
         Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
         Parent root = FXMLLoader.load(getClass().getResource(MenuHandler.getBackProduct()));
         stage.setScene(new Scene(root));
+    }
+
+    public void similarProducts(ActionEvent actionEvent) {
     }
 }
