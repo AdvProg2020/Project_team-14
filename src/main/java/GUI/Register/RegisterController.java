@@ -212,7 +212,7 @@ public class RegisterController {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are You Sure You Want To Exit", ButtonType.YES, ButtonType.NO);
         alert.showAndWait();
         if (alert.getResult().equals(ButtonType.YES)) {
-            System.exit(23);
+            System.exit(1989);
         }
     }
 }

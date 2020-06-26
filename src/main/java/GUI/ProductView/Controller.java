@@ -424,7 +424,7 @@ public class Controller {
 
     public void starPopup(ActionEvent mouseEvent) throws IOException {
         Audio.playClick5();
-        if (MenuHandler.isIsUserLogin() == false) {
+        if (!MenuHandler.isIsUserLogin()) {
             return;
         }
         Popup popup = new Popup();
@@ -447,9 +447,14 @@ public class Controller {
     }
 
     public void similarProducts(ActionEvent actionEvent) {
+        Audio.playClick4();
     }
 
-    public void compare(ActionEvent actionEvent) {
+    public void compare(ActionEvent actionEvent) throws IOException {
+        Audio.playClick5();
+        Parent root = FXMLLoader.load(getClass().getResource("/GUI/ProductView/Compare.fxml"));
+        Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root));
     }
 
     private boolean checkProductNameFormat(String input) {
