@@ -21,6 +21,7 @@ public class ProfileLayoutController {
     public ImageView imageView;
 
     public void initialize() throws IOException {
+        MenuHandler.setBackProduct("GUI/ProfileLayout/ProfileLayout.fxml");
         pane.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/ProfileLayout/PersonalInfoLayout.fxml")));
     }
 
