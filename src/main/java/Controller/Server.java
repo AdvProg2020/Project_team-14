@@ -240,8 +240,11 @@ public class Server {
             this.getProductOnSale(command);
         } else if (command.startsWith("get product price by salesman+")) {
             this.getProductPrice(command);
+        } else if (command.startsWith("is product finished+")) {
+            isFinished(command);
+        } else if (command.startsWith("is product on sale+")) {
+            isOnSale(command);
         }
-
         //end parts
         else if (command.startsWith("show balance")) {
             this.showBalance(command);
@@ -251,11 +254,19 @@ public class Server {
 
     }
 
+    private void isFinished(String command) {
+        Server.setAnswer(Boolean.toString(Storage.getProductById(command.split("\\+")[1]).isFinished()));
+    }
+
+    private void isOnSale(String command) {
+        Server.setAnswer(Boolean.toString(Storage.getProductById(command.split("\\+")[1]).is_on_sale()));
+    }
+
     private void addBalance(String command) {
         Account account = Storage.getAccountWithUsername(command.split("\\+")[1]);
         if (account instanceof Customer) {
             ((Customer) account).setCredit(account.getCredit() + Integer.parseInt(command.split("\\+")[2]));
-        } else if (account instanceof Salesman){
+        } else if (account instanceof Salesman) {
             ((Salesman) account).setCredit(account.getCredit() + Integer.parseInt(command.split("\\+")[2]));
         }
         Server.setAnswer("successful");
