@@ -104,16 +104,9 @@
             </VBox>
          </children>
       </HBox>
-      <HBox layoutX="18.0" layoutY="571.0" prefHeight="100.0" prefWidth="781.0">
+      <HBox alignment="CENTER" layoutX="18.0" layoutY="571.0" prefHeight="100.0" prefWidth="781.0">
          <children>
-            <Button fx:id="removeButton" mnemonicParsing="false" onAction="#remove" prefHeight="51.0" prefWidth="137.0" style="-fx-background-color: Fuchsia;" text="REMOVE">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-               <font>
-                  <Font size="15.0" />
-               </font></Button>
-            <Button fx:id="viewRequests" mnemonicParsing="false" onAction="#viewRequests" prefHeight="51.0" prefWidth="137.0" style="-fx-background-color: LawnGreen;" text="View Requests">
+            <Button fx:id="removeButton" mnemonicParsing="false" onAction="#remove" prefHeight="51.0" prefWidth="137.0" style="-fx-background-color: LawnGreen;" text="REMOVE">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>

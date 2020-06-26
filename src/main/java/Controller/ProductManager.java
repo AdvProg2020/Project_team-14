@@ -120,6 +120,10 @@ public class ProductManager {
         Product product = Storage.getProductById(productID);
         assert product != null;
         assert account != null;
+        if (username.equals("offLine")) {
+            Server.setAnswer(product.toStringForCustomerView());
+            return;
+        }
         if (account.getRole().equals(Role.BOSS)) {
             Server.setAnswer(product.toStringForBossView());
         } else if (account.getRole().equals(Role.SALESMAN)) {

@@ -140,7 +140,11 @@ public class ManageProductsController {
                 stage.getScene().setCursor(Cursor.DEFAULT);
             });
             ((AnchorPane) object).setOnMouseClicked(event -> {
-                MenuHandler.setBackProduct("/GUI/SalesmanProfile/SalesmanProfileLayout.fxml");
+                if (MenuHandler.getUserType().equalsIgnoreCase("Salesman")) {
+                    MenuHandler.setBackProduct("/GUI/SalesmanProfile/SalesmanProfileLayout.fxml");
+                } else if (MenuHandler.getUserType().equalsIgnoreCase("Boss")) {
+                    MenuHandler.setBackProduct("/GUI/ProfileLayout/ProfileLayout.fxml");
+                }
                 MenuHandler.setProductID(s.split("\\s")[2]);
                 Stage stage = (Stage) ((AnchorPane) event.getSource()).getScene().getWindow();
                 Parent root = null;

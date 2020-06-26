@@ -22,7 +22,9 @@ import Model.Account.Role;
 import Model.Account.Salesman;
 import Model.Category.Category;
 import Model.Confirmation;
+import Model.Off.Sale;
 import Model.Product.Comment;
+import Model.Product.Point;
 import Model.Product.Product;
 import Model.Request.Request;
 import Model.Storage;
@@ -210,6 +212,10 @@ public class Server {
             this.getCommentProductID(command);
         } else if (command.startsWith("comment product+")) {
             this.commentProduct(command);
+        } else if (command.startsWith("point product+")) {
+            this.pointProduct(command);
+        } else if (command.startsWith("what is point product+")) {
+            this.getProductPoint(command);
         } else if (command.startsWith("is server has boss")) {
             this.isServerHasBoss();
         } else if (command.startsWith("get product min price+")) {
@@ -228,6 +234,12 @@ public class Server {
             this.getPersonImage(command);
         } else if (command.startsWith("delete person image")) {
             this.deletePersonImage(command);
+        } else if (command.startsWith("what is product name+")) {
+            this.getProductName(command);
+        } else if (command.startsWith("is product on sale by+")) {
+            this.getProductOnSale(command);
+        } else if (command.startsWith("get product price by salesman+")) {
+            this.getProductPrice(command);
         }
 
         //end parts
@@ -235,6 +247,74 @@ public class Server {
             this.showBalance(command);
         }
 
+    }
+
+    private void getProductPrice(String command) {
+        Product product = Storage.getProductById(command.split("\\+")[2]);
+        setAnswer(String.valueOf(product.getPriceBySalesmanID(command.split("\\+")[1])));
+    }
+
+    private void getProductOnSale(String command) {
+        //complete needed
+        /*setAnswer("none");
+        for (Product product : Storage.getAllProducts()) {
+            if (product.getProductID().equals(command.split("\\+")[2])) {
+                if (product.getIsOnSale().get(command.split("\\+")[1])) {
+                    for (Sale sale : Storage.allSales) {
+                        if (sale.getSalesmanID().equals(command.split("\\+")[1])) {
+                        }
+                    }
+                }
+            }
+        }*/
+        setAnswer("none");
+    }
+
+    private void getProductName(String command) {
+        answer = Storage.getProductById(command.split("\\+")[1]).getName();
+    }
+
+    private void pointProduct(String command) {
+        for (Point point : Storage.allPoints) {
+            if (point.getProductID().equals(command.split("\\+")[2])) {
+                if (point.getUsername().equals(command.split("\\+")[1])) {
+                    point.setPoint(Integer.parseInt(command.split("\\+")[3]));
+                    return;
+                }
+            }
+        }
+        new Point(command.split("\\+")[1], command.split("\\+")[2], (Integer.parseInt(command.split("\\+")[3])));
+    }
+
+    private void getProductPoint(String command) {
+        int a[] = new int[5];
+        a[0] = a[1] = a[2] = a[3] = a[4] = 0;
+        for (Point point : Storage.allPoints) {
+            if (point.getProductID().equals(command.split("\\+")[1])) {
+                a[point.getPoint() - 1]++;
+            }
+        }
+        Server.setAnswer(a[0] + "+" + a[1] + "+" + a[2] + "+" + a[3] + "+" + a[4]);
+    }
+
+    private void getCommentProductID(String command) {
+        String ans = "";
+        for (Comment comment : Storage.allComments) {
+            if (comment.getProductID().equals(command.split("\\+")[1])) {
+                ans += comment.toStringForProductView() + "\n";
+            }
+        }
+        if (ans.equals("")) {
+            Server.setAnswer("none");
+            return;
+        }
+        Server.setAnswer(ans);
+    }
+
+    private void commentProduct(String command) {
+        Comment comment = new Comment(command.split("\\+")[3], command.split("\\+")[4], command.split("\\+")[1],
+                command.split("\\+")[2]);
+        new Request(comment).setAccountUsername(command.split("\\+")[1]);
     }
 
     private void deletePersonImage(String command) {
@@ -352,16 +432,6 @@ public class Server {
         } else {
             Server.setAnswer("no");
         }
-    }
-
-    private void getCommentProductID(String command) {
-
-    }
-
-    private void commentProduct(String command) {
-        Comment comment = new Comment(command.split("\\+")[3], command.split("\\+")[4], command.split("\\+")[1],
-                command.split("\\+")[2]);
-        new Request(comment).setAccountUsername(command.split("\\+")[1]);
     }
 
     private void editSale(String command) {
@@ -1124,7 +1194,7 @@ public class Server {
     }
 
     public String serverToClient() throws IOException {
-        endOfProgramme.updateFiles();
+        //endOfProgramme.updateFiles();
         return Server.answer;
     }
 

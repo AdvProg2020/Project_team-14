@@ -68,6 +68,14 @@ public class Point implements Serializable {
         return numberOfPeopleVoted;
     }
 
+    public String getProductID() {
+        return productID;
+    }
+
+    public void setProductID(String productID) {
+        this.productID = productID;
+    }
+
     public String createID() {
         return RandomString.createID("Point");
     }
@@ -76,5 +84,15 @@ public class Point implements Serializable {
         return this.pointID;
     }
 
+    public void setPointID(String pointID) {
+        this.pointID = pointID;
+    }
 
+    public void setPoint(int point) {
+        this.point = point;
+    }
+
+    public int getPoint() {
+        return point;
+    }
 }
