@@ -52,10 +52,10 @@ public class SalesmanManager {
      */
 
     //default sort factor is percentage
-
-    public void showSales(String salesmanID, ArrayList<Object> filters, String sortFactor, String sortType) {
+    //---[username] is SALESMAN-->return its sales, [username] is BOSS-->return all sales
+    public void showSales(String username, ArrayList<Object> filters, String sortFactor, String sortType) {
         StringBuilder result = new StringBuilder("Here are All of your Sales:");
-        ArrayList<Sale> sales = Sale.getAllSaleBySalesmanID(salesmanID);
+        ArrayList<Sale> sales = Storage.getAllSalesByUsername(username);
         SalesSortFactor.sort(sortFactor, sortType, sales);
         for (Sale sale : sales) {
             if (saleHasFactor()) {

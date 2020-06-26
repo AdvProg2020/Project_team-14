@@ -20,7 +20,7 @@
                 </TableView>
             </content>
         </ScrollPane>
-        <Button layoutX="558.0" layoutY="97.0" mnemonicParsing="false" onMouseClicked="#newSale" opacity="0.87" prefHeight="50.0" prefWidth="151.0" text="New Sale">
+        <Button fx:id="newSaleButton" layoutX="558.0" layoutY="97.0" mnemonicParsing="false" onMouseClicked="#newSale" opacity="0.87" prefHeight="50.0" prefWidth="151.0" text="New Sale">
             <font>
                 <Font name="System Bold Italic" size="13.0" />
             </font></Button>

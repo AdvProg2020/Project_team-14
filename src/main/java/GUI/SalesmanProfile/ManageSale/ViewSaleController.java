@@ -3,19 +3,24 @@ package GUI.SalesmanProfile.ManageSale;
 import GUI.Media.Audio;
 import GUI.MenuHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.text.ParseException;
 import java.time.LocalDate;
 
-public class ViewSaleManager {
+public class ViewSaleController {
     public DatePicker startDate;
     public DatePicker endDate;
     public TextField percentage;
     public TextField confirmationStatus;
+    public TextField salesmanId;
+    public Label salesmanIdLabel;
+    public Button saveChangesButton;
     public Label errorsLabel;
     public ListView<String> productList;
     public String initStartDate;
@@ -33,13 +38,29 @@ public class ViewSaleManager {
         endDate.setValue(LocalDate.parse(lines[2].substring(9)));
         percentage.setText(lines[0].substring(11));
         confirmationStatus.setText(lines[3].substring(13));
+        salesmanId.setText(lines[4].substring(11));
+
 
         initStartDate = startDate.getValue().toString();
         initEndDate = endDate.getValue().toString();
         initPercentage = percentage.getText();
 
-        for (int i = 5; i < lines.length; i++) {
+        for (int i = 6; i < lines.length; i++) {
             productList.getItems().add(lines[i]);
+        }
+
+        setPageForBoss();
+    }
+
+    private void setPageForBoss() {
+        if (MenuHandler.getUserType().equalsIgnoreCase("boss")) {
+            salesmanId.setVisible(true);
+            salesmanIdLabel.setVisible(true);
+            percentage.setDisable(true);
+            startDate.setDisable(true);
+            endDate.setDisable(true);
+            saveChangesButton.setDisable(true);
+            saveChangesButton.setVisible(false);
         }
     }
 
