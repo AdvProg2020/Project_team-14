@@ -331,4 +331,7 @@ public class Controller {
 
     public void similarProducts(ActionEvent actionEvent) {
     }
+
+    public void compare(ActionEvent actionEvent) {
+    }
 }

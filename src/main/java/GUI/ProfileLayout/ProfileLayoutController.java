@@ -68,4 +68,9 @@ public class ProfileLayoutController {
         pane.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/CategoryMenu/CategoryMenu.fxml")));
     }
 
+    public void categoryClicked(MouseEvent mouseEvent) throws IOException {
+        Audio.playClick7();
+        pane.getChildren().remove(pane.getChildren().get(0));
+        pane.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/CategoryMenu/CategoryMenu.fxml")));
+    }
 }
