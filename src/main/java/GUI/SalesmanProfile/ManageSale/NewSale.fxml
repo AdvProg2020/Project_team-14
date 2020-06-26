@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="492.0" prefWidth="761.0" style="-fx-background-color: #28518a; -fx-background-radius: 20;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.SalesmanProfile.ManageSale.NewSaleController">
+    <children>
+      <Button fx:id="doneButton" layoutX="546.0" layoutY="375.0" mnemonicParsing="false" onMouseClicked="#createSale" prefHeight="41.0" prefWidth="142.0" text="Done!" textFill="#f50c0c">
+         <font>
+            <Font name="System Bold Italic" size="18.0" />
+         </font>
+      </Button>
+      <Button layoutX="381.0" layoutY="375.0" mnemonicParsing="false" onMouseClicked="#back" prefHeight="41.0" prefWidth="142.0" text="Back" textFill="#ec0808">
+         <font>
+            <Font name="System Bold Italic" size="19.0" />
+         </font>
+      </Button>
+      <VBox alignment="TOP_CENTER" layoutX="381.0" layoutY="107.0" prefHeight="259.0" prefWidth="338.0">
+         <children>
+            <Label text="Start Date" textFill="WHITE">
+               <font>
+                  <Font name="System Italic" size="16.0" />
+               </font>
+            </Label>
+            <DatePicker fx:id="startDate" prefHeight="26.0" prefWidth="193.0" />
+            <Label text="End Date" textFill="WHITE">
+               <font>
+                  <Font name="System Italic" size="16.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="25.0" />
+               </VBox.margin>
+            </Label>
+            <DatePicker fx:id="endDate" prefHeight="26.0" prefWidth="197.0" />
+            <Label text="Percentage" textFill="WHITE">
+               <font>
+                  <Font name="System Italic" size="16.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="25.0" />
+               </VBox.margin>
+            </Label>
+            <TextField fx:id="percentage" prefHeight="26.0" prefWidth="307.0">
+               <VBox.margin>
+                  <Insets left="70.0" right="70.0" />
+               </VBox.margin></TextField>
+            <Label fx:id="errors" textFill="RED">
+               <font>
+                  <Font size="13.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </Label>
+         </children>
+      </VBox>
+      <ListView fx:id="productList" layoutX="50.0" layoutY="95.0" prefHeight="350.0" prefWidth="314.0" />
+      <Label layoutX="50.0" layoutY="62.0" text="Products" textFill="WHITE">
+         <font>
+            <Font name="System Italic" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="300.0" layoutY="14.0" text="Create new Sale" textFill="WHITE">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Label>
+    </children>
+</AnchorPane>
