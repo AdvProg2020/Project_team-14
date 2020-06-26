@@ -16,6 +16,7 @@ public class Sale extends Off implements Serializable {
     private String saleID;
     private String salesmanID;
     private Confirmation confirmationState;
+    private static final long serialVersionUID = 4L;
 
     public Sale(String start, String end, int percentage, String salesmanID, ArrayList<String> productIDs) {
         super(start, end, percentage);
