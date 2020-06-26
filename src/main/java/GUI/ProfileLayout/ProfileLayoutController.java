@@ -2,6 +2,7 @@ package GUI.ProfileLayout;
 
 import GUI.Media.Audio;
 import GUI.MenuHandler;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,6 +14,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -22,11 +25,13 @@ public class ProfileLayoutController {
     public Pane pane;
     public ImageView imageView;
     public ImageView profileImage;
-    Image image;
+
 
     public void initialize() throws IOException, ParseException {
         pane.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/ProfileLayout/PersonalInfoLayout.fxml")));
-        image = profileImage.getImage();
+        FileInputStream imageStream = new FileInputStream("src/main/java/GUI/ProductScene/resources/user.png");
+        Image image = new Image(imageStream);
+        profileImage.setImage(image);
     }
 
     public void setProfileImage() throws ParseException, IOException {
@@ -35,13 +40,11 @@ public class ProfileLayoutController {
         }
         MenuHandler.getServer().clientToServer("get person image+" + MenuHandler.getUsername());
         if (!MenuHandler.getServer().serverToClient().startsWith("no image found")) {
-            Image image = new Image(new FileInputStream(MenuHandler.getServer().serverToClient().substring(6)));
-            imageView.setImage(image);
+           // profileImage.setImage(new Image(MenuHandler.getServer().serverToClient()));
         } else {
-            File file = new File("src/main/java/GUI/ProductScene/resources/user.png");
-            Image image = new Image(file.toURI().toString());
-            imageView.setImage(image);
-
+            FileInputStream imageStream = new FileInputStream("src/main/java/GUI/ProductScene/resources/user.png");
+            Image image = new Image(imageStream);
+            profileImage.setImage(image);
         }
     }
 

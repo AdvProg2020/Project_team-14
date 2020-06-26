@@ -206,9 +206,10 @@ public class PersonalInfoController {
         fileChooser.setTitle("upload your image");
         File chosenFile = fileChooser.showOpenDialog(stage);
         if (chosenFile == null) return;
-        String path = String.valueOf(chosenFile.toURI().toURL().toString());
+        String path = String.valueOf(chosenFile.toURI());
         MenuHandler.getServer().clientToServer("set person image+" + MenuHandler.getUsername() + "+" + path);
         ProfileLayoutController profileLayoutController = new ProfileLayoutController();
+        profileLayoutController.profileImage.setImage(new Image(String.valueOf(chosenFile.toURI())));
         System.out.println("set person image+" + MenuHandler.getUsername() + "+" + path);
         System.err.println(path);
         profileLayoutController.setProfileImage();

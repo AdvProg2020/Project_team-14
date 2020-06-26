@@ -46,11 +46,7 @@
                 </ImageView>
             </children>
         </HBox>
-        <ImageView fx:id="profileImage" fitHeight="400.0" fitWidth="300.0" layoutX="65.0" layoutY="55.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-                <Image url="@../ProductScene/resources/user.png" />
-            </image>
-        </ImageView>
+        <ImageView fx:id="profileImage" fitHeight="400.0" fitWidth="300.0" layoutX="65.0" layoutY="55.0" pickOnBounds="true" preserveRatio="true" />
         <VBox alignment="CENTER" layoutX="65.0" layoutY="367.0" prefHeight="300.0" prefWidth="300.0" spacing="10.0" style="-fx-background-color: RoyalBlue;">
             <children>
                 <Button mnemonicParsing="false" onAction="#managePersonalInfo" prefHeight="40.0" prefWidth="300.0" style="-fx-background-color: blue;" styleClass="my-button" text="Manage Personal Info" textFill="#e50d0d">
