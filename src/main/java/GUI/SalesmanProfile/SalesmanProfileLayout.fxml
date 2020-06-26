@@ -69,7 +69,7 @@
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Button>
-                <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="300.0" style="-fx-background-color: green;" styleClass="my-button" text="Manage Sales">
+                <Button mnemonicParsing="false" onAction="#manageSales" prefHeight="40.0" prefWidth="300.0" style="-fx-background-color: green;" styleClass="my-button" text="Manage Sales">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Button>

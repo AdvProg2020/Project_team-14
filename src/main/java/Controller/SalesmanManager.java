@@ -55,14 +55,18 @@ public class SalesmanManager {
 
     public void showSales(String salesmanID, ArrayList<Object> filters, String sortFactor, String sortType) {
         StringBuilder result = new StringBuilder("Here are All of your Sales:");
-        ArrayList<Sale> sales = new ArrayList<>(Sale.getAllAuthenticSales(salesmanID));
+        ArrayList<Sale> sales = Sale.getAllSaleBySalesmanID(salesmanID);
         SalesSortFactor.sort(sortFactor, sortType, sales);
         for (Sale sale : sales) {
             if (saleHasFactor()) {
-                result.append("\n").append(sale.getSaleID()); //assume we list just IDs, then if user chose one, we show detail
+                result.append("\n").append(sale.toStringForTable()); //assume we list just IDs, then if user chose one, we show detail
             }
         }
-        Server.setAnswer(result.toString());
+        if (result.toString().equals("Here are All of your Sales:")) {
+            Server.setAnswer("nothing found");
+        } else {
+            Server.setAnswer(result.toString());
+        }
     }
 
     private boolean saleHasFactor() {
