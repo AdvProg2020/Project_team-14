@@ -311,7 +311,7 @@ public class Server {
 
     private void isThereProductName(String command) {
         for (Product product : Storage.getAllProducts()) {
-            if (product.equals(command.split("\\+")[1])) {
+            if (product.getName().equals(command.split("\\+")[1])) {
                 Server.setAnswer("true");
             }
         }
