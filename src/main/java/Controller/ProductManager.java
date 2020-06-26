@@ -22,6 +22,7 @@ public class ProductManager {
     private boolean checkCategoryFilter(Product product, String categories) {
         String[] categoriesName = categories.split(",");
         for (String category : categoriesName) {
+            if (product.getCategoryName() == null) continue;
             if (product.getCategoryName().equals(category)) return true;
         }
         return false;
@@ -38,7 +39,7 @@ public class ProductManager {
     private boolean checkConfirmationFilter(Product product, String s) {
         String[] allState = s.split(",");
         for (String state : allState) {
-            if (product.getOverallConfirmation().equals(state)) return true;
+            if (String.valueOf(product.getOverallConfirmation()).equalsIgnoreCase(state)) return true;
         }
         return false;
     }
@@ -50,8 +51,8 @@ public class ProductManager {
         if (remainderState.length == 2) {
             return true;
         }
-        if (remainderState[0].equals("not available")) {
-            wantedAmount = 0;
+        if (remainderState[0].equalsIgnoreCase("not available")) {
+            wantedAmount = 1;
             ans = false;
         } else {
             wantedAmount = 1;
@@ -60,7 +61,7 @@ public class ProductManager {
         for (String salesmanID : product.getSalesmanIDs()) {
             if (product.isAvailableBySalesmanWithUsername(salesmanID, wantedAmount)) return ans;
         }
-        return ans;
+        return !ans;
     }
 
 

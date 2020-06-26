@@ -31,6 +31,7 @@ public class ProductSceneController {
     public void openPopUp(MouseEvent mouseEvent) throws IOException {
         Popup popup = new Popup();
         Stage stage = (Stage) ((ImageView) mouseEvent.getSource()).getScene().getWindow();
+        MenuHandler.setStage(stage);
         if (MenuHandler.isIsUserLogin()) {
             Parent registerLoginPopUp = FXMLLoader.load(getClass().getResource("/GUI/MainMenuPopups/ProfilePopup.fxml"));
             popup.getContent().addAll(registerLoginPopUp);
@@ -48,6 +49,7 @@ public class ProductSceneController {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+
                 stage.setScene(new Scene(root));
                 popup.getScene().getWindow().hide();
             });

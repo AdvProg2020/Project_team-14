@@ -889,6 +889,7 @@ public class Server {
                 filters.add(input[i + 1]);
             }
         }
+        System.out.println(filters);
         return filters;
     }
 
@@ -1079,7 +1080,7 @@ public class Server {
     }
 
     public String serverToClient() throws IOException {
-        endOfProgramme.updateFiles();
+        //endOfProgramme.updateFiles();
         return Server.answer;
     }
 

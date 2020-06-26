@@ -22,6 +22,8 @@ public class Category implements Serializable {
     private String attribute;
 
     public Category(String categoryName, String parentCategoryName, String attribute) {
+        System.out.println(attribute + " " + parentCategoryName + " " + categoryName);
+
         this.attribute = attribute;
         this.parentCategoryName = parentCategoryName;
         this.categoryName = categoryName;
@@ -122,8 +124,13 @@ public class Category implements Serializable {
     }
 
     public String toStringForBoss() {
+        String father = this.getParentCategoryName();
+        if (father == null) {
+            father = "rootCategory";
+        }
         return "Category Name: " + this.categoryName + " " +
-                "Category Attribute: " + this.attribute;
+                "Category Attribute: " + this.attribute + " " +
+                "Parent Category: " + father;
     }
 
     public String toString() {

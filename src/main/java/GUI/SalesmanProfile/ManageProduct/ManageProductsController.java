@@ -50,17 +50,74 @@ public class ManageProductsController {
         System.out.println(salesman);
         MenuHandler.getServer().clientToServer("show categories+" + MenuHandler.getUsername());
         String categories = MenuHandler.getServer().serverToClient();
-        System.out.println(categories);
+        for (String s : categories.split("\n")) {
+            if (s.startsWith("Category")) {
+                filter.getItems().add("Category:" + s.split("\\s")[2]);
+            }
+        }
         update();
     }
 
     private void update() throws ParseException, IOException {
-        MenuHandler.getServer().clientToServer("show products+" + MenuHandler.getUsername());
+        String categories = "", salesman = "", available = "", confirmationState = "";
+        for (Object object : filterList.getChildren()) {
+            if (object instanceof HBox) {
+                Object object1 = ((HBox) object).getChildren().get(0);
+                if (object1 instanceof Label) {
+                    if (((Label) object1).getText().startsWith("Confirmation:")) {
+                        if (confirmationState.equals("")) {
+                            confirmationState = ((Label) object1).getText().substring(13);
+                        } else {
+                            confirmationState += "," + ((Label) object1).getText().substring(13);
+                        }
+                    } else if (((Label) object1).getText().startsWith("Category:")) {
+                        if (categories.equals("")) {
+                            categories = ((Label) object1).getText().substring(9);
+                        } else {
+                            categories += "," + ((Label) object1).getText().substring(9);
+                        }
+                    } else if (((Label) object1).getText().startsWith("Salesman:")) {
+                        if (salesman.equals("")) {
+                            salesman = ((Label) object1).getText().substring(9);
+                        } else {
+                            salesman += "," + ((Label) object1).getText().substring(9);
+                        }
+                    } else {
+                        if (available.equals("")) {
+                            available = ((Label) object1).getText();
+                        } else {
+                            available += "," + ((Label) object1).getText();
+                        }
+                    }
+                }
+            }
+        }
+        String command = "show products+" + MenuHandler.getUsername();
+        if (available.equals("") && salesman.equals("") && categories.equals("") && confirmationState.equals("")) {
+
+        } else {
+            command += "+filters:";
+            if (!available.equals("")) {
+                command += "+remainder+" + available;
+            }
+            if (!salesman.equals("")) {
+                command += "+salesmanIDs+" + salesman;
+            }
+            if (!categories.equals("")) {
+                command += "+categories+" + categories;
+            }
+            if (!confirmationState.equals("")) {
+                command += "+Confirmation+" + confirmationState;
+            }
+        }
+
+        MenuHandler.getServer().clientToServer(command);
         String serverAnswer = MenuHandler.getServer().serverToClient();
 
-        for (int i = 1; i <= products.getChildren().size(); i++) {
+        for (int i = 1; i <= products.getChildren().size(); ) {
             Object object = products.getChildren().remove(0);
         }
+        System.out.println(products.getChildren().size());
         if (serverAnswer.equals("nothing found")) {
             return;
         }
@@ -102,11 +159,6 @@ public class ManageProductsController {
             }
             ImageView imageView = (ImageView) ((AnchorPane) object).getChildren().get(0);
             Image image = new Image(path);
-            double x = image.getWidth();
-            double y = image.getHeight();
-            //image.
-            //double ratio=
-            //160 140
             imageView.setImage(image);
             ((AnchorPane) object).setStyle("-fx-padding: 0;" + "-fx-border-style: solid inside;"
                     + "-fx-border-width: 1;" + "-fx-border-insets: 2;"

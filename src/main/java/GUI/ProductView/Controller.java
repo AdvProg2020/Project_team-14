@@ -150,7 +150,9 @@ public class Controller {
         MenuHandler.getServer().clientToServer("get product picture path+" + productId);
         String path = MenuHandler.getServer().serverToClient();
         if (path != null) {
-            imageView.setImage(new Image(path));
+            if (!path.equalsIgnoreCase("none")) {
+                imageView.setImage(new Image(path));
+            }
         }
         zoom();
         MenuHandler.getServer().clientToServer("view product+" + MenuHandler.getUsername() + "+" + productId);
@@ -328,5 +330,8 @@ public class Controller {
     }
 
     public void similarProducts(ActionEvent actionEvent) {
+    }
+
+    public void compare(ActionEvent actionEvent) {
     }
 }
