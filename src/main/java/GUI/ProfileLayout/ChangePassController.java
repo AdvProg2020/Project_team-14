@@ -78,6 +78,7 @@ public class ChangePassController {
         String respond = MenuHandler.getServer().serverToClient();
 
         if (respond.startsWith("Error:")) {
+            System.out.println();
             result.setText(respond.substring(6));
             return;
         }
