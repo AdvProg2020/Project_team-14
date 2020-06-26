@@ -8,14 +8,11 @@
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
-<?import javafx.scene.effect.Lighting?>
-<?import javafx.scene.effect.Shadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxWidth="1182.0" minWidth="1182.0" prefHeight="775.0" prefWidth="1182.0" styleClass="background" stylesheets="@../StyleSheets/RegisterationStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Register.RegisterController">
@@ -122,6 +119,19 @@
                      </VBox.margin>
                       </Label>
                       <ChoiceBox fx:id="role" prefHeight="31.0" prefWidth="187.0" />
+                      <Label fx:id="companyLabel" prefHeight="19.0" prefWidth="55.0" text="Company" visible="false">
+                          <font>
+                              <Font name="System Italic" size="13.0" />
+                          </font>
+                     <VBox.margin>
+                        <Insets top="25.0" />
+                     </VBox.margin>
+                      </Label>
+                      <TextField fx:id="company" alignment="CENTER" prefHeight="31.0" prefWidth="187.0" promptText="Enter Your company" visible="false">
+                          <font>
+                              <Font size="15.0" />
+                          </font>
+                      </TextField>
                </children>
             </VBox>
                 <Button contentDisplay="CENTER" layoutX="172.0" layoutY="549.0" mnemonicParsing="false" onAction="#register" prefHeight="45.0" prefWidth="187.0" styleClass="buttone" text="Register">
@@ -129,16 +139,6 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
                 </Button>
-                <Label fx:id="companyLabel" layoutX="457.0" layoutY="390.0" prefHeight="19.0" prefWidth="55.0" text="Company" visible="false">
-                    <font>
-                        <Font name="System Italic" size="13.0" />
-                    </font>
-                </Label>
-                <TextField fx:id="company" alignment="CENTER" layoutX="391.0" layoutY="415.0" prefHeight="31.0" prefWidth="187.0" promptText="Enter Your company" visible="false">
-                    <font>
-                        <Font size="15.0" />
-                    </font>
-                </TextField>
                 <Label layoutX="147.0" layoutY="671.0" text="Already Have An Account?" />
                 <Button contentDisplay="CENTER" layoutX="327.0" layoutY="667.0" mnemonicParsing="false" onAction="#openLoginMenu" text="log in" textFill="#f51414">
                     <font>
