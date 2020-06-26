@@ -1,5 +1,6 @@
 package GUI.BossProfile.ManagerUsersMenu;
 
+import GUI.Media.Audio;
 import GUI.MenuHandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -9,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
+import javax.sound.sampled.AudioInputStream;
 import java.io.IOException;
 import java.text.ParseException;
 
@@ -79,28 +81,29 @@ public class MoveInformationPopOut {
     }
 
     public void remove(ActionEvent actionEvent) {
-
+        Audio.playClick4();
     }
 
     public void viewRequests(ActionEvent actionEvent) {
-
+        Audio.playClick7();
     }
 
     public void ViewProducts(ActionEvent actionEvent) {
-
+        Audio.playClick3();
     }
 
     public void back(ActionEvent actionEvent) throws IOException {
+        Audio.playClick6();
         Parent root = FXMLLoader.load(getClass().getResource("/GUI/ProfileLayout/ProfileLayout.fxml"));
         Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
     }
 
     public void acceptRequest(ActionEvent actionEvent) {
-
+        Audio.playClick5();
     }
 
     public void declineRequest(ActionEvent actionEvent) {
-
+        Audio.playClick1();
     }
 }

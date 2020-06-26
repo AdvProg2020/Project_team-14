@@ -1,7 +1,7 @@
 package GUI.BossProfile.ManagerUsersMenu;
 
+import GUI.Media.Audio;
 import GUI.MenuHandler;
-import Menus.Menu;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,8 +9,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.regex.Matcher;
@@ -24,14 +29,17 @@ public class NewManagerPopOut {
     public TextField lastName;
     public PasswordField password;
     public TextField telephone;
+    public MediaView film;
 
     public void Back(MouseEvent mouseEvent) throws IOException {
+        Audio.playClick5();
         Parent root = FXMLLoader.load(getClass().getResource("/GUI/ProfileLayout/ProfileLayout.fxml"));
         Stage stage = (Stage) ((ImageView) mouseEvent.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
     }
 
     public void newBossButton(ActionEvent actionEvent) throws ParseException, IOException {
+        Audio.playClick5();
         Alert alert = new Alert(Alert.AlertType.ERROR, "", ButtonType.OK);
         if (username.getText().equals("")) {
             alert.setContentText("Username Field Must Not Be Empty");
@@ -52,16 +60,16 @@ public class NewManagerPopOut {
             alert.setContentText("Telephone Field Must Not Be Empty");
             alert.showAndWait();
         } else {
-            if (!checkUsernameFormat(username.getText())) {
+            if (checkUsernameFormat(username.getText())) {
                 alert.setContentText("Username Should Consists Of Only Characters And Numbers And _ Without Space");
                 alert.showAndWait();
-            } else if (!checkUsernameFormat(password.getText())) {
+            } else if (checkUsernameFormat(password.getText())) {
                 alert.setContentText("Password Should Consists Of Only Characters And Numbers And _ Without Space");
                 alert.showAndWait();
-            } else if (!checkNameFormat(firstName.getText())) {
+            } else if (checkNameFormat(firstName.getText())) {
                 alert.setContentText("Name Should Consists Of Only Characters Like [A-Z][a-z]");
                 alert.showAndWait();
-            } else if (!checkNameFormat(lastName.getText())) {
+            } else if (checkNameFormat(lastName.getText())) {
                 alert.setContentText("Name Should Consists Of Only Characters Like [A-Z][a-z]");
                 alert.showAndWait();
             } else if (!checkEmailFormat(Email.getText())) {
@@ -97,11 +105,11 @@ public class NewManagerPopOut {
     }
 
     private boolean checkNameFormat(String name) {
-        return getMatcher("[a-zA-Z]+", name).matches();
+        return !getMatcher("[a-zA-Z]+", name).matches();
     }
 
     private boolean checkUsernameFormat(String input) {
-        return getMatcher("(\\w+)", input).matches();
+        return !getMatcher("(\\w+)", input).matches();
     }
 
     private boolean checkEmailFormat(String mail) {
@@ -110,5 +118,15 @@ public class NewManagerPopOut {
 
     private boolean checkTelephoneFormat(String number) {
         return getMatcher("0(\\d+)", number).matches() && number.length() == 11;
+    }
+
+    public void initialize(){
+        String path = "src/main/java/GUI/Login/resources/mp4 (1).mp4";
+        Media media = new Media(new File(path).toURI().toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(media);
+        film.setMediaPlayer(mediaPlayer);
+        mediaPlayer.setAutoPlay(true);
+        mediaPlayer.setOnEndOfMedia(() -> mediaPlayer.seek(Duration.ZERO));
+
     }
 }

@@ -1,5 +1,6 @@
 package GUI.ProductView;
 
+import GUI.Media.Audio;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -7,6 +8,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.shape.Line;
 
+import javax.sound.sampled.AudioInputStream;
 import java.util.ArrayList;
 
 public class RatingController {
@@ -70,6 +72,8 @@ public class RatingController {
     }
 
     public void setRate(MouseEvent mouseEvent) {
+        Audio.playClick2();
+        if (hasRate) return;
         if (hasRate) return;
         hasRate = true;
 

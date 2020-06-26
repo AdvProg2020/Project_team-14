@@ -2,11 +2,12 @@
 
 <?import java.net.*?>
 <?import javafx.geometry.*?>
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1200.0" styleClass="backgrounds" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.SalesmanProfile.SalesmanProfileController">
+<AnchorPane prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: RoyalBlue;" styleClass="backgrounds" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.SalesmanProfile.SalesmanProfileController">
     <children>
         <HBox alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="1200.0" spacing="5.0" styleClass="tool-bar">
             <children>
@@ -22,6 +23,9 @@
                     <image>
                         <Image url="@../ProductScene/resources/home.png" />
                     </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
                 </ImageView>
                 <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                     <image>
@@ -33,6 +37,9 @@
                     <image>
                         <Image url="@../ProductScene/resources/supermarket.png" />
                     </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
                 </ImageView>
                 <ImageView fitHeight="45.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                     <image>
@@ -41,6 +48,9 @@
                     <HBox.margin>
                         <Insets right="8.0" />
                     </HBox.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
                 </ImageView>
             </children>
         </HBox>
@@ -51,11 +61,26 @@
         </ImageView>
         <VBox alignment="CENTER" layoutX="45.0" layoutY="400.0" prefHeight="300.0" prefWidth="300.0" spacing="10.0">
             <children>
-                <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="300.0" styleClass="my-button" text="Manage Personal Info" />
-                <Button mnemonicParsing="false" onAction="#manageProducts" prefHeight="40.0" prefWidth="300.0" styleClass="my-button" text="Manage Products" />
-                <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="300.0" styleClass="my-button" text="Manage Sales" />
-                <Button layoutX="10.0" layoutY="165.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="300.0" styleClass="my-button" text="Manage Logs" />
-                <Button layoutX="10.0" layoutY="250.0" mnemonicParsing="false" onAction="#logout" prefHeight="40.0" prefWidth="300.0" styleClass="my-button" text="logOut" />
+                <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="300.0" style="-fx-background-color: green;" styleClass="my-button" text="Manage Personal Info">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+                <Button mnemonicParsing="false" onAction="#manageProducts" prefHeight="40.0" prefWidth="300.0" style="-fx-background-color: yellow;" styleClass="my-button" text="Manage Products">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+                <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="300.0" style="-fx-background-color: green;" styleClass="my-button" text="Manage Sales">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+                <Button layoutX="10.0" layoutY="165.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="300.0" style="-fx-background-color: yellow;" styleClass="my-button" text="Manage Logs">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+                <Button layoutX="10.0" layoutY="250.0" mnemonicParsing="false" onAction="#logout" prefHeight="40.0" prefWidth="300.0" style="-fx-background-color: green;" styleClass="my-button" text="logOut">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
             </children>
         </VBox>
         <Pane fx:id="pane" layoutX="413.0" layoutY="82.0" prefHeight="735.0" prefWidth="780.0" styleClass="info-part" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="55.0" />

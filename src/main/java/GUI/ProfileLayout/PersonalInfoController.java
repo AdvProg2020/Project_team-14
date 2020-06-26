@@ -1,12 +1,12 @@
 package GUI.ProfileLayout;
 
+import GUI.Media.Audio;
 import GUI.MenuHandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 
@@ -63,7 +63,7 @@ public class PersonalInfoController {
     }
 
     public void chargeWallet(ActionEvent actionEvent) {
-
+        Audio.playClick3();
     }
 
     public void returnable(ActionEvent actionEvent) throws IOException {
@@ -74,6 +74,7 @@ public class PersonalInfoController {
     }
 
     public void editInfo(ActionEvent actionEvent) throws ParseException, IOException {
+        Audio.playClick5();
         String message = "";
         boolean edit = false;
         if (!username.getText().equals(theUsername)) {
@@ -93,7 +94,7 @@ public class PersonalInfoController {
         }
         if (!firstName.getText().equals(theFirstName)) {
             edit = true;
-            if (!checkNameFormat(firstName.getText())) {
+            if (checkNameFormat(firstName.getText())) {
                 message += "First Name Format Is Invalid\n";
             } else {
                 MenuHandler.getServer().clientToServer("edit personal info+firstName+" + firstName.getText() + "+" + MenuHandler.getUsername());
@@ -103,7 +104,7 @@ public class PersonalInfoController {
         }
         if (!lastName.getText().equals(theLastName)) {
             edit = true;
-            if (!checkNameFormat(lastName.getText())) {
+            if (checkNameFormat(lastName.getText())) {
                 message += "Last Name Format Is Invalid\n";
             } else {
                 MenuHandler.getServer().clientToServer("edit personal info+lastName+" + lastName.getText() + "+" + MenuHandler.getUsername());
@@ -148,6 +149,7 @@ public class PersonalInfoController {
     }
 
     public void changePassword(ActionEvent actionEvent) throws IOException {
+        Audio.playClick7();
         Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
         Parent root = FXMLLoader.load(getClass().getResource("ChangePassLayout.fxml"));
         Popup popup = new Popup();
@@ -175,8 +177,8 @@ public class PersonalInfoController {
     }
 
     private boolean checkNameFormat(String name) {
-        if (name.equals("")) return false;
-        return getMatcher("[a-zA-Z]+", name).matches();
+        if (name.equals("")) return true;
+        return !getMatcher("[a-zA-Z]+", name).matches();
     }
 
     private boolean checkUsernameFormat(String input) {

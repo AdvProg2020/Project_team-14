@@ -21,7 +21,7 @@
                 </TableView>
             </content>
         </ScrollPane>
-        <Button layoutX="104.0" layoutY="690.0" mnemonicParsing="false" onMouseClicked="#back" opacity="0.87" prefHeight="50.0" prefWidth="253.0" text="conntinue purchase" textFill="#190ce8">
+        <Button layoutX="104.0" layoutY="690.0" mnemonicParsing="false" onAction="#back" onMouseClicked="#back" opacity="0.87" prefHeight="50.0" prefWidth="253.0" text="conntinue purchase" textFill="#190ce8">
             <font>
                 <Font name="System Bold Italic" size="22.0" />
             </font>
@@ -46,7 +46,7 @@
             <Font name="System Italic" size="21.0" />
          </font>
       </Label>
-      <Button layoutX="572.0" layoutY="526.0" mnemonicParsing="false" onMouseClicked="#useOffCode" opacity="0.87" prefHeight="50.0" prefWidth="151.0" text="use an off code" textFill="#3c06ff" underline="true">
+      <Button layoutX="572.0" layoutY="526.0" mnemonicParsing="false" onAction="#useOffCode" onMouseClicked="#useOffCode" opacity="0.87" prefHeight="50.0" prefWidth="151.0" text="use an off code" textFill="#3c06ff" underline="true">
          <font>
             <Font name="System Bold Italic" size="13.0" />
          </font>
@@ -67,7 +67,7 @@
             <Font name="System Italic" size="21.0" />
          </font>
       </Label>
-      <Button layoutX="423.0" layoutY="690.0" mnemonicParsing="false" onMouseClicked="#buy" opacity="0.87" prefHeight="50.0" prefWidth="253.0" text="finalise it!" textFill="#190ce8">
+      <Button layoutX="423.0" layoutY="690.0" mnemonicParsing="false" onAction="#buy" onMouseClicked="#buy" opacity="0.87" prefHeight="50.0" prefWidth="253.0" text="finalise it!" textFill="#190ce8">
          <font>
             <Font name="System Bold Italic" size="22.0" />
          </font>

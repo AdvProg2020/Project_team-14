@@ -1,5 +1,6 @@
 package GUI.BossProfile.ManageOffCodes;
 
+import GUI.Media.Audio;
 import GUI.MenuHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -7,6 +8,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 
+import javax.sound.sampled.AudioInputStream;
 import java.io.IOException;
 import java.text.ParseException;
 import java.time.LocalDate;
@@ -44,6 +46,7 @@ public class NewOffCodeController {
     }
 
     public void doneCreating(MouseEvent mouseEvent) throws IOException, ParseException {
+        Audio.playClick7();
         try {
             checkValidation();
         } catch (Exception e) {
@@ -86,16 +89,20 @@ public class NewOffCodeController {
     }
 
     public void cancel(MouseEvent mouseEvent) {
+        Audio.playClick6();
         ((Button) mouseEvent.getSource()).getScene().getWindow().hide();
     }
 
     private void checkValidation() throws Exception {
         if (startDate.getValue() == null | endDate.getValue() == null | percentage.getText().equals("") |
-                max.getText().equals("") | frequency.getText().equals("")) throw new Exception("Error: Fill form completely");
-        if (endDate.getValue().isBefore(startDate.getValue())) throw new Exception("Error: End Date must be after Start Date!!");
+                max.getText().equals("") | frequency.getText().equals(""))
+            throw new Exception("Error: Fill form completely");
+        if (endDate.getValue().isBefore(startDate.getValue()))
+            throw new Exception("Error: End Date must be after Start Date!!");
     }
 
     public void addToList(MouseEvent mouseEvent) {
+        Audio.playClick6();
         String username = wantedUsername.getText();
         try {
             checkUsernameValidation(username, "add");
@@ -111,6 +118,7 @@ public class NewOffCodeController {
     }
 
     public void deleteFromList(MouseEvent mouseEvent) {
+        Audio.playClick3();
         String username = wantedUsername.getText();
         try {
             checkUsernameValidation(username, "delete");
@@ -134,7 +142,9 @@ public class NewOffCodeController {
 
     private void checkUsernameValidation(String username, String type) throws Exception {
         if (username.equals("")) throw new Exception("you must chose a username!!");
-        if (type.equals("add") & addedUsers.getItems().contains(username)) throw new Exception("you've already added this user");
-        if (type.equals("delete") & !addedUsers.getItems().contains(username)) throw new Exception("this user is not in your list");
+        if (type.equals("add") & addedUsers.getItems().contains(username))
+            throw new Exception("you've already added this user");
+        if (type.equals("delete") & !addedUsers.getItems().contains(username))
+            throw new Exception("this user is not in your list");
     }
 }

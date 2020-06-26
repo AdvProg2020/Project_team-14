@@ -1,5 +1,6 @@
 package GUI.ProductView;
 
+import GUI.Media.Audio;
 import GUI.MenuHandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -20,6 +21,7 @@ public class EditProductController {
     public TextField count;
 
     public void back(ActionEvent actionEvent) throws IOException {
+        Audio.playClick6();
         Popup popup = (Popup) ((Button) actionEvent.getSource()).getScene().getWindow();
         popup.hide();
         Parent root = FXMLLoader.load(getClass().getResource("/GUI/ProductView/ProductViewLayout.fxml"));
@@ -27,6 +29,7 @@ public class EditProductController {
     }
 
     public void editProduct(ActionEvent actionEvent) throws ParseException, IOException {
+        Audio.playClick1();
         if (checkProductNameFormat(name.getText())) {
             MenuHandler.getServer().clientToServer("edit product+name+" + MenuHandler.getUsername() + "+"
                     + MenuHandler.getProductID() + "+" + name.getText());

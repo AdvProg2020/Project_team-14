@@ -1,6 +1,8 @@
 package GUI.BossProfile.ManageOffCodes;
 
+import GUI.Media.Audio;
 import GUI.MenuHandler;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -17,6 +19,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 
+import javax.sound.sampled.AudioInputStream;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -118,6 +121,7 @@ public class ManageOffCodesController {
 
 
     public void createNewOffCode(MouseEvent mouseEvent) throws IOException {
+        Audio.playClick2();
         Stage parent = (Stage) ((Button) mouseEvent.getSource()).getScene().getWindow();
         Parent root = FXMLLoader.load(getClass().getResource("/GUI/BossProfile/ManageOffCodes/NewOffCodePopup.fxml"));
         Popup popup = new Popup();
@@ -132,5 +136,9 @@ public class ManageOffCodesController {
             }
         });
         popup.show(parent);
+    }
+
+    public void deleteOffCode(ActionEvent actionEvent) {
+        Audio.playClick3();
     }
 }

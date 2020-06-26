@@ -22,7 +22,13 @@ public class main extends Application {
     public void start(Stage primaryStage) throws Exception {
         Audio.playBackGroundMusic();
         MenuHandler.setServer(new Server());
-        Parent root = FXMLLoader.load(getClass().getResource("GUI/ProductScene/ProductScene.fxml"));
+        MenuHandler.getServer().clientToServer("is server has boss");
+        Parent root;
+        if (MenuHandler.getServer().serverToClient().equalsIgnoreCase("yes")) {
+            root = FXMLLoader.load(getClass().getResource("GUI/ProductScene/ProductScene.fxml"));
+        } else {
+            root = FXMLLoader.load(getClass().getResource("GUI/RegisterBoss/RegisterBoss.fxml"));
+        }
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
 

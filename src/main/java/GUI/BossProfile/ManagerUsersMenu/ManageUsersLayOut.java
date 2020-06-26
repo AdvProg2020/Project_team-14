@@ -1,5 +1,6 @@
 package GUI.BossProfile.ManagerUsersMenu;
 
+import GUI.Media.Audio;
 import GUI.MenuHandler;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,6 +12,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
+import javax.sound.sampled.AudioInputStream;
 import java.io.IOException;
 import java.text.ParseException;
 
@@ -87,16 +89,19 @@ public class ManageUsersLayOut {
     }
 
     public void makeNewManager(ActionEvent actionEvent) throws IOException {
+        Audio.playClick4();
         Parent root = FXMLLoader.load(getClass().getResource("/GUI/BossProfile/ManagerUsersMenu/NewManagerPopOut.fxml"));
         Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
     }
 
     public void filter(ActionEvent actionEvent) throws IOException, ParseException {
+        Audio.playClick7();
         update();
     }
 
     public void viewAccount(ActionEvent actionEvent) throws IOException {
+        Audio.playClick4();
         if (accounts.getSelectionModel().getSelectedItem() == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "You Must Choose From Accounts First", ButtonType.OK);
             alert.showAndWait();

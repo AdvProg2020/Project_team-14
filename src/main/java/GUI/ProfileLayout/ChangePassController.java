@@ -1,5 +1,6 @@
 package GUI.ProfileLayout;
 
+import GUI.Media.Audio;
 import GUI.MenuHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -68,6 +69,7 @@ public class ChangePassController {
     }
 
     public void changePass(MouseEvent mouseEvent) throws ParseException, IOException {
+        Audio.playClick5();
         StringBuilder toServer = new StringBuilder("change pass+" + MenuHandler.getUsername());
         String oldPass = textFields.get(0).isVisible() ? textFields.get(0).getText() : passFields.get(0).getText();
         String newPass = textFields.get(1).isVisible() ? textFields.get(0).getText() : passFields.get(1).getText();

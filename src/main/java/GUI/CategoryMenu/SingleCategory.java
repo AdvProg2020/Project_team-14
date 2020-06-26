@@ -42,15 +42,6 @@ public class SingleCategory {
 
     }
 
-    public void MouseEntered(MouseEvent mouseEvent) {
-        Stage stage = (Stage) ((Button) mouseEvent.getSource()).getScene().getWindow();
-        stage.getScene().setCursor(Cursor.HAND);
-    }
-
-    public void MouseExited(MouseEvent mouseEvent) {
-        Stage stage = (Stage) ((Button) mouseEvent.getSource()).getScene().getWindow();
-        stage.getScene().setCursor(Cursor.DEFAULT);
-    }
 
     public void BackClicked(MouseEvent mouseEvent) throws IOException {
         Audio.playClick4();
