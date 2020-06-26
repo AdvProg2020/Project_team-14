@@ -62,13 +62,19 @@ public class Controller {
     public ImageView status;
     public Label productName;
 
-    private void setStatus() throws FileNotFoundException {
-        // if it is on sale
-        status.setImage(new Image(new FileInputStream("src/main/java/GUI/ProductView/resources/sale.jpg")));
-        // if it is normal
-        status.setImage(new Image(new FileInputStream("src/main/java/GUI/ProductView/resources/images.png")));
-        // if it it not available
-        status.setImage(new Image(new FileInputStream("src/main/java/GUI/ProductView/resources/images (1).png")));
+    private void setStatus() throws IOException, ParseException {
+        MenuHandler.getServer().clientToServer("is product on sale+" + MenuHandler.getProductID());
+        if (MenuHandler.getServer().serverToClient().equalsIgnoreCase("true")) {
+            status.setImage(new Image(new FileInputStream("src/main/java/GUI/ProductView/resources/sale.jpg")));
+        } else {
+            MenuHandler.getServer().clientToServer("is product finished+" + MenuHandler.getProductID());
+            if(MenuHandler.getServer().serverToClient().equalsIgnoreCase("true")){
+                status.setImage(new Image(new FileInputStream("src/main/java/GUI/ProductView/resources/images (1).png")));
+            } else {
+                status.setImage(new Image(new FileInputStream("src/main/java/GUI/ProductView/resources/images.png")));
+            }
+
+        }
     }
 
     private void reset(ImageView imageView, double width, double height) {
@@ -153,6 +159,7 @@ public class Controller {
 
 
     public void initialize() throws ParseException, IOException {
+        setStatus();
         String productId = MenuHandler.getProductID();
         MenuHandler.getServer().clientToServer("what is comment product ID+" + productId);
         String allComments = MenuHandler.getServer().serverToClient();

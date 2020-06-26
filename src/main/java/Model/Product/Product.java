@@ -45,6 +45,24 @@ public class Product implements Serializable {
     //the first argument is salesmanID and the second onw is the price by salesman
     private HashMap<String, Integer> price = new HashMap<>();
 
+    public boolean is_on_sale() {
+        for (String username : isOnSale.keySet()) {
+            if (isOnSale.get(username) && !hasBeenDeleted.get(username) && remainder.get(username) > 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isFinished() {
+        for (String username : isOnSale.keySet()) {
+            if (!hasBeenDeleted.get(username) && remainder.get(username) > 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 
     public Product(String name, String salesmanID, String brand, String description, int price, int remainder) {
         this.name = name;
