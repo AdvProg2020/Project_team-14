@@ -112,5 +112,12 @@ public class ProfileLayoutController {
     public void home(MouseEvent mouseEvent) throws IOException {
         Audio.playClick5();
         MenuHandler.getStage().setScene(new Scene(FXMLLoader.load(getClass().getResource("/GUI/ProductScene/ProductScene.fxml"))));
+        pane.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/SalesmanProfile/ManageProduct/ManageProductsLayout.fxml")));
+    }
+
+    public void manageSales(ActionEvent actionEvent) throws IOException {
+        Audio.playClick1();
+        pane.getChildren().remove(pane.getChildren().get(0));
+        pane.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/SalesmanProfile/ManageSale/ManageSalesLayout.fxml")));
     }
 }

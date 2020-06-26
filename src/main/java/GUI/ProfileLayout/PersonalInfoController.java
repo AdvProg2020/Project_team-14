@@ -65,12 +65,15 @@ public class PersonalInfoController {
         }
     }
 
-    public void chargeWallet(ActionEvent actionEvent) {
+    public void chargeWallet(ActionEvent actionEvent) throws IOException {
         Audio.playClick3();
+        Parent root = FXMLLoader.load(getClass().getResource("/GUI/ProfileLayout/ChargeWalet.fxml"));
+        Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root));
     }
 
     public void returnable(ActionEvent actionEvent) throws IOException {
-        Parent root = null;
+        Parent root;
         root = FXMLLoader.load(getClass().getResource("/GUI/ProfileLayout/ProfileLayout.fxml"));
         Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
@@ -160,9 +163,7 @@ public class PersonalInfoController {
         popup.setOnHiding(event -> {
             try {
                 initialize();
-            } catch (ParseException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
+            } catch (ParseException | IOException e) {
                 e.printStackTrace();
             }
         });
@@ -201,7 +202,7 @@ public class PersonalInfoController {
 
     public void uploadImg(ActionEvent actionEvent) throws ParseException, IOException {
         Audio.playClick5();
-        Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+        /*Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("upload your image");
         File chosenFile = fileChooser.showOpenDialog(stage);
@@ -209,10 +210,12 @@ public class PersonalInfoController {
         String path = String.valueOf(chosenFile.toURI());
         MenuHandler.getServer().clientToServer("set person image+" + MenuHandler.getUsername() + "+" + path);
         ProfileLayoutController profileLayoutController = new ProfileLayoutController();
-        profileLayoutController.profileImage.setImage(new Image(String.valueOf(chosenFile.toURI())));
+       // profileLayoutController.profileImage.setImage(new Image(String.valueOf(chosenFile.toURI())));
         System.out.println("set person image+" + MenuHandler.getUsername() + "+" + path);
         System.err.println(path);
-        profileLayoutController.setProfileImage();
+       // profileLayoutController.setProfileImage();
+
+         */
     }
 
     public void deleteImg(ActionEvent actionEvent) throws ParseException, IOException {

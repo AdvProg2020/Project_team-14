@@ -18,6 +18,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -35,8 +36,18 @@ public class ManageProductsController {
 
     public void newProductMenu(ActionEvent actionEvent) throws IOException {
         Audio.playClick5();
-        MenuHandler.getPane().getChildren().remove(MenuHandler.getPane().getChildren().get(0));
-        MenuHandler.getPane().getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/SalesmanProfile/ManageProduct/NewProductLayout.fxml")));
+        Popup popup = new Popup();
+        popup.getContent().add(FXMLLoader.load(getClass().getResource("/GUI/SalesmanProfile/ManageProduct/NewProductLayout.fxml")));
+        popup.show(((Button) actionEvent.getSource()).getScene().getWindow());
+        popup.setOnHiding(e -> {
+            try {
+                update();
+            } catch (ParseException ex) {
+                ex.printStackTrace();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
     }
 
     public void initialize() throws ParseException, IOException {

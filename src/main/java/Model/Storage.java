@@ -1,9 +1,6 @@
 package Model;
 
-import Model.Account.Account;
-import Model.Account.Boss;
-import Model.Account.Customer;
-import Model.Account.Salesman;
+import Model.Account.*;
 import Model.Cart.Cart;
 import Model.Category.Category;
 import Model.Log.BuyLog;
@@ -142,6 +139,28 @@ public class Storage {
             }
         }
         return arrayList;
+    }
+
+    public static ArrayList<Product> getAllProductOfSeller(String salesmanID, int type) {
+        ArrayList<Product> ans = new ArrayList<>();
+        boolean wantAll = type != 1;
+        for (Product product : allProducts) {
+            if (product.doesSalesmanSellProductWithUsername(salesmanID) | wantAll) ans.add(product);
+        }
+        return ans;
+    }
+
+    public static ArrayList<Sale> getAllSalesByUsername(String username) {
+        Account account = getAccountWithUsername(username);
+        if (account.getRole().equals(Role.BOSS)) {
+            return allSales;
+        } else {
+            ArrayList<Sale> wantedSale = new ArrayList<>();
+            for (Sale sale : allSales) {
+                if (sale.getSalesmanID().equals(username)) wantedSale.add(sale);
+            }
+            return wantedSale;
+        }
     }
 
 }

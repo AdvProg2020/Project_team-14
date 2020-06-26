@@ -5,13 +5,13 @@ import GUI.MenuHandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -39,10 +39,10 @@ public class AddProductController {
 
     public void uploadImg(MouseEvent mouseEvent) {
         Audio.playClick5();
-        Stage stage = (Stage) pane.getScene().getWindow();
+        Popup popup = (Popup) pane.getScene().getWindow();
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Upload Product Picture");
-        File chosenFile = fileChooser.showOpenDialog(stage);
+        File chosenFile = fileChooser.showOpenDialog(popup);
         if (chosenFile == null) return;
         img.setImage(new Image(String.valueOf(chosenFile.toURI())));
         path = String.valueOf(chosenFile.toURI());
@@ -50,10 +50,10 @@ public class AddProductController {
 
     public void uploadVid(MouseEvent mouseEvent) {
         Audio.playClick5();
-        Stage stage = (Stage) pane.getScene().getWindow();
+        Popup popup = (Popup) pane.getScene().getWindow();
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Upload Product Video (MP4 only)");
-        File chosenFile = fileChooser.showOpenDialog(stage);
+        File chosenFile = fileChooser.showOpenDialog(popup);
         if (chosenFile != null) {
             if (String.valueOf(chosenFile.toURI()).endsWith("4")) {
                 pathVid = String.valueOf(chosenFile.toURI());
@@ -63,19 +63,22 @@ public class AddProductController {
                 alert.showAndWait();
             }
         }
-
     }
 
 
     private void reset(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/GUI/SalesmanProfile/ManageProduct/NewProductLayout.fxml"));
-        Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root));
+        Popup popup = (Popup) ((Button) actionEvent.getSource()).getScene().getWindow();
+        popup.getContent().clear();
+        popup.getContent().add(root);
     }
 
     public void newProduct(ActionEvent actionEvent) throws IOException, ParseException {
         Audio.playClick2();
         Alert alert = new Alert(Alert.AlertType.ERROR, "", ButtonType.OK);
+        ((Stage) alert.getDialogPane().getScene().getWindow()).setAlwaysOnTop(true);
+        ((Stage) alert.getDialogPane().getScene().getWindow()).toFront();
+
         if (productName.getText().equalsIgnoreCase("")) {
             alert.setContentText("You Should Choose A Name For Product");
             alert.showAndWait();
@@ -141,9 +144,7 @@ public class AddProductController {
 
     public void back(ActionEvent actionEvent) throws IOException {
         Audio.playClick4();
-        Parent root = FXMLLoader.load(getClass().getResource("/GUI/SalesmanProfile/SalesmanProfileLayout.fxml"));
-        Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root));
+        ((Button) actionEvent.getSource()).getScene().getWindow().hide();
     }
 
     private boolean checkProductNameFormat(String input) {

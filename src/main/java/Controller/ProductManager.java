@@ -91,9 +91,10 @@ public class ProductManager {
         return true;
     }
 
+    //type = 0--> return all Products, type = 1--> return [username] products
     public void showProducts(String username, ArrayList<Object> filters, String sortFactor, String sortType, int type) {
         int count = 0;
-        ArrayList<Product> products = Storage.getAllProducts();
+        ArrayList<Product> products = Storage.getAllProductOfSeller(username, type);
         ProductSortFactor.sort(sortFactor, sortType, products);
         StringBuilder answer = new StringBuilder("");
         if (products.size() == 0) {
