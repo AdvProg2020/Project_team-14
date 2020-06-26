@@ -86,7 +86,9 @@ public class ChangePassController {
         ((Stage) alert.getDialogPane().getScene().getWindow()).setAlwaysOnTop(true);
         ((Stage) alert.getDialogPane().getScene().getWindow()).toFront();
         alert.showAndWait();
+        MenuHandler.getServer().clientToServer("change pass+" + MenuHandler.getUsername() + "+" + oldPass + "+" + newPass);
         passPane.getScene().getWindow().hide();
+
     }
 
     public void back(MouseEvent mouseEvent) {
