@@ -16,6 +16,9 @@
                   <image>
                       <Image url="@resources/png-transparent-computer-icons-exit-icon-miscellaneous-angle-text.png" />
                   </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
               </ImageView>
               <Label contentDisplay="CENTER" layoutX="247.0" layoutY="94.0" prefHeight="73.0" prefWidth="138.0" text="Login" textFill="#ea0303">
                   <font>
@@ -55,12 +58,18 @@
                      </light>
                   </Lighting>
                </effect>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
               </Button>
               <Label layoutX="186.0" layoutY="744.0" text="don't have an account?" />
               <Button contentDisplay="CENTER" layoutX="348.0" layoutY="740.0" mnemonicParsing="false" onAction="#openRegisterMenu" text="register" textFill="#f51414">
                   <font>
                       <Font name="System Italic" size="12.0" />
                   </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
               </Button>
               <ImageView fitHeight="51.0" fitWidth="45.0" layoutX="378.0" layoutY="524.0" pickOnBounds="true" preserveRatio="true">
                   <image>
@@ -97,6 +106,9 @@
             <image>
                 <Image url="@resources/computer-icons-download-back-icon.jpg" />
             </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
         </ImageView>
         <TextField alignment="CENTER" layoutX="-228.0" layoutY="132.0" prefHeight="31.0" prefWidth="187.0" promptText="Enter Your Password">
             <font>
