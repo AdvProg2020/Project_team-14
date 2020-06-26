@@ -24,6 +24,9 @@ public class Compare {
     public void search(ActionEvent actionEvent) throws ParseException, IOException {
         Audio.playClick5();
         MenuHandler.getServer().clientToServer("is there product name+" + text.getText());
+        if (text.getText().equals("")) {
+            return;
+        }
         if (MenuHandler.getServer().serverToClient().startsWith("tr")) {
             name2.setText(text.getText());
             MenuHandler.getServer().clientToServer("product min price with name+" + text.getText());
