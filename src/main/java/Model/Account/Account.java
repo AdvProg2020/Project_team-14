@@ -16,6 +16,7 @@ public abstract class Account implements Serializable {
     private String Email;
     private String telephone;
     private Role role;
+    private String imgPath;
 
     public Account(String username, String password, String firstName, String secondName, String Email, String telephone, String role) {
         this.username = username;
@@ -33,6 +34,14 @@ public abstract class Account implements Serializable {
             this.role = Role.SALESMAN;
         }
         isOnline = false;
+    }
+
+    public void setImgPath(String imgPath) {
+        this.imgPath = imgPath;
+    }
+
+    public String getImgPath() {
+        return imgPath;
     }
 
     public boolean isOnline() {
