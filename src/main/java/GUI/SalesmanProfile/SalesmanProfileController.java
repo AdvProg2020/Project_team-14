@@ -34,6 +34,12 @@ public class SalesmanProfileController {
         pane.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/SalesmanProfile/ManageSale/ManageSalesLayout.fxml")));
     }
 
+    public void managePersonalInfo(ActionEvent actionEvent) throws IOException {
+        Audio.playClick4();
+        pane.getChildren().clear();
+        pane.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/ProfileLayout/PersonalInfoLayout.fxml")));
+    }
+
     public void logout(ActionEvent actionEvent) throws IOException {
         Audio.playClick5();
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are You Sure You Want To Logout?", ButtonType.YES, ButtonType.NO);
