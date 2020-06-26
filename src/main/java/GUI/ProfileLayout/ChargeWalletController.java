@@ -25,7 +25,7 @@ public class ChargeWalletController {
 
     public void back(ActionEvent actionEvent) throws IOException {
         Audio.playClick5();
-        Parent root = FXMLLoader.load(getClass().getResource("/GUI/Register/Register.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/GUI/ProfileLayout/ProfileLayout.fxml"));
         Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
     }
