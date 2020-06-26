@@ -3,6 +3,7 @@ package Model.Product;
 import Model.Confirmation;
 import Model.RandomString;
 import Model.Storage;
+import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 
 import java.io.Serializable;
 import java.util.*;
@@ -221,6 +222,7 @@ public class Product implements Serializable {
     //the salesman is confirmed by manager and also
     //checks that the salesman hasn't deleted the product
     public boolean doesSalesmanSellProductWithUsername(String username) {
+        isConfirmedForSalesmanWithUsername(username);
         return (salesmanIDs.contains(username) && !hasBeenDeleted.get(username) && isConfirmedForSalesmanWithUsername(username));
     }
 
@@ -316,7 +318,7 @@ public class Product implements Serializable {
         result.append("Description: ").append(this.description).append("\n");
         if (salesmanIDs.contains(salesmanUser)) {
             if (!hasBeenDeleted.get(salesmanUser)) {
-                result.append("Confirmation state for you: ").append(confirmationState.get(salesmanUser)).append("\n");
+                result.append("Confirmation state for you: ").append(this.confirmationState.get(salesmanUser)).append("\n");
                 result.append("Your Price: ").append(price.get(salesmanUser)).append("\n");
                 result.append("Your remainder: ").append(remainder.get(salesmanUser)).append("\n");
                 if (isOnSale.get(salesmanUser)) {

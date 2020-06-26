@@ -8,106 +8,129 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: RoyalBlue;" styleClass="backgrounds" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ProfileLayout.ProfileLayoutController">
+<AnchorPane prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: RoyalBlue;" styleClass="backgrounds"
+            xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="GUI.ProfileLayout.ProfileLayoutController">
     <children>
         <HBox alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="1200.0" spacing="5.0" styleClass="tool-bar">
             <children>
                 <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../ProductScene/resources/back.png" />
+                        <Image url="@../ProductScene/resources/back.png"/>
                     </image>
                     <HBox.margin>
-                        <Insets left="8.0" />
+                        <Insets left="8.0"/>
                     </HBox.margin>
                 </ImageView>
-                <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fitWidth="30.0" onMouseClicked="#home" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../ProductScene/resources/home.png" />
+                        <Image url="@../ProductScene/resources/home.png"/>
                     </image>
                 </ImageView>
                 <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../ProductScene/resources/send.png" />
+                        <Image url="@../ProductScene/resources/send.png"/>
                     </image>
                 </ImageView>
-                <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="1060.0" styleClass="labels" text="Wellcome to Store" textFill="WHITE" />
+                <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="1060.0" styleClass="labels"
+                       text="Wellcome to Store" textFill="WHITE"/>
                 <ImageView fitHeight="45.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../ProductScene/resources/supermarket.png" />
+                        <Image url="@../ProductScene/resources/supermarket.png"/>
                     </image>
                 </ImageView>
                 <ImageView fitHeight="45.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../ProductScene/resources/user.png" />
+                        <Image url="@../ProductScene/resources/user.png"/>
                     </image>
                     <HBox.margin>
-                        <Insets right="8.0" />
+                        <Insets right="8.0"/>
                     </HBox.margin>
                 </ImageView>
             </children>
         </HBox>
-        <ImageView fx:id="profileImage" fitHeight="400.0" fitWidth="300.0" layoutX="65.0" layoutY="55.0" pickOnBounds="true" preserveRatio="true" />
-        <VBox alignment="CENTER" layoutX="65.0" layoutY="367.0" prefHeight="300.0" prefWidth="300.0" spacing="10.0" style="-fx-background-color: RoyalBlue;">
+        <ImageView fx:id="profileImage" fitHeight="400.0" fitWidth="300.0" layoutX="65.0" layoutY="55.0"
+                   pickOnBounds="true" preserveRatio="true"/>
+        <VBox alignment="CENTER" layoutX="65.0" layoutY="367.0" prefHeight="300.0" prefWidth="300.0" spacing="10.0"
+              style="-fx-background-color: RoyalBlue;">
             <children>
-                <Button mnemonicParsing="false" onAction="#managePersonalInfo" prefHeight="40.0" prefWidth="300.0" style="-fx-background-color: blue;" styleClass="my-button" text="Manage Personal Info" textFill="#e50d0d">
+                <Button mnemonicParsing="false" onAction="#managePersonalInfo" prefHeight="40.0" prefWidth="300.0"
+                        style="-fx-background-color: blue;" styleClass="my-button" text="Manage Personal Info"
+                        textFill="#e50d0d">
                     <font>
-                        <Font name="System Italic" size="12.0" />
+                        <Font name="System Italic" size="12.0"/>
                     </font>
                     <cursor>
-                        <Cursor fx:constant="HAND" />
+                        <Cursor fx:constant="HAND"/>
                     </cursor>
                 </Button>
-                <Button mnemonicParsing="false" onMouseClicked="#manageOffCodes" prefHeight="40.0" prefWidth="300.0" style="-fx-background-color: green;" styleClass="my-button" text="Manage OffCodes" textFill="#ee1515">
+                <Button mnemonicParsing="false" onMouseClicked="#manageOffCodes" prefHeight="40.0" prefWidth="300.0"
+                        style="-fx-background-color: green;" styleClass="my-button" text="Manage OffCodes"
+                        textFill="#ee1515">
                     <cursor>
-                        <Cursor fx:constant="HAND" />
+                        <Cursor fx:constant="HAND"/>
                     </cursor>
                 </Button>
-                <Button mnemonicParsing="false" onMouseClicked="#categoryClicked" prefHeight="40.0" prefWidth="300.0" style="-fx-background-color: blue;" styleClass="my-button" text="Manage Categories" textFill="#e11a1a">
+                <Button mnemonicParsing="false" onMouseClicked="#categoryClicked" prefHeight="40.0" prefWidth="300.0"
+                        style="-fx-background-color: blue;" styleClass="my-button" text="Manage Categories"
+                        textFill="#e11a1a">
                     <cursor>
-                        <Cursor fx:constant="HAND" />
+                        <Cursor fx:constant="HAND"/>
                     </cursor>
                 </Button>
-                <Button mnemonicParsing="false" onAction="#manageAccounts" prefHeight="40.0" prefWidth="300.0" style="-fx-background-color: green;" styleClass="my-button" text="Manage User" textFill="#da1818">
+                <Button mnemonicParsing="false" onAction="#manageAccounts" prefHeight="40.0" prefWidth="300.0"
+                        style="-fx-background-color: green;" styleClass="my-button" text="Manage User"
+                        textFill="#da1818">
                     <cursor>
-                        <Cursor fx:constant="HAND" />
+                        <Cursor fx:constant="HAND"/>
                     </cursor>
                 </Button>
-                <Button mnemonicParsing="false" onAction="#productShow" prefHeight="40.0" prefWidth="300.0" style="-fx-background-color: blue;" styleClass="my-button" text="Manage Products" textFill="#ea0404">
+                <Button mnemonicParsing="false" onAction="#productShow" prefHeight="40.0" prefWidth="300.0"
+                        style="-fx-background-color: blue;" styleClass="my-button" text="Manage Products"
+                        textFill="#ea0404">
                     <cursor>
-                        <Cursor fx:constant="HAND" />
+                        <Cursor fx:constant="HAND"/>
                     </cursor>
                 </Button>
-                <Button layoutX="10.0" layoutY="216.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="300.0" style="-fx-background-color: green;" styleClass="my-button" text="Manage Sales" textFill="#ea0404">
+                <Button layoutX="10.0" layoutY="216.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="300.0"
+                        style="-fx-background-color: green;" styleClass="my-button" text="Manage Sales"
+                        textFill="#ea0404">
                     <cursor>
-                        <Cursor fx:constant="HAND" />
+                        <Cursor fx:constant="HAND"/>
                     </cursor>
                 </Button>
-                <Button layoutX="10.0" layoutY="254.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="300.0" style="-fx-background-color: blue;" styleClass="my-button" text="Manage Logs" textFill="#ea0404">
+                <Button layoutX="10.0" layoutY="254.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="300.0"
+                        style="-fx-background-color: blue;" styleClass="my-button" text="Manage Logs"
+                        textFill="#ea0404">
                     <cursor>
-                        <Cursor fx:constant="HAND" />
+                        <Cursor fx:constant="HAND"/>
                     </cursor>
                 </Button>
-                <Button layoutX="10.0" layoutY="303.0" mnemonicParsing="false" onAction="#manageRequests" prefHeight="40.0" prefWidth="300.0" style="-fx-background-color: green;" styleClass="my-button" text="Manage Requests" textFill="#ea0404">
+                <Button layoutX="10.0" layoutY="303.0" mnemonicParsing="false" onAction="#manageRequests"
+                        prefHeight="40.0" prefWidth="300.0" style="-fx-background-color: green;" styleClass="my-button"
+                        text="Manage Requests" textFill="#ea0404">
                     <cursor>
-                        <Cursor fx:constant="HAND" />
+                        <Cursor fx:constant="HAND"/>
                     </cursor>
                 </Button>
-                <Button mnemonicParsing="false" onAction="#logout" prefHeight="40.0" prefWidth="300.0" style="-fx-background-color: blue;" styleClass="my-button" text="logOut" textFill="#ec0f0f">
+                <Button mnemonicParsing="false" onAction="#logout" prefHeight="40.0" prefWidth="300.0"
+                        style="-fx-background-color: blue;" styleClass="my-button" text="logOut" textFill="#ec0f0f">
                     <cursor>
-                        <Cursor fx:constant="HAND" />
+                        <Cursor fx:constant="HAND"/>
                     </cursor>
                 </Button>
             </children>
             <cursor>
-                <Cursor fx:constant="HAND" />
+                <Cursor fx:constant="HAND"/>
             </cursor>
         </VBox>
-        <Pane fx:id="pane" layoutX="413.0" layoutY="82.0" prefHeight="734.0" prefWidth="781.0" styleClass="info-part" AnchorPane.bottomAnchor="11.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="55.0" />
+        <Pane fx:id="pane" layoutX="413.0" layoutY="82.0" prefHeight="734.0" prefWidth="781.0" styleClass="info-part"
+              AnchorPane.bottomAnchor="11.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="55.0"/>
     </children>
     <stylesheets>
-        <URL value="@../StyleSheets/ProfileStyle.css" />
-        <URL value="@../StyleSheets/MainThemStyle.css" />
-        <URL value="@../StyleSheets/MainThemStyle.css" />
-        <URL value="@../StyleSheets/MainThemStyle.css" />
+        <URL value="@../StyleSheets/ProfileStyle.css"/>
+        <URL value="@../StyleSheets/MainThemStyle.css"/>
+        <URL value="@../StyleSheets/MainThemStyle.css"/>
+        <URL value="@../StyleSheets/MainThemStyle.css"/>
     </stylesheets>
 </AnchorPane>

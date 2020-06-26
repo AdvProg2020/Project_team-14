@@ -309,8 +309,8 @@ public class Controller {
         if (s.equals("")) return;
         MenuHandler.getServer().clientToServer("view product+" + s + "+" + MenuHandler.getProductID());
         String respond = MenuHandler.getServer().serverToClient();
-        System.out.println(respond);
         seller.setText(s);
+        System.out.println(respond);
         for (String string : respond.split("\n")) {
             if (string.startsWith("Your Price")) {
                 price.setText(string.split("\\s")[2] + "$");

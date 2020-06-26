@@ -32,7 +32,6 @@ public class ViewRequestController {
             declineButton.setVisible(false);
             acceptButton.setText("Delete");
         }
-        System.out.println(serverAnswer);
         requestTypeField.setText(serverAnswer.split("\\s")[1]);
         requestID = MenuHandler.getRequestID();
         switch (serverAnswer.split("\\s")[1]) {

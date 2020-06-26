@@ -11,6 +11,7 @@ import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -28,6 +29,7 @@ public class ManageProductsController {
     public ComboBox<String> sortFactor;
     public ComboBox<String> filter;
     public FlowPane filterList;
+    public Button addButton;
     ObservableList<String> list = FXCollections.observableArrayList("Confirmation:ACCEPTED", "Confirmation:DENIED",
             "Confirmation:CHECKING", "Available", "Not Available");
 
@@ -38,6 +40,9 @@ public class ManageProductsController {
     }
 
     public void initialize() throws ParseException, IOException {
+        if (MenuHandler.getUserType().equalsIgnoreCase("Boss")) {
+            addButton.setDisable(true);
+        }
         MenuHandler.getServer().clientToServer("show the salesman+" + MenuHandler.getUsername());
         String salesman = MenuHandler.getServer().serverToClient();
         filter.setItems(list);
@@ -47,7 +52,6 @@ public class ManageProductsController {
             }
             filter.getItems().add("Salesman:" + s);
         }
-        System.out.println(salesman);
         MenuHandler.getServer().clientToServer("show categories+" + MenuHandler.getUsername());
         String categories = MenuHandler.getServer().serverToClient();
         for (String s : categories.split("\n")) {
@@ -116,11 +120,9 @@ public class ManageProductsController {
 
         MenuHandler.getServer().clientToServer(command);
         String serverAnswer = MenuHandler.getServer().serverToClient();
-
         for (int i = 1; i <= products.getChildren().size(); ) {
             Object object = products.getChildren().remove(0);
         }
-        System.out.println(products.getChildren().size());
         if (serverAnswer.equals("nothing found")) {
             return;
         }

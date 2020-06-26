@@ -139,7 +139,6 @@ public class ProductSceneController {
             }
             filter.getItems().add("Salesman:" + s);
         }
-        System.out.println(salesman);
         MenuHandler.getServer().clientToServer("show categories+" + MenuHandler.getUsername());
         String categories = MenuHandler.getServer().serverToClient();
         for (String s : categories.split("\n")) {
@@ -212,7 +211,6 @@ public class ProductSceneController {
         for (int i = 1; i <= products.getChildren().size(); ) {
             Object object = products.getChildren().remove(0);
         }
-        System.out.println(products.getChildren().size());
         if (serverAnswer.equals("nothing found")) {
             return;
         }

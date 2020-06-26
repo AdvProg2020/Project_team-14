@@ -14,9 +14,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.ParseException;
@@ -41,7 +38,7 @@ public class ProfileLayoutController {
         }
         MenuHandler.getServer().clientToServer("get person image+" + MenuHandler.getUsername());
         if (!MenuHandler.getServer().serverToClient().startsWith("no image found")) {
-           // profileImage.setImage(new Image(MenuHandler.getServer().serverToClient()));
+            // profileImage.setImage(new Image(MenuHandler.getServer().serverToClient()));
         } else {
             FileInputStream imageStream = new FileInputStream("src/main/java/GUI/ProductScene/resources/user.png");
             Image image = new Image(imageStream);
@@ -51,12 +48,14 @@ public class ProfileLayoutController {
 
     public void managePersonalInfo(ActionEvent actionEvent) throws IOException {
         Audio.playClick5();
+        if (pane.getChildren().size() == 0) return;
         pane.getChildren().remove(pane.getChildren().get(0));
         pane.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/ProfileLayout/PersonalInfoLayout.fxml")));
     }
 
     public void manageRequests(ActionEvent actionEvent) throws IOException {
         Audio.playClick4();
+        if (pane.getChildren().size() == 0) return;
         pane.getChildren().remove(pane.getChildren().get(0));
         pane.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/BossProfile/ManageRequests/ManageRequestLayout.fxml")));
     }
@@ -77,31 +76,41 @@ public class ProfileLayoutController {
 
     public void manageAccounts(ActionEvent actionEvent) throws IOException {
         Audio.playClick2();
+        if (pane.getChildren().size() == 0) return;
         pane.getChildren().remove(pane.getChildren().get(0));
         pane.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/BossProfile/ManagerUsersMenu/ManageUsersLayOut.fxml")));
     }
 
     public void manageOffCodes(MouseEvent mouseEvent) throws IOException {
         Audio.playClick1();
+        if (pane.getChildren().size() == 0) return;
         pane.getChildren().remove(pane.getChildren().get(0));
         pane.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/BossProfile/ManageOffCodes/ManageOffCodeLayout.fxml")));
     }
 
     public void categoryMenu(ActionEvent actionEvent) throws IOException {
         Audio.playClick7();
+        if (pane.getChildren().size() == 0) return;
         pane.getChildren().remove(pane.getChildren().get(0));
         pane.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/CategoryMenu/CategoryMenu.fxml")));
     }
 
     public void categoryClicked(MouseEvent mouseEvent) throws IOException {
         Audio.playClick7();
+        if (pane.getChildren().size() == 0) return;
         pane.getChildren().remove(pane.getChildren().get(0));
         pane.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/CategoryMenu/CategoryMenu.fxml")));
     }
 
     public void productShow(ActionEvent actionEvent) throws IOException {
         Audio.playClick3();
+        if (pane.getChildren().size() == 0) return;
         pane.getChildren().remove(pane.getChildren().get(0));
-        pane.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/SalesmanProfile/ManageProduct//ManageProductsLayout.fxml")));
+        pane.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/SalesmanProfile/ManageProduct/ManageProductsLayout.fxml")));
+    }
+
+    public void home(MouseEvent mouseEvent) throws IOException {
+        Audio.playClick5();
+        MenuHandler.getStage().setScene(new Scene(FXMLLoader.load(getClass().getResource("/GUI/ProductScene/ProductScene.fxml"))));
     }
 }
