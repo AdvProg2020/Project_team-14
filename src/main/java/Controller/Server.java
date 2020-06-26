@@ -266,6 +266,7 @@ public class Server {
         product.setRemainderForSalesman(product.getRemainderForSalesman(command.split("\\+")[2]) - Integer.parseInt(command.split("\\+")[4]), command.split("\\+")[2]);
         Account account = Storage.getAccountWithUsername(command.split("\\+")[1]);
         Account account1 = Storage.getAccountWithUsername(command.split("\\+")[2]);
+        //
     }
 
     private void getMoney(String command) {
