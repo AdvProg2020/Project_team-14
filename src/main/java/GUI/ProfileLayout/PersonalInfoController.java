@@ -220,9 +220,6 @@ public class PersonalInfoController {
 
     public void deleteImg(ActionEvent actionEvent) throws ParseException, IOException {
         Audio.playClick5();
-        ProfileLayoutController profileLayoutController = new ProfileLayoutController();
-        profileLayoutController.setProfileImage();
-        MenuHandler.getServer().clientToServer("delete person image+" + MenuHandler.getUsername() + "+");
     }
 
 }

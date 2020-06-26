@@ -214,11 +214,6 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button layoutX="556.0" layoutY="10.0" mnemonicParsing="false" onAction="#deleteImg" prefHeight="45.0" prefWidth="134.0" text="delete image">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
             </children>
         </HBox>
     </children>
