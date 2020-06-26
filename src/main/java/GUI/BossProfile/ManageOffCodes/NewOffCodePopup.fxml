@@ -19,7 +19,7 @@
          <children>
             <VBox prefHeight="200.0" prefWidth="220.0">
                <children>
-                  <Label text="Start Date :">
+                  <Label prefHeight="32.0" prefWidth="99.0" text="Start Date :">
                      <font>
                         <Font size="20.0" />
                      </font>
@@ -63,27 +63,27 @@
             </VBox>
             <VBox prefHeight="245.0" prefWidth="220.0">
                <children>
-                  <DatePicker fx:id="startDate">
+                  <DatePicker fx:id="startDate" prefHeight="33.0" prefWidth="174.0">
                      <VBox.margin>
                         <Insets bottom="15.0" top="15.0" />
                      </VBox.margin>
                   </DatePicker>
-                  <DatePicker fx:id="endDate">
+                  <DatePicker fx:id="endDate" prefHeight="33.0" prefWidth="174.0">
                      <VBox.margin>
                         <Insets bottom="15.0" />
                      </VBox.margin>
                   </DatePicker>
-                  <TextField fx:id="percentage" alignment="CENTER" prefHeight="26.0" prefWidth="176.0" promptText="enter percentage">
+                  <TextField fx:id="percentage" alignment="CENTER" prefHeight="33.0" prefWidth="220.0" promptText="enter percentage">
                      <VBox.margin>
                         <Insets bottom="15.0" />
                      </VBox.margin>
                   </TextField>
-                  <TextField fx:id="max" alignment="CENTER" promptText="enter max">
+                  <TextField fx:id="max" alignment="CENTER" prefHeight="33.0" prefWidth="220.0" promptText="enter max">
                      <VBox.margin>
                         <Insets bottom="15.0" />
                      </VBox.margin>
                   </TextField>
-                  <TextField fx:id="frequency" alignment="CENTER" promptText="enter frequency">
+                  <TextField fx:id="frequency" alignment="CENTER" prefHeight="33.0" prefWidth="220.0" promptText="enter frequency">
                      <VBox.margin>
                         <Insets bottom="15.0" />
                      </VBox.margin>
@@ -123,12 +123,12 @@
                         <Insets bottom="40.0" />
                      </VBox.margin>
                   </Label>
-                  <Button mnemonicParsing="false" onMouseClicked="#addToList" prefHeight="31.0" prefWidth="58.0" text="add">
+                  <Button mnemonicParsing="false" onMouseClicked="#addToList" prefHeight="32.0" prefWidth="58.0" text="add">
                      <VBox.margin>
                         <Insets bottom="10.0" />
                      </VBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" onMouseClicked="#deleteFromList" text="delete" />
+                  <Button mnemonicParsing="false" onMouseClicked="#deleteFromList" prefHeight="34.0" prefWidth="59.0" text="delete" />
                </children>
             </VBox>
          </children>
@@ -146,8 +146,8 @@
       </Label>
       <HBox alignment="CENTER" prefHeight="92.0" prefWidth="595.0" spacing="15.0">
          <children>
-            <Button mnemonicParsing="false" onMouseClicked="#cancel" text="Cancel" />
-            <Button mnemonicParsing="false" onMouseClicked="#doneCreating" text="Done" />
+            <Button mnemonicParsing="false" onMouseClicked="#cancel" prefHeight="25.0" prefWidth="67.0" text="Cancel" />
+            <Button mnemonicParsing="false" onMouseClicked="#doneCreating" prefHeight="25.0" prefWidth="66.0" text="Done" />
          </children>
       </HBox>
    </children>

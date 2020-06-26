@@ -7,9 +7,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.stage.FileChooser;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.regex.Matcher;
@@ -195,4 +198,28 @@ public class PersonalInfoController {
         if (number.equals("")) return false;
         return getMatcher("0(\\d+)", number).matches() && number.length() == 11;
     }
+
+    public void uploadImg(ActionEvent actionEvent) throws ParseException, IOException {
+        Audio.playClick5();
+        Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("upload your image");
+        File chosenFile = fileChooser.showOpenDialog(stage);
+        if (chosenFile == null) return;
+        String path = String.valueOf(chosenFile.toURI());
+        MenuHandler.getServer().clientToServer("set person image+" + MenuHandler.getUsername() + "+" + path);
+        ProfileLayoutController profileLayoutController = new ProfileLayoutController();
+        profileLayoutController.profileImage.setImage(new Image(String.valueOf(chosenFile.toURI())));
+        System.out.println("set person image+" + MenuHandler.getUsername() + "+" + path);
+        System.err.println(path);
+        profileLayoutController.setProfileImage();
+    }
+
+    public void deleteImg(ActionEvent actionEvent) throws ParseException, IOException {
+        Audio.playClick5();
+        ProfileLayoutController profileLayoutController = new ProfileLayoutController();
+        profileLayoutController.setProfileImage();
+        MenuHandler.getServer().clientToServer("delete person image+" + MenuHandler.getUsername() + "+");
+    }
+
 }

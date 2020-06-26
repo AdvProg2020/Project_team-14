@@ -32,7 +32,7 @@
                                                 <Insets left="5.0" top="15.0" />
                                             </VBox.margin>
                                         </Label>
-                                        <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="175.0" text="Last Name :">
+                                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="55.0" prefWidth="170.0" text="Last Name :">
                                             <font>
                                                 <Font size="20.0" />
                                             </font>
@@ -40,7 +40,7 @@
                                                 <Insets left="5.0" top="15.0" />
                                             </VBox.margin>
                                         </Label>
-                                        <Label fx:id="companyInfoLabel" alignment="CENTER" contentDisplay="CENTER" prefWidth="175.0" text="Company Info :">
+                                        <Label fx:id="companyInfoLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="57.0" prefWidth="170.0" text="Company Info :">
                                             <font>
                                                 <Font size="20.0" />
                                             </font>
@@ -52,17 +52,17 @@
                                 </VBox>
                                 <VBox prefHeight="200.0" prefWidth="175.0">
                                     <children>
-                                        <TextField fx:id="firstName">
+                                        <TextField fx:id="firstName" prefHeight="35.0" prefWidth="167.0">
                                             <VBox.margin>
                                                 <Insets right="8.0" top="15.0" />
                                             </VBox.margin>
                                         </TextField>
-                                        <TextField fx:id="lastName">
+                                        <TextField fx:id="lastName" prefHeight="35.0" prefWidth="167.0">
                                             <VBox.margin>
                                                 <Insets right="8.0" top="15.0" />
                                             </VBox.margin>
                                         </TextField>
-                                        <TextField fx:id="companyInfo">
+                                        <TextField fx:id="companyInfo" prefHeight="35.0" prefWidth="167.0">
                                             <VBox.margin>
                                                 <Insets right="8.0" top="15.0" />
                                             </VBox.margin>
@@ -89,7 +89,7 @@
                                         <Insets right="35.0" />
                                     </HBox.margin>
                                 </Label>
-                                <TextField fx:id="balance" disable="true" prefWidth="167.0">
+                                <TextField fx:id="balance" disable="true" prefHeight="35.0" prefWidth="167.0">
                                     <HBox.margin>
                                         <Insets right="8.0" />
                                     </HBox.margin>
@@ -112,7 +112,7 @@
                             <children>
                                 <VBox prefHeight="182.0" prefWidth="175.0">
                                     <children>
-                                        <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="380.0" text="Username :">
+                                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="35.0" prefWidth="175.0" text="Username :">
                                             <font>
                                                 <Font size="20.0" />
                                             </font>
@@ -128,7 +128,7 @@
                                                 <Insets top="15.0" />
                                             </VBox.margin>
                                         </Label>
-                                        <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="380.0" text="Email :">
+                                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="50.0" prefWidth="175.0" text="Email :">
                                             <font>
                                                 <Font size="20.0" />
                                             </font>
@@ -144,7 +144,7 @@
                                                 <Insets top="15.0" />
                                             </VBox.margin>
                                         </Label>
-                                        <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="380.0" text="Role :">
+                                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="44.0" prefWidth="175.0" text="Role :">
                                             <font>
                                                 <Font size="20.0" />
                                             </font>
@@ -156,27 +156,27 @@
                                 </VBox>
                                 <VBox prefHeight="200.0" prefWidth="175.0">
                                     <children>
-                                        <TextField fx:id="username">
+                                        <TextField fx:id="username" prefHeight="35.0" prefWidth="167.0">
                                             <VBox.margin>
                                                 <Insets right="8.0" top="15.0" />
                                             </VBox.margin>
                                         </TextField>
-                                        <TextField fx:id="password" disable="true">
+                                        <TextField fx:id="password" disable="true" prefHeight="35.0" prefWidth="167.0">
                                             <VBox.margin>
                                                 <Insets right="8.0" top="15.0" />
                                             </VBox.margin>
                                         </TextField>
-                                        <TextField fx:id="Email">
+                                        <TextField fx:id="Email" prefHeight="34.0" prefWidth="167.0">
                                             <VBox.margin>
                                                 <Insets right="8.0" top="15.0" />
                                             </VBox.margin>
                                         </TextField>
-                                        <TextField fx:id="telephone">
+                                        <TextField fx:id="telephone" prefHeight="35.0" prefWidth="167.0">
                                             <VBox.margin>
                                                 <Insets right="8.0" top="15.0" />
                                             </VBox.margin>
                                         </TextField>
-                                        <TextField fx:id="role" disable="true" editable="false">
+                                        <TextField fx:id="role" disable="true" editable="false" prefHeight="35.0" prefWidth="167.0">
                                             <VBox.margin>
                                                 <Insets right="8.0" top="15.0" />
                                             </VBox.margin>
@@ -205,10 +205,20 @@
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Button>
-            <Button layoutX="411.0" layoutY="10.0" mnemonicParsing="false" onAction="#changePassword" prefHeight="45.0" prefWidth="139.0" text="Change Password">
+            <Button layoutX="411.0" layoutY="10.0" mnemonicParsing="false" onAction="#changePassword" prefHeight="45.0" prefWidth="134.0" text="Change Password">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Button>
+            <Button layoutX="479.0" layoutY="10.0" mnemonicParsing="false" onAction="#uploadImg" prefHeight="45.0" prefWidth="134.0" text="upload image">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button layoutX="556.0" layoutY="10.0" mnemonicParsing="false" onAction="#deleteImg" prefHeight="45.0" prefWidth="134.0" text="delete image">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
             </children>
         </HBox>
     </children>

@@ -157,11 +157,11 @@ public class Controller {
         zoom();
         MenuHandler.getServer().clientToServer("view product+" + MenuHandler.getUsername() + "+" + productId);
         String serverAnswer = MenuHandler.getServer().serverToClient();
-        String ans = "";
+        StringBuilder ans = new StringBuilder();
         for (int i = 0; i < serverAnswer.split("\n").length - 4; i++) {
-            ans += serverAnswer.split("\n")[i] + "\n";
+            ans.append(serverAnswer.split("\n")[i]).append("\n");
         }
-        infoText.setText(ans);
+        infoText.setText(ans.toString());
         infoText.setEditable(false);
         if (!MenuHandler.isIsUserLogin()) {
             customerLoad(serverAnswer);

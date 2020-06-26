@@ -2,26 +2,50 @@ package GUI.ProfileLayout;
 
 import GUI.Media.Audio;
 import GUI.MenuHandler;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.text.ParseException;
 
 public class ProfileLayoutController {
     public Pane pane;
     public ImageView imageView;
+    public ImageView profileImage;
 
-    public void initialize() throws IOException {
+
+    public void initialize() throws IOException, ParseException {
         pane.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/ProfileLayout/PersonalInfoLayout.fxml")));
+        FileInputStream imageStream = new FileInputStream("src/main/java/GUI/ProductScene/resources/user.png");
+        Image image = new Image(imageStream);
+        profileImage.setImage(image);
+    }
+
+    public void setProfileImage() throws ParseException, IOException {
+        if (MenuHandler.getServer().serverToClient() == null) {
+            return;
+        }
+        MenuHandler.getServer().clientToServer("get person image+" + MenuHandler.getUsername());
+        if (!MenuHandler.getServer().serverToClient().startsWith("no image found")) {
+           // profileImage.setImage(new Image(MenuHandler.getServer().serverToClient()));
+        } else {
+            FileInputStream imageStream = new FileInputStream("src/main/java/GUI/ProductScene/resources/user.png");
+            Image image = new Image(imageStream);
+            profileImage.setImage(image);
+        }
     }
 
     public void managePersonalInfo(ActionEvent actionEvent) throws IOException {

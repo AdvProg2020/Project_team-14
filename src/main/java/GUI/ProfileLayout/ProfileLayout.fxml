@@ -1,19 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.net.URL?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: RoyalBlue;" styleClass="backgrounds" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ProfileLayout.ProfileLayoutController">
+<AnchorPane prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: RoyalBlue;" styleClass="backgrounds" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ProfileLayout.ProfileLayoutController">
     <children>
         <HBox alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="1200.0" spacing="5.0" styleClass="tool-bar">
             <children>
@@ -51,11 +46,7 @@
                 </ImageView>
             </children>
         </HBox>
-        <ImageView fitHeight="400.0" fitWidth="300.0" layoutX="65.0" layoutY="55.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-                <Image url="@../ProductScene/resources/user.png" />
-            </image>
-        </ImageView>
+        <ImageView fx:id="profileImage" fitHeight="400.0" fitWidth="300.0" layoutX="65.0" layoutY="55.0" pickOnBounds="true" preserveRatio="true" />
         <VBox alignment="CENTER" layoutX="65.0" layoutY="367.0" prefHeight="300.0" prefWidth="300.0" spacing="10.0" style="-fx-background-color: RoyalBlue;">
             <children>
                 <Button mnemonicParsing="false" onAction="#managePersonalInfo" prefHeight="40.0" prefWidth="300.0" style="-fx-background-color: blue;" styleClass="my-button" text="Manage Personal Info" textFill="#e50d0d">
@@ -81,7 +72,7 @@
                         <Cursor fx:constant="HAND" />
                     </cursor>
                 </Button>
-                <Button mnemonicParsing="false" onAction="#productShow" prefHeight="40.0" prefWidth="300.0" style="-fx-background-color: blue;" styleClass="my-button" text="Manage Products" textFill="#ea0404">
+                <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="300.0" style="-fx-background-color: blue;" styleClass="my-button" text="Manage Products" textFill="#ea0404">
                     <cursor>
                         <Cursor fx:constant="HAND" />
                     </cursor>
