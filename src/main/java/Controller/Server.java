@@ -20,6 +20,7 @@ import Model.Account.Account;
 import Model.Account.Customer;
 import Model.Account.Role;
 import Model.Account.Salesman;
+import Model.Cart.Cart;
 import Model.Category.Category;
 import Model.Confirmation;
 import Model.Off.Sale;
@@ -28,6 +29,7 @@ import Model.Product.Point;
 import Model.Product.Product;
 import Model.Request.Request;
 import Model.Storage;
+import org.javatuples.Triplet;
 
 public class Server {
     static private boolean hasBoss;
@@ -250,8 +252,56 @@ public class Server {
             this.showBalance(command);
         } else if (command.startsWith("add balance+")) {
             this.addBalance(command);
+        } else if (command.startsWith("Add To Cart+")) {
+            this.addToCart(command);
+        } else if (command.startsWith("get money+")) {
+            this.getMoney(command);
+        } else if (command.startsWith("buy+")) {
+            this.buy(command);
         }
+    }
 
+    private void buy(String command) {
+        Product product = Storage.getProductById(command.split("\\+")[3]);
+        product.setRemainderForSalesman(product.getRemainderForSalesman(command.split("\\+")[2]) - Integer.parseInt(command.split("\\+")[4]), command.split("\\+")[2]);
+        Account account = Storage.getAccountWithUsername(command.split("\\+")[1]);
+        Account account1 = Storage.getAccountWithUsername(command.split("\\+")[2]);
+    }
+
+    private void getMoney(String command) {
+        Account account = Storage.getAccountWithUsername(command.split("\\+")[1]);
+        Server.setAnswer(String.valueOf(account.getCredit()));
+    }
+
+    private void addToCart(String command) {
+        /*for (Cart cart : Storage.allCarts) {
+            if (cart.getUsername().equals(command.split("\\+")[1])) {
+                for (Triplet<String, String, Integer> item : cart.getAllItems()) {
+                    if (item.getValue0().equals(command.split("\\+")[2])) {
+                        if (item.getValue1().equals(command.split("\\+")[3])) {
+                            int counter = item.getValue2();
+                            if (counter + (Integer) count.getValue() > (Integer.parseInt(remainder.getText()))) {
+                                Alert alert = new Alert(Alert.AlertType.ERROR, "The Current Number Of Items + The Items You Already Added To Your Cart Is More Than Remainder", ButtonType.OK);
+                                alert.showAndWait();
+                            } else {
+                                MenuHandler.getServer().clientToServer("Add To Cart+" + MenuHandler.getUsername() + "+" + (String) chooseSeller.getValue() + "+" + MenuHandler.getProductID() + "+" + (Integer) count.getValue());
+                                Triplet addedItem = new Triplet<>((String) chooseSeller.getValue(), MenuHandler.getProductID(), (Integer) count.getValue() + counter);
+                                MenuHandler.getCart().remove(item);
+                                MenuHandler.getCart().add(addedItem);
+                                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Added To The Cart", ButtonType.OK);
+                                alert.showAndWait();
+                            }
+                            return;
+                        }
+                    }
+                }
+                Triplet addedItem = new Triplet<>((String) chooseSeller.getValue(), MenuHandler.getProductID(), (Integer) count.getValue());
+                MenuHandler.getCart().add(addedItem);
+                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Added To The Cart", ButtonType.OK);
+                alert.showAndWait();
+                return;
+            }
+        }*/
     }
 
     private void isFinished(String command) {

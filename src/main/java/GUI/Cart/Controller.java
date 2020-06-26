@@ -26,6 +26,7 @@ public class Controller {
     public TableColumn<Cart, String> isOnSale;
     public TableColumn<Cart, Integer> priceAll;
     public TableView<Cart> products;
+    private int ans = 0;
 
     ObservableList<Cart> list = FXCollections.observableArrayList();
 
@@ -53,13 +54,13 @@ public class Controller {
                     isOnSale.equalsIgnoreCase("none") ? "No" : "Yes", isOnSale);
             list.add(cart);
             System.out.println(cart);
-
         }
         products.setItems(list);
     }
 
     private int getPrice(int price, Integer count, String isOnSale) {
         if (isOnSale.equalsIgnoreCase("none")) {
+            ans += price * count;
             return price * count;
         } else {
             return -1;
@@ -75,10 +76,19 @@ public class Controller {
         Audio.playClick2();
     }
 
-    public void buy(ActionEvent mouseEvent) throws IOException {
+    public void buy(ActionEvent mouseEvent) throws IOException, ParseException {
         Audio.playClick3();
         if (MenuHandler.isIsUserLogin()) {
-
+            MenuHandler.getServer().clientToServer("get money+" + MenuHandler.getUsername());
+            int money = Integer.parseInt(MenuHandler.getServer().serverToClient());
+            if (money < ans) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Not Enough Money", ButtonType.OK);
+                alert.showAndWait();
+            } else {
+                for (Cart cart : list) {
+                    MenuHandler.getServer().clientToServer("buy+" + MenuHandler.getServer() + "+" + cart.getSalesman() + "+" + cart.getProductId() + "+" + cart.getCount());
+                }
+            }
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR, "You Should Login First", ButtonType.OK);
             alert.showAndWait();
