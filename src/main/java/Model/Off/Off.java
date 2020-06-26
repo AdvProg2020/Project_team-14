@@ -75,7 +75,7 @@ public abstract class Off implements Serializable {
         return result;
     }
 
-    private String dateToLocalDate(Date date) {
+    protected String dateToLocalDate(Date date) {
         ZoneId zoneId = ZoneId.systemDefault();
         Instant instant = date.toInstant();
         LocalDate localDate = instant.atZone(zoneId).toLocalDate();

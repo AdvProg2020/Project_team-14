@@ -39,7 +39,7 @@ public class Sale extends Off implements Serializable {
     public static ArrayList<Sale> getAllSaleBySalesmanID(String salesmanID) {
         ArrayList<Sale> salesmanSale = new ArrayList<>();
         for (Sale sale : allSales) {
-            if (sale.getSaleID().equals(salesmanID)) salesmanSale.add(sale);
+            if (sale.getSalesmanID().equals(salesmanID)) salesmanSale.add(sale);
         }
         return salesmanSale;
     }
@@ -125,6 +125,7 @@ public class Sale extends Off implements Serializable {
 
     public String toString() {
         StringBuilder result = new StringBuilder(super.toString());
+        result.append("Confirmation:").append(confirmationState).append("\n");
         result.append("Products: " + "\n");
         for (String ID : productIDs) {
             result.append(Product.getNameByID(ID)).append("\n");
@@ -140,5 +141,16 @@ public class Sale extends Off implements Serializable {
             }
         }
         return sales;
+    }
+
+    public String toStringForTable() {
+//        StringBuilder result = new StringBuilder(super.toString());
+        StringBuilder result = new StringBuilder("");
+        result.append("StartDate:").append(dateToLocalDate(start)).append(" ");
+        result.append("EndDate:").append(dateToLocalDate(end)).append(" ");
+        result.append("Percentage:").append(percentage).append(" ");
+        result.append("Confirmation:").append(this.confirmationState).append(" ");
+        result.append("SaleId:").append(this.getSaleID());
+        return result.toString();
     }
 }

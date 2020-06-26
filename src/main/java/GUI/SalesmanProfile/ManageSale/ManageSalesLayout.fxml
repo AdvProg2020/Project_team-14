@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="735.0" prefWidth="780.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.SalesmanProfile.ManageSale.ManageSaleController">
+    <children>
+        <ScrollPane hbarPolicy="NEVER" layoutX="14.0" layoutY="267.0" prefHeight="456.0" prefWidth="754.0" vbarPolicy="NEVER" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+            <content>
+                <TableView fx:id="saleTable" prefHeight="454.0" prefWidth="767.0">
+                    <columns>
+                        <TableColumn fx:id="number" prefWidth="36.60000705718994" text="No" />
+                        <TableColumn fx:id="percentage" prefWidth="186.59997177124023" text="Percentage" />
+                  <TableColumn fx:id="startDate" prefWidth="102.0" text="Start Time" />
+                  <TableColumn fx:id="endDate" prefWidth="113.0" text="End Time" />
+                  <TableColumn fx:id="status" prefWidth="110.0" text="Status" />
+                        <TableColumn fx:id="moreInfo" prefWidth="207.2000732421875" text="More Info" />
+                    </columns>
+                </TableView>
+            </content>
+        </ScrollPane>
+        <Button layoutX="558.0" layoutY="97.0" mnemonicParsing="false" onMouseClicked="#newSale" opacity="0.87" prefHeight="50.0" prefWidth="151.0" text="New Sale">
+            <font>
+                <Font name="System Bold Italic" size="13.0" />
+            </font></Button>
+        <Label layoutX="393.0" layoutY="14.0" text="Sales" textFill="#ec0808">
+            <font>
+                <Font name="System Italic" size="29.0" />
+            </font>
+        </Label>
+      <Button layoutX="558.0" layoutY="168.0" mnemonicParsing="false" onMouseClicked="#viewSale" opacity="0.87" prefHeight="50.0" prefWidth="151.0" text="View Sale">
+         <font>
+            <Font name="System Bold Italic" size="13.0" />
+         </font>
+      </Button>
+      <Label fx:id="viewError" layoutX="285.0" layoutY="182.0" textFill="RED">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+    </children>
+</AnchorPane>

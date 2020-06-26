@@ -15,6 +15,7 @@ public class MenuHandler {
     static private String requestID = null;
     static private String seeingUsername = null;
     static private String seeingOffCode = null;
+    static private String seeingSale = null;
     static private boolean isUserLogin = false;
     static private String userType = null;
     static private Stage stage;
@@ -143,5 +144,13 @@ public class MenuHandler {
 
     public static void setCartBack(String cartBack) {
         MenuHandler.cartBack = cartBack;
+    }
+
+    public static String getSeeingSale() {
+        return seeingSale;
+    }
+
+    public static void setSeeingSale(String seeingSale) {
+        MenuHandler.seeingSale = seeingSale;
     }
 }
