@@ -55,7 +55,7 @@ public class ProductSceneController {
                     } else if (MenuHandler.getUserType().equalsIgnoreCase("salesman")) {
                         root = FXMLLoader.load(getClass().getResource("/GUI/SalesmanProfile/SalesmanProfileLayout.fxml"));
                     } else {
-
+                        root = FXMLLoader.load(getClass().getResource("/GUI/CustomerProfile/CustomerProfileLayout.fxml"));
                     }
                 } catch (IOException e) {
                     e.printStackTrace();

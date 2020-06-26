@@ -62,6 +62,9 @@ public class PersonalInfoController {
         } else if (information[12].equalsIgnoreCase("salesman")) {
             companyInfo.setText(information[14]);
             balance.setText(information[16]);
+        } else {
+            companyInfoLabel.setVisible(false);
+            companyInfo.setVisible(false);
         }
     }
 
@@ -150,7 +153,8 @@ public class PersonalInfoController {
         } else {
             Alert alert = new Alert(Alert.AlertType.INFORMATION, message, ButtonType.OK);
             alert.showAndWait();
-            returnable(actionEvent);
+//            returnable(actionEvent);
+            initialize();
         }
     }
 
