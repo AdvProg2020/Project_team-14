@@ -54,9 +54,9 @@
                 <VBox alignment="CENTER" prefHeight="104.0" prefWidth="118.0">
                     <children>
                         <Label alignment="CENTER" text="Min Credit Filter" />
-                        <TextField fx:id="minCredit" alignment="CENTER" promptText="0-99999999" />
+                        <TextField fx:id="minCredit" alignment="CENTER" onAction="#filter" promptText="0-99999999" />
                         <Label alignment="CENTER" text="Max Credit Filter" />
-                        <TextField fx:id="maxCredit" alignment="CENTER" promptText="0-99999999" />
+                        <TextField fx:id="maxCredit" alignment="CENTER" onAction="#filter" promptText="0-99999999" />
                     </children>
                 </VBox>
             </children>

@@ -123,6 +123,7 @@ public class Product implements Serializable {
     }
 
     public void setRemainderForSalesman(int remainder, String salesmanUser) {
+        this.remainder.remove(salesmanUser);
         this.remainder.put(salesmanUser, remainder);
     }
 
@@ -131,6 +132,7 @@ public class Product implements Serializable {
     }
 
     public void setPriceForSalesman(int price, String salesmanUser) {
+        this.price.remove(salesmanUser);
         this.price.put(salesmanUser, price);
     }
 
@@ -139,6 +141,7 @@ public class Product implements Serializable {
     }
 
     public void deleteForSalesman(String salesmanUser) {
+        hasBeenDeleted.remove(salesmanUser);
         hasBeenDeleted.put(salesmanUser, true);
     }
 
@@ -147,6 +150,7 @@ public class Product implements Serializable {
     }
 
     public void setIsOnSale(String salesmanID, boolean isOnSale) {
+        this.isOnSale.remove(salesmanID);
         this.isOnSale.put(salesmanID, isOnSale);
     }
 
@@ -236,7 +240,9 @@ public class Product implements Serializable {
         return sellers;
     }
 
+
     public void setConfirmationState(String salesmanID, Confirmation confirmationState) {
+        this.confirmationState.remove(salesmanID);
         this.confirmationState.put(salesmanID, confirmationState);
     }
 
@@ -280,7 +286,7 @@ public class Product implements Serializable {
         result.append("Name: ").append(this.name).append("\n");
         result.append("Brand: ").append(this.brand).append("\n");
         result.append("Description: ").append(this.description).append("\n");
-        result.append("Sellers: " + "\n");
+        /*result.append("Sellers: " + "\n");
         for (String salesmanID : salesmanIDs) {
             if (!doesSalesmanSellProductWithUsername(salesmanID) || !isAvailableBySalesmanWithUsername(salesmanID, 1)) {
                 continue;
@@ -290,7 +296,7 @@ public class Product implements Serializable {
                     append(remainder.get(salesmanID)).append("\n");
         }
         result.append("Seen Count: ").append(this.seenCount).append("\n");
-        result.append("Average Point").append(this.getAveragePoint()).append("\n");
+        result.append("Average Point").append(this.getAveragePoint()).append("\n");*/
         return result.toString();
     }
 

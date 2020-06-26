@@ -117,6 +117,19 @@ public class ViewRequestController {
                 requestContent.setText(ans);
                 break;
             }
+            case "COMMENT_CONFIRMATION": {
+                String ans = serverAnswer.split("\n")[1] + "\n";
+                ans += serverAnswer.split("\n")[2].split("\\s")[0] + " " + serverAnswer.split("\n")[2].
+                        split("\\s")[1] + " " + serverAnswer.split("\n")[2].split("\\s")[2] + "\n";
+                ans += serverAnswer.split("\n")[3].split("\\s")[0] + " " + serverAnswer.split("\n")[3].
+                        split("\\s")[1] + "\n";
+                for (int i = 4; i < serverAnswer.split("\n").length; i++) {
+                    ans += serverAnswer.split("\n")[i] + "\n";
+                }
+                ans += "Request ID: " + requestID;
+                requestContent.setText(ans);
+                break;
+            }
         }
     }
 

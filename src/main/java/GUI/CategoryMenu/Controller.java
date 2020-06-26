@@ -6,7 +6,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -34,24 +33,44 @@ public class Controller {
 
     public void initialize() throws ParseException, IOException {
         update();
+        MenuHandler.getServer().clientToServer("show categories+" + MenuHandler.getUsername());
+        String serverAnswer = MenuHandler.getServer().serverToClient();
+        for (String s : serverAnswer.split("\n")) {
+            if (s.startsWith("Category")) {
+                filter.getItems().add(s.split("\\s")[2]);
+            }
+        }
     }
 
     public void update() throws IOException, ParseException {
-        MenuHandler.getServer().clientToServer("show categories+" + MenuHandler.getUsername());
+        String fatherCategory = "";
+        for (Object o : filters.getChildren()) {
+            if (o instanceof HBox) {
+                Object o1 = ((HBox) o).getChildren().get(0);
+                if (o1 instanceof Label) {
+                    if (fatherCategory.equals("")) {
+                        fatherCategory = ((Label) o1).getText();
+                    } else {
+                        fatherCategory += "," + ((Label) o1).getText();
+                    }
+                }
+            }
+        }
+        if (fatherCategory.equals("")) {
+            MenuHandler.getServer().clientToServer("show categories+" + MenuHandler.getUsername());
+        } else {
+            MenuHandler.getServer().clientToServer("show categories+" + MenuHandler.getUsername() + "+filters:" + "+fatherCategory+" + fatherCategory);
+        }
         String serverAnswer = MenuHandler.getServer().serverToClient();
-        System.out.println(serverAnswer);
         categoryName.setCellValueFactory(new PropertyValueFactory<>("categoryName"));
-        fatherCategory.setCellValueFactory(new PropertyValueFactory<>("parentCategory"));
+        this.fatherCategory.setCellValueFactory(new PropertyValueFactory<>("parentCategory"));
         categoryAttribute.setCellValueFactory(new PropertyValueFactory<>("attribute"));
         list = FXCollections.observableArrayList();
-        categoryList = FXCollections.observableArrayList();
         for (String s : serverAnswer.split("\n")) {
             if (s.startsWith("Category")) {
                 list.add(new Category(s.split("\\s")[2], s.split("\\s")[8], s.split("\\s")[5]));
-                categoryList.add("Parent Category:" + s.split("\\s")[2]);
             }
         }
-        filter.setItems(categoryList);
         categories.setItems(list);
     }
 

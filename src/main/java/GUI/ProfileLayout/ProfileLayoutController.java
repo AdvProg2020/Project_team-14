@@ -28,6 +28,7 @@ public class ProfileLayoutController {
 
 
     public void initialize() throws IOException, ParseException {
+        MenuHandler.setBackProduct("GUI/ProfileLayout/ProfileLayout.fxml");
         pane.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/ProfileLayout/PersonalInfoLayout.fxml")));
         FileInputStream imageStream = new FileInputStream("src/main/java/GUI/ProductScene/resources/user.png");
         Image image = new Image(imageStream);

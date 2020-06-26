@@ -30,6 +30,7 @@ public class main extends Application {
             root = FXMLLoader.load(getClass().getResource("GUI/RegisterBoss/RegisterBoss.fxml"));
         }
         primaryStage.setScene(new Scene(root));
+        MenuHandler.setStage(primaryStage);
         primaryStage.show();
 
     }

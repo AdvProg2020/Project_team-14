@@ -22,6 +22,7 @@ public class MenuHandler {
     static private String loginBackAddress = null;
     static private Pane pane;
     static private String backProduct = null;
+    static private String cartBack = null;
     static private ArrayList<Triplet<String, String, Integer>> cart = new ArrayList<>();
     public static String selectedCategory;
 
@@ -135,6 +136,14 @@ public class MenuHandler {
 
     public static void setCart(ArrayList<Triplet<String, String, Integer>> cart) {
         MenuHandler.cart = cart;
+    }
+
+    public static String getCartBack() {
+        return cartBack;
+    }
+
+    public static void setCartBack(String cartBack) {
+        MenuHandler.cartBack = cartBack;
     }
 
     public static String getSeeingSale() {

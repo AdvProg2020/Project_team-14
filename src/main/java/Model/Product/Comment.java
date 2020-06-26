@@ -32,7 +32,6 @@ public class Comment implements Serializable {
         this.commentID = createID();
         this.date = new Date();
         allComments.add(this);
-        new Request(this);
     }
 
     public static Comment getCommentByID(String commentID) {
@@ -89,10 +88,10 @@ public class Comment implements Serializable {
 
     public String toStringForProductView() {
         String result = "";
-        result += "Sender: " + this.senderUsername + "\n";
-        result += "Title: " + this.title + "\n";
-        result += "Message: " + this.text + "\n";
-        result += "Date: " + this.date.toString() + "\n";
+        result += "Sender: " + this.senderUsername + "+";
+        result += "Title: " + this.title + "+";
+        result += "Message: " + this.text + "+";
+        result += "Date: " + this.date.toString();
         return result;
     }
 
@@ -100,7 +99,7 @@ public class Comment implements Serializable {
 
     public String toStringForChecking() {
         String result = "";
-        result += "Product Name: " + Objects.requireNonNull(Storage.getProductById(productID)).getName();
+        result += "Product Name: " + Objects.requireNonNull(Storage.getProductById(productID)).getName() + "\n";
         result += "Sender: " + this.senderUsername + "\n";
         result += "Title: " + this.title + "\n";
         result += "Message: " + this.text + "\n";
