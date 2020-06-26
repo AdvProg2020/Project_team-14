@@ -2,15 +2,19 @@ package GUI.Register;
 
 import GUI.Media.Audio;
 import GUI.MenuHandler;
+import javafx.animation.FadeTransition;
+import javafx.animation.ParallelTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
@@ -38,12 +42,16 @@ public class RegisterController {
     public ChoiceBox role;
     public TextField telephone;
     public TextField company;
+    public Pane avatarPane;
+    public Pane avatarBoard;
+    public Pane registerBoard;
 
+    @FXML
     public void initialize() throws ParseException, IOException {
         String path = "src/main/java/GUI/Login/resources/mp4.mp4";
         Media media = new Media(new File(path).toURI().toString());
         MediaPlayer mediaPlayer = new MediaPlayer(media);
-        mediaView.setMediaPlayer(mediaPlayer);
+//        mediaView.setMediaPlayer(mediaPlayer);
         mediaPlayer.setAutoPlay(true);
         mediaPlayer.setOnEndOfMedia(() -> mediaPlayer.seek(Duration.ZERO));
 
@@ -53,13 +61,40 @@ public class RegisterController {
         } else {
             role.setItems(rolesIfHasNotBoss);
         }
+
+        avatarPane.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/Register/Avatar.fxml")));
+        ParallelTransition pt = doTransition("start");
+        pt.play();
     }
 
     public void openLoginMenu(ActionEvent actionEvent) throws IOException {
         Audio.playClick2();
         Parent root = FXMLLoader.load(getClass().getResource("/GUI/Login/Login.fxml"));
         Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root));
+
+        ParallelTransition pt = doTransition("end");
+        pt.play();
+        pt.setOnFinished(e -> stage.setScene(new Scene(root)));
+    }
+
+    private ParallelTransition doTransition(String type) {
+        double from, to;
+        if (type.equals("start")) {
+            from = 0;
+            to = 1;
+        } else {
+            from = 1;
+            to = 0;
+        }
+        FadeTransition ft1 = new FadeTransition(Duration.millis(500), registerBoard);
+        ft1.setFromValue(from);
+        ft1.setToValue(to);
+
+        FadeTransition ft2 = new FadeTransition(Duration.millis(500), avatarBoard);
+        ft2.setFromValue(from);
+        ft2.setToValue(to);
+
+        return new ParallelTransition(ft1, ft2);
     }
 
     public void register(ActionEvent actionEvent) throws ParseException, IOException {

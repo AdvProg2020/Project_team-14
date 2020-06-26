@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
@@ -33,6 +34,7 @@ public class Controller {
     public TextField telephone;
     public MediaView mediaView;
     public MediaView film;
+    public Pane avatarPane;
     ObservableList<String> rolesIfHasBoss = FXCollections.observableArrayList("Boss");
 
 
@@ -126,15 +128,15 @@ public class Controller {
     }
 
     public void waterfall() {
-        String path = "src/main/java/GUI/Register/resources/mp4.mp4";
+        /*String path = "src/main/java/GUI/Register/resources/mp4.mp4";
         Media media = new Media(new File(path).toURI().toString());
         MediaPlayer mediaPlayer = new MediaPlayer(media);
         film.setMediaPlayer(mediaPlayer);
         mediaPlayer.setAutoPlay(true);
-        mediaPlayer.setOnEndOfMedia(() -> mediaPlayer.seek(Duration.ZERO));
+        mediaPlayer.setOnEndOfMedia(() -> mediaPlayer.seek(Duration.ZERO));*/
     }
 
-    public void initialize() {
+    public void initialize() throws IOException {
         role.setItems(rolesIfHasBoss);
         String path = "src/main/java/GUI/Login/resources/mp4.mp4";
         Media media = new Media(new File(path).toURI().toString());
@@ -143,5 +145,6 @@ public class Controller {
         mediaPlayer.setAutoPlay(true);
         mediaPlayer.setOnEndOfMedia(() -> mediaPlayer.seek(Duration.ZERO));
         waterfall();
+        avatarPane.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/Register/Avatar.fxml")));
     }
 }

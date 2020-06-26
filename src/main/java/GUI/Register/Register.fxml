@@ -1,117 +1,130 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.media.*?>
-<?import javafx.scene.paint.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.Lighting?>
+<?import javafx.scene.effect.Shadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Register.RegisterController">
+<AnchorPane maxWidth="1182.0" minWidth="1182.0" prefHeight="775.0" prefWidth="1182.0" styleClass="background" stylesheets="@../StyleSheets/RegisterationStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Register.RegisterController">
     <children>
-        <ImageView fitHeight="838.0" fitWidth="722.0" layoutX="-128.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-                <Image url="@../Login/resources/12-120662_ipad-retina-red-flower-wallpaper-iphone.jpg" />
-            </image>
-        </ImageView>
-        <AnchorPane layoutX="594.0" layoutY="-19.0" onKeyPressed="#checkSalesmanRole" onMouseClicked="#checkSalesmanRole" onMouseMoved="#checkSalesmanRole" onMouseReleased="#checkSalesmanRole" prefHeight="825.0" prefWidth="618.0" style="-fx-background-color: White;">
+      <Pane fx:id="avatarBoard" layoutX="16.0" layoutY="113.0" prefHeight="593.0" prefWidth="1151.0" styleClass="back-register-background">
+         <children>
+            <Pane fx:id="avatarPane" layoutX="14.0" layoutY="14.0" prefHeight="567.0" prefWidth="595.0" style="-fx-background-color: #182952; -fx-background-radius: 30;" />
+         </children>
+         <effect>
+            <DropShadow />
+         </effect>
+      </Pane>
+        <AnchorPane fx:id="registerBoard" layoutX="636.0" layoutY="39.0" minWidth="520.0" onKeyPressed="#checkSalesmanRole" onMouseClicked="#checkSalesmanRole" onMouseMoved="#checkSalesmanRole" onMouseReleased="#checkSalesmanRole" prefHeight="713.0" prefWidth="520.0" styleClass="registerBackground">
             <children>
-                <Label layoutX="207.0" layoutY="56.0" prefHeight="73.0" prefWidth="204.0" text="Register" textFill="#ea0303">
+                <Label layoutX="141.0" layoutY="59.0" styleClass="header" text="Register" textFill="#ea0303">
                     <font>
                         <Font name="Candara Light Italic" size="61.0" />
                     </font>
                 </Label>
-                <Label layoutX="115.0" layoutY="163.0" prefHeight="19.0" prefWidth="62.0" text="First Name">
-                    <font>
-                        <Font name="System Italic" size="13.0" />
-                    </font>
-                </Label>
-                <TextField fx:id="firstName" alignment="CENTER" layoutX="53.0" layoutY="186.0" promptText="Enter Your First Name">
-                    <font>
-                        <Font size="15.0" />
-                    </font>
-                </TextField>
-                <Label layoutX="116.0" layoutY="236.0" prefHeight="19.0" prefWidth="62.0" text="Last Name">
-                    <font>
-                        <Font name="System Italic" size="13.0" />
-                    </font>
-                </Label>
-                <TextField fx:id="lastName" alignment="CENTER" layoutX="52.0" layoutY="259.0" promptText="Enter Your Last Name">
-                    <font>
-                        <Font size="15.0" />
-                    </font>
-                </TextField>
-                <Label layoutX="457.0" layoutY="236.0" prefHeight="19.0" prefWidth="55.0" text="Password">
-                    <font>
-                        <Font name="System Italic" size="13.0" />
-                    </font>
-                </Label>
-                <PasswordField fx:id="password" alignment="CENTER" layoutX="391.0" layoutY="259.0" prefHeight="31.0" prefWidth="187.0" promptText="Enter Your Password">
-                    <font>
-                        <Font size="15.0" />
-                    </font>
-                </PasswordField>
-                <Label layoutX="453.0" layoutY="163.0" prefHeight="19.0" prefWidth="62.0" text="Username">
-                    <font>
-                        <Font name="System Italic" size="13.0" />
-                    </font>
-                </Label>
-                <TextField fx:id="username" alignment="CENTER" layoutX="391.0" layoutY="186.0" promptText="Enter Your Username">
-                    <font>
-                        <Font size="15.0" />
-                    </font>
-                </TextField>
-                <Label layoutX="127.0" layoutY="319.0" prefHeight="19.0" prefWidth="39.0" text="Email">
-                    <font>
-                        <Font name="System Italic" size="13.0" />
-                    </font>
-                </Label>
-                <ImageView fitHeight="31.0" fitWidth="39.0" layoutX="559.0" layoutY="35.0" onMouseClicked="#exit" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@resources/png-transparent-computer-icons-exit-icon-miscellaneous-angle-text.png" />
-                    </image>
-                </ImageView>
-                <TextField fx:id="Email" alignment="CENTER" layoutX="53.0" layoutY="339.0" prefHeight="31.0" prefWidth="187.0" promptText="Enter Your Email Address">
-                    <font>
-                        <Font size="15.0" />
-                    </font>
-                </TextField>
-                <Label layoutX="468.0" layoutY="319.0" prefHeight="0.0" prefWidth="32.0" text="Role">
-                    <font>
-                        <Font name="System Italic" size="13.0" />
-                    </font>
-                </Label>
-                <ChoiceBox fx:id="role" layoutX="391.0" layoutY="339.0" prefHeight="31.0" prefWidth="187.0" />
-                <Label layoutX="89.0" layoutY="390.0" prefHeight="19.0" prefWidth="115.0" text="Telephone Number">
-                    <font>
-                        <Font name="System Italic" size="13.0" />
-                    </font>
-                </Label>
-                <TextField fx:id="telephone" alignment="CENTER" layoutX="52.0" layoutY="415.0" prefHeight="31.0" prefWidth="187.0" promptText="Enter Your Telephone">
-                    <font>
-                        <Font size="15.0" />
-                    </font>
-                </TextField>
-                <Button contentDisplay="CENTER" layoutX="212.0" layoutY="513.0" mnemonicParsing="false" onAction="#register" prefHeight="77.0" prefWidth="195.0" text="Register" textFill="#0c2ee8">
-                    <font>
-                        <Font name="System Bold" size="36.0" />
-                    </font>
-               <effect>
-                  <Lighting diffuseConstant="2.0">
-                     <bumpInput>
-                        <Shadow />
-                     </bumpInput>
-                     <light>
-                        <Light.Distant>
-                           <color>
-                              <Color red="0.07999999821186066" green="1.0" blue="0.23701922595500946" />
-                           </color>
-                        </Light.Distant>
-                     </light>
-                  </Lighting>
-               </effect>
+            <VBox alignment="TOP_CENTER" layoutX="57.0" layoutY="194.0">
+               <children>
+                      <Label prefHeight="19.0" prefWidth="62.0" text="First Name">
+                          <font>
+                              <Font name="System Italic" size="13.0" />
+                          </font>
+                      </Label>
+                      <TextField fx:id="firstName" alignment="CENTER" promptText="Enter Your First Name">
+                          <font>
+                              <Font size="15.0" />
+                          </font>
+                      </TextField>
+                      <Label prefHeight="19.0" prefWidth="62.0" text="Last Name">
+                          <font>
+                              <Font name="System Italic" size="13.0" />
+                          </font>
+                     <VBox.margin>
+                        <Insets top="25.0" />
+                     </VBox.margin>
+                      </Label>
+                      <TextField fx:id="lastName" alignment="CENTER" promptText="Enter Your Last Name">
+                          <font>
+                              <Font size="15.0" />
+                          </font>
+                      </TextField>
+                      <Label prefHeight="19.0" prefWidth="39.0" text="Email">
+                          <font>
+                              <Font name="System Italic" size="13.0" />
+                          </font>
+                     <VBox.margin>
+                        <Insets top="25.0" />
+                     </VBox.margin>
+                      </Label>
+                      <TextField fx:id="Email" alignment="CENTER" prefHeight="31.0" prefWidth="187.0" promptText="Enter Your Email Address">
+                          <font>
+                              <Font size="15.0" />
+                          </font>
+                      </TextField>
+                      <Label prefHeight="19.0" prefWidth="115.0" text="Telephone Number">
+                          <font>
+                              <Font name="System Italic" size="13.0" />
+                          </font>
+                     <VBox.margin>
+                        <Insets top="25.0" />
+                     </VBox.margin>
+                      </Label>
+                      <TextField fx:id="telephone" alignment="CENTER" prefHeight="31.0" prefWidth="187.0" promptText="Enter Your Telephone">
+                          <font>
+                              <Font size="15.0" />
+                          </font>
+                      </TextField>
+               </children>
+            </VBox>
+            <VBox alignment="TOP_CENTER" layoutX="298.0" layoutY="194.0">
+               <children>
+                      <Label prefHeight="19.0" prefWidth="62.0" text="Username">
+                          <font>
+                              <Font name="System Italic" size="13.0" />
+                          </font>
+                      </Label>
+                      <TextField fx:id="username" alignment="CENTER" promptText="Enter Your Username">
+                          <font>
+                              <Font size="15.0" />
+                          </font>
+                      </TextField>
+                      <Label prefHeight="19.0" prefWidth="55.0" text="Password">
+                          <font>
+                              <Font name="System Italic" size="13.0" />
+                          </font>
+                     <VBox.margin>
+                        <Insets top="25.0" />
+                     </VBox.margin>
+                      </Label>
+                      <PasswordField fx:id="password" alignment="CENTER" prefHeight="31.0" prefWidth="187.0" promptText="Enter Your Password">
+                          <font>
+                              <Font size="15.0" />
+                          </font>
+                      </PasswordField>
+                      <Label prefHeight="0.0" prefWidth="32.0" text="Role">
+                          <font>
+                              <Font name="System Italic" size="13.0" />
+                          </font>
+                     <VBox.margin>
+                        <Insets top="25.0" />
+                     </VBox.margin>
+                      </Label>
+                      <ChoiceBox fx:id="role" prefHeight="31.0" prefWidth="187.0" />
+               </children>
+            </VBox>
+                <Button contentDisplay="CENTER" layoutX="172.0" layoutY="549.0" mnemonicParsing="false" onAction="#register" prefHeight="45.0" prefWidth="187.0" styleClass="buttone" text="Register">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -126,8 +139,8 @@
                         <Font size="15.0" />
                     </font>
                 </TextField>
-                <Label layoutX="204.0" layoutY="737.0" text="Already Have An Account?" />
-                <Button contentDisplay="CENTER" layoutX="384.0" layoutY="733.0" mnemonicParsing="false" onAction="#openLoginMenu" text="log in" textFill="#f51414">
+                <Label layoutX="147.0" layoutY="671.0" text="Already Have An Account?" />
+                <Button contentDisplay="CENTER" layoutX="327.0" layoutY="667.0" mnemonicParsing="false" onAction="#openLoginMenu" text="log in" textFill="#f51414">
                     <font>
                         <Font name="System Italic" size="12.0" />
                     </font>
@@ -135,12 +148,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
                 </Button>
-                <ImageView fitHeight="25.0" fitWidth="32.0" layoutX="513.0" layoutY="37.0" onMouseClicked="#back" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@resources/computer-icons-download-back-icon.jpg" />
-                    </image>
-                </ImageView>
-            <ImageView fitHeight="39.0" fitWidth="45.0" layoutX="190.0" layoutY="626.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="39.0" fitWidth="45.0" layoutX="190.0" layoutY="622.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@resources/Twitter_bird_logo_2012.svg.png" />
                </image>
@@ -148,9 +156,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </ImageView>
-            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fitHeight="37.0" fitWidth="62.0" layoutX="384.0" layoutY="626.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="37.0" fitWidth="62.0" layoutX="293.0" layoutY="622.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@resources/download.png" />
                </image>
@@ -158,7 +164,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </ImageView>
-            <ImageView fitHeight="46.0" fitWidth="45.0" layoutX="286.0" layoutY="622.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="46.0" fitWidth="45.0" layoutX="243.0" layoutY="618.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@resources/google-logo.png" />
                </image>
@@ -166,16 +172,20 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </ImageView>
-            <MediaView fx:id="mediaView" fitHeight="100.0" fitWidth="100.0" layoutX="462.0" layoutY="513.0" />
             </children>
          <cursor>
             <Cursor fx:constant="DEFAULT" />
          </cursor>
         </AnchorPane>
-      <ImageView fitHeight="528.0" fitWidth="480.0" layoutX="62.0" layoutY="100.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@resources/avatar.png" />
-         </image>
-      </ImageView>
+          <ImageView fitHeight="25.0" fitWidth="32.0" layoutX="1131.0" layoutY="14.0" onMouseClicked="#exit" pickOnBounds="true" preserveRatio="true">
+              <image>
+                  <Image url="@resources/close.png" />
+              </image>
+          </ImageView>
+          <ImageView fitHeight="25.0" fitWidth="32.0" layoutX="1099.0" layoutY="14.0" onMouseClicked="#back" pickOnBounds="true" preserveRatio="true">
+              <image>
+                  <Image url="@resources/arrows.png" />
+              </image>
+          </ImageView>
     </children>
 </AnchorPane>

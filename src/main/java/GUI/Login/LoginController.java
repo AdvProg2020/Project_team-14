@@ -3,13 +3,18 @@ package GUI.Login;
 import GUI.Media.Audio;
 import GUI.MenuHandler;
 import Menus.Menu;
+import javafx.animation.FadeTransition;
+import javafx.animation.ParallelTransition;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
@@ -25,6 +30,8 @@ public class LoginController {
     public TextField username;
     public PasswordField password;
     public MediaView costure;
+    public AnchorPane loginBoard;
+    public Pane photoBoard;
 
     public void Login(ActionEvent actionEvent) throws ParseException, IOException {
         Audio.playClick7();
@@ -65,7 +72,30 @@ public class LoginController {
         Audio.playClick3();
         Parent root = FXMLLoader.load(getClass().getResource("/GUI/Register/Register.fxml"));
         Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root));
+
+        ParallelTransition pt = doTransition("end");
+        pt.play();
+        pt.setOnFinished(e -> stage.setScene(new Scene(root)));
+    }
+
+    private ParallelTransition doTransition(String type) {
+        double from, to;
+        if (type.equals("start")) {
+            from = 0;
+            to = 1;
+        } else {
+            from = 1;
+            to = 0;
+        }
+        FadeTransition ft1 = new FadeTransition(Duration.millis(500), loginBoard);
+        ft1.setFromValue(from);
+        ft1.setToValue(to);
+
+        FadeTransition ft2 = new FadeTransition(Duration.millis(500), photoBoard);
+        ft2.setFromValue(from);
+        ft2.setToValue(to);
+
+        return new ParallelTransition(ft1, ft2);
     }
 
     public void back(MouseEvent mouseEvent) throws IOException {
@@ -85,12 +115,16 @@ public class LoginController {
         }
     }
 
+    @FXML
     public void initialize() {
         String path = "src/main/java/GUI/Login/resources/mp4 (1).mp4";
         Media media = new Media(new File(path).toURI().toString());
         MediaPlayer mediaPlayer = new MediaPlayer(media);
-        costure.setMediaPlayer(mediaPlayer);
+//        costure.setMediaPlayer(mediaPlayer);
         mediaPlayer.setAutoPlay(true);
         mediaPlayer.setOnEndOfMedia(() -> mediaPlayer.seek(Duration.ZERO));
+
+        ParallelTransition pt = doTransition("start");
+        pt.play();
     }
 }

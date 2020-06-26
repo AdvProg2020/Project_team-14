@@ -1,0 +1,45 @@
+.header {
+	-fx-text-fill: #0c2233;
+	-fx-font-family: "georgia";
+	-fx-font-size: 65;
+}
+
+.background {
+	/*-fx-background-image: url(../Register/resources/storeFront2blured.jpg);*/
+	-fx-background-color:  #dbd8e3;
+}
+
+.buttone {
+	-fx-background-color:  #182952;
+	-fx-background-color: #1f024c;
+	-fx-background-radius: 10;
+	-fx-font-family: "georgia";
+	-fx-font-size: 20;
+	-fx-text-fill: #ffffff;
+}
+
+.buttone:hover {
+	-fx-background-color: #45056e;
+	-fx-cursor: hand;
+}
+
+.buttone:pressed {
+	-fx-background-insets: 2 0 0 0,2 0 3 0, 2 0 4 0, 2 0 5 0;
+	-fx-background-insets: 2 2 2 2,2 0 3 0, 2 0 4 0, 2 0 5 0;
+}
+
+.registerBackground {
+	-fx-background-color:  #0a91ab;
+	-fx-background-radius: 60;
+}
+
+.back-register-background {
+	-fx-background-color:  #182952;
+	-fx-background-radius: 30;
+}
+
+.welcome {
+	-fx-text-fill: #ff5722;
+	-fx-font-family: "georgia";
+	-fx-font-size: 65;
+}
