@@ -16,6 +16,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -123,14 +124,31 @@ public class ManageRequestsController {
             }
             hBox.setOnMouseClicked(mouseEvent -> {
                 MenuHandler.setRequestID(s.split("\\s")[5]);
-                Stage stage = (Stage) ((HBox) mouseEvent.getSource()).getScene().getWindow();
+                Popup popup = new Popup();
+                try {
+                    popup.getContent().add(FXMLLoader.load(getClass().getResource("/GUI/BossProfile/ManageRequests/ViewRequest.fxml")));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    System.out.println("ERROR IN LOADING FXML FILE OF VIEW REQUEST");
+                }
+                popup.show(((HBox) mouseEvent.getSource()).getScene().getWindow());
+                popup.setOnHiding(e -> {
+                    try {
+                        updateList();
+                    } catch (ParseException ex) {
+                        ex.printStackTrace();
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                });
+                /*Stage stage = (Stage) ((HBox) mouseEvent.getSource()).getScene().getWindow();
                 Parent root = null;
                 try {
                     root = FXMLLoader.load(getClass().getResource("/GUI/BossProfile/ManageRequests/ViewRequest.fxml"));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                stage.setScene(new Scene(root));
+                stage.setScene(new Scene(root));*/
             });
             hBox.setOnMouseEntered(mouseEvent -> {
                 Stage stage = (Stage) ((HBox) mouseEvent.getSource()).getScene().getWindow();

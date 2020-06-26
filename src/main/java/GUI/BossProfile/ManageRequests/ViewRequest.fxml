@@ -9,9 +9,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="694.0" spacing="10.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.BossProfile.ManageRequests.ViewRequestController">
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="694.0" spacing="10.0" style="-fx-background-color: #22267b; -fx-background-radius: 20;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.BossProfile.ManageRequests.ViewRequestController">
     <children>
-        <Label alignment="CENTER" text="Request">
+        <Label alignment="CENTER" text="Request" textFill="WHITE">
             <VBox.margin>
                 <Insets bottom="10.0" top="10.0" />
             </VBox.margin>
@@ -23,7 +23,7 @@
             <children>
                 <VBox alignment="TOP_CENTER" prefHeight="390.0" prefWidth="135.0">
                     <children>
-                        <Label text="Type :">
+                        <Label text="Type :" textFill="WHITE">
                             <VBox.margin>
                                 <Insets left="15.0" top="15.0" />
                             </VBox.margin>
@@ -31,7 +31,7 @@
                                 <Font size="20.0" />
                             </font>
                         </Label>
-                        <Label text="Content :">
+                        <Label text="Content :" textFill="WHITE">
                             <VBox.margin>
                                 <Insets left="15.0" top="15.0" />
                             </VBox.margin>
