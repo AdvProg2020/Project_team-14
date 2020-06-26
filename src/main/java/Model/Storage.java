@@ -144,4 +144,13 @@ public class Storage {
         return arrayList;
     }
 
+    public static ArrayList<Product> getAllProductOfSeller(String salesmanID, int type) {
+        ArrayList<Product> ans = new ArrayList<>();
+        boolean wantAll = type != 1;
+        for (Product product : allProducts) {
+            if (product.doesSalesmanSellProductWithUsername(salesmanID) | wantAll) ans.add(product);
+        }
+        return ans;
+    }
+
 }
