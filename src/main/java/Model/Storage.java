@@ -142,6 +142,8 @@ public class Storage {
     }
 
     public static ArrayList<Product> getAllProductOfSeller(String salesmanID, int type) {
+        if (salesmanID == null) return allProducts;
+        if (salesmanID.equals("")) return allProducts;
         ArrayList<Product> ans = new ArrayList<>();
         boolean wantAll = type != 1;
         for (Product product : allProducts) {
