@@ -25,14 +25,15 @@ public class ChargeWalletController {
 
     public void back(ActionEvent actionEvent) throws IOException {
         Audio.playClick5();
-        Parent root = FXMLLoader.load(getClass().getResource("/GUI/ProfileLayout/ProfileLayout.fxml"));
-        Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root));
+        ((Button) actionEvent.getSource()).getScene().getWindow().hide();
     }
 
     public void done(ActionEvent actionEvent) throws ParseException, IOException {
         Audio.playClick4();
         Alert alert = new Alert(Alert.AlertType.ERROR, "", ButtonType.OK);
+        ((Stage) alert.getDialogPane().getScene().getWindow()).setAlwaysOnTop(true);
+        ((Stage) alert.getDialogPane().getScene().getWindow()).toFront();
+
         if (!amount.getText().matches("\\d+")) {
             alert.setContentText("amount should only be an integer");
             alert.showAndWait();
