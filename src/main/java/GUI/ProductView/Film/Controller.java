@@ -11,6 +11,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
+import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,13 +35,16 @@ public class Controller {
 
     public void initialize() throws IOException, ParseException {
         Audio.mute();
-        String path;
+        String path = null;
         MenuHandler.getServer().clientToServer("get product video+" + MenuHandler.getProductID());
         if (MenuHandler.getServer().serverToClient().startsWith("no video")) {
             path = "src/main/java/GUI/ProductView/Film/videoplayback (1).mp4";
         } else {
             path = MenuHandler.getServer().serverToClient();
         }
+        int indexOf = path.indexOf("src");
+        path = path.substring(indexOf);
+        System.out.println(path);
         Media media = new Media(new File(path).toURI().toString());
         MediaPlayer mediaPlayer = new MediaPlayer(media);
         MediaView.setMediaPlayer(mediaPlayer);

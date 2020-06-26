@@ -73,4 +73,10 @@ public class ProfileLayoutController {
         pane.getChildren().remove(pane.getChildren().get(0));
         pane.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/CategoryMenu/CategoryMenu.fxml")));
     }
+
+    public void productShow(ActionEvent actionEvent) throws IOException {
+        Audio.playClick3();
+        pane.getChildren().remove(pane.getChildren().get(0));
+        pane.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/SalesmanProfile/ManageProduct//ManageProductsLayout.fxml")));
+    }
 }

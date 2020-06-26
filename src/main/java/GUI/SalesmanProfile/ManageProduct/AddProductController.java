@@ -57,6 +57,7 @@ public class AddProductController {
         if (chosenFile != null) {
             if (String.valueOf(chosenFile.toURI()).endsWith("4")) {
                 pathVid = String.valueOf(chosenFile.toURI());
+                System.out.println(pathVid);
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "", ButtonType.OK);
                 alert.setContentText("something went wrong");
@@ -97,21 +98,25 @@ public class AddProductController {
                 alert.setContentText("Product Name Format Is Invalid");
                 alert.showAndWait();
                 reset(actionEvent);
+                return;
             }
             if (!checkNameFormat(brand.getText())) {
                 alert.setContentText("Product Brand Format Is Invalid");
                 alert.showAndWait();
                 reset(actionEvent);
+                return;
             }
             if (!price.getText().matches("\\d+") || ((String) price.getText()).length() > 8) {
                 alert.setContentText("You Should Choose A Price");
                 alert.showAndWait();
                 reset(actionEvent);
+                return;
             }
             if (!checkDescriptionFormat(description.getText())) {
                 alert.setContentText("Description Format Is Invalid");
                 alert.showAndWait();
                 reset(actionEvent);
+                return;
             }
             MenuHandler.getServer().clientToServer("create product+" + MenuHandler.getUsername() + "+" +
                     productName.getText() + "+" + brand.getText() + "+" + description.getText() + "+" + price.getText()
