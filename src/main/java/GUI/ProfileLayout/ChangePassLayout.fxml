@@ -87,7 +87,7 @@
       </Label>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="15.0">
          <children>
-            <Button mnemonicParsing="false" text="Cancel">
+            <Button mnemonicParsing="false" onMouseClicked="#back" text="Cancel">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Button>

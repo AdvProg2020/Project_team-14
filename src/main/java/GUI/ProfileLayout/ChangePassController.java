@@ -85,6 +85,12 @@ public class ChangePassController {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Your password changed successfully", ButtonType.OK);
         ((Stage) alert.getDialogPane().getScene().getWindow()).setAlwaysOnTop(true);
         ((Stage) alert.getDialogPane().getScene().getWindow()).toFront();
+        alert.showAndWait();
         passPane.getScene().getWindow().hide();
+    }
+
+    public void back(MouseEvent mouseEvent) {
+        Audio.playClick5();
+        ((Button) mouseEvent.getSource()).getScene().getWindow().hide();
     }
 }

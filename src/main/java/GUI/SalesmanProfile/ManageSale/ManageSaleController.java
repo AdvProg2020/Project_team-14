@@ -26,6 +26,7 @@ public class ManageSaleController {
     public TableColumn endDate;
     public TableColumn status;
     public TableColumn moreInfo;
+    public Button newSaleButton;
     public Label viewError;
 
 
@@ -37,7 +38,15 @@ public class ManageSaleController {
         endDate.setCellValueFactory(new PropertyValueFactory<>("endDate"));
         status.setCellValueFactory(new PropertyValueFactory<>("status"));
         moreInfo.setCellValueFactory(new PropertyValueFactory<>("moreInfo"));
+        setChangesForBoss();
         update();
+    }
+
+    private void setChangesForBoss() {
+        if (MenuHandler.getUserType().equalsIgnoreCase("boss")) {
+            newSaleButton.setVisible(false);
+            newSaleButton.setDisable(true);
+        }
     }
 
     private void update() throws ParseException, IOException {

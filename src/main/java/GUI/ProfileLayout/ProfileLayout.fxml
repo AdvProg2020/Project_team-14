@@ -77,7 +77,7 @@
                         <Cursor fx:constant="HAND" />
                     </cursor>
                 </Button>
-                <Button layoutX="10.0" layoutY="216.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="300.0" style="-fx-background-color: green;" styleClass="my-button" text="Manage Sales" textFill="#ea0404">
+                <Button layoutX="10.0" layoutY="216.0" mnemonicParsing="false" onAction="#manageSales" prefHeight="40.0" prefWidth="300.0" style="-fx-background-color: green;" styleClass="my-button" text="Manage Sales" textFill="#ea0404">
                     <cursor>
                         <Cursor fx:constant="HAND" />
                     </cursor>
