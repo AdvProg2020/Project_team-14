@@ -245,8 +245,20 @@ public class Server {
         //end parts
         else if (command.startsWith("show balance")) {
             this.showBalance(command);
+        } else if (command.startsWith("add balance+")) {
+            this.addBalance(command);
         }
 
+    }
+
+    private void addBalance(String command) {
+        Account account = Storage.getAccountWithUsername(command.split("\\+")[1]);
+        if (account instanceof Customer) {
+            ((Customer) account).setCredit(account.getCredit() + Integer.parseInt(command.split("\\+")[2]));
+        } else if (account instanceof Salesman){
+            ((Salesman) account).setCredit(account.getCredit() + Integer.parseInt(command.split("\\+")[2]));
+        }
+        Server.setAnswer("successful");
     }
 
     private void getProductPrice(String command) {
@@ -287,7 +299,7 @@ public class Server {
     }
 
     private void getProductPoint(String command) {
-        int a[] = new int[5];
+        int[] a = new int[5];
         a[0] = a[1] = a[2] = a[3] = a[4] = 0;
         for (Point point : Storage.allPoints) {
             if (point.getProductID().equals(command.split("\\+")[1])) {
@@ -298,17 +310,17 @@ public class Server {
     }
 
     private void getCommentProductID(String command) {
-        String ans = "";
+        StringBuilder ans = new StringBuilder();
         for (Comment comment : Storage.allComments) {
             if (comment.getProductID().equals(command.split("\\+")[1])) {
-                ans += comment.toStringForProductView() + "\n";
+                ans.append(comment.toStringForProductView()).append("\n");
             }
         }
-        if (ans.equals("")) {
+        if (ans.toString().equals("")) {
             Server.setAnswer("none");
             return;
         }
-        Server.setAnswer(ans);
+        Server.setAnswer(ans.toString());
     }
 
     private void commentProduct(String command) {
