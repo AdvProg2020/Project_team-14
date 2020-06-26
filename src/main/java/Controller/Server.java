@@ -222,6 +222,12 @@ public class Server {
             this.getProductVideo(command);
         } else if (command.startsWith("set product video+")) {
             this.setProductVideo(command);
+        } else if (command.startsWith("set person image+")) {
+            this.setPersonImage(command);
+        } else if (command.startsWith("get person image+")) {
+            this.getPersonImage(command);
+        } else if (command.startsWith("delete person image")) {
+            this.deletePersonImage(command);
         }
 
         //end parts
@@ -231,12 +237,50 @@ public class Server {
 
     }
 
+    private void deletePersonImage(String command) {
+        String username = command.split("\\+")[1];
+        for (Account account : Storage.getAllAccounts()) {
+            if (account.getUsername().equals(username)) {
+                account.setImgPath(null);
+                Server.setAnswer("successful");
+                return;
+            }
+        }
+    }
+
+    private void setPersonImage(String command) {
+        String username = command.split("\\+")[1];
+        for (Account account : Storage.getAllAccounts()) {
+            if (account.getUsername().equals(username)) {
+                account.setImgPath(command.split("\\+")[2]);
+                Server.setAnswer("successful");
+                return;
+            }
+        }
+    }
+
+    private void getPersonImage(String command) {
+        String username = command.split("\\+")[1];
+        for (Account account : Storage.getAllAccounts()) {
+            if (account.getUsername().equals(username)) {
+                if (account.getImgPath() != null) {
+                    Server.setAnswer(account.getImgPath());
+                    return;
+                } else {
+                    Server.setAnswer("no image found");
+                }
+            }
+        }
+    }
+
+
     private void setProductVideo(String command) {
         String productId = command.split("\\+")[1];
         for (Product product : Storage.getAllProducts()) {
             if (product.getProductID().equals(productId)) {
                 product.setVideoPath(command.split("\\+")[2]);
                 Server.setAnswer("successful");
+                return;
             }
         }
     }
@@ -461,7 +505,7 @@ public class Server {
         for (Account account : Storage.getAllAccounts()) {
             if (account.getRole().equals(Role.CUSTOMER)) ans.append("+").append(account.getUsername());
         }
-        if (ans.equals("users:")) setAnswer("nothing found");
+        if (ans.toString().equals("users:")) setAnswer("nothing found");
         else setAnswer(ans.toString());
     }
 
@@ -1080,7 +1124,7 @@ public class Server {
     }
 
     public String serverToClient() throws IOException {
-        //endOfProgramme.updateFiles();
+        endOfProgramme.updateFiles();
         return Server.answer;
     }
 

@@ -59,54 +59,57 @@ public class ManageProductsController {
     }
 
     private void update() throws ParseException, IOException {
-        String categories = "", salesman = "", available = "", confirmationState = "";
+        StringBuilder categories = new StringBuilder();
+        StringBuilder salesman = new StringBuilder();
+        StringBuilder available = new StringBuilder();
+        StringBuilder confirmationState = new StringBuilder();
         for (Object object : filterList.getChildren()) {
             if (object instanceof HBox) {
                 Object object1 = ((HBox) object).getChildren().get(0);
                 if (object1 instanceof Label) {
                     if (((Label) object1).getText().startsWith("Confirmation:")) {
-                        if (confirmationState.equals("")) {
-                            confirmationState = ((Label) object1).getText().substring(13);
+                        if (confirmationState.toString().equals("")) {
+                            confirmationState = new StringBuilder(((Label) object1).getText().substring(13));
                         } else {
-                            confirmationState += "," + ((Label) object1).getText().substring(13);
+                            confirmationState.append(",").append(((Label) object1).getText().substring(13));
                         }
                     } else if (((Label) object1).getText().startsWith("Category:")) {
-                        if (categories.equals("")) {
-                            categories = ((Label) object1).getText().substring(9);
+                        if (categories.toString().equals("")) {
+                            categories = new StringBuilder(((Label) object1).getText().substring(9));
                         } else {
-                            categories += "," + ((Label) object1).getText().substring(9);
+                            categories.append(",").append(((Label) object1).getText().substring(9));
                         }
                     } else if (((Label) object1).getText().startsWith("Salesman:")) {
-                        if (salesman.equals("")) {
-                            salesman = ((Label) object1).getText().substring(9);
+                        if (salesman.toString().equals("")) {
+                            salesman = new StringBuilder(((Label) object1).getText().substring(9));
                         } else {
-                            salesman += "," + ((Label) object1).getText().substring(9);
+                            salesman.append(",").append(((Label) object1).getText().substring(9));
                         }
                     } else {
-                        if (available.equals("")) {
-                            available = ((Label) object1).getText();
+                        if (available.toString().equals("")) {
+                            available = new StringBuilder(((Label) object1).getText());
                         } else {
-                            available += "," + ((Label) object1).getText();
+                            available.append(",").append(((Label) object1).getText());
                         }
                     }
                 }
             }
         }
         String command = "show products+" + MenuHandler.getUsername();
-        if (available.equals("") && salesman.equals("") && categories.equals("") && confirmationState.equals("")) {
+        if (available.toString().equals("") && salesman.toString().equals("") && categories.toString().equals("") && confirmationState.toString().equals("")) {
 
         } else {
             command += "+filters:";
-            if (!available.equals("")) {
+            if (!available.toString().equals("")) {
                 command += "+remainder+" + available;
             }
-            if (!salesman.equals("")) {
+            if (!salesman.toString().equals("")) {
                 command += "+salesmanIDs+" + salesman;
             }
-            if (!categories.equals("")) {
+            if (!categories.toString().equals("")) {
                 command += "+categories+" + categories;
             }
-            if (!confirmationState.equals("")) {
+            if (!confirmationState.toString().equals("")) {
                 command += "+Confirmation+" + confirmationState;
             }
         }
