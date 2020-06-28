@@ -34,18 +34,13 @@ public class Controller {
 
     public void initialize() throws IOException, ParseException {
         Audio.mute();
-        String path = null;
         MenuHandler.getServer().clientToServer("get product video+" + MenuHandler.getProductID());
+        MediaPlayer mediaPlayer;
         if (MenuHandler.getServer().serverToClient().startsWith("no video")) {
-            path = "src/main/java/GUI/ProductView/Film/videoplayback (1).mp4";
+            mediaPlayer = new MediaPlayer(new Media(new File("src/main/java/GUI/ProductView/Film/videoplayback (1).mp4").toURI().toString()));
         } else {
-            path = MenuHandler.getServer().serverToClient();
+            mediaPlayer = new MediaPlayer(new Media(MenuHandler.getServer().serverToClient()));
         }
-        int indexOf = path.indexOf("src");
-        path = path.substring(indexOf);
-        System.out.println(path);
-        Media media = new Media(new File(path).toURI().toString());
-        MediaPlayer mediaPlayer = new MediaPlayer(media);
         MediaView.setMediaPlayer(mediaPlayer);
         mediaPlayer.setAutoPlay(true);
     }

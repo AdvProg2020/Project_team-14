@@ -113,8 +113,8 @@ public class Controller {
     }
 
     private void zoom() {
-        double width = imageView.getFitWidth();
-        double height = imageView.getFitHeight();
+        double width = imageView.getImage().getWidth();
+        double height = imageView.getImage().getHeight();
 
         imageView.setPreserveRatio(true);
         reset(imageView, 291.0, 276.0);
