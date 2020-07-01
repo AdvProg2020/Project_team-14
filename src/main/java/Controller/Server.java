@@ -253,6 +253,8 @@ public class Server {
             similarProduct(command);
         } else if (command.startsWith("commercial+")) {
             commercial(command);
+        } else if (command.startsWith("get all commercial")) {
+            getAllCommercials();
         }
         //end parts
         else if (command.startsWith("show balance")) {
@@ -261,6 +263,18 @@ public class Server {
             this.addBalance(command);
         }
 
+    }
+
+    private void getAllCommercials() {
+        StringBuilder string = new StringBuilder();
+        for (String id : Salesman.getAllCommercials()) {
+            string.append(id).append(",");
+        }
+        if(string.length()!=0){
+            Server.setAnswer(string.substring(0, string.length() - 1));
+        } else {
+            Server.setAnswer("no commercial");
+        }
     }
 
     private void commercial(String command) {
