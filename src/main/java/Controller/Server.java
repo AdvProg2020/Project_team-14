@@ -10,6 +10,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -248,6 +249,8 @@ public class Server {
             getMinPriceWithName(command);
         } else if (command.startsWith("is there product name+")) {
             isThereProductName(command);
+        } else if (command.startsWith("similar product+")) {
+            similarProduct(command);
         }
         //end parts
         else if (command.startsWith("show balance")) {
@@ -260,11 +263,30 @@ public class Server {
 
     private void isThereProductName(String command) {
         for (Product product : Storage.getAllProducts()) {
-            if (product.getName().equals(command.split("\\+")[1])) {
+            System.out.println("looking for " + command.split("\\+")[1] + " but " + product.getName());
+            if (product.getName().equals(command.split("\\+")[1]) || command.contains(product.getName())) {
                 Server.setAnswer("true");
+                return;
             }
         }
         Server.setAnswer("false");
+    }
+
+    public void similarProduct(String command) {
+        String productID = command.split("\\+")[1];
+        while (true) {
+            if (Storage.getAllProducts().size() == 1 || Storage.getAllProducts().size() == 0) {
+                Server.setAnswer("nothing");
+            } else {
+                Random rand = new Random();
+                int i = rand.nextInt(Storage.getAllProducts().size());
+                if (Storage.getAllProducts().get(i).getProductID().equals(productID)) {
+                    continue;
+                }
+                Server.setAnswer(Storage.getAllProducts().get(i).getProductID());
+            }
+            break;
+        }
     }
 
     private void isFinished(String command) {

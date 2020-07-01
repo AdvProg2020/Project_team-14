@@ -7,27 +7,25 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.media.*?>
 
-<AnchorPane prefHeight="608.0" prefWidth="895.0" xmlns="http://javafx.com/javafx/10.0.2-internal"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ProductView.Film.Controller">
+<AnchorPane prefHeight="644.0" prefWidth="834.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ProductView.Film.Controller">
     <children>
-        <MediaView fx:id="MediaView" fitHeight="500.0" fitWidth="600.0" layoutX="156.0" layoutY="66.0"/>
-        <Button layoutX="824.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#exitButtonClicked"
-                prefHeight="33.0" prefWidth="46.0">
+        <MediaView fx:id="MediaView" fitHeight="550.0" fitWidth="800.0" layoutX="17.0" layoutY="80.0" />
+        <Button layoutX="764.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#exitButtonClicked" prefHeight="51.0" prefWidth="52.0" style="-fx-background-color: black;">
             <graphic>
-                <ImageView fx:id="exit" fitHeight="41.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fx:id="exit" fitHeight="40.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../../Register/resources/png-transparent-computer-icons-exit-icon-miscellaneous-angle-text.png"/>
+                        <Image url="@close.png" />
                     </image>
                     <cursor>
-                        <Cursor fx:constant="HAND"/>
+                        <Cursor fx:constant="HAND" />
                     </cursor>
                 </ImageView>
             </graphic>
             <cursor>
-                <Cursor fx:constant="HAND"/>
+                <Cursor fx:constant="HAND" />
             </cursor>
             <effect>
-                <SepiaTone level="0.34"/>
+                <SepiaTone level="0.34" />
             </effect>
         </Button>
     </children>

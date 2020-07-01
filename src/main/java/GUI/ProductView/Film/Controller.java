@@ -11,6 +11,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.File;
 import java.io.IOException;
@@ -43,6 +44,7 @@ public class Controller {
         }
         MediaView.setMediaPlayer(mediaPlayer);
         mediaPlayer.setAutoPlay(true);
+        mediaPlayer.setOnEndOfMedia(() -> mediaPlayer.seek(Duration.ZERO));
     }
 
 }

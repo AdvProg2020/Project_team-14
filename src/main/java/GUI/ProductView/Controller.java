@@ -68,7 +68,7 @@ public class Controller {
             status.setImage(new Image(new FileInputStream("src/main/java/GUI/ProductView/resources/sale.jpg")));
         } else {
             MenuHandler.getServer().clientToServer("is product finished+" + MenuHandler.getProductID());
-            if(MenuHandler.getServer().serverToClient().equalsIgnoreCase("true")){
+            if (MenuHandler.getServer().serverToClient().equalsIgnoreCase("true")) {
                 status.setImage(new Image(new FileInputStream("src/main/java/GUI/ProductView/resources/images (1).png")));
             } else {
                 status.setImage(new Image(new FileInputStream("src/main/java/GUI/ProductView/resources/images.png")));
@@ -446,8 +446,17 @@ public class Controller {
         stage.setScene(new Scene(root));
     }
 
-    public void similarProducts(ActionEvent actionEvent) {
-        Audio.playClick4();
+    public void similarProducts(ActionEvent actionEvent) throws IOException, ParseException {
+        MenuHandler.getServer().clientToServer("similar product+" + MenuHandler.getProductID());
+        if (!MenuHandler.getServer().serverToClient().equals("nothing")) {
+            Audio.playClick4();
+            Parent root = FXMLLoader.load(getClass().getResource("/GUI/ProductView/SimilarProduct/SimilarProduct.fxml"));
+            Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+        } else {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "no similar product found!", ButtonType.OK);
+            alert.showAndWait();
+        }
     }
 
     public void compare(ActionEvent actionEvent) throws IOException {
