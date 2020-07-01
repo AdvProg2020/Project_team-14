@@ -81,6 +81,11 @@
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Button>
+            <Button layoutX="10.0" layoutY="90.0" mnemonicParsing="false" onAction="#askForCommercial" prefHeight="40.0" prefWidth="300.0" style="-fx-background-color: yellow;" styleClass="my-button" text="Ask For Commercial">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
             </children>
         </VBox>
         <Pane fx:id="pane" layoutX="413.0" layoutY="82.0" prefHeight="735.0" prefWidth="780.0" styleClass="info-part" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="55.0" />

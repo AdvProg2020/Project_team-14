@@ -53,4 +53,5 @@ public class SimilarProduct {
         Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
     }
+
 }

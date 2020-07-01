@@ -251,6 +251,8 @@ public class Server {
             isThereProductName(command);
         } else if (command.startsWith("similar product+")) {
             similarProduct(command);
+        } else if (command.startsWith("commercial+")) {
+            commercial(command);
         }
         //end parts
         else if (command.startsWith("show balance")) {
@@ -261,10 +263,30 @@ public class Server {
 
     }
 
+    private void commercial(String command) {
+        String productID = command.split("\\+")[2];
+        String username = command.split("\\+")[1];
+        Salesman salesman = (Salesman) Storage.getAccountWithUsername(username);
+        if (Storage.getProductById(productID) == null) {
+            Server.setAnswer("invalid product");
+        } else if (salesman.isProductOnCommercial(productID)) {
+            Server.setAnswer("it's already on commercial");
+        } else if (Storage.getProductById(productID).getSalesmanIDs().contains(username)) {
+            if (salesman.getCredit() < 1000) {
+                Server.setAnswer("not enough money");
+            } else {
+                salesman.setCredit(salesman.getCredit() - 1000);
+                salesman.getCommercials().add(productID);
+                Server.setAnswer("added successfully");
+            }
+        } else {
+            Server.setAnswer("not your product");
+        }
+    }
+
     private void isThereProductName(String command) {
         for (Product product : Storage.getAllProducts()) {
-            System.out.println("looking for " + command.split("\\+")[1] + " but " + product.getName());
-            if (product.getName().equals(command.split("\\+")[1]) || command.contains(product.getName())) {
+            if (product.getName().equals(command.split("\\+")[1])) {
                 Server.setAnswer("true");
                 return;
             }
