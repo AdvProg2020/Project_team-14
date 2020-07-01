@@ -41,6 +41,7 @@ public class SimilarProduct {
 
     public void visitClicked(ActionEvent actionEvent) throws IOException {
         Audio.playClick7();
+        MenuHandler.setProductID(productID);
         Parent root = FXMLLoader.load(getClass().getResource("/GUI/ProductView/ProductViewLayout.fxml"));
         Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
