@@ -2,8 +2,7 @@ package GUI.Register;
 
 import GUI.Media.Audio;
 import GUI.MenuHandler;
-import javafx.animation.FadeTransition;
-import javafx.animation.ParallelTransition;
+import javafx.animation.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,6 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -24,6 +24,7 @@ import javafx.util.Duration;
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -124,6 +125,9 @@ public class RegisterController {
         } else if (((String) role.getValue()).equalsIgnoreCase("salesman") && company.getText().equals("")) {
             alert.setContentText("Company Field Must Not Be Empty");
             alert.showAndWait();
+        } else if(((Label) (((AnchorPane) avatarPane.getChildren().get(0)).getChildren().get(12))).getText().equals("")) {
+            alert.setContentText("please chose your avatar");
+            alert.showAndWait();
         } else {
             if (!checkUsernameFormat(username.getText())) {
                 alert.setContentText("Username Should Consists Of Only Characters And Numbers And _ Without Space");
@@ -158,6 +162,7 @@ public class RegisterController {
                 } else {
                     alert.setAlertType(Alert.AlertType.CONFIRMATION);
                     alert.setContentText("Your Register Was Successful");
+                    setAvatarInServer(username.getText());
                 }
                 alert.showAndWait();
                 Parent root = FXMLLoader.load(getClass().getResource("/GUI/Register/Register.fxml"));
@@ -165,6 +170,12 @@ public class RegisterController {
                 stage.setScene(new Scene(root));
             }
         }
+    }
+
+    private void setAvatarInServer(String username) throws ParseException {
+        String avatar = ((Label) (((AnchorPane) avatarPane.getChildren().get(0)).getChildren().get(12))).getText();
+        String toServer = "set person image+" + username + "+" + avatar;
+        MenuHandler.getServer().clientToServer(toServer);
     }
 
     public void checkSalesmanRole() {
@@ -199,12 +210,14 @@ public class RegisterController {
         return getMatcher("0(\\d+)", number).matches() && number.length() == 11;
     }
 
-    public void back(MouseEvent mouseEvent) throws IOException {
+    public void back(MouseEvent mouseEvent) throws IOException, InterruptedException {
         Audio.playClick7();
         String path = MenuHandler.getLoginBackAddress();
+
         Parent root = FXMLLoader.load(getClass().getResource(path));
         Stage stage = (Stage) ((ImageView) mouseEvent.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
     }
 
     public void exit(MouseEvent mouseEvent) {

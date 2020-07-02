@@ -17,6 +17,7 @@ public abstract class Account implements Serializable {
     private String telephone;
     private Role role;
     private String imgPath;
+    private String avatar;
 
     public Account(String username, String password, String firstName, String secondName, String Email, String telephone, String role) {
         this.username = username;
@@ -38,6 +39,14 @@ public abstract class Account implements Serializable {
 
     public void setImgPath(String imgPath) {
         this.imgPath = imgPath;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getAvatar() {
+        return avatar;
     }
 
     public String getImgPath() {

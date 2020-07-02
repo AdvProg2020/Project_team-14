@@ -52,7 +52,7 @@
       <cursor>
          <Cursor fx:constant="HAND" />
       </cursor></TextField>
-    <Button layoutX="546.0" layoutY="535.0" mnemonicParsing="false" onAction="#newBossButton" prefHeight="39.0" prefWidth="199.0" text="Done" textFill="#100ce1">
+    <Button layoutX="653.0" layoutY="574.0" mnemonicParsing="false" onAction="#newBossButton" prefHeight="39.0" prefWidth="155.0" text="Done" textFill="#100ce1">
         <font>
             <Font name="Arial" size="21.0" />
         </font>
@@ -78,13 +78,13 @@
       <cursor>
          <Cursor fx:constant="HAND" />
       </cursor></TextField>
-   <ImageView fitHeight="81.0" fitWidth="46.0" layoutX="885.0" layoutY="14.0" onMouseClicked="#Back" pickOnBounds="true" preserveRatio="true">
-      <image>
-         <Image url="@resources/png-transparent-computer-icons-exit-icon-miscellaneous-angle-text.png" />
-      </image>
+   <MediaView fx:id="film" fitHeight="200.0" fitWidth="200.0" layoutX="180.0" layoutY="502.0" />
+   <Button layoutX="459.0" layoutY="574.0" mnemonicParsing="false" onMouseClicked="#Back" prefHeight="39.0" prefWidth="147.0" text="Back" textFill="#100ce1">
+      <font>
+         <Font name="Arial" size="21.0" />
+      </font>
       <cursor>
          <Cursor fx:constant="HAND" />
       </cursor>
-   </ImageView>
-   <MediaView fx:id="film" fitHeight="200.0" fitWidth="200.0" layoutX="180.0" layoutY="502.0" />
+   </Button>
 </AnchorPane>

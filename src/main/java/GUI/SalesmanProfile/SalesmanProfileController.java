@@ -9,18 +9,34 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import javax.sound.sampled.AudioInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class SalesmanProfileController {
     public Pane pane;
+    public ImageView profileImage;
 
     public void initialize() throws IOException {
         MenuHandler.setPane(pane);
         pane.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/ProfileLayout/PersonalInfoLayout.fxml")));
+        setProfileImage();
+    }
+
+    private void setProfileImage() throws FileNotFoundException {
+        if (!MenuHandler.getUserAvatar().equals("no image found")) {
+            String path = "src/main/java/GUI/Register/resources/";
+            String avatar = MenuHandler.getUserAvatar() + ".png";
+            FileInputStream imageStream = new FileInputStream(path + avatar);
+            Image image = new Image(imageStream);
+            profileImage.setImage(image);
+        }
     }
 
     public void manageProducts(ActionEvent actionEvent) throws IOException {
@@ -62,9 +78,11 @@ public class SalesmanProfileController {
         stage.setScene(new Scene(root));
     }
 
-    public void logs(ActionEvent actionEvent) throws IOException {
+    public void logs() throws IOException {
         Audio.playClick3();
+        System.out.println("fuck you");
         pane.getChildren().clear();
         pane.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/Log/Log.fxml")));
     }
+
 }

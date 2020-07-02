@@ -14,33 +14,30 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.ParseException;
 
 public class ProfileLayoutController {
     public Pane pane;
-    public ImageView imageView;
     public ImageView profileImage;
 
 
     public void initialize() throws IOException, ParseException {
         MenuHandler.setBackProduct("GUI/ProfileLayout/ProfileLayout.fxml");
         pane.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/ProfileLayout/PersonalInfoLayout.fxml")));
-        FileInputStream imageStream = new FileInputStream("src/main/java/GUI/ProductScene/resources/user.png");
-        Image image = new Image(imageStream);
-        profileImage.setImage(image);
+        setProfileImage();
     }
 
     public void setProfileImage() throws ParseException, IOException {
-        if (MenuHandler.getServer().serverToClient() == null) {
-            return;
-        }
-        MenuHandler.getServer().clientToServer("get person image+" + MenuHandler.getUsername());
-        if (!MenuHandler.getServer().serverToClient().startsWith("no image found")) {
-            // profileImage.setImage(new Image(MenuHandler.getServer().serverToClient()));
-        } else {
-            FileInputStream imageStream = new FileInputStream("src/main/java/GUI/ProductScene/resources/user.png");
+        if (!MenuHandler.getUserAvatar().equals("no image found")) {
+            String path = "src/main/java/GUI/Register/resources/";
+            String avatar = MenuHandler.getUserAvatar() + ".png";
+            System.out.println(avatar);
+            FileInputStream imageStream = new FileInputStream(path + avatar);
             Image image = new Image(imageStream);
             profileImage.setImage(image);
         }
@@ -48,14 +45,12 @@ public class ProfileLayoutController {
 
     public void managePersonalInfo(ActionEvent actionEvent) throws IOException {
         Audio.playClick5();
-        if (pane.getChildren().size() == 0) return;
         pane.getChildren().remove(pane.getChildren().get(0));
         pane.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/ProfileLayout/PersonalInfoLayout.fxml")));
     }
 
     public void manageRequests(ActionEvent actionEvent) throws IOException {
         Audio.playClick4();
-        if (pane.getChildren().size() == 0) return;
         pane.getChildren().remove(pane.getChildren().get(0));
         pane.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/BossProfile/ManageRequests/ManageRequestLayout.fxml")));
     }

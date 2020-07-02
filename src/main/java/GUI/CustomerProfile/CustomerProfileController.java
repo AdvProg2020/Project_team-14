@@ -10,20 +10,36 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class CustomerProfileController {
     public Pane pane;
+    public ImageView profileImage;
 
     @FXML
     public void initialize() throws IOException {
         MenuHandler.setPane(pane);
         pane.getChildren().clear();
         pane.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/ProfileLayout/PersonalInfoLayout.fxml")));
+        setProfileImage();
+    }
+
+    private void setProfileImage() throws FileNotFoundException {
+        if (!MenuHandler.getUserAvatar().equals("no image found")) {
+            String path = "src/main/java/GUI/Register/resources/";
+            String avatar = MenuHandler.getUserAvatar() + ".png";
+            FileInputStream imageStream = new FileInputStream(path + avatar);
+            Image image = new Image(imageStream);
+            profileImage.setImage(image);
+        }
     }
 
     public void managePersonalInfo(MouseEvent mouseEvent) throws IOException {
@@ -52,9 +68,12 @@ public class CustomerProfileController {
         }
     }
 
-    public void log(ActionEvent actionEvent) throws IOException {
+
+
+    public void logging(ActionEvent actionEvent) throws IOException {
         Audio.playClick3();
         pane.getChildren().clear();
         pane.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/Log/Log.fxml")));
+
     }
 }

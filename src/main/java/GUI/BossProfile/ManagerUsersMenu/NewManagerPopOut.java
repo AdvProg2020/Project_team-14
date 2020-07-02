@@ -31,16 +31,16 @@ public class NewManagerPopOut {
     public TextField telephone;
     public MediaView film;
 
-    public void Back(MouseEvent mouseEvent) throws IOException {
+    public void Back(MouseEvent mouseEvent) {
         Audio.playClick5();
-        Parent root = FXMLLoader.load(getClass().getResource("/GUI/ProfileLayout/ProfileLayout.fxml"));
-        Stage stage = (Stage) ((ImageView) mouseEvent.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root));
+        ((Button) mouseEvent.getSource()).getScene().getWindow().hide();
     }
 
     public void newBossButton(ActionEvent actionEvent) throws ParseException, IOException {
         Audio.playClick5();
         Alert alert = new Alert(Alert.AlertType.ERROR, "", ButtonType.OK);
+        ((Stage) alert.getDialogPane().getScene().getWindow()).setAlwaysOnTop(true);
+        ((Stage) alert.getDialogPane().getScene().getWindow()).toFront();
         if (username.getText().equals("")) {
             alert.setContentText("Username Field Must Not Be Empty");
             alert.showAndWait();

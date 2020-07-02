@@ -44,13 +44,16 @@
             </ImageView>
          </children>
       </HBox>
-      <ImageView fitHeight="268.0" fitWidth="279.0" layoutX="61.0" layoutY="116.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="profileImage" fitHeight="268.0" fitWidth="279.0" layoutX="61.0" layoutY="116.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../ProductScene/resources/user.png" />
+         </image></ImageView>
       <VBox alignment="CENTER" layoutX="45.0" layoutY="400.0" prefHeight="300.0" prefWidth="300.0" spacing="10.0">
          <children>
             <Button mnemonicParsing="false" onMouseClicked="#managePersonalInfo" prefHeight="40.0" prefWidth="300.0" styleClass="my-button" text="Manage Personal Info" />
             <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="300.0" styleClass="my-button" text="Manage Cart" />
             <Button mnemonicParsing="false" onMouseClicked="#manageOffCode" prefHeight="40.0" prefWidth="300.0" styleClass="my-button" text="Manage OffCodes" />
-            <Button layoutX="10.0" layoutY="165.0" mnemonicParsing="false" onAction="#log" prefHeight="40.0" prefWidth="300.0" styleClass="my-button" text="Manage Logs" />
+            <Button layoutX="10.0" layoutY="165.0" mnemonicParsing="false" onAction="#logging" prefHeight="40.0" prefWidth="300.0" styleClass="my-button" text="Manage Logs" />
             <Button layoutX="10.0" layoutY="250.0" mnemonicParsing="false" onMouseClicked="#logOut" prefHeight="40.0" prefWidth="300.0" styleClass="my-button" text="logOut" />
          </children>
       </VBox>

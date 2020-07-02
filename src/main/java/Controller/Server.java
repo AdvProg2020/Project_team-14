@@ -483,7 +483,7 @@ public class Server {
         String username = command.split("\\+")[1];
         for (Account account : Storage.getAllAccounts()) {
             if (account.getUsername().equals(username)) {
-                account.setImgPath(command.split("\\+")[2]);
+                account.setAvatar(command.split("\\+")[2]);
                 Server.setAnswer("successful");
                 return;
             }
@@ -494,8 +494,8 @@ public class Server {
         String username = command.split("\\+")[1];
         for (Account account : Storage.getAllAccounts()) {
             if (account.getUsername().equals(username)) {
-                if (account.getImgPath() != null) {
-                    Server.setAnswer(account.getImgPath());
+                if (account.getAvatar() != null) {
+                    Server.setAnswer(account.getAvatar());
                     return;
                 } else {
                     Server.setAnswer("no image found");

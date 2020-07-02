@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -62,6 +63,9 @@ public class Controller {
         } else if (telephone.getText().equals("")) {
             alert.setContentText("Telephone Field Must Not Be Empty");
             alert.showAndWait();
+        } else if(((Label) (((AnchorPane) avatarPane.getChildren().get(0)).getChildren().get(12))).getText().equals("")) {
+            alert.setContentText("Please chose your avatar");
+            alert.showAndWait();
         } else {
             if (checkUsernameFormat(username.getText())) {
                 alert.setContentText("Username Should Consists Of Only Characters And Numbers And _ Without Space");
@@ -90,11 +94,18 @@ public class Controller {
                 alert.setAlertType(Alert.AlertType.CONFIRMATION);
                 alert.setContentText("Your Register Was Successful");
                 alert.showAndWait();
+                setAvatarInServer(username.getText());
                 Parent root = FXMLLoader.load(getClass().getResource("/GUI/ProductScene/ProductScene.fxml"));
                 Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
                 stage.setScene(new Scene(root));
             }
         }
+    }
+
+    private void setAvatarInServer(String username) throws ParseException {
+        String avatar = ((Label) (((AnchorPane) avatarPane.getChildren().get(0)).getChildren().get(12))).getText();
+        String toServer = "set person image+" + username + "+" + avatar;
+        MenuHandler.getServer().clientToServer(toServer);
     }
 
     private Matcher getMatcher(String regex, String command) {
