@@ -28,6 +28,7 @@ public class ManageOffCodesController {
     public ComboBox<String> sortList;
     public ComboBox<String> filterList;
     public FlowPane chosenFilterItem;
+    public Button newOffCodeButton;
     public VBox offCodeList;
     private ArrayList<String> chosenFilter = new ArrayList<>();
     private String sortType = "ASCENDING";
@@ -37,7 +38,15 @@ public class ManageOffCodesController {
     @FXML
     public void initialize() throws IOException, ParseException {
         sortList.getItems().addAll("Default", "PERCENTAGE", "END_DATE", "START_DATE");
+        makeItForCustomer();
         updateContent();
+    }
+
+    private void makeItForCustomer() {
+        if (!MenuHandler.getUserType().equalsIgnoreCase("boss")) {
+            newOffCodeButton.setDisable(true);
+            newOffCodeButton.setVisible(false);
+        }
     }
 
     private void updateContent() throws ParseException, IOException {
@@ -92,24 +101,26 @@ public class ManageOffCodesController {
         HBox hBox = (HBox) mouseEvent.getSource();
         MenuHandler.setSeeingOffCode(((Label) hBox.getChildren().get(1)).getText());
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/GUI/BossProfile/ManageOffCodes/ViewOffCodePopup.fxml"));
+            Parent root;
+            if (MenuHandler.getUserType().equalsIgnoreCase("boss")) {
+                root = FXMLLoader.load(getClass().getResource("/GUI/BossProfile/ManageOffCodes/ViewOffCodePopup.fxml"));
+            } else {
+                root = FXMLLoader.load(getClass().getResource("/GUI/CustomerProfile/ManageOffCodes/CustomerViewOffCode.fxml"));
+            }
             Popup popup = new Popup();
             popup.getContent().add(root);
             popup.setOnHiding(e -> {
                 try {
                     updateContent();
-                } catch (ParseException ex) {
-                    ex.printStackTrace();
-                } catch (IOException ex) {
+                } catch (ParseException | IOException ex) {
                     ex.printStackTrace();
                 }
             });
-            popup.show((Stage) offCodeList.getScene().getWindow());
+            popup.show(offCodeList.getScene().getWindow());
         } catch (IOException e) {
             System.err.println("exception in loading ViewOffCodePopup.fxml ManageOffCodesController class");
             e.printStackTrace();
         }
-
     }
 
     public void changeSortType(MouseEvent mouseEvent) throws IOException, ParseException {
