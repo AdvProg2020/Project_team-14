@@ -2,6 +2,7 @@ package GUI.Cart;
 
 import GUI.Media.Audio;
 import GUI.MenuHandler;
+import Menus.Menu;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -13,6 +14,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.javatuples.Triplet;
+import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -53,7 +55,6 @@ public class Controller {
                     getPrice(Integer.parseInt(price), item.getValue2(), isOnSale), item.getValue2(),
                     isOnSale.equalsIgnoreCase("none") ? "No" : "Yes", isOnSale);
             list.add(cart);
-            System.out.println(cart);
         }
         products.setItems(list);
     }
@@ -68,7 +69,8 @@ public class Controller {
     }
 
 
-    public void back(ActionEvent mouseEvent) {
+    public void back(ActionEvent mouseEvent) throws IOException {
+        MenuHandler.getStage().setScene(new Scene(FXMLLoader.load(getClass().getResource("/GUI/ProductScene/ProductScene.fxml"))));
         Audio.playClick1();
     }
 
@@ -81,12 +83,19 @@ public class Controller {
         if (MenuHandler.isIsUserLogin()) {
             MenuHandler.getServer().clientToServer("get money+" + MenuHandler.getUsername());
             int money = Integer.parseInt(MenuHandler.getServer().serverToClient());
+            System.out.println(money);
             if (money < ans) {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Not Enough Money", ButtonType.OK);
                 alert.showAndWait();
             } else {
+                String products = "buy+" + MenuHandler.getUsername() + "\n";
                 for (Cart cart : list) {
-                    MenuHandler.getServer().clientToServer("buy+" + MenuHandler.getServer() + "+" + cart.getSalesman() + "+" + cart.getProductId() + "+" + cart.getCount());
+                    products += cart.getSalesman() + "+" + cart.getProductId() + "+" + cart.getCount() + "\n";
+                }
+                MenuHandler.getServer().clientToServer(products);
+                if (MenuHandler.getServer().serverToClient().equals("Buy Successful")) {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION, "Buy Successful", ButtonType.OK);
+                    alert.showAndWait();
                 }
             }
         } else {
@@ -95,6 +104,7 @@ public class Controller {
             MenuHandler.setLoginBackAddress("/GUI/Cart/Cart.fxml");
             MenuHandler.getStage().setScene(new Scene(FXMLLoader.load(getClass().getResource("/GUI/Login/Login.fxml"))));
         }
+        MenuHandler.getStage().setScene(new Scene(FXMLLoader.load(getClass().getResource("/GUI/ProductScene/ProductScene.fxml"))));
     }
 
     public void deleteFromCart(ActionEvent actionEvent) throws IOException, ParseException {

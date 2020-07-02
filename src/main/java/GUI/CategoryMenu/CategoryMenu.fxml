@@ -1,63 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.effect.Lighting?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.FlowPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="622.0" prefWidth="776.0" xmlns="http://javafx.com/javafx/8.0.171"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.CategoryMenu.Controller">
-    <ScrollPane hbarPolicy="NEVER" layoutX="14.0" layoutY="153.0" prefHeight="380.0" prefWidth="512.0"
-                vbarPolicy="NEVER">
+<AnchorPane prefHeight="622.0" prefWidth="776.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.CategoryMenu.Controller">
+    <ScrollPane hbarPolicy="NEVER" layoutX="14.0" layoutY="153.0" prefHeight="380.0" prefWidth="512.0" vbarPolicy="NEVER">
         <TableView fx:id="categories" prefHeight="377.0" prefWidth="511.0">
             <columns>
-                <TableColumn fx:id="categoryName" prefWidth="163.0" text="Name"/>
-                <TableColumn fx:id="categoryAttribute" prefWidth="158.0" text="Category Attribute"/>
-                <TableColumn fx:id="fatherCategory" minWidth="4.333343505859375" prefWidth="189.0"
-                             text="Father Category"/>
+                <TableColumn fx:id="categoryName" prefWidth="163.0" text="Name" />
+                <TableColumn fx:id="categoryAttribute" prefWidth="158.0" text="Category Attribute" />
+                <TableColumn fx:id="fatherCategory" minWidth="4.333343505859375" prefWidth="189.0" text="Father Category" />
             </columns>
         </TableView>
     </ScrollPane>
-    <Button id="NewCategory" layoutX="572.0" layoutY="75.0" mnemonicParsing="false" onAction="#newCategory"
-            onMouseClicked="#NewCategoryClicked" onMouseEntered="#MouseEntered" onMouseExited="#MouseExited"
-            opacity="0.87" prefHeight="50.0" prefWidth="151.0" text="New Category" textFill="RED">
+    <Button id="NewCategory" layoutX="572.0" layoutY="75.0" mnemonicParsing="false" onAction="#newCategory" onMouseClicked="#NewCategoryClicked" onMouseEntered="#MouseEntered" onMouseExited="#MouseExited" opacity="0.87" prefHeight="50.0" prefWidth="151.0" text="New Category" textFill="RED">
         <font>
-            <Font name="System Bold Italic" size="13.0"/>
+            <Font name="System Bold Italic" size="13.0" />
         </font>
         <cursor>
-            <Cursor fx:constant="HAND"/>
+            <Cursor fx:constant="HAND" />
         </cursor>
         <effect>
-            <Lighting bumpInput="$null" diffuseConstant="2.0" specularConstant="2.0" specularExponent="40.0"
-                      surfaceScale="0.0">
+            <Lighting bumpInput="$null" diffuseConstant="2.0" specularConstant="2.0" specularExponent="40.0" surfaceScale="0.0">
                 <light>
                 </light>
             </Lighting>
         </effect>
     </Button>
-    <Label layoutX="187.0" layoutY="47.0" prefHeight="106.0" prefWidth="339.0" text="Let Us Make New Category"
-           textFill="#ec0808">
+    <Label layoutX="187.0" layoutY="47.0" prefHeight="106.0" prefWidth="339.0" text="Let Us Make New Category" textFill="#ec0808">
         <font>
-            <Font name="System Italic" size="29.0"/>
+            <Font name="System Italic" size="29.0" />
         </font>
     </Label>
     <VBox alignment="TOP_CENTER" layoutX="526.0" layoutY="127.0" prefHeight="489.0" prefWidth="245.0">
         <children>
-            <Label text="Filter"/>
-            <ComboBox fx:id="filter" onAction="#updateFilter" prefHeight="31.0" prefWidth="199.0"/>
+            <Label text="Filter" />
+            <ComboBox fx:id="filter" onAction="#updateFilter" prefHeight="31.0" prefWidth="199.0" />
             <ScrollPane hbarPolicy="NEVER" vbarPolicy="NEVER">
                 <content>
-                    <FlowPane fx:id="filters" prefHeight="419.0" prefWidth="245.0"/>
+                    <FlowPane fx:id="filters" prefHeight="419.0" prefWidth="245.0" />
                 </content>
             </ScrollPane>
         </children>
     </VBox>
+   <Button layoutX="187.0" layoutY="566.0" mnemonicParsing="false" onAction="#viewCategory" text="Open Category" />
 </AnchorPane>

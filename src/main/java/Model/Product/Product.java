@@ -233,6 +233,7 @@ public class Product implements Serializable {
     }
 
     private boolean isConfirmedForSalesmanWithUsername(String username) {
+        if (!this.confirmationState.containsKey(username)) return false;
         return this.confirmationState.get(username).equals(Confirmation.ACCEPTED);
     }
 

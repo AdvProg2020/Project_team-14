@@ -60,6 +60,7 @@ public class PersonalInfoController {
             companyInfo.setText(information[14]);
             balance.setText(information[16]);
         } else {
+            balance.setText(information[14]);
             companyInfoLabel.setVisible(false);
             companyInfo.setVisible(false);
         }

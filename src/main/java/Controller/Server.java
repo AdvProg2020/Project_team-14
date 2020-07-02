@@ -24,6 +24,8 @@ import Model.Account.Salesman;
 import Model.Cart.Cart;
 import Model.Category.Category;
 import Model.Confirmation;
+import Model.Log.BuyLog;
+import Model.Log.Log;
 import Model.Off.Sale;
 import Model.Product.Comment;
 import Model.Product.Point;
@@ -273,11 +275,15 @@ public class Server {
     }
 
     private void buy(String command) {
-        Product product = Storage.getProductById(command.split("\\+")[3]);
-        product.setRemainderForSalesman(product.getRemainderForSalesman(command.split("\\+")[2]) - Integer.parseInt(command.split("\\+")[4]), command.split("\\+")[2]);
-        Account account = Storage.getAccountWithUsername(command.split("\\+")[1]);
-        Account account1 = Storage.getAccountWithUsername(command.split("\\+")[2]);
-        //
+        for (String s : command.split("\n")) {
+            if (s.startsWith("buy")) continue;
+            Product product = Storage.getProductById(s.split("\\+")[1]);
+            product.setRemainderForSalesman(product.getRemainderForSalesman(s.split("\\+")[0]) - Integer.parseInt(s.split("\\+")[2]), s.split("\\+")[0]);
+            Account account = Storage.getAccountWithUsername(command.split("\\+")[1]);
+            Account account1 = Storage.getAccountWithUsername(s.split("\\+")[0]);
+            ((Salesman) account1).setCredit(account.getCredit() + product.getPriceBySalesmanID(s.split("\\+")[0]) * Integer.parseInt(s.split("\\+")[2]));
+            ((Customer) account).setCredit(account.getCredit() - product.getPriceBySalesmanID(s.split("\\+")[0]) * Integer.parseInt(s.split("\\+")[2]));
+        }
     }
 
     private void getMoney(String command) {
@@ -321,7 +327,7 @@ public class Server {
         for (String id : Salesman.getAllCommercials()) {
             string.append(id).append(",");
         }
-        if(string.length()!=0){
+        if (string.length() != 0) {
             Server.setAnswer(string.substring(0, string.length() - 1));
         } else {
             Server.setAnswer("no commercial");
@@ -1348,7 +1354,7 @@ public class Server {
     }
 
     public String serverToClient() throws IOException {
-        endOfProgramme.updateFiles();
+        //endOfProgramme.updateFiles();
         return Server.answer;
     }
 

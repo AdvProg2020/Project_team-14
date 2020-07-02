@@ -4,6 +4,7 @@ import GUI.Media.Audio;
 import GUI.MenuHandler;
 import Menus.Menu;
 import Menus.Views.ViewCategoryMenu;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
@@ -19,7 +20,15 @@ import java.text.ParseException;
 public class SingleCategory {
     public Label parentCategory;
     public Label categoryName;
-    public Label attribute;
+    public TableView productList;
+    public TableColumn product;
+    public TableView categoryList;
+    public TableColumn category;
+    public Button addProduct;
+    public Button deleteProduct;
+    public Button removeCategory;
+    public TableView attributeList;
+    public TableColumn attribute;
 
     public void ChangeNameClicked(MouseEvent mouseEvent) throws ParseException, IOException {
         Audio.playClick5();
@@ -50,7 +59,20 @@ public class SingleCategory {
         stage.setScene(new Scene(root));
     }
 
-    public void initialize() {
+    public void initialize() throws ParseException, IOException {
+        String categoryName = MenuHandler.getSelectedCategory();
+        MenuHandler.getServer().clientToServer("view category+" + MenuHandler.getUsername() + "+" + MenuHandler.getSelectedCategory());
+        String serverAnswer = MenuHandler.getServer().serverToClient();
+        System.out.println(serverAnswer);
+        this.categoryName.setText(categoryName);
+    }
 
+    public void removeCategory(ActionEvent actionEvent) {
+    }
+
+    public void deleteProduct(ActionEvent actionEvent) {
+    }
+
+    public void addProduct(ActionEvent actionEvent) {
     }
 }
