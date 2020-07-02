@@ -78,9 +78,11 @@ public class SalesmanProfileController {
         stage.setScene(new Scene(root));
     }
 
-    public void logs(ActionEvent actionEvent) throws IOException {
+    public void logs() throws IOException {
         Audio.playClick3();
+        System.out.println("fuck you");
         pane.getChildren().clear();
         pane.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/Log/Log.fxml")));
     }
+
 }

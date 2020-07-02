@@ -2,8 +2,7 @@ package GUI.Register;
 
 import GUI.Media.Audio;
 import GUI.MenuHandler;
-import javafx.animation.FadeTransition;
-import javafx.animation.ParallelTransition;
+import javafx.animation.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -25,6 +24,7 @@ import javafx.util.Duration;
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -210,12 +210,14 @@ public class RegisterController {
         return getMatcher("0(\\d+)", number).matches() && number.length() == 11;
     }
 
-    public void back(MouseEvent mouseEvent) throws IOException {
+    public void back(MouseEvent mouseEvent) throws IOException, InterruptedException {
         Audio.playClick7();
         String path = MenuHandler.getLoginBackAddress();
+
         Parent root = FXMLLoader.load(getClass().getResource(path));
         Stage stage = (Stage) ((ImageView) mouseEvent.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
     }
 
     public void exit(MouseEvent mouseEvent) {

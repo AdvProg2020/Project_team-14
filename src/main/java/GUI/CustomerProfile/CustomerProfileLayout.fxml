@@ -53,7 +53,7 @@
             <Button mnemonicParsing="false" onMouseClicked="#managePersonalInfo" prefHeight="40.0" prefWidth="300.0" styleClass="my-button" text="Manage Personal Info" />
             <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="300.0" styleClass="my-button" text="Manage Cart" />
             <Button mnemonicParsing="false" onMouseClicked="#manageOffCode" prefHeight="40.0" prefWidth="300.0" styleClass="my-button" text="Manage OffCodes" />
-            <Button layoutX="10.0" layoutY="165.0" mnemonicParsing="false" onAction="#log" prefHeight="40.0" prefWidth="300.0" styleClass="my-button" text="Manage Logs" />
+            <Button layoutX="10.0" layoutY="165.0" mnemonicParsing="false" onAction="#logging" prefHeight="40.0" prefWidth="300.0" styleClass="my-button" text="Manage Logs" />
             <Button layoutX="10.0" layoutY="250.0" mnemonicParsing="false" onMouseClicked="#logOut" prefHeight="40.0" prefWidth="300.0" styleClass="my-button" text="logOut" />
          </children>
       </VBox>

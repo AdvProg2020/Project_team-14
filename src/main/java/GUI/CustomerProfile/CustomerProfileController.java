@@ -68,9 +68,12 @@ public class CustomerProfileController {
         }
     }
 
-    public void log(ActionEvent actionEvent) throws IOException {
+
+
+    public void logging(ActionEvent actionEvent) throws IOException {
         Audio.playClick3();
         pane.getChildren().clear();
         pane.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/Log/Log.fxml")));
+
     }
 }
