@@ -26,6 +26,7 @@ import Model.Category.Category;
 import Model.Confirmation;
 import Model.Log.BuyLog;
 import Model.Log.Log;
+import Model.Off.OffCode;
 import Model.Off.Sale;
 import Model.Product.Comment;
 import Model.Product.Point;
@@ -271,6 +272,23 @@ public class Server {
             this.getMoney(command);
         } else if (command.startsWith("buy+")) {
             this.buy(command);
+        } else if (command.startsWith("can use offCode+")) {
+            this.canUserOffCode(command);
+        }
+    }
+
+    private void canUserOffCode(String command) {
+        String offCodeId = command.split("\\+")[2];
+        String customer = command.split("\\+")[1];
+        if (Storage.isThereOffCodeWithID(offCodeId)) {
+            OffCode offCode = Storage.getOffCodeById(offCodeId);
+            if (offCode.canCustomerUseItWithUsername(customer)) {
+                setAnswer("Use It");
+            } else {
+                setAnswer("You Cant Use This Off Code");
+            }
+        } else {
+            setAnswer("No Off Code With This Id");
         }
     }
 

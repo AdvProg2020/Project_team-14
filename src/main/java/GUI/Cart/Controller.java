@@ -8,13 +8,9 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.javatuples.Triplet;
-import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -28,6 +24,9 @@ public class Controller {
     public TableColumn<Cart, String> isOnSale;
     public TableColumn<Cart, Integer> priceAll;
     public TableView<Cart> products;
+    public Label usedOffCode;
+    public Label finalPrice;
+    public TextField offCodeId;
     private int ans = 0;
 
     ObservableList<Cart> list = FXCollections.observableArrayList();
@@ -70,12 +69,18 @@ public class Controller {
 
 
     public void back(ActionEvent mouseEvent) throws IOException {
-        MenuHandler.getStage().setScene(new Scene(FXMLLoader.load(getClass().getResource("/GUI/ProductScene/ProductScene.fxml"))));
         Audio.playClick1();
+        MenuHandler.getStage().setScene(new Scene(FXMLLoader.load(getClass().getResource("/GUI/ProductScene/ProductScene.fxml"))));
     }
 
-    public void useOffCode(ActionEvent mouseEvent) {
+    public void useOffCode(ActionEvent mouseEvent) throws ParseException, IOException {
         Audio.playClick2();
+        MenuHandler.getServer().clientToServer("can use offCode+" + MenuHandler.getUsername() + "+" + offCodeId.getText());
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, MenuHandler.getServer().serverToClient(), ButtonType.OK);
+        if (!MenuHandler.getServer().serverToClient().equals("Use It")) {
+            alert.setAlertType(Alert.AlertType.ERROR);
+        }
+        alert.showAndWait();
     }
 
     public void buy(ActionEvent mouseEvent) throws IOException, ParseException {
