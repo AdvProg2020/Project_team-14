@@ -61,4 +61,10 @@ public class SalesmanProfileController {
         Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
     }
+
+    public void logs(ActionEvent actionEvent) throws IOException {
+        Audio.playClick3();
+        pane.getChildren().clear();
+        pane.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/Log/Log.fxml")));
+    }
 }
