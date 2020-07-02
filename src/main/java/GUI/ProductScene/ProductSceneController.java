@@ -23,6 +23,8 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 
@@ -47,6 +49,7 @@ public class ProductSceneController {
             Parent registerLoginPopUp = FXMLLoader.load(getClass().getResource("/GUI/MainMenuPopups/ProfilePopup.fxml"));
             popup.getContent().addAll(registerLoginPopUp);
             ((Label) ((VBox) registerLoginPopUp).getChildren().get(1)).setText(MenuHandler.getUsername());
+            setProfileImageInProfilePopup(registerLoginPopUp);
             ((Button) ((HBox) ((VBox) registerLoginPopUp).getChildren().get(2)).getChildren().get(0)).setOnAction(event -> {
                 Parent root = null;
                 try {
@@ -120,6 +123,17 @@ public class ProductSceneController {
                 popup.getScene().getWindow().hide();
             });
             popup.show(stage);
+        }
+    }
+
+    private void setProfileImageInProfilePopup(Parent root) throws FileNotFoundException {
+        if (!MenuHandler.getUserAvatar().equals("no image found")) {
+            String path = "src/main/java/GUI/Register/resources/";
+            String avatar = MenuHandler.getUserAvatar() + ".png";
+            FileInputStream imageStream = new FileInputStream(path + avatar);
+            Image image = new Image(imageStream);
+            ImageView profileImage = (ImageView) ((VBox) root).getChildren().get(0);
+            profileImage.setImage(image);
         }
     }
 
