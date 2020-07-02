@@ -1,6 +1,7 @@
 package Model.Product;
 
 import Model.Confirmation;
+import Model.Off.Sale;
 import Model.RandomString;
 import Model.Storage;
 
@@ -178,6 +179,20 @@ public class Product implements Serializable {
 
     public int getPriceBySalesmanID(String salesmanID) {
         return price.get(salesmanID);
+    }
+
+    public Sale getMaxSale(String salesmanId) {
+        int percentage = -1;
+        Sale ans = null;
+        for (Sale sale : Storage.allSales) {
+            if (sale.isAuthentic() & sale.getSalesmanID().equals(salesmanId) & sale.doesContainProduct(this.productID)) {
+                if (sale.getPercentage() > percentage) {
+                    ans = sale;
+                    percentage = sale.getPercentage();
+                }
+            }
+        }
+        return ans;
     }
 
     public int getMinimumPrice() {
