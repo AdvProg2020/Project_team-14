@@ -35,8 +35,7 @@ public class EditProductController {
                     + MenuHandler.getProductID() + "+" + name.getText());
         } else {
 
-        }
-        if (checkDescriptionFormat(description.getText())) {
+        } if (checkDescriptionFormat(description.getText())) {
             MenuHandler.getServer().clientToServer("edit product+description+" + MenuHandler.getUsername() + "+"
                     + MenuHandler.getProductID() + "+" + description.getText());
         } else {

@@ -12,6 +12,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+import javax.sound.sampled.AudioInputStream;
 import java.io.IOException;
 
 public class SalesmanProfileController {
@@ -52,5 +53,18 @@ public class SalesmanProfileController {
             Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
         }
+    }
+
+    public void askForCommercial(ActionEvent actionEvent) throws IOException {
+        Audio.playClick3();
+        Parent root = FXMLLoader.load(getClass().getResource("/GUI/SalesmanProfile/Commercial.fxml"));
+        Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root));
+    }
+
+    public void logs(ActionEvent actionEvent) throws IOException {
+        Audio.playClick3();
+        pane.getChildren().clear();
+        pane.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/Log/Log.fxml")));
     }
 }

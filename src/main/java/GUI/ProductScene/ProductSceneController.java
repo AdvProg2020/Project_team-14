@@ -260,7 +260,7 @@ public class ProductSceneController {
     }
 
 
-    public void chooseFilter(ActionEvent actionEvent) throws IOException, ParseException {
+    public void chooseFilter() throws IOException, ParseException {
         String s = (String) filter.getValue();
         try {
             checkExistenceOfFilter(s);

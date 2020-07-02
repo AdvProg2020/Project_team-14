@@ -113,8 +113,8 @@ public class Controller {
     }
 
     private void zoom() {
-        double width = imageView.getFitWidth();
-        double height = imageView.getFitHeight();
+        double width = imageView.getImage().getWidth();
+        double height = imageView.getImage().getHeight();
 
         imageView.setPreserveRatio(true);
         reset(imageView, 291.0, 276.0);
@@ -447,8 +447,17 @@ public class Controller {
         stage.setScene(new Scene(root));
     }
 
-    public void similarProducts(ActionEvent actionEvent) {
-        Audio.playClick4();
+    public void similarProducts(ActionEvent actionEvent) throws IOException, ParseException {
+        MenuHandler.getServer().clientToServer("similar product+" + MenuHandler.getProductID());
+        if (!MenuHandler.getServer().serverToClient().equals("nothing")) {
+            Audio.playClick4();
+            Parent root = FXMLLoader.load(getClass().getResource("/GUI/ProductView/SimilarProduct/SimilarProduct.fxml"));
+            Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+        } else {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "no similar product found!", ButtonType.OK);
+            alert.showAndWait();
+        }
     }
 
     public void compare(ActionEvent actionEvent) throws IOException {

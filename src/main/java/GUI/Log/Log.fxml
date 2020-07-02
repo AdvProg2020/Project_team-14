@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="658.0" prefWidth="784.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Log.Log">
+   <children>
+      <Button layoutX="473.0" layoutY="60.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="95.0" text="remove" />
+      <TableView layoutX="147.0" layoutY="193.0" prefHeight="410.0" prefWidth="489.0">
+        <columns>
+          <TableColumn prefWidth="96.33334350585938" text="Log No" />
+          <TableColumn prefWidth="117.0" text="Price" />
+            <TableColumn prefWidth="274.66664632161456" text="Explanation" />
+        </columns>
+      </TableView>
+      <Button layoutX="236.0" layoutY="60.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="95.0" text="Check Details" />
+      <Separator layoutX="62.0" layoutY="119.0" prefHeight="46.0" prefWidth="690.0" />
+   </children>
+</AnchorPane>

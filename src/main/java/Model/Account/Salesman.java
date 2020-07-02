@@ -2,6 +2,7 @@ package Model.Account;
 
 import Model.Confirmation;
 import Model.Request.Request;
+import Model.Storage;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ public class Salesman extends Account implements Serializable {
     private Confirmation confirmationState;
     private int credit;
     private ArrayList<String> requestIDs;
+    private ArrayList<String> commercials = new ArrayList<>();
 
     public Salesman(String username, String password, String firstName, String secondName, String Email, String telephone, String role, String company, int credit) {
         super(username, password, firstName, secondName, Email, telephone, role);
@@ -18,6 +20,26 @@ public class Salesman extends Account implements Serializable {
         this.company = company;
         this.credit = credit;
         confirmationState = Confirmation.CHECKING;
+    }
+
+    public ArrayList<String> getCommercials() {
+        return commercials;
+    }
+
+    public void addCommercial(String productID) {
+        commercials.add(productID);
+    }
+
+    public boolean isProductOnCommercial(String productID) {
+        return commercials.contains(productID);
+    }
+
+    public static ArrayList<String> getAllCommercials() {
+        ArrayList<String> arrayList = new ArrayList<>();
+        for (Salesman salesman : Storage.getAllSalesmen()) {
+            arrayList.addAll(salesman.getCommercials());
+        }
+        return arrayList;
     }
 
     public Confirmation getConfirmationState() {

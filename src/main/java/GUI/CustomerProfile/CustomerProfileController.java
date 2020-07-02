@@ -51,4 +51,10 @@ public class CustomerProfileController {
             stage.setScene(new Scene(root));
         }
     }
+
+    public void log(ActionEvent actionEvent) throws IOException {
+        Audio.playClick3();
+        pane.getChildren().clear();
+        pane.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/Log/Log.fxml")));
+    }
 }

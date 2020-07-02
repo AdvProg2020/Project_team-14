@@ -10,6 +10,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -250,6 +251,12 @@ public class Server {
             getMinPriceWithName(command);
         } else if (command.startsWith("is there product name+")) {
             isThereProductName(command);
+        } else if (command.startsWith("similar product+")) {
+            similarProduct(command);
+        } else if (command.startsWith("commercial+")) {
+            commercial(command);
+        } else if (command.startsWith("get all commercial")) {
+            getAllCommercials();
         }
         //end parts
         else if (command.startsWith("show balance")) {
@@ -309,13 +316,64 @@ public class Server {
         }*/
     }
 
+    private void getAllCommercials() {
+        StringBuilder string = new StringBuilder();
+        for (String id : Salesman.getAllCommercials()) {
+            string.append(id).append(",");
+        }
+        if(string.length()!=0){
+            Server.setAnswer(string.substring(0, string.length() - 1));
+        } else {
+            Server.setAnswer("no commercial");
+        }
+    }
+
+    private void commercial(String command) {
+        String productID = command.split("\\+")[2];
+        String username = command.split("\\+")[1];
+        Salesman salesman = (Salesman) Storage.getAccountWithUsername(username);
+        if (Storage.getProductById(productID) == null) {
+            Server.setAnswer("invalid product");
+        } else if (salesman.isProductOnCommercial(productID)) {
+            Server.setAnswer("it's already on commercial");
+        } else if (Storage.getProductById(productID).getSalesmanIDs().contains(username)) {
+            if (salesman.getCredit() < 1000) {
+                Server.setAnswer("not enough money");
+            } else {
+                salesman.setCredit(salesman.getCredit() - 1000);
+                salesman.getCommercials().add(productID);
+                Server.setAnswer("added successfully");
+            }
+        } else {
+            Server.setAnswer("not your product");
+        }
+    }
+
     private void isThereProductName(String command) {
         for (Product product : Storage.getAllProducts()) {
             if (product.getName().equals(command.split("\\+")[1])) {
                 Server.setAnswer("true");
+                return;
             }
         }
         Server.setAnswer("false");
+    }
+
+    public void similarProduct(String command) {
+        String productID = command.split("\\+")[1];
+        while (true) {
+            if (Storage.getAllProducts().size() == 1 || Storage.getAllProducts().size() == 0) {
+                Server.setAnswer("nothing");
+            } else {
+                Random rand = new Random();
+                int i = rand.nextInt(Storage.getAllProducts().size());
+                if (Storage.getAllProducts().get(i).getProductID().equals(productID)) {
+                    continue;
+                }
+                Server.setAnswer(Storage.getAllProducts().get(i).getProductID());
+            }
+            break;
+        }
     }
 
     private void isFinished(String command) {
@@ -1290,7 +1348,7 @@ public class Server {
     }
 
     public String serverToClient() throws IOException {
-        //endOfProgramme.updateFiles();
+        endOfProgramme.updateFiles();
         return Server.answer;
     }
 
