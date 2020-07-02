@@ -141,9 +141,7 @@ public class ViewRequestController {
             ((Stage) alert.getDialogPane().getScene().getWindow()).setAlwaysOnTop(true);
             ((Stage) alert.getDialogPane().getScene().getWindow()).toFront();
             alert.showAndWait();
-            /*Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
-            Parent root = FXMLLoader.load(getClass().getResource("/GUI/BossProfile/ManageRequests/ViewRequest.fxml"));
-            stage.setScene(new Scene(root));*/
+            ((Button) actionEvent.getSource()).getScene().getWindow().hide();
         }
     }
 
@@ -156,9 +154,7 @@ public class ViewRequestController {
                 ((Stage) alert.getDialogPane().getScene().getWindow()).setAlwaysOnTop(true);
                 ((Stage) alert.getDialogPane().getScene().getWindow()).toFront();
                 alert.showAndWait();
-                /*Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
-                Parent root = FXMLLoader.load(getClass().getResource("/GUI/BossProfile/ManageRequests/ViewRequest.fxml"));
-                stage.setScene(new Scene(root));*/
+                ((Button) actionEvent.getSource()).getScene().getWindow().hide();
             }
         } else {
             MenuHandler.getServer().clientToServer("delete request+" + MenuHandler.getUsername() + "+" + requestID);
@@ -167,9 +163,7 @@ public class ViewRequestController {
                 ((Stage) alert.getDialogPane().getScene().getWindow()).setAlwaysOnTop(true);
                 ((Stage) alert.getDialogPane().getScene().getWindow()).toFront();
                 alert.showAndWait();
-                /*Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
-                Parent root = FXMLLoader.load(getClass().getResource("/GUI/ProfileLayout/ProfileLayout.fxml"));
-                stage.setScene(new Scene(root));*/
+                ((Button) actionEvent.getSource()).getScene().getWindow().hide();
             }
         }
     }
@@ -185,8 +179,5 @@ public class ViewRequestController {
     public void back(ActionEvent actionEvent) throws IOException {
         Audio.playClick1();
         ((Button) actionEvent.getSource()).getScene().getWindow().hide();
-        /*Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("/GUI/ProfileLayout/ProfileLayout.fxml"));
-        stage.setScene(new Scene(root));*/
     }
 }
