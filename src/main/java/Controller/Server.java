@@ -260,6 +260,8 @@ public class Server {
             commercial(command);
         } else if (command.startsWith("get all commercial")) {
             getAllCommercials();
+        } else if (command.startsWith("get product sale")) {
+            getProductSale(command);
         }
         //end parts
         else if (command.startsWith("show balance")) {
@@ -338,6 +340,15 @@ public class Server {
                 return;
             }
         }*/
+    }
+
+    private void getProductSale(String command) {
+        String productId = command.split("\\+")[1];
+        String salesmanId = command.split("\\+")[2];
+        Product product = Storage.getProductById(productId);
+        assert product != null;
+        Sale maxSale = product.getMaxSale(salesmanId);
+        Server.setAnswer(maxSale.getSaleID());
     }
 
     private void getAllCommercials() {
