@@ -4,6 +4,8 @@ import GUI.Media.Audio;
 import GUI.MenuHandler;
 import Menus.Menu;
 import Menus.Views.ViewCategoryMenu;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
@@ -30,6 +32,9 @@ public class SingleCategory {
     public TableView attributeList;
     public TableColumn attribute;
 
+    ObservableList<String> list1 = FXCollections.observableArrayList();
+    ObservableList<String> list2 = FXCollections.observableArrayList();
+
     public void ChangeNameClicked(MouseEvent mouseEvent) throws ParseException, IOException {
         Audio.playClick5();
         TextInputDialog td = new TextInputDialog("enter the new name without space");
@@ -48,7 +53,6 @@ public class SingleCategory {
                 alert.showAndWait();
             }
         }
-
     }
 
 
@@ -63,16 +67,49 @@ public class SingleCategory {
         String categoryName = MenuHandler.getSelectedCategory();
         MenuHandler.getServer().clientToServer("view category+" + MenuHandler.getUsername() + "+" + MenuHandler.getSelectedCategory());
         String serverAnswer = MenuHandler.getServer().serverToClient();
-        System.out.println(serverAnswer);
         this.categoryName.setText(categoryName);
+        if (serverAnswer.contains("The category doesn't")) {
+            parentCategory.setText("None");
+        }
+        update();
+        boolean b = false;
+    }
+
+    private void update() throws ParseException, IOException {
+        MenuHandler.getServer().clientToServer("view category+" + MenuHandler.getUsername() + "+" + MenuHandler.getSelectedCategory());
+        String serverAnswer = MenuHandler.getServer().serverToClient();
+        boolean b = false;
+        for (String s : serverAnswer.split("\n")) {
+            if (s.equals("SubCategories: ")) {
+                b = true;
+                continue;
+            }
+            if (s.equals("Products: ")) {
+                break;
+            }
+            list1.add(s);
+        }
+        b = false;
+        for (String s : serverAnswer.split("\n")) {
+            if (s.equals("Products: ")) {
+                b = true;
+                continue;
+            }
+            list2.add(s);
+        }
+        categoryList.getItems().addAll(list1);
+        productList.getItems().addAll(list2);
     }
 
     public void removeCategory(ActionEvent actionEvent) {
+
     }
 
     public void deleteProduct(ActionEvent actionEvent) {
+
     }
 
     public void addProduct(ActionEvent actionEvent) {
+
     }
 }

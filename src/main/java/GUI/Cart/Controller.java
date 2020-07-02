@@ -56,6 +56,7 @@ public class Controller {
             list.add(cart);
         }
         products.setItems(list);
+        finalPrice.setText(String.valueOf(ans));
     }
 
     private int getPrice(int price, Integer count, String isOnSale) {
@@ -79,6 +80,8 @@ public class Controller {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, MenuHandler.getServer().serverToClient(), ButtonType.OK);
         if (!MenuHandler.getServer().serverToClient().equals("Use It")) {
             alert.setAlertType(Alert.AlertType.ERROR);
+        } else {
+            usedOffCode.setText(offCodeId.getText());
         }
         alert.showAndWait();
     }
