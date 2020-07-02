@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 public class MenuHandler {
     static private String username = null;
+    static private String userAvatar = null;
     static private Server server;
     static private String productID = null;
     static private String requestID = null;
@@ -152,5 +153,13 @@ public class MenuHandler {
 
     public static void setSeeingSale(String seeingSale) {
         MenuHandler.seeingSale = seeingSale;
+    }
+
+    public static String getUserAvatar() {
+        return userAvatar;
+    }
+
+    public static void setUserAvatar(String userAvatar) {
+        MenuHandler.userAvatar = userAvatar;
     }
 }

@@ -55,6 +55,7 @@ public class LoginController {
                     MenuHandler.setUserType("SALESMAN");
                 }
                 MenuHandler.setUsername(serverAnswer.split("\\s")[4]);
+                setAvatarInClient();
                 alert.setAlertType(Alert.AlertType.INFORMATION);
                 alert.setContentText("Login Successful" + "\n" + "Welcome");
                 alert.showAndWait();
@@ -66,6 +67,13 @@ public class LoginController {
                 alert.showAndWait();
             }
         }
+    }
+
+    private void setAvatarInClient() throws ParseException, IOException {
+        String toServer = "get person image+" + MenuHandler.getUsername();
+        MenuHandler.getServer().clientToServer(toServer);
+        String respond = MenuHandler.getServer().serverToClient();
+        MenuHandler.setUserAvatar(respond);
     }
 
     public void openRegisterMenu(ActionEvent actionEvent) throws IOException {

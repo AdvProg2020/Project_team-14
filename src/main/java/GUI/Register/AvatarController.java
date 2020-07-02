@@ -6,6 +6,7 @@ import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Circle;
@@ -26,6 +27,7 @@ public class AvatarController {
     public ImageView image3;
     public ImageView image4;
     public ImageView image5;
+    public Label chosenAvatar;
     ArrayList<Circle> destinations = new ArrayList<>();
     ArrayList<ImageView> images = new ArrayList<>();
     ArrayList<Double> toX;
@@ -84,12 +86,14 @@ public class AvatarController {
 
     private void choseItem(int i) {
         isOtherVisible = false;
+        chosenAvatar.setText("avatar" + (i + 1));
         moveToCenter(i);
         hideOthers(i);
     }
 
     private void showChoices(int i) {
         isOtherVisible = true;
+        chosenAvatar.setText("");
         for (ImageView image : images) {
             image.setDisable(false);
         }

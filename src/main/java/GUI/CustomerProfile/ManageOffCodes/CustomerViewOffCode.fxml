@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="472.0" prefWidth="717.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.CustomerProfile.ManageOffCodes.ViewController">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#727271" height="388.0" layoutY="91.0" stroke="BLACK" strokeType="INSIDE" style="-fx-stroke-width: 3;" width="717.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#21201f" height="89.0" stroke="BLACK" strokeType="INSIDE" width="717.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <Label fx:id="offCodeId" layoutX="56.0" layoutY="66.0" style="-fx-background-color: #ef6817; -fx-background-radius: 20; -fx-text-fill: #383838;" text="Label">
+         <font>
+            <Font size="25.0" />
+         </font>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </Label>
+      <HBox alignment="TOP_CENTER" layoutX="75.0" layoutY="138.0" prefHeight="258.0" prefWidth="568.0">
+         <children>
+            <VBox alignment="TOP_CENTER" prefHeight="258.0" prefWidth="224.0">
+               <children>
+                  <Label prefHeight="31.0" text="Start Date" textFill="#383838">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label layoutX="10.0" layoutY="10.0" prefHeight="31.0" text="End Date" textFill="#383838">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label layoutX="10.0" layoutY="31.0" prefHeight="31.0" text="Percentage" textFill="#383838">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label layoutX="10.0" layoutY="52.0" prefHeight="31.0" text="Max" textFill="#383838">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label layoutX="10.0" layoutY="73.0" prefHeight="31.0" text="Remainig count" textFill="#383838">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </Label>
+               </children>
+            </VBox>
+            <VBox alignment="TOP_CENTER" prefHeight="258.0" prefWidth="219.0">
+               <children>
+                  <Label fx:id="startDate" prefHeight="31.0" text="sd" textFill="#383838">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label fx:id="endDate" layoutX="10.0" layoutY="73.0" prefHeight="31.0" text="ed" textFill="#383838">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label fx:id="percentage" layoutX="10.0" layoutY="41.0" prefHeight="31.0" text="p" textFill="#383838">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label fx:id="max" layoutX="10.0" layoutY="72.0" prefHeight="31.0" text="m" textFill="#383838">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label fx:id="remaining" layoutX="10.0" layoutY="103.0" prefHeight="31.0" text="r" textFill="#383838">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </Label>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+      <Button layoutX="315.0" layoutY="419.0" mnemonicParsing="false" onMouseClicked="#back" prefHeight="39.0" prefWidth="89.0" style="-fx-background-color: #ef6817; -fx-text-fill: #21201f;" text="Back">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

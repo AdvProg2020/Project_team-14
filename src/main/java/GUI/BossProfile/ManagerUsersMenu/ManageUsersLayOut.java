@@ -10,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
 
 import javax.sound.sampled.AudioInputStream;
@@ -91,8 +92,16 @@ public class ManageUsersLayOut {
     public void makeNewManager(ActionEvent actionEvent) throws IOException {
         Audio.playClick4();
         Parent root = FXMLLoader.load(getClass().getResource("/GUI/BossProfile/ManagerUsersMenu/NewManagerPopOut.fxml"));
-        Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root));
+        Popup popup = new Popup();
+        popup.getContent().add(root);
+        popup.show(((Button) actionEvent.getSource()).getScene().getWindow());
+        popup.setOnHiding(e -> {
+            try {
+                update();
+            } catch (ParseException | IOException ex) {
+                ex.printStackTrace();
+            }
+        });
     }
 
     public void filter(ActionEvent actionEvent) throws IOException, ParseException {
@@ -109,8 +118,15 @@ public class ManageUsersLayOut {
         }
         Account account = accounts.getSelectionModel().getSelectedItem();
         MenuHandler.setSeeingUsername(account.getUsername());
-        Parent root = FXMLLoader.load(getClass().getResource("/GUI/BossProfile/ManagerUsersMenu/MoveInformationPopOut.fxml"));
-        Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root));
+        Popup popup = new Popup();
+        popup.getContent().add(FXMLLoader.load(getClass().getResource("/GUI/BossProfile/ManagerUsersMenu/MoveInformationPopOut.fxml")));
+        popup.show(((Button) actionEvent.getSource()).getScene().getWindow());
+        popup.setOnHiding(e -> {
+            try {
+                update();
+            } catch (ParseException | IOException ex) {
+                ex.printStackTrace();
+            }
+        });
     }
 }

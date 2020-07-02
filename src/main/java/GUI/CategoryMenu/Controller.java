@@ -14,6 +14,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -83,9 +84,16 @@ public class Controller {
 
     public void newCategory(ActionEvent actionEvent) throws IOException {
         Audio.playClick4();
-        Parent root = FXMLLoader.load(getClass().getResource("/GUI/CategoryMenu/NewCategory.fxml"));
-        Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root));
+        Popup popup = new Popup();
+        popup.getContent().add(FXMLLoader.load(getClass().getResource("/GUI/CategoryMenu/NewCategory.fxml")));
+        popup.show(((Button) actionEvent.getSource()).getScene().getWindow());
+        popup.setOnHiding(e -> {
+            try {
+                update();
+            } catch (IOException | ParseException ex) {
+                ex.printStackTrace();
+            }
+        });
     }
 
     public void updateFilter(ActionEvent actionEvent) throws IOException, ParseException {

@@ -97,10 +97,11 @@ public class Customer extends Account implements Serializable {
         StringBuilder result = new StringBuilder("OffCode Info:\n");
         assert offCode != null;
         result.append(offCode.toString());
+        result.append("Max:").append(offCode.getCeiling()).append("\n");
         if (customerOffCodes.containsKey(offCodeID)) {
-            result.append("Remaining time you can use it: ").append(customerOffCodes.get(offCodeID));
+            result.append("Remaining time you can use it:").append(customerOffCodes.get(offCodeID));
         } else {
-            result.append("Remaining time you can use it: " + 0);
+            result.append("Remaining time you can use it:" + 0);
         }
         return result.toString();
     }

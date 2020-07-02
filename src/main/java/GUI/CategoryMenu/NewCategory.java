@@ -41,16 +41,16 @@ public class NewCategory {
         categories.getItems().addAll(category);
     }
 
-    public void closeNewCategory(MouseEvent mouseEvent) throws IOException {
+    public void closeNewCategory(MouseEvent mouseEvent) {
         Audio.playClick1();
-        Parent root = FXMLLoader.load(getClass().getResource("/GUI/ProfileLayout/ProfileLayout.fxml"));
-        Stage stage = (Stage) ((ImageView) mouseEvent.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root));
+        ((Button) mouseEvent.getSource()).getScene().getWindow().hide();
     }
 
     public void createNewCategory(ActionEvent mouseEvent) throws ParseException, IOException {
         Audio.playClick5();
         Alert alert = new Alert(Alert.AlertType.ERROR, "", ButtonType.OK);
+        ((Stage) alert.getDialogPane().getScene().getWindow()).setAlwaysOnTop(true);
+        ((Stage) alert.getDialogPane().getScene().getWindow()).toFront();
         String parent_category = (String) categories.getValue();
         String category_name = name.getText();
         String category_attribute = "";
@@ -100,11 +100,14 @@ public class NewCategory {
     }
 
     public void addAttribute(ActionEvent actionEvent) throws IOException {
+        Alert alert = new Alert(Alert.AlertType.ERROR, null, ButtonType.OK);
+        ((Stage) alert.getDialogPane().getScene().getWindow()).setAlwaysOnTop(true);
+        ((Stage) alert.getDialogPane().getScene().getWindow()).toFront();
         if (attribute.getText().equals("")) {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "You Should Write Something In Attribute Section", ButtonType.OK);
+            alert.setContentText("You Should Write Something In Attribute Section");
             alert.showAndWait();
         } else if (!checkNameFormat(attribute.getText())) {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Wrong Attribute Format", ButtonType.OK);
+            alert.setContentText("Wrong Attribute Format");
             alert.showAndWait();
         } else {
             String s = attribute.getText();

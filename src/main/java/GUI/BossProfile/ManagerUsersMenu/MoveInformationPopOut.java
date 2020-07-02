@@ -94,9 +94,7 @@ public class MoveInformationPopOut {
 
     public void back(ActionEvent actionEvent) throws IOException {
         Audio.playClick6();
-        Parent root = FXMLLoader.load(getClass().getResource("/GUI/ProfileLayout/ProfileLayout.fxml"));
-        Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root));
+        ((Button) actionEvent.getSource()).getScene().getWindow().hide();
     }
 
     public void acceptRequest(ActionEvent actionEvent) {
