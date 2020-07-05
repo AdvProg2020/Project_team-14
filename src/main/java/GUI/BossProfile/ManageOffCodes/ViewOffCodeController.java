@@ -80,7 +80,7 @@ public class ViewOffCodeController {
             MenuHandler.getServer().clientToServer(toServer);
             respond.append(MenuHandler.getServer().serverToClient()).append("\n");
         }
-        if (!startDate.getValue().toString().equals(initStartDate)) {
+        if (!endDate.getValue().toString().equals(initEndDate)) {
             String toServer = "edit offCode" + "+" + MenuHandler.getSeeingOffCode() + "+" + "end date" + "+" + endDate.getValue().toString();
             MenuHandler.getServer().clientToServer(toServer);
             respond.append(MenuHandler.getServer().serverToClient()).append("\n");

@@ -21,14 +21,19 @@ import Model.Account.Account;
 import Model.Account.Customer;
 import Model.Account.Role;
 import Model.Account.Salesman;
+import Model.Cart.Cart;
 import Model.Category.Category;
 import Model.Confirmation;
+import Model.Log.BuyLog;
+import Model.Log.Log;
+import Model.Off.OffCode;
 import Model.Off.Sale;
 import Model.Product.Comment;
 import Model.Product.Point;
 import Model.Product.Product;
 import Model.Request.Request;
 import Model.Storage;
+import org.javatuples.Triplet;
 
 public class Server {
     static private boolean hasBoss;
@@ -255,14 +260,95 @@ public class Server {
             commercial(command);
         } else if (command.startsWith("get all commercial")) {
             getAllCommercials();
+        } else if (command.startsWith("get product sale")) {
+            getProductSale(command);
         }
         //end parts
         else if (command.startsWith("show balance")) {
             this.showBalance(command);
         } else if (command.startsWith("add balance+")) {
             this.addBalance(command);
+        } else if (command.startsWith("Add To Cart+")) {
+            this.addToCart(command);
+        } else if (command.startsWith("get money+")) {
+            this.getMoney(command);
+        } else if (command.startsWith("buy+")) {
+            this.buy(command);
+        } else if (command.startsWith("can use offCode+")) {
+            this.canUserOffCode(command);
         }
+    }
 
+    private void canUserOffCode(String command) {
+        String offCodeId = command.split("\\+")[2];
+        String customer = command.split("\\+")[1];
+        if (Storage.isThereOffCodeWithID(offCodeId)) {
+            OffCode offCode = Storage.getOffCodeById(offCodeId);
+            if (offCode.canCustomerUseItWithUsername(customer)) {
+                setAnswer("Use It");
+            } else {
+                setAnswer("You Cant Use This Off Code");
+            }
+        } else {
+            setAnswer("No Off Code With This Id");
+        }
+    }
+
+    private void buy(String command) {
+        for (String s : command.split("\n")) {
+            if (s.startsWith("buy")) continue;
+            Product product = Storage.getProductById(s.split("\\+")[1]);
+            product.setRemainderForSalesman(product.getRemainderForSalesman(s.split("\\+")[0]) - Integer.parseInt(s.split("\\+")[2]), s.split("\\+")[0]);
+            Account account = Storage.getAccountWithUsername(command.split("\\+")[1]);
+            Account account1 = Storage.getAccountWithUsername(s.split("\\+")[0]);
+            ((Salesman) account1).setCredit(account.getCredit() + product.getPriceBySalesmanID(s.split("\\+")[0]) * Integer.parseInt(s.split("\\+")[2]));
+            ((Customer) account).setCredit(account.getCredit() - product.getPriceBySalesmanID(s.split("\\+")[0]) * Integer.parseInt(s.split("\\+")[2]));
+        }
+    }
+
+    private void getMoney(String command) {
+        Account account = Storage.getAccountWithUsername(command.split("\\+")[1]);
+        Server.setAnswer(String.valueOf(account.getCredit()));
+    }
+
+    private void addToCart(String command) {
+        /*for (Cart cart : Storage.allCarts) {
+            if (cart.getUsername().equals(command.split("\\+")[1])) {
+                for (Triplet<String, String, Integer> item : cart.getAllItems()) {
+                    if (item.getValue0().equals(command.split("\\+")[2])) {
+                        if (item.getValue1().equals(command.split("\\+")[3])) {
+                            int counter = item.getValue2();
+                            if (counter + (Integer) count.getValue() > (Integer.parseInt(remainder.getText()))) {
+                                Alert alert = new Alert(Alert.AlertType.ERROR, "The Current Number Of Items + The Items You Already Added To Your Cart Is More Than Remainder", ButtonType.OK);
+                                alert.showAndWait();
+                            } else {
+                                MenuHandler.getServer().clientToServer("Add To Cart+" + MenuHandler.getUsername() + "+" + (String) chooseSeller.getValue() + "+" + MenuHandler.getProductID() + "+" + (Integer) count.getValue());
+                                Triplet addedItem = new Triplet<>((String) chooseSeller.getValue(), MenuHandler.getProductID(), (Integer) count.getValue() + counter);
+                                MenuHandler.getCart().remove(item);
+                                MenuHandler.getCart().add(addedItem);
+                                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Added To The Cart", ButtonType.OK);
+                                alert.showAndWait();
+                            }
+                            return;
+                        }
+                    }
+                }
+                Triplet addedItem = new Triplet<>((String) chooseSeller.getValue(), MenuHandler.getProductID(), (Integer) count.getValue());
+                MenuHandler.getCart().add(addedItem);
+                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Added To The Cart", ButtonType.OK);
+                alert.showAndWait();
+                return;
+            }
+        }*/
+    }
+
+    private void getProductSale(String command) {
+        String productId = command.split("\\+")[1];
+        String salesmanId = command.split("\\+")[2];
+        Product product = Storage.getProductById(productId);
+        assert product != null;
+        Sale maxSale = product.getMaxSale(salesmanId);
+        Server.setAnswer(maxSale.getSaleID());
     }
 
     private void getAllCommercials() {
@@ -270,7 +356,7 @@ public class Server {
         for (String id : Salesman.getAllCommercials()) {
             string.append(id).append(",");
         }
-        if(string.length()!=0){
+        if (string.length() != 0) {
             Server.setAnswer(string.substring(0, string.length() - 1));
         } else {
             Server.setAnswer("no commercial");
@@ -1107,7 +1193,6 @@ public class Server {
                 filters.add(input[i + 1]);
             }
         }
-        System.out.println(filters);
         return filters;
     }
 
@@ -1298,7 +1383,7 @@ public class Server {
     }
 
     public String serverToClient() throws IOException {
-        endOfProgramme.updateFiles();
+        //endOfProgramme.updateFiles();
         return Server.answer;
     }
 

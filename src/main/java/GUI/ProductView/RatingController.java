@@ -46,7 +46,6 @@ public class RatingController {
 
         MenuHandler.getServer().clientToServer("what is point product+" + MenuHandler.getProductID());
         String rate = MenuHandler.getServer().serverToClient();
-        System.out.println(rate);
 
 
         ArrayList<Integer> points = new ArrayList<>();
@@ -79,7 +78,6 @@ public class RatingController {
         if (hasRate) return;
         String starId = ((ImageView) mouseEvent.getSource()).getId();
         int number = Integer.parseInt(starId.substring(4));
-        System.out.println(number);
         Image filledStar = new Image("file:src/main/java/GUI/ProductView/resources/filledStar.png");
         for (int i = 0; i < number; i++) {
             ((ImageView) starList.getChildren().get(i)).setImage(filledStar);

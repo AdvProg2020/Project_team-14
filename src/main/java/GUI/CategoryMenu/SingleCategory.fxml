@@ -5,15 +5,13 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="679.0" prefWidth="762.0" style="-fx-background-color: Cyan;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.CategoryMenu.SingleCategory">
+<AnchorPane prefHeight="910.0" prefWidth="762.0" style="-fx-background-color: Cyan;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.CategoryMenu.SingleCategory">
     <children>
         <ScrollPane layoutX="27.0" layoutY="143.0" prefHeight="236.0" prefWidth="497.0">
             <content>
-                <TableView prefHeight="222.0" prefWidth="510.0">
+                <TableView fx:id="productList" prefHeight="222.0" prefWidth="494.0">
                     <columns>
-                        <TableColumn prefWidth="152.66665267944336" text="Products" />
-                        <TableColumn prefWidth="166.6666717529297" text="remove" />
-                        <TableColumn minWidth="4.333343505859375" prefWidth="149.99996948242188" text="add" />
+                        <TableColumn fx:id="product" prefWidth="491.4000053405762" text="Products" />
                     </columns>
                 </TableView>
             </content>
@@ -22,16 +20,17 @@
             <font>
                 <Font name="System Bold Italic" size="13.0" />
             </font>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor></Button>
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor>
+        </Button>
         <Button id="BackButton" layoutX="562.0" layoutY="101.0" mnemonicParsing="false" onMouseClicked="#BackClicked" opacity="0.87" prefHeight="50.0" prefWidth="151.0" text="back" textFill="#f30202">
             <font>
                 <Font name="System Bold Italic" size="13.0" />
             </font>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor>
         </Button>
         <VBox layoutX="562.0" layoutY="215.0" prefHeight="310.0" prefWidth="200.0">
             <Label prefHeight="43.0" prefWidth="198.0" text="All products are here" textFill="#3902eb">
@@ -70,12 +69,10 @@
                 </font>
             </Label>
         </VBox>
-        <ScrollPane layoutX="27.0" layoutY="413.0" prefHeight="236.0" prefWidth="497.0">
-            <TableView prefHeight="222.0" prefWidth="510.0">
+        <ScrollPane layoutX="27.0" layoutY="386.0" prefHeight="236.0" prefWidth="497.0">
+            <TableView fx:id="categoryList" prefHeight="222.0" prefWidth="510.0">
                 <columns>
-                    <TableColumn prefWidth="152.66665267944336" text="SubCategory" />
-                    <TableColumn prefWidth="154.33334350585938" text="remove" />
-                    <TableColumn prefWidth="180.33334350585938" text="Number Of Products" />
+                    <TableColumn fx:id="category" prefWidth="482.8000030517578" text="SubCategory" />
                 </columns>
             </TableView>
         </ScrollPane>
@@ -109,16 +106,18 @@
                     <Font name="System Bold Italic" size="21.0" />
                 </font>
             </Label>
-         <Label layoutX="10.0" layoutY="39.0" text="Attribute:" textFill="#a91111" GridPane.rowIndex="2">
-            <font>
-               <Font name="System Bold Italic" size="21.0" />
-            </font>
-         </Label>
-         <Label id="Attribute" fx:id="attribute" layoutX="212.0" layoutY="39.0" text="Name here" textFill="#1513a8" GridPane.columnIndex="1" GridPane.rowIndex="2">
-            <font>
-               <Font name="System Bold Italic" size="21.0" />
-            </font>
-         </Label>
         </GridPane>
+        <Button fx:id="addProduct" layoutX="590.0" layoutY="163.0" mnemonicParsing="false" onAction="#addProduct" prefHeight="26.0" prefWidth="95.0" text="Add Product" />
+        <Button fx:id="deleteProduct" layoutX="590.0" layoutY="189.0" mnemonicParsing="false" onAction="#deleteProduct" text="Delete Product" />
+        <Button fx:id="removeCategory" layoutX="578.0" layoutY="546.0" mnemonicParsing="false" onAction="#removeCategory" prefHeight="26.0" prefWidth="119.0" text="Remove Category" />
+        <ScrollPane layoutX="26.0" layoutY="634.0" prefHeight="236.0" prefWidth="498.0">
+            <content>
+                <TableView fx:id="attributeList" prefHeight="226.0" prefWidth="504.0">
+                    <columns>
+                        <TableColumn fx:id="attribute" prefWidth="482.8000030517578" text="Attributes" />
+                    </columns>
+                </TableView>
+            </content>
+        </ScrollPane>
     </children>
 </AnchorPane>

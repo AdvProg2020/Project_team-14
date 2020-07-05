@@ -16,7 +16,7 @@
             </columns>
         </TableView>
     </ScrollPane>
-    <Button id="NewCategory" layoutX="572.0" layoutY="75.0" mnemonicParsing="false" onAction="#newCategory" onMouseEntered="#MouseEntered" onMouseExited="#MouseExited" opacity="0.87" prefHeight="50.0" prefWidth="151.0" text="New Category" textFill="RED">
+    <Button id="NewCategory" layoutX="572.0" layoutY="75.0" mnemonicParsing="false" onAction="#newCategory" onMouseClicked="#NewCategoryClicked" onMouseEntered="#MouseEntered" onMouseExited="#MouseExited" opacity="0.87" prefHeight="50.0" prefWidth="151.0" text="New Category" textFill="RED">
         <font>
             <Font name="System Bold Italic" size="13.0" />
         </font>
@@ -46,4 +46,5 @@
             </ScrollPane>
         </children>
     </VBox>
+   <Button layoutX="187.0" layoutY="566.0" mnemonicParsing="false" onAction="#viewCategory" text="Open Category" />
 </AnchorPane>

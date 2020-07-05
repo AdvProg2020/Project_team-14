@@ -1,8 +1,10 @@
 package Model.Product;
 
 import Model.Confirmation;
+import Model.Off.Sale;
 import Model.RandomString;
 import Model.Storage;
+import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 
 import java.io.Serializable;
 import java.util.*;
@@ -180,6 +182,20 @@ public class Product implements Serializable {
         return price.get(salesmanID);
     }
 
+    public Sale getMaxSale(String salesmanId) {
+        int percentage = -1;
+        Sale ans = null;
+        for (Sale sale : Storage.allSales) {
+            if (sale.isAuthentic() & sale.getSalesmanID().equals(salesmanId) & sale.doesContainProduct(this.productID)) {
+                if (sale.getPercentage() > percentage) {
+                    ans = sale;
+                    percentage = sale.getPercentage();
+                }
+            }
+        }
+        return ans;
+    }
+
     public int getMinimumPrice() {
         int result = 1000000000;
         for (String salesmanID : salesmanIDs) {
@@ -232,6 +248,7 @@ public class Product implements Serializable {
     }
 
     private boolean isConfirmedForSalesmanWithUsername(String username) {
+        if (!this.confirmationState.containsKey(username)) return false;
         return this.confirmationState.get(username).equals(Confirmation.ACCEPTED);
     }
 
@@ -239,6 +256,7 @@ public class Product implements Serializable {
     //the salesman is confirmed by manager and also
     //checks that the salesman hasn't deleted the product
     public boolean doesSalesmanSellProductWithUsername(String username) {
+        isConfirmedForSalesmanWithUsername(username);
         return (salesmanIDs.contains(username) && !hasBeenDeleted.get(username) && isConfirmedForSalesmanWithUsername(username));
     }
 
@@ -334,7 +352,7 @@ public class Product implements Serializable {
         result.append("Description: ").append(this.description).append("\n");
         if (salesmanIDs.contains(salesmanUser)) {
             if (!hasBeenDeleted.get(salesmanUser)) {
-                result.append("Confirmation state for you: ").append(confirmationState.get(salesmanUser)).append("\n");
+                result.append("Confirmation state for you: ").append(this.confirmationState.get(salesmanUser)).append("\n");
                 result.append("Your Price: ").append(price.get(salesmanUser)).append("\n");
                 result.append("Your remainder: ").append(remainder.get(salesmanUser)).append("\n");
                 if (isOnSale.get(salesmanUser)) {

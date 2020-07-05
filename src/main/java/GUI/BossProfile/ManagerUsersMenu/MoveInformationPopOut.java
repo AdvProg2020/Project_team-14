@@ -37,7 +37,6 @@ public class MoveInformationPopOut {
         seeingUsername = MenuHandler.getSeeingUsername();
         MenuHandler.getServer().clientToServer("view account info+" + MenuHandler.getUsername() + "+" + seeingUsername);
         String serverAnswer = MenuHandler.getServer().serverToClient();
-        System.out.println(serverAnswer);
         String[] information = serverAnswer.split("\n");
         username.setText(information[0].split("\\s")[1]);
         name.setText(information[2].split("\\s")[1] + " " + information[2].split("\\s")[2]);

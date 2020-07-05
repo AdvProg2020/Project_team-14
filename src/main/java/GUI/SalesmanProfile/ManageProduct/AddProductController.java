@@ -57,7 +57,6 @@ public class AddProductController {
         if (chosenFile != null) {
             if (String.valueOf(chosenFile.toURI()).endsWith("4")) {
                 pathVid = String.valueOf(chosenFile.toURI());
-                System.out.println(pathVid);
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "", ButtonType.OK);
                 alert.setContentText("something went wrong");

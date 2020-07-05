@@ -2,15 +2,13 @@ package GUI.Cart;
 
 import GUI.Media.Audio;
 import GUI.MenuHandler;
+import Menus.Menu;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.javatuples.Triplet;
 
@@ -26,6 +24,10 @@ public class Controller {
     public TableColumn<Cart, String> isOnSale;
     public TableColumn<Cart, Integer> priceAll;
     public TableView<Cart> products;
+    public Label usedOffCode;
+    public Label finalPrice;
+    public TextField offCodeId;
+    private int ans = 0;
 
     ObservableList<Cart> list = FXCollections.observableArrayList();
 
@@ -52,14 +54,14 @@ public class Controller {
                     getPrice(Integer.parseInt(price), item.getValue2(), isOnSale), item.getValue2(),
                     isOnSale.equalsIgnoreCase("none") ? "No" : "Yes", isOnSale);
             list.add(cart);
-            System.out.println(cart);
-
         }
         products.setItems(list);
+        finalPrice.setText(String.valueOf(ans));
     }
 
     private int getPrice(int price, Integer count, String isOnSale) {
         if (isOnSale.equalsIgnoreCase("none")) {
+            ans += price * count;
             return price * count;
         } else {
             return -1;
@@ -67,24 +69,50 @@ public class Controller {
     }
 
 
-    public void back(ActionEvent mouseEvent) {
+    public void back(ActionEvent mouseEvent) throws IOException {
         Audio.playClick1();
+        MenuHandler.getStage().setScene(new Scene(FXMLLoader.load(getClass().getResource("/GUI/ProductScene/ProductScene.fxml"))));
     }
 
-    public void useOffCode(ActionEvent mouseEvent) {
+    public void useOffCode(ActionEvent mouseEvent) throws ParseException, IOException {
         Audio.playClick2();
+        MenuHandler.getServer().clientToServer("can use offCode+" + MenuHandler.getUsername() + "+" + offCodeId.getText());
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, MenuHandler.getServer().serverToClient(), ButtonType.OK);
+        if (!MenuHandler.getServer().serverToClient().equals("Use It")) {
+            alert.setAlertType(Alert.AlertType.ERROR);
+        } else {
+            usedOffCode.setText(offCodeId.getText());
+        }
+        alert.showAndWait();
     }
 
-    public void buy(ActionEvent mouseEvent) throws IOException {
+    public void buy(ActionEvent mouseEvent) throws IOException, ParseException {
         Audio.playClick3();
         if (MenuHandler.isIsUserLogin()) {
-
+            MenuHandler.getServer().clientToServer("get money+" + MenuHandler.getUsername());
+            int money = Integer.parseInt(MenuHandler.getServer().serverToClient());
+            System.out.println(money);
+            if (money < ans) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Not Enough Money", ButtonType.OK);
+                alert.showAndWait();
+            } else {
+                String products = "buy+" + MenuHandler.getUsername() + "\n";
+                for (Cart cart : list) {
+                    products += cart.getSalesman() + "+" + cart.getProductId() + "+" + cart.getCount() + "\n";
+                }
+                MenuHandler.getServer().clientToServer(products);
+                if (MenuHandler.getServer().serverToClient().equals("Buy Successful")) {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION, "Buy Successful", ButtonType.OK);
+                    alert.showAndWait();
+                }
+            }
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR, "You Should Login First", ButtonType.OK);
             alert.showAndWait();
             MenuHandler.setLoginBackAddress("/GUI/Cart/Cart.fxml");
             MenuHandler.getStage().setScene(new Scene(FXMLLoader.load(getClass().getResource("/GUI/Login/Login.fxml"))));
         }
+        MenuHandler.getStage().setScene(new Scene(FXMLLoader.load(getClass().getResource("/GUI/ProductScene/ProductScene.fxml"))));
     }
 
     public void deleteFromCart(ActionEvent actionEvent) throws IOException, ParseException {

@@ -316,8 +316,8 @@ public class Controller {
         if (s.equals("")) return;
         MenuHandler.getServer().clientToServer("view product+" + s + "+" + MenuHandler.getProductID());
         String respond = MenuHandler.getServer().serverToClient();
-        System.out.println(respond);
         seller.setText(s);
+        System.out.println(respond);
         for (String string : respond.split("\n")) {
             if (string.startsWith("Your Price")) {
                 price.setText(string.split("\\s")[2] + "$");
@@ -357,7 +357,7 @@ public class Controller {
         }
     }
 
-    public void addToCart(ActionEvent actionEvent) throws IOException {
+    public void addToCart(ActionEvent actionEvent) throws IOException, ParseException {
         Audio.playClick6();
         if (addButton.getText().equalsIgnoreCase("Add To Cart")) {
             if (chooseSeller.getValue() == null) {
@@ -380,6 +380,7 @@ public class Controller {
                                 Alert alert = new Alert(Alert.AlertType.ERROR, "The Current Number Of Items + The Items You Already Added To Your Cart Is More Than Remainder", ButtonType.OK);
                                 alert.showAndWait();
                             } else {
+                                MenuHandler.getServer().clientToServer("Add To Cart+" + MenuHandler.getUsername() + "+" + (String) chooseSeller.getValue() + "+" + MenuHandler.getProductID() + "+" + (Integer) count.getValue());
                                 Triplet addedItem = new Triplet<>((String) chooseSeller.getValue(), MenuHandler.getProductID(), (Integer) count.getValue() + counter);
                                 MenuHandler.getCart().remove(item);
                                 MenuHandler.getCart().add(addedItem);

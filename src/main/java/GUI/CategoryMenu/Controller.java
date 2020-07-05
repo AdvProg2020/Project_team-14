@@ -141,4 +141,16 @@ public class Controller {
     public void MouseExited(MouseEvent mouseEvent) {
 
     }
+
+    public void viewCategory(ActionEvent actionEvent) throws IOException {
+        System.out.println("hi");
+        if (categories.getSelectionModel().getSelectedItem() == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Choose Category First", ButtonType.OK);
+            alert.showAndWait();
+        } else {
+            Category category = categories.getSelectionModel().getSelectedItem();
+            MenuHandler.setSelectedCategory(category.getCategoryName());
+            MenuHandler.getStage().setScene(new Scene(FXMLLoader.load(getClass().getResource("/GUI/CategoryMenu/SingleCategory.fxml"))));
+        }
+    }
 }
