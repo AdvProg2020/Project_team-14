@@ -74,7 +74,14 @@ public class Server {
         return pattern.matcher(command);
     }
 
+    private boolean checkStringLength(String command) {
+        return command.length() >= 1000;
+    }
+
     public void clientToServer(String command) throws ParseException {
+        if (checkStringLength(command)) {
+            return;
+        }
         Matcher matcher;
         if ((matcher = getMatcher("login\\+(\\w+)\\+(\\w+)", command)).find()) {
             this.login(matcher);
