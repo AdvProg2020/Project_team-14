@@ -38,6 +38,7 @@ public class RegisterController {
     public Label identificationLabel;
     private int numberOfTimesTried;
     private int numberOfBadTries;
+    private boolean checkSecurity;
     private Random random = new Random();
     ObservableList<String> rolesIfHasNotBoss = FXCollections.observableArrayList("Boss", "Salesman", "Customer");
     ObservableList<String> rolesIfHasBoss = FXCollections.observableArrayList("Customer", "Salesman");
@@ -56,6 +57,7 @@ public class RegisterController {
 
     @FXML
     public void initialize() throws ParseException, IOException {
+        checkSecurity = false;
         numberOfBadTries = 0;
         numberOfTimesTried = 0;
         identificationLabel.setText(String.valueOf(random.nextInt(10000)));
@@ -103,9 +105,12 @@ public class RegisterController {
 
     public void register(ActionEvent actionEvent) throws ParseException, IOException {
         Audio.playClick5();
+        checkSecurity(actionEvent);
         numberOfTimesTried++;
         numberOfBadTries++;
-        checkSecurity(actionEvent);
+        if (checkSecurity) {
+            return;
+        }
         Alert alert = new Alert(Alert.AlertType.ERROR, "", ButtonType.OK);
         if (!indegtification.getText().equals(identificationLabel.getText())) {
             alert.setContentText("the code is wrong try again");
@@ -245,9 +250,12 @@ public class RegisterController {
 
     public void checkSecurity(ActionEvent actionEvent) throws IOException {
         if (numberOfTimesTried == 3 || numberOfBadTries == 5) {
+            checkSecurity = true;
             Parent root = FXMLLoader.load(getClass().getResource("/GUI/Register/Lock/Lock.fxml"));
             Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
+            numberOfBadTries = 0;
+            numberOfTimesTried = 0;
         }
     }
 

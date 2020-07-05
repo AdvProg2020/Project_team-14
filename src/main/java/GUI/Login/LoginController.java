@@ -36,12 +36,16 @@ public class LoginController {
     public TextField code;
     private int numberOfTimesTries;
     private int numberOfWrongCode;
+    private boolean checkSecurity;
 
     public void Login(ActionEvent actionEvent) throws ParseException, IOException {
         Audio.playClick7();
         numberOfTimesTries++;
         Alert alert = new Alert(Alert.AlertType.ERROR, "", ButtonType.OK);
         checkSecurity(actionEvent);
+        if (checkSecurity) {
+            return;
+        }
         if (!code.getText().equals(codeLabel.getText())) {
             numberOfWrongCode++;
             alert.setContentText("wrong code");
@@ -135,6 +139,7 @@ public class LoginController {
 
     @FXML
     public void initialize() {
+        checkSecurity = false;
         numberOfTimesTries = 0;
         numberOfWrongCode = 0;
         Random random = new Random();
@@ -150,9 +155,13 @@ public class LoginController {
 
     private void checkSecurity(ActionEvent actionEvent) throws IOException {
         if (numberOfTimesTries == 10 || numberOfWrongCode == 3) {
+            checkSecurity = true;
             Parent root = FXMLLoader.load(getClass().getResource("/GUI/Login/Lock/Lock.fxml"));
             Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
+            numberOfWrongCode = 0;
+            numberOfTimesTries = 0;
         }
     }
+
 }

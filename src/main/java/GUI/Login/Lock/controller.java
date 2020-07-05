@@ -1,5 +1,6 @@
 package GUI.Login.Lock;
 
+import GUI.Media.Audio;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -85,6 +86,7 @@ public class controller {
     }
 
     public void clicked1(MouseEvent mouseEvent) throws FileNotFoundException, InterruptedException {
+        Audio.playClick7();
         if (r == 1) {
             disableAll();
         } else {
@@ -93,6 +95,7 @@ public class controller {
     }
 
     public void clicked2(MouseEvent mouseEvent) throws FileNotFoundException, InterruptedException {
+        Audio.playClick7();
         if (r == 2) {
             disableAll();
         } else {
@@ -101,6 +104,7 @@ public class controller {
     }
 
     public void clicked4(MouseEvent mouseEvent) throws FileNotFoundException, InterruptedException {
+        Audio.playClick7();
         if (r == 4) {
             disableAll();
         } else {
@@ -109,6 +113,7 @@ public class controller {
     }
 
     public void clicked5(MouseEvent mouseEvent) throws FileNotFoundException, InterruptedException {
+        Audio.playClick7();
         if (r == 5) {
             disableAll();
         } else {
@@ -125,6 +130,7 @@ public class controller {
     }
 
     public void clicked6(MouseEvent mouseEvent) throws FileNotFoundException, InterruptedException {
+        Audio.playClick7();
         if (r == 6) {
             disableAll();
         } else {
@@ -133,6 +139,7 @@ public class controller {
     }
 
     public void clicked7(MouseEvent mouseEvent) throws FileNotFoundException, InterruptedException {
+        Audio.playClick7();
         if (r == 7) {
             disableAll();
         } else {
@@ -141,6 +148,7 @@ public class controller {
     }
 
     public void clicked8(MouseEvent mouseEvent) throws FileNotFoundException, InterruptedException {
+        Audio.playClick7();
         if (r == 8) {
             disableAll();
         } else {
@@ -149,6 +157,7 @@ public class controller {
     }
 
     public void clicked9(MouseEvent mouseEvent) throws FileNotFoundException, InterruptedException {
+        Audio.playClick7();
         if (r == 9) {
             disableAll();
         } else {
