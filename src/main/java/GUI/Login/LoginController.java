@@ -24,19 +24,29 @@ import javafx.util.Duration;
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.Random;
 
 public class LoginController {
 
     public TextField username;
     public PasswordField password;
-    public MediaView costure;
     public AnchorPane loginBoard;
     public Pane photoBoard;
+    public Label codeLabel;
+    public TextField code;
+    private int numberOfTimesTries;
+    private int numberOfWrongCode;
 
     public void Login(ActionEvent actionEvent) throws ParseException, IOException {
         Audio.playClick7();
+        numberOfTimesTries++;
         Alert alert = new Alert(Alert.AlertType.ERROR, "", ButtonType.OK);
-        if (username.getText().equals("")) {
+        checkSecurity(actionEvent);
+        if (!code.getText().equals(codeLabel.getText())) {
+            numberOfWrongCode++;
+            alert.setContentText("wrong code");
+            alert.showAndWait();
+        } else if (username.getText().equals("")) {
             alert.setContentText("Username Field Must Not Be Empty");
             alert.showAndWait();
         } else if (password.getText().equals("")) {
@@ -125,14 +135,24 @@ public class LoginController {
 
     @FXML
     public void initialize() {
-        String path = "src/main/java/GUI/Login/resources/mp4 (1).mp4";
-        Media media = new Media(new File(path).toURI().toString());
-        MediaPlayer mediaPlayer = new MediaPlayer(media);
-//        costure.setMediaPlayer(mediaPlayer);
-        mediaPlayer.setAutoPlay(true);
-        mediaPlayer.setOnEndOfMedia(() -> mediaPlayer.seek(Duration.ZERO));
-
+        numberOfTimesTries = 0;
+        numberOfWrongCode = 0;
+        Random random = new Random();
+        codeLabel.setText(String.valueOf(random.nextInt(10000)));
         ParallelTransition pt = doTransition("start");
         pt.play();
+    }
+
+    public void resetCode(ActionEvent actionEvent) {
+        Random random = new Random();
+        codeLabel.setText(String.valueOf(random.nextInt(10000)));
+    }
+
+    private void checkSecurity(ActionEvent actionEvent) throws IOException {
+        if (numberOfTimesTries == 10 || numberOfWrongCode == 3) {
+            Parent root = FXMLLoader.load(getClass().getResource("/GUI/Login/Lock/Lock.fxml"));
+            Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+        }
     }
 }

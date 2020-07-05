@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.media.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="499.0" prefWidth="737.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Login.Lock.controller">
+    <children>
+        <Button fx:id="back" disable="true" layoutX="111.0" layoutY="367.0" mnemonicParsing="false" onAction="#Back" prefHeight="42.0" prefWidth="98.0" text="Back">
+            <font>
+                <Font size="27.0" />
+            </font>
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor>
+        </Button>
+        <Label fx:id="timer" layoutX="354.0" layoutY="31.0" prefHeight="73.0" prefWidth="305.0" text="choose the bus">
+            <font>
+                <Font name="AWL Phonetics 3 Unicode" size="37.0" />
+            </font>
+        </Label>
+        <ImageView fx:id="image1" fitHeight="86.0" fitWidth="98.0" layoutX="305.0" layoutY="128.0" onMouseClicked="#clicked1" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../../Register/resources/download%20(1).jpg" />
+            </image>
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor></ImageView>
+        <ImageView fx:id="image2" fitHeight="86.0" fitWidth="98.0" layoutX="436.0" layoutY="128.0" onMouseClicked="#clicked2" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../../Register/resources/download%20(1).jpg" />
+            </image>
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor></ImageView>
+        <ImageView fx:id="image4" fitHeight="86.0" fitWidth="98.0" layoutX="305.0" layoutY="250.0" onMouseClicked="#clicked4" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../../Register/resources/download%20(1).jpg" />
+            </image>
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor></ImageView>
+        <ImageView fx:id="image5" fitHeight="86.0" fitWidth="98.0" layoutX="436.0" layoutY="250.0" onMouseClicked="#clicked5" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../../Register/resources/download%20(1).jpg" />
+            </image>
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor></ImageView>
+        <ImageView fx:id="image3" fitHeight="86.0" fitWidth="98.0" layoutX="563.0" layoutY="128.0" onMouseClicked="#clicked3" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../../Register/resources/download%20(1).jpg" />
+            </image>
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor>
+        </ImageView>
+        <ImageView fx:id="image6" fitHeight="86.0" fitWidth="98.0" layoutX="571.0" layoutY="250.0" onMouseClicked="#clicked6" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../../Register/resources/download%20(1).jpg" />
+            </image>
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor>
+        </ImageView>
+        <ImageView fx:id="image7" fitHeight="86.0" fitWidth="98.0" layoutX="305.0" layoutY="367.0" onMouseClicked="#clicked7" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../../Register/resources/download%20(1).jpg" />
+            </image>
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor>
+        </ImageView>
+        <ImageView fx:id="image8" fitHeight="86.0" fitWidth="98.0" layoutX="436.0" layoutY="367.0" onMouseClicked="#clicked8" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../../Register/resources/download%20(1).jpg" />
+            </image>
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor>
+        </ImageView>
+        <ImageView fx:id="image9" fitHeight="86.0" fitWidth="98.0" layoutX="571.0" layoutY="367.0" onMouseClicked="#clicked9" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../../Register/resources/download%20(1).jpg" />
+            </image>
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor>
+        </ImageView>
+        <MediaView fx:id="mediaView" fitHeight="200.0" fitWidth="200.0" layoutX="60.0" layoutY="91.0" />
+    </children>
+</AnchorPane>
