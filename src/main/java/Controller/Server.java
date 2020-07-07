@@ -1,11 +1,6 @@
 package Controller;
 
-//import Model.Cart.Cart;
-//import Model.Category.Category;
-//import Model.Storage;
-
 import java.io.IOException;
-import java.net.ServerSocket;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -16,17 +11,12 @@ import java.util.regex.Pattern;
 
 import Controller.DataBase.EndOfProgramme;
 import Controller.DataBase.startOfProgramme;
-import GUI.Supporter.Controller;
-import Menus.shows.ShowRequestsMenu;
 import Model.Account.Account;
 import Model.Account.Customer;
 import Model.Account.Role;
 import Model.Account.Salesman;
-import Model.Cart.Cart;
 import Model.Category.Category;
 import Model.Confirmation;
-import Model.Log.BuyLog;
-import Model.Log.Log;
 import Model.Off.OffCode;
 import Model.Off.Sale;
 import Model.Product.Comment;
@@ -60,7 +50,6 @@ public class Server {
         startOfProgramme startOfProgramme = new startOfProgramme();
         startOfProgramme.startProgramme();
         hasBoss = (Storage.getAllBosses().size() != 0);
-        //abstractCarts = new HashMap<>();
     }
 
     public static void setAnswer(String answer) {
@@ -83,7 +72,10 @@ public class Server {
         if (checkStringLength(command) || mayContainScript(command)) {
             return;
         }
-        
+
+        //checking IP
+        //checking token ...
+
         takeAction(command);
     }
 
@@ -289,8 +281,20 @@ public class Server {
             this.buy(command);
         } else if (command.startsWith("can use offCode+")) {
             this.canUserOffCode(command);
+        } else if (command.startsWith("make new supporter+")) {
+            this.makeNewSupporter(command);
+        } else if (command.startsWith("delete supporter+")) {
+            this.deleteSupporter(command);
         }
 
+    }
+
+    private void makeNewSupporter(String command) {
+        SupporterController.makeNewSupporter(command.split("\\+")[1], command.split("\\+")[2]);
+    }
+
+    private void deleteSupporter(String command) {
+        SupporterController.deleteSupporter(command.split("\\+")[1]);
     }
 
     private void canUserOffCode(String command) {
@@ -1400,10 +1404,6 @@ public class Server {
         endOfProgramme.updateFiles();
         return Server.answer;
     }
-
-    /*
-     * ---------[ here are common parts, server handel this by itself, no manager required ]--------
-     */
 
     public void showBalance(String command) {
         String username = command.split("\\+")[1];
