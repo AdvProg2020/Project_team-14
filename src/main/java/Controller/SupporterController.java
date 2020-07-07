@@ -16,4 +16,12 @@ public class SupporterController {
         return Supporter.getSupporterWithUsername(supporterUsername).getChats();
     }
 
+    public static void makeNewSupporter(String username, String password) {
+        new Supporter(username, password);
+    }
+
+    public static void deleteSupporter(String username) {
+        Supporter.getAllSupporters().remove(Supporter.getSupporterWithUsername(username));
+    }
+
 }

@@ -128,12 +128,14 @@ public class ProductSceneController {
 
     private void setProfileImageInProfilePopup(Parent root) throws FileNotFoundException {
         if (!MenuHandler.getUserAvatar().equals("no image found")) {
-            String path = "src/main/java/GUI/Register/resources/";
+            /*String path = "src/main/java/GUI/Register/resources/";
             String avatar = MenuHandler.getUserAvatar() + ".png";
             FileInputStream imageStream = new FileInputStream(path + avatar);
             Image image = new Image(imageStream);
             ImageView profileImage = (ImageView) ((VBox) root).getChildren().get(0);
             profileImage.setImage(image);
+
+             */
         }
     }
 

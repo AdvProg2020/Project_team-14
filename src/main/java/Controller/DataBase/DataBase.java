@@ -36,7 +36,6 @@ public abstract class DataBase {
 
 
     public static void makeDirectories() {
-
         File file = new File("src\\main\\resources\\DataBase");
         file.mkdirs();
         File file2 = new File("src\\main\\resources\\DataBase\\Bosses");

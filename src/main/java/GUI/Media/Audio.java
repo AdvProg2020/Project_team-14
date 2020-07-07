@@ -17,8 +17,8 @@ public class Audio {
         if (muteness) {
             return;
         }
-        mediaPlayer.setAutoPlay(true);
-        mediaPlayer.setOnEndOfMedia(() -> mediaPlayer.seek(Duration.ZERO));
+       // mediaPlayer.setAutoPlay(true);
+        //mediaPlayer.setOnEndOfMedia(() -> mediaPlayer.seek(Duration.ZERO));
 
     }
 

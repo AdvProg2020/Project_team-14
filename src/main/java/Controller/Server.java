@@ -16,6 +16,7 @@ import java.util.regex.Pattern;
 
 import Controller.DataBase.EndOfProgramme;
 import Controller.DataBase.startOfProgramme;
+import GUI.Supporter.Controller;
 import Menus.shows.ShowRequestsMenu;
 import Model.Account.Account;
 import Model.Account.Customer;
@@ -33,7 +34,8 @@ import Model.Product.Point;
 import Model.Product.Product;
 import Model.Request.Request;
 import Model.Storage;
-import org.javatuples.Triplet;
+
+import static Controller.Security.Methods.*;
 
 public class Server {
     static private boolean hasBoss;
@@ -74,14 +76,18 @@ public class Server {
         return pattern.matcher(command);
     }
 
-    private boolean checkStringLength(String command) {
-        return command.length() >= 1000;
-    }
-
     public void clientToServer(String command) throws ParseException {
-        if (checkStringLength(command)) {
+
+        //running security checks
+
+        if (checkStringLength(command) || mayContainScript(command)) {
             return;
         }
+        
+        takeAction(command);
+    }
+
+    public void takeAction(String command) throws ParseException {
         Matcher matcher;
         if ((matcher = getMatcher("login\\+(\\w+)\\+(\\w+)", command)).find()) {
             this.login(matcher);
@@ -284,6 +290,7 @@ public class Server {
         } else if (command.startsWith("can use offCode+")) {
             this.canUserOffCode(command);
         }
+
     }
 
     private void canUserOffCode(String command) {
