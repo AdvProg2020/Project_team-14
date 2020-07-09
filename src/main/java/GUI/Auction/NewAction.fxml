@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+
+<AnchorPane prefHeight="492.0" prefWidth="649.0" style="-fx-background-color: royalblue;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Auction.NewAction">
+   <children>
+      <DatePicker layoutX="321.0" layoutY="183.0" prefHeight="25.0" prefWidth="174.0" />
+      <DatePicker layoutX="321.0" layoutY="255.0" prefHeight="25.0" prefWidth="174.0" />
+      <Label layoutX="233.0" layoutY="14.0" prefHeight="42.0" prefWidth="176.0" text="New Auction" textFill="#f71212">
+         <font>
+            <Font size="31.0" />
+         </font>
+      </Label>
+      <Button layoutX="372.0" layoutY="403.0" mnemonicParsing="false" onAction="#Dome" style="-fx-background-color: cyan;" text="Done" textFill="#2084fe">
+         <font>
+            <Font size="19.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button layoutX="215.0" layoutY="403.0" mnemonicParsing="false" onAction="#Back" prefHeight="42.0" prefWidth="71.0" style="-fx-background-color: cyan;" text="Back" textFill="#2084fe">
+         <font>
+            <Font size="19.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Label layoutX="161.0" layoutY="106.0" text="Product:">
+         <font>
+            <Font name="System Italic" size="20.0" />
+         </font>
+      </Label>
+      <ComboBox layoutX="321.0" layoutY="108.0" prefHeight="25.0" prefWidth="174.0" />
+      <Label layoutX="151.0" layoutY="181.0" text="Start Date:">
+         <font>
+            <Font name="System Italic" size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="155.0" layoutY="253.0" text="End Date:">
+         <font>
+            <Font name="System Italic" size="20.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

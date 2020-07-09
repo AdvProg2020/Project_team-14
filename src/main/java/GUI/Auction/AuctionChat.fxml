@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="674.0" prefWidth="656.0" style="-fx-background-color: yellow;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Auction.AuctionChat">
+   <children>
+      <ScrollPane layoutX="63.0" layoutY="111.0" prefHeight="475.0" prefWidth="535.0">
+         <content>
+            <VBox fx:id="VBOX" prefHeight="472.0" prefWidth="531.0">
+               <children>
+                  <Label alignment="CENTER" layoutX="177.0" layoutY="10.0">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER" layoutX="177.0" layoutY="35.0" prefHeight="30.0" prefWidth="243.0" text="Hossein: this is bullshit">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER" layoutX="10.0" layoutY="35.0" prefHeight="27.0" prefWidth="219.0">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER" layoutX="10.0" layoutY="65.0" prefHeight="30.0" prefWidth="307.0" text=" Sarah: well it's that bad anyway">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+               </children></VBox>
+         </content>
+         <effect>
+            <SepiaTone level="0.87" />
+         </effect>
+      </ScrollPane>
+      <Label layoutX="257.0" layoutY="25.0" prefHeight="45.0" prefWidth="141.0" text="Chat Room" textFill="#fc2727">
+         <font>
+            <Font name="Agency FB Bold" size="37.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="backIcon" fitHeight="53.0" fitWidth="49.0" layoutX="588.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@resources/columns-android-application-software-png-favpng-wFDL9gA90YH4weKLuFNwg0CiE_t.jpg" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <TextField layoutX="63.0" layoutY="604.0" prefHeight="39.0" prefWidth="476.0" promptText="Enter Your Message Here">
+         <font>
+            <Font name="System Italic" size="18.0" />
+         </font>
+      </TextField>
+      <ImageView fx:id="sendMessage" fitHeight="39.0" fitWidth="42.0" layoutX="556.0" layoutY="604.0" opacity="0.9" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@resources/113-1130161_send-icon-png-sending-message-image-clip.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+   </children>
+</AnchorPane>
