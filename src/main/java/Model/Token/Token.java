@@ -5,9 +5,10 @@ import java.util.Base64;
 import java.util.HashMap;
 
 public class Token {
+    private HashMap<String, String> token = new HashMap<>();
+
     private static final SecureRandom secureRandom = new SecureRandom();
     private static final Base64.Encoder base64Encoder = Base64.getUrlEncoder();
-    private HashMap<String, String> token = new HashMap<>();
 
     public static String generateNewToken() {
         byte[] randomBytes = new byte[100];

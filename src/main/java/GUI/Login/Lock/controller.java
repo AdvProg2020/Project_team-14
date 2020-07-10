@@ -38,6 +38,7 @@ public class controller {
     public ImageView image5;
     public ImageView image4;
     private int r;
+    private int x = 0;
 
     public void initialize() throws InterruptedException, FileNotFoundException {
         String path = "src/main/java/GUI/Login/resources/mp4.mp4";
@@ -86,82 +87,122 @@ public class controller {
     }
 
     public void clicked1(MouseEvent mouseEvent) throws FileNotFoundException, InterruptedException {
-        Audio.playClick7();
+        Audio.playClick5();
         if (r == 1) {
-            disableAll();
+            x++;
+            initialize();
         } else {
             initialize();
+        }
+        if (x > 4) {
+            disableAll();
         }
     }
 
     public void clicked2(MouseEvent mouseEvent) throws FileNotFoundException, InterruptedException {
-        Audio.playClick7();
+        Audio.playClick5();
         if (r == 2) {
-            disableAll();
+            x++;
+            initialize();
         } else {
             initialize();
+        }
+        if (x > 4) {
+            disableAll();
         }
     }
 
     public void clicked4(MouseEvent mouseEvent) throws FileNotFoundException, InterruptedException {
-        Audio.playClick7();
+        Audio.playClick5();
         if (r == 4) {
-            disableAll();
+            x++;
+            initialize();
         } else {
             initialize();
+        }
+        if (x > 4) {
+            disableAll();
         }
     }
 
     public void clicked5(MouseEvent mouseEvent) throws FileNotFoundException, InterruptedException {
-        Audio.playClick7();
+        Audio.playClick5();
         if (r == 5) {
-            disableAll();
+            x++;
+            initialize();
         } else {
             initialize();
+        }
+        if (x > 4) {
+            disableAll();
         }
     }
 
     public void clicked3(MouseEvent mouseEvent) throws FileNotFoundException, InterruptedException {
+        Audio.playClick5();
         if (r == 3) {
-            disableAll();
+            x++;
+            initialize();
         } else {
             initialize();
         }
+        if (x > 4) {
+            disableAll();
+        }
+
     }
 
     public void clicked6(MouseEvent mouseEvent) throws FileNotFoundException, InterruptedException {
-        Audio.playClick7();
+        Audio.playClick5();
         if (r == 6) {
-            disableAll();
+            x++;
+            initialize();
         } else {
             initialize();
         }
+        if (x > 4) {
+            disableAll();
+        }
+
     }
 
     public void clicked7(MouseEvent mouseEvent) throws FileNotFoundException, InterruptedException {
-        Audio.playClick7();
+        Audio.playClick5();
         if (r == 7) {
-            disableAll();
+            x++;
+            initialize();
         } else {
             initialize();
+        }
+        if (x > 4) {
+            disableAll();
         }
     }
 
     public void clicked8(MouseEvent mouseEvent) throws FileNotFoundException, InterruptedException {
-        Audio.playClick7();
+        Audio.playClick5();
         if (r == 8) {
-            disableAll();
+            x++;
+            initialize();
         } else {
             initialize();
         }
+        if (x > 4) {
+            disableAll();
+        }
+
     }
 
     public void clicked9(MouseEvent mouseEvent) throws FileNotFoundException, InterruptedException {
-        Audio.playClick7();
+        Audio.playClick5();
         if (r == 9) {
-            disableAll();
+            x++;
+            initialize();
         } else {
             initialize();
+        }
+        if (x > 4) {
+            disableAll();
         }
     }
 
