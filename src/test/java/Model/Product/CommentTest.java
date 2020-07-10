@@ -37,17 +37,17 @@ public class CommentTest {
     @Test
     public void toStringForProductView() {
         Comment comment = new Comment("title","text", customer.getUsername(), product.getProductID());
-        String result = "Sender: customerUser" + "\n";
-        result += "Message: text" + "\n";
-        Assert.assertTrue(comment.toStringForProductView().contains(result));
+        Assert.assertTrue(comment.toStringForProductView().startsWith("Sender: customerUser+Title: title+Message: text+Date:"));
     }
 
     @Test
     public void toStringForChecking() {
         Comment comment = new Comment("title","text", customer.getUsername(), product.getProductID());
-        String result = "Product Name: name";
-        result += "Sender: customerUser" + "\n";
-        result += "Message: text" + "\n";
+        String result = "Product Name: name\n" +
+                "Sender: customerUser\n" +
+                "Title: title\n" +
+                "Message: text";
+        System.out.println(comment.toStringForChecking());
         Assert.assertTrue(comment.toStringForChecking().contains(result));
     }
 

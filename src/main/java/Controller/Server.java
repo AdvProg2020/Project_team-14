@@ -87,8 +87,6 @@ public class Server {
             this.register(command);
         } else if (command.startsWith("logout+")) {
             this.logout(command);
-        } else if (command.startsWith("forgot password+")) {
-            this.forgotPassword(command);
         } else if (command.startsWith("what is account role+")) {
             this.getAccountRole(command);
         } else if (command.startsWith("view personal info+")) {
@@ -1310,10 +1308,6 @@ public class Server {
     private void viewPersonalInfo(String command) {
         String[] input = command.split("\\+");
         accountManager.viewAccountInformation(input[1]);
-    }
-
-    private void forgotPassword(String command) {
-        accountManager.forgotPassword(command.split("\\+")[1]);
     }
 
     private void getAccountRole(String command) {

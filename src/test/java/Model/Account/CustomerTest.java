@@ -6,11 +6,12 @@ import org.junit.Test;
 
 public class CustomerTest {
     Customer customer = new Customer("username", "password", "firstName"
-            , "secondName", "h.hafezi2000@gmail.com", "09333805288", "CUSTOMER", 1000,null);
+            , "secondName", "h.hafezi2000@gmail.com", "09333805288", "CUSTOMER", 1000, null);
 
     @Test
     public void toStringTest() {
         String result = "Username: " + "username" + "\n";
+        result += "Password: password\n";
         result += "Name: " + "" + "firstName" + " secondName" + "\n";
         result += "Email: " + "h.hafezi2000@gmail.com" + "\n";
         result += "Telephone: " + "09333805288" + "\n";
