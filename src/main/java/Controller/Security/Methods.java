@@ -17,10 +17,7 @@ public class Methods {
         String s2 = Base64.getEncoder().encodeToString(s1.getBytes());
         String s3 = Base64.getEncoder().encodeToString(s2.getBytes());
         String s4 = Base64.getEncoder().encodeToString(s3.getBytes());
-        String result = Base64.getEncoder().encodeToString(s4.getBytes()).replace("a", ",,,,,");
-        result = result.replace("b", "]()[[[");
-        result = result.replace("l", "_________");
-        return result;
+        return Base64.getEncoder().encodeToString(s4.getBytes());
     }
 
     public String decode(String string) {
@@ -28,10 +25,7 @@ public class Methods {
         String s3 = new String(Base64.getDecoder().decode(s4));
         String s2 = new String(Base64.getDecoder().decode(s3));
         String s1 = new String(Base64.getDecoder().decode(s2));
-        String result = new String(Base64.getDecoder().decode(s1));
-        result = result.replace(",,,,,", "a");
-        result = result.replace("]()[[[", "b");
-        return result;
+        return new String(Base64.getDecoder().decode(s1));
     }
 
 

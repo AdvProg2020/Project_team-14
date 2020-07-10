@@ -66,17 +66,24 @@ public class Server {
     }
 
     public void clientToServer(String command) throws ParseException {
+        try {
 
-        //running security checks
+            //running security checks
 
-        if (checkStringLength(command) || mayContainScript(command)) {
-            return;
-        }
+            if (checkStringLength(command) || mayContainScript(command)) {
+                return;
+            }
 
-        //checking IP
-        //checking token ...
+            //checking IP
+            //checking token ...
 
-        takeAction(command);
+            // if it doesn't ask for secret stuff
+            //takeNormalAction(command);
+
+            //if it's secret
+            takeAction(command);
+        } catch (Exception ignored) { }
+
     }
 
     public void takeAction(String command) throws ParseException {

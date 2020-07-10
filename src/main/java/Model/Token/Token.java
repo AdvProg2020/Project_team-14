@@ -1,11 +1,14 @@
 package Model.Token;
 
 import java.security.SecureRandom;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.HashMap;
 
 public class Token {
-    private HashMap<String, String> token = new HashMap<>();
+    private ArrayList<String> token = new ArrayList<>();
+    private ArrayList<String> usedTimes = new ArrayList<>();
+
 
     private static final SecureRandom secureRandom = new SecureRandom();
     private static final Base64.Encoder base64Encoder = Base64.getUrlEncoder();
@@ -17,7 +20,7 @@ public class Token {
     }
 
     public boolean isTokenValid(String token) {
-        return this.token.containsValue(token);
+        return this.token.contains(token);
     }
 
     public boolean hasTokenExpired(String token) {
@@ -26,7 +29,7 @@ public class Token {
     }
 
     public void createNewToken(String username) {
-        token.put(username, generateNewToken());
+        token.add(generateNewToken());
     }
 
     public void deleteToken(String username) {
