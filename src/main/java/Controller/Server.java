@@ -55,8 +55,9 @@ public class Server {
         try {
             sql.startProgramme();
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println(e.getMessage());
         }
+        System.out.println(Storage.getAllBosses().size() + " the start size");
         hasBoss = (Storage.getAllBosses().size() != 0);
     }
 

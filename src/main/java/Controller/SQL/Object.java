@@ -53,10 +53,9 @@ public class Object implements Serializable {
         sellLogs.addAll(Storage.allSellLogs);
         carts.addAll(Storage.allCarts);
         requests.addAll(Storage.getAllRequests());
-        object = this;
     }
 
-    public String serialise() throws IOException {
+    public String serialise(Object object) throws IOException {
         String string = "";
         try {
             ByteArrayOutputStream bo = new ByteArrayOutputStream();
@@ -82,36 +81,22 @@ public class Object implements Serializable {
     }
 
     private static void addToMemory(Object object) {
-        Storage.getAllBosses().clear();
-        Storage.getAllBosses().addAll(object.bosses);
-        Storage.allBuyLogs.clear();
-        Storage.allBuyLogs.addAll(object.buyLogs);
-        Storage.getAllCategories().clear();
-        Storage.getAllCategories().addAll(object.categories);
-        Storage.allComments.clear();
-        Storage.allComments.addAll(object.comments);
-        Storage.getAllCustomers().clear();
-        Storage.getAllCustomers().addAll(object.customers);
-        Storage.allOffCodes.clear();
-        Storage.allOffCodes.addAll(object.offCodes);
-        Storage.allPoints.clear();
-        Storage.allPoints.addAll(object.points);
-        Storage.getAllProducts().clear();
-        Storage.getAllProducts().addAll(object.products);
-        Storage.allSales.clear();
-        Storage.allSales.addAll(object.sales);
-        Storage.getAllSalesmen().clear();
-        Storage.getAllSalesmen().addAll(object.salesmen);
-        Storage.allSpecialOffCodes.clear();
-        Storage.allSpecialOffCodes.addAll(object.specialOffCodes);
-        Storage.allSellLogs.clear();
-        Storage.allSellLogs.addAll(object.sellLogs);
-        Storage.allCarts.clear();
-        Storage.allCarts.addAll(object.carts);
-        Storage.getAllRequests().clear();
-        Storage.getAllRequests().addAll(object.requests);
+        System.out.println(object.bosses.size());
+        Storage.getAllAccounts().addAll(object.bosses);
         System.out.println(Storage.getAllBosses().size());
-        System.out.println(Object.object.bosses.size());
+        Storage.allBuyLogs.addAll(object.buyLogs);
+        Storage.getAllCategories().addAll(object.categories);
+        Storage.allComments.addAll(object.comments);
+        Storage.getAllAccounts().addAll(object.customers);
+        Storage.allOffCodes.addAll(object.offCodes);
+        Storage.allPoints.addAll(object.points);
+        Storage.getAllProducts().addAll(object.products);
+        Storage.allSales.addAll(object.sales);
+        Storage.getAllAccounts().addAll(object.salesmen);
+        Storage.allSpecialOffCodes.addAll(object.specialOffCodes);
+        Storage.allSellLogs.addAll(object.sellLogs);
+        Storage.allCarts.addAll(object.carts);
+        Storage.getAllRequests().addAll(object.requests);
     }
 
 }

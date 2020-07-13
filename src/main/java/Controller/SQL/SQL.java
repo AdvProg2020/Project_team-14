@@ -55,8 +55,7 @@ public class SQL {
 
     public void updateProgramme() {
         try {
-            new Object();
-            insert(Object.object.serialise());
+            insert(Object.object.serialise(new Object()));
         } catch (Exception exception) {
             exception.printStackTrace();
         }
