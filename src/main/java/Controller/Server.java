@@ -1,6 +1,7 @@
 package Controller;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import java.util.regex.Pattern;
 
 import Controller.DataBase.EndOfProgramme;
 import Controller.DataBase.startOfProgramme;
+import Controller.SQL.SQL;
 import Model.Account.Account;
 import Model.Account.Customer;
 import Model.Account.Role;
@@ -35,12 +37,13 @@ public class Server {
     private SalesmanManager salesmanManager;
     private CustomerManager customerManager;
     private EndOfProgramme endOfProgramme = new EndOfProgramme();
+    private SQL sql = new SQL();
 
     //first is username, second is a cart
     //private HashMap<String, Cart> abstractCarts;
     static private String answer;
 
-    public Server() throws IOException, ClassNotFoundException {
+    public Server() throws IOException, ClassNotFoundException, SQLException {
         answer = "";
         this.accountManager = new AccountManager();
         this.bossManager = new BossManager();
@@ -48,7 +51,8 @@ public class Server {
         this.salesmanManager = new SalesmanManager();
         this.productManager = new ProductManager();
         startOfProgramme startOfProgramme = new startOfProgramme();
-        startOfProgramme.startProgramme();
+        //startOfProgramme.startProgramme();
+        sql.startProgramme();
         hasBoss = (Storage.getAllBosses().size() != 0);
     }
 
@@ -82,7 +86,8 @@ public class Server {
 
             //if it's secret
             takeAction(command);
-        } catch (Exception ignored) { }
+        } catch (Exception ignored) {
+        }
 
     }
 
@@ -1402,7 +1407,8 @@ public class Server {
     }
 
     public String serverToClient() throws IOException {
-        endOfProgramme.updateFiles();
+        //endOfProgramme.updateFiles();
+        sql.updateProgramme();
         return Server.answer;
     }
 
