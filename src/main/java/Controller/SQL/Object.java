@@ -18,10 +18,11 @@ import Model.Storage;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Base64;
 
-public class Object {
-    public static Object object;
-    private ArrayList<Boss> bosses = new ArrayList<>();
+public class Object implements Serializable {
+    public static Object object = new Object();
+    public ArrayList<Boss> bosses = new ArrayList<>();
     private ArrayList<BuyLog> buyLogs = new ArrayList<>();
     private ArrayList<Category> categories = new ArrayList<>();
     private ArrayList<Comment> comments = new ArrayList<>();
@@ -35,6 +36,7 @@ public class Object {
     private ArrayList<SellLog> sellLogs = new ArrayList<>();
     private ArrayList<Cart> carts = new ArrayList<>();
     private ArrayList<Request> requests = new ArrayList<>();
+    private static final long serialVersionUID = 4L;
 
     public Object() {
         bosses.addAll(Storage.getAllBosses());
@@ -61,20 +63,16 @@ public class Object {
             ObjectOutputStream so = new ObjectOutputStream(bo);
             so.writeObject(object);
             so.flush();
-            string = bo.toString();
+            string = Base64.getEncoder().encodeToString(bo.toByteArray());
         } catch (Exception e) {
             e.printStackTrace();
         }
         return string;
     }
 
-    public static void deserialize(String string) {
-        if (string == null || string.equals("")) {
-            return;
-        }
+    public static void deserialize(byte[] bytes) {
         try {
-            byte[] b = string.getBytes();
-            ByteArrayInputStream bi = new ByteArrayInputStream(b);
+            ByteArrayInputStream bi = new ByteArrayInputStream(bytes);
             ObjectInputStream si = new ObjectInputStream(bi);
             Object obj = (Object) si.readObject();
             addToMemory(obj);
@@ -112,6 +110,8 @@ public class Object {
         Storage.allCarts.addAll(object.carts);
         Storage.getAllRequests().clear();
         Storage.getAllRequests().addAll(object.requests);
+        System.out.println(Storage.getAllBosses().size());
+        System.out.println(Object.object.bosses.size());
     }
 
 }

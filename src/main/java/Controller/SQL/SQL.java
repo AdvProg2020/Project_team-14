@@ -1,42 +1,48 @@
 package Controller.SQL;
 
 import java.sql.*;
+import java.util.Base64;
 
 public class SQL {
     private Connection connection;
 
     public SQL() {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            //Class.forName("com.mysql.jdbc.Driver");
             connection = DriverManager.getConnection("jdbc:mysql://localhost/test?" + "user=root&password=");
             Statement stmt = connection.createStatement();
             String sql;
-            sql = "CREATE TABLE data " +
-                    "(id INTEGER not NULL, " +
-                    "name blob, " +
-                    " PRIMARY KEY ( id ))";
+            sql = "CREATE TABLE Neuer " + "(id INTEGER not NULL, " + "name blob, " + " PRIMARY KEY ( id ))";
             stmt.executeUpdate(sql);
         } catch (Exception s) {
             System.out.println(s.getMessage());
         }
     }
 
-    public void insert(String string) {
+    private void close() {
         try {
-            PreparedStatement statement = connection.prepareStatement("INSERT  INTO data  (id,name) values (?,?)");
-            statement.executeUpdate("DELETE FROM data");
-            statement.setInt(1, 1);
-            statement.setString(2, string);
-            statement.executeUpdate();
-            statement.close();
-        } catch (SQLException s) {
-            System.out.println(s.getMessage());
+            connection.close();
+        } catch (Exception s) {
+            s.printStackTrace();
         }
     }
 
-    public String show() throws SQLException {
+    public void insert(String data) {
+        try {
+            PreparedStatement statement = connection.prepareStatement("INSERT  INTO Neuer  (id,name) values (?,?)");
+            statement.executeUpdate("DELETE FROM Neuer");
+            statement.setInt(1, 1);
+            statement.setString(2, data);
+            statement.executeUpdate();
+            statement.close();
+        } catch (SQLException s) {
+            s.printStackTrace();
+        }
+    }
+
+    public byte[] show() throws SQLException {
         String string = "";
-        String sql = "SELECT id, name FROM data";
+        String sql = "SELECT id, name FROM Neuer";
         Statement stmt = connection.createStatement();
         ResultSet rs = stmt.executeQuery(sql);
         while (rs.next()) {
@@ -44,16 +50,16 @@ public class SQL {
             string = rs.getString("name");
         }
         rs.close();
-        return string;
+        return Base64.getDecoder().decode(string);
     }
 
     public void updateProgramme() {
         try {
+            new Object();
             insert(Object.object.serialise());
         } catch (Exception exception) {
-            System.out.println(exception.getMessage());
+            exception.printStackTrace();
         }
-
     }
 
     public void startProgramme() {
@@ -63,5 +69,4 @@ public class SQL {
             System.out.println(exception.getMessage());
         }
     }
-
 }

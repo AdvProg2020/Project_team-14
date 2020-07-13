@@ -52,7 +52,11 @@ public class Server {
         this.productManager = new ProductManager();
         startOfProgramme startOfProgramme = new startOfProgramme();
         //startOfProgramme.startProgramme();
-        sql.startProgramme();
+        try {
+            sql.startProgramme();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
         hasBoss = (Storage.getAllBosses().size() != 0);
     }
 
