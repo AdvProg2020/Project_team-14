@@ -10,7 +10,7 @@ public class Account {
     private String password;
     private long balance = 0;
 
-    public Account(String firstName, String secondName, String username, String password) {
+    public Account(String username, String password, String firstName, String secondName) {
         this.firstName = firstName;
         this.secondName = secondName;
         this.username = username;

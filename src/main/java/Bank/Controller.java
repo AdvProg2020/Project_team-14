@@ -7,17 +7,9 @@ import java.util.Base64;
 public class Controller {
     private ArrayList<String> tokens = new ArrayList<>();
     private String clientRequest;
-    private String ServerAnswer;
+    private String serverAnswer;
     private static final SecureRandom secureRandom = new SecureRandom();
     private static final Base64.Encoder base64Encoder = Base64.getUrlEncoder();
-
-    public String fromClientToBank() {
-        return null;
-    }
-
-    public void createAccount(String firstName, String secondName, String username, String password) {
-        new Account(firstName, secondName, username, password);
-    }
 
     public String getToken() {
         byte[] randomBytes = new byte[100];
@@ -27,46 +19,163 @@ public class Controller {
         return token;
     }
 
-    public boolean withdraw(String username, long amount) {
-        Account account = Account.getAccountWithUsername(username);
-        if (account == null) {
-            return false;
-        } else {
-            if (account.getBalance() > amount) {
-                account.setBalance(account.getBalance() - amount);
-                return true;
+    public boolean tokenIsAuthentic(String token) {
+        return tokens.contains(token);
+    }
+
+    public boolean tokenIsExpired(String token) {
+        long past = Long.parseLong(token.substring(0, 13));
+        return System.currentTimeMillis() - past > 1000000;
+    }
+
+    public void takeAction(String command) {
+        if (command.startsWith("create account+")) {
+            createAccount(command);
+        } else if (command.startsWith("get token+")) {
+            getToken(command);
+        } else if (command.startsWith("create transfer receipt+")) {
+            createTransferReceipt(command);
+        } else if (command.startsWith("create withdraw receipt+")) {
+            createWithdrawReceipt(command);
+        } else if (command.startsWith("create deposit receipt+")) {
+            createDepositReceipt(command);
+        } else if (command.startsWith("get balance+")) {
+            getBalance(command);
+        }
+    }
+
+    private void createAccount(String command) {
+        try {
+            if (Account.getAccountWithUsername(command.split("\\+")[1]) != null) {
+                serverAnswer = "you already have an account";
             } else {
-                return false;
+                new Account(command.split("\\+")[1], command.split("\\+")[2], command.split("\\+")[3], command.split("\\+")[4]);
+                serverAnswer = "created successfully";
             }
+        } catch (Exception e) {
+            serverAnswer = "something went wrong";
         }
     }
 
-    public boolean deposit(String username, long amount) {
-        Account account = Account.getAccountWithUsername(username);
-        if (account == null) {
-            return false;
-        } else {
-            account.setBalance(account.getBalance() + amount);
-            return true;
-        }
-    }
-
-    public boolean transfer(String fromUsername, String toUsername, long amount) {
-        Account firstAccount = Account.getAccountWithUsername(fromUsername);
-        Account secondAccount = Account.getAccountWithUsername(toUsername);
-        if (firstAccount == null || secondAccount == null) {
-            return false;
-        } else {
-            if (firstAccount.getBalance() >= amount) {
-                firstAccount.setBalance(firstAccount.getBalance() - amount);
-                secondAccount.setBalance(secondAccount.getBalance() + amount);
-                return true;
+    private void getToken(String command) {
+        try {
+            String username = command.split("\\+")[1];
+            String password = command.split("\\+")[2];
+            Account account = Account.getAccountWithUsername(username);
+            if (account != null && account.getPassword().equals(password)) {
+                serverAnswer = getToken();
             } else {
-                return false;
+                serverAnswer = "fuck off, identification was wrong";
             }
+        } catch (Exception e) {
+            serverAnswer = "something went wrong";
         }
     }
 
+    private void createTransferReceipt(String command) {
+        try {
+            String token = command.split("\\+")[1];
+            String username1 = command.split("\\+")[2];
+            String username2 = command.split("\\+")[3];
+            long amount = Long.parseLong(command.split("\\+")[4]);
+            String description = command.split("\\+")[5];
+            if (tokenIsAuthentic(token)) {
+                if (!tokenIsExpired(token)) {
+                    if (Account.getAccountWithUsername(username1) != null && Account.getAccountWithUsername(username2) != null) {
+                        new Transaction(username1, username2, amount, description);
+                        serverAnswer = "successful";
+                    } else {
+                        serverAnswer = "one of usernames isn't valid";
+                    }
+                } else {
+                    serverAnswer = "token has expired";
+                }
+            } else {
+                serverAnswer = "token isn't authentic";
+            }
+        } catch (Exception e) {
+            serverAnswer = "something went wrong";
+        }
+    }
 
+    private void createWithdrawReceipt(String command) {
+        try {
+            String token = command.split("\\+")[1];
+            String username = command.split("\\+")[2];
+            long amount = Long.parseLong(command.split("\\+")[3]);
+            String description = command.split("\\+")[4];
+            if (tokenIsAuthentic(token)) {
+                if (tokenIsExpired(token)) {
+                    serverAnswer = "token has expired";
+                } else {
+                    if (Account.getAccountWithUsername(username) != null) {
+                        new Transaction(TransactionType.WITHDRAW, username, amount, description);
+                        serverAnswer = "successful";
+                    } else {
+                        serverAnswer = "the username is invalid";
+                    }
+                }
+            } else {
+                serverAnswer = "token isn't authentic";
+            }
+        } catch (Exception e) {
+            serverAnswer = "something went wrong";
+        }
+    }
+
+    private void createDepositReceipt(String command) {
+        try {
+            String token = command.split("\\+")[1];
+            String username = command.split("\\+")[2];
+            long amount = Long.parseLong(command.split("\\+")[3]);
+            String description = command.split("\\+")[4];
+            if (tokenIsAuthentic(token)) {
+                if (tokenIsExpired(token)) {
+                    serverAnswer = "token has expired";
+                } else {
+                    if (Account.getAccountWithUsername(username) != null) {
+                        new Transaction(TransactionType.DEPOSIT, username, amount, description);
+                        serverAnswer = "successful";
+                    } else {
+                        serverAnswer = "the username is invalid";
+                    }
+                }
+            } else {
+                serverAnswer = "token isn't authentic";
+            }
+        } catch (Exception e) {
+            serverAnswer = "something went wrong";
+        }
+    }
+
+    private void getBalance(String command) {
+        try {
+            String token = command.split("\\+")[1];
+            String username = command.split("\\+")[2];
+            if (tokenIsAuthentic(token)) {
+                if (tokenIsExpired(token)) {
+                    serverAnswer = "token has expired";
+                } else {
+                    Account account = Account.getAccountWithUsername(username);
+                    if (account != null) {
+                        serverAnswer = Long.toString(account.getBalance());
+                    } else {
+                        serverAnswer = "the username is invalid";
+                    }
+                }
+            } else {
+                serverAnswer = "token isn't authentic";
+            }
+        } catch (Exception e) {
+            serverAnswer = "something went wrong";
+        }
+    }
 
 }
+
+// create account+username+password+firstName+secondName
+// get token+username+password
+// create transfer receipt+token+username1+username2+amount+description
+// create withdraw receipt+token+username+amount+description
+// create deposit receipt+token+username+amount+description
+// get balance+token+username

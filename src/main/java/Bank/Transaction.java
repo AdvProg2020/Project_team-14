@@ -1,6 +1,5 @@
 package Bank;
 
-import javax.xml.transform.Transformer;
 import java.util.ArrayList;
 
 public class Transaction {
@@ -9,19 +8,22 @@ public class Transaction {
     private String toUsername;
     private TransactionType transactionType;
     private long amount;
+    private String description;
 
-    public Transaction(TransactionType transactionType, String fromUsername, long amount) {
+    public Transaction(TransactionType transactionType, String fromUsername, long amount, String description) {
         this.transactionType = transactionType;
         this.fromUsername = fromUsername;
         this.amount = amount;
+        this.description = description;
         allTransaction.add(this);
     }
 
-    public Transaction(String fromUsername, String toUsername, long amount) {
+    public Transaction(String fromUsername, String toUsername, long amount, String description) {
         this.transactionType = TransactionType.TRANSFER;
         this.fromUsername = fromUsername;
         this.toUsername = toUsername;
         this.amount = amount;
+        this.description = description;
         allTransaction.add(this);
     }
 
@@ -56,5 +58,44 @@ public class Transaction {
         return arrayList;
     }
 
+    public boolean withdraw(String username, long amount) {
+        Account account = Account.getAccountWithUsername(username);
+        if (account == null) {
+            return false;
+        } else {
+            if (account.getBalance() > amount) {
+                account.setBalance(account.getBalance() - amount);
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
 
+    public boolean deposit(String username, long amount) {
+        Account account = Account.getAccountWithUsername(username);
+        if (account == null) {
+            return false;
+        } else {
+            account.setBalance(account.getBalance() + amount);
+            return true;
+        }
+    }
+
+    public boolean transfer(String fromUsername, String toUsername, long amount) {
+        Account firstAccount = Account.getAccountWithUsername(fromUsername);
+        Account secondAccount = Account.getAccountWithUsername(toUsername);
+        if (firstAccount == null || secondAccount == null) {
+            return false;
+        } else {
+            if (firstAccount.getBalance() >= amount) {
+                firstAccount.setBalance(firstAccount.getBalance() - amount);
+                secondAccount.setBalance(secondAccount.getBalance() + amount);
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+    
 }
