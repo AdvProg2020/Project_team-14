@@ -50,8 +50,6 @@ public class Server {
         this.customerManager = new CustomerManager();
         this.salesmanManager = new SalesmanManager();
         this.productManager = new ProductManager();
-        startOfProgramme startOfProgramme = new startOfProgramme();
-        //startOfProgramme.startProgramme();
         try {
             sql.startProgramme();
         } catch (Exception e) {
@@ -1416,7 +1414,7 @@ public class Server {
     }
 
     public String serverToClient() throws IOException {
-        //endOfProgramme.updateFiles();
+        endOfProgramme.updateFiles();
         sql.updateProgramme();
         return Server.answer;
     }

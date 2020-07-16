@@ -55,7 +55,6 @@ public class startOfProgramme extends DataBase {
             Account s = (Account) in.readObject();
             Storage.getAllAccounts().add(s);
         }
-
     }
 
     @Override
