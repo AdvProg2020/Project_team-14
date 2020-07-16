@@ -8,7 +8,6 @@ public class SQL {
 
     public SQL() {
         try {
-            //Class.forName("com.mysql.jdbc.Driver");
             connection = DriverManager.getConnection("jdbc:mysql://localhost/test?" + "user=root&password=");
             Statement stmt = connection.createStatement();
             String sql;

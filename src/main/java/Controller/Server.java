@@ -283,6 +283,10 @@ public class Server {
         } else if (command.startsWith("get product sale")) {
             getProductSale(command);
         }
+        //bank parts
+        else if (command.startsWith("bank ")){
+            setAnswer(BankConnector.sendToBank(command.substring("bank ".length())));
+        }
         //end parts
         else if (command.startsWith("show balance")) {
             this.showBalance(command);

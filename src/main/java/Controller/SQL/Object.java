@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Base64;
 
 public class Object implements Serializable {
+
     public static Object object = new Object();
     public ArrayList<Boss> bosses = new ArrayList<>();
     private ArrayList<BuyLog> buyLogs = new ArrayList<>();
@@ -55,7 +56,7 @@ public class Object implements Serializable {
         requests.addAll(Storage.getAllRequests());
     }
 
-    public String serialise(Object object) throws IOException {
+    public String serialise(Object object) {
         String string = "";
         try {
             ByteArrayOutputStream bo = new ByteArrayOutputStream();

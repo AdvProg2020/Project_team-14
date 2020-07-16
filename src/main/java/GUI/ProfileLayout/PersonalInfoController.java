@@ -74,9 +74,7 @@ public class PersonalInfoController {
         popup.setOnHiding(e -> {
             try {
                 initialize();
-            } catch (ParseException ex) {
-                ex.printStackTrace();
-            } catch (IOException ex) {
+            } catch (ParseException | IOException ex) {
                 ex.printStackTrace();
             }
         });

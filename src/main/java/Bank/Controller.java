@@ -1,5 +1,7 @@
 package Bank;
 
+import jdk.nashorn.internal.codegen.LocalStateRestorationInfo;
+
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Base64;
@@ -41,6 +43,20 @@ public class Controller {
             createDepositReceipt(command);
         } else if (command.startsWith("get balance+")) {
             getBalance(command);
+        } else if (command.startsWith("pay transaction with id+")) {
+            pay(command);
+        } else if (command.startsWith("is there person with username+")) {
+            isTherePersonWithUsername(command);
+        }
+    }
+
+    private void isTherePersonWithUsername(String command) {
+        String username = command.split("\\+")[1];
+        Account account = Account.getAccountWithUsername(username);
+        if (account == null) {
+            serverAnswer = "false";
+        } else {
+            serverAnswer = "true";
         }
     }
 
@@ -79,19 +95,19 @@ public class Controller {
             String username2 = command.split("\\+")[3];
             long amount = Long.parseLong(command.split("\\+")[4]);
             String description = command.split("\\+")[5];
-            if (tokenIsAuthentic(token)) {
-                if (!tokenIsExpired(token)) {
-                    if (Account.getAccountWithUsername(username1) != null && Account.getAccountWithUsername(username2) != null) {
-                        new Transaction(username1, username2, amount, description);
-                        serverAnswer = "successful";
-                    } else {
-                        serverAnswer = "one of usernames isn't valid";
-                    }
-                } else {
-                    serverAnswer = "token has expired";
-                }
-            } else {
+            if (!tokenIsAuthentic(token)) {
                 serverAnswer = "token isn't authentic";
+                return;
+            }
+            if (tokenIsExpired(token)) {
+                serverAnswer = "token has expired";
+                return;
+            }
+            if (Account.getAccountWithUsername(username1) != null && Account.getAccountWithUsername(username2) != null) {
+                new Transaction(username1, username2, amount, description);
+                serverAnswer = "successful";
+            } else {
+                serverAnswer = "one of usernames isn't valid";
             }
         } catch (Exception e) {
             serverAnswer = "something went wrong";
@@ -104,19 +120,19 @@ public class Controller {
             String username = command.split("\\+")[2];
             long amount = Long.parseLong(command.split("\\+")[3]);
             String description = command.split("\\+")[4];
-            if (tokenIsAuthentic(token)) {
-                if (tokenIsExpired(token)) {
-                    serverAnswer = "token has expired";
-                } else {
-                    if (Account.getAccountWithUsername(username) != null) {
-                        new Transaction(TransactionType.WITHDRAW, username, amount, description);
-                        serverAnswer = "successful";
-                    } else {
-                        serverAnswer = "the username is invalid";
-                    }
-                }
-            } else {
+            if (!tokenIsAuthentic(token)) {
                 serverAnswer = "token isn't authentic";
+                return;
+            }
+            if (tokenIsExpired(token)) {
+                serverAnswer = "token has expired";
+                return;
+            }
+            if (Account.getAccountWithUsername(username) != null) {
+                new Transaction(TransactionType.WITHDRAW, username, amount, description);
+                serverAnswer = "successful";
+            } else {
+                serverAnswer = "the username is invalid";
             }
         } catch (Exception e) {
             serverAnswer = "something went wrong";
@@ -129,19 +145,19 @@ public class Controller {
             String username = command.split("\\+")[2];
             long amount = Long.parseLong(command.split("\\+")[3]);
             String description = command.split("\\+")[4];
-            if (tokenIsAuthentic(token)) {
-                if (tokenIsExpired(token)) {
-                    serverAnswer = "token has expired";
-                } else {
-                    if (Account.getAccountWithUsername(username) != null) {
-                        new Transaction(TransactionType.DEPOSIT, username, amount, description);
-                        serverAnswer = "successful";
-                    } else {
-                        serverAnswer = "the username is invalid";
-                    }
-                }
-            } else {
+            if (!tokenIsAuthentic(token)) {
                 serverAnswer = "token isn't authentic";
+                return;
+            }
+            if (tokenIsExpired(token)) {
+                serverAnswer = "token has expired";
+                return;
+            }
+            if (Account.getAccountWithUsername(username) != null) {
+                new Transaction(TransactionType.DEPOSIT, username, amount, description);
+                serverAnswer = "successful";
+            } else {
+                serverAnswer = "the username is invalid";
             }
         } catch (Exception e) {
             serverAnswer = "something went wrong";
@@ -152,22 +168,45 @@ public class Controller {
         try {
             String token = command.split("\\+")[1];
             String username = command.split("\\+")[2];
-            if (tokenIsAuthentic(token)) {
-                if (tokenIsExpired(token)) {
-                    serverAnswer = "token has expired";
-                } else {
-                    Account account = Account.getAccountWithUsername(username);
-                    if (account != null) {
-                        serverAnswer = Long.toString(account.getBalance());
-                    } else {
-                        serverAnswer = "the username is invalid";
-                    }
-                }
-            } else {
+            Account account = Account.getAccountWithUsername(username);
+            if (!tokenIsAuthentic(token)) {
                 serverAnswer = "token isn't authentic";
+                return;
+            }
+            if (tokenIsExpired(token)) {
+                serverAnswer = "token has expired";
+                return;
+            }
+            if (account != null) {
+                serverAnswer = Long.toString(account.getBalance());
+            } else {
+                serverAnswer = "the username is invalid";
             }
         } catch (Exception e) {
             serverAnswer = "something went wrong";
+        }
+    }
+
+    private void pay(String command) {
+        String token = command.split("\\+")[1];
+        int id = Integer.parseInt(command.split("\\+")[2]);
+        if (!tokenIsAuthentic(token)) {
+            serverAnswer = "token isn't authentic";
+            return;
+        }
+        if (tokenIsExpired(token)) {
+            serverAnswer = "token has expired";
+            return;
+        }
+        Transaction transaction = Transaction.getTransactionBasedOnID(id);
+        if (transaction == null) {
+            serverAnswer = "transaction ID is not authentic";
+        } else {
+            if (transaction.isDone()) {
+                serverAnswer = "it's already done";
+            } else {
+                serverAnswer = transaction.Do();
+            }
         }
     }
 

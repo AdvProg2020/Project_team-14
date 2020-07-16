@@ -1,6 +1,9 @@
 package Bank;
 
+import com.google.gson.internal.bind.SqlDateTypeAdapter;
+
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Transaction {
     private static ArrayList<Transaction> allTransaction = new ArrayList<>();
@@ -8,7 +11,10 @@ public class Transaction {
     private String toUsername;
     private TransactionType transactionType;
     private long amount;
+    private boolean isDone = false;
     private String description;
+    private int ID;
+
 
     public Transaction(TransactionType transactionType, String fromUsername, long amount, String description) {
         this.transactionType = transactionType;
@@ -16,6 +22,8 @@ public class Transaction {
         this.amount = amount;
         this.description = description;
         allTransaction.add(this);
+        Random random = new Random();
+        ID = random.nextInt(100000);
     }
 
     public Transaction(String fromUsername, String toUsername, long amount, String description) {
@@ -58,44 +66,68 @@ public class Transaction {
         return arrayList;
     }
 
-    public boolean withdraw(String username, long amount) {
+    public String withdraw(String username, long amount) {
         Account account = Account.getAccountWithUsername(username);
         if (account == null) {
-            return false;
+            return "invalid username";
         } else {
             if (account.getBalance() > amount) {
                 account.setBalance(account.getBalance() - amount);
-                return true;
+                return "successful";
             } else {
-                return false;
+                return "not enough credit";
             }
         }
     }
 
-    public boolean deposit(String username, long amount) {
+    public String deposit(String username, long amount) {
         Account account = Account.getAccountWithUsername(username);
         if (account == null) {
-            return false;
+            return "invalid username";
         } else {
             account.setBalance(account.getBalance() + amount);
-            return true;
+            return "successful";
         }
     }
 
-    public boolean transfer(String fromUsername, String toUsername, long amount) {
+    public String transfer(String fromUsername, String toUsername, long amount) {
         Account firstAccount = Account.getAccountWithUsername(fromUsername);
         Account secondAccount = Account.getAccountWithUsername(toUsername);
         if (firstAccount == null || secondAccount == null) {
-            return false;
+            return "one of usernames is invalid";
         } else {
             if (firstAccount.getBalance() >= amount) {
                 firstAccount.setBalance(firstAccount.getBalance() - amount);
                 secondAccount.setBalance(secondAccount.getBalance() + amount);
-                return true;
+                return "successful";
             } else {
-                return false;
+                return "not enough credit";
             }
         }
     }
-    
+
+    public boolean isDone() {
+        return isDone;
+    }
+
+    public String Do() {
+        if (transactionType.equals(TransactionType.TRANSFER)) {
+            return transfer(fromUsername, toUsername, amount);
+        } else if (transactionType.equals(TransactionType.WITHDRAW)) {
+            return withdraw(fromUsername, amount);
+        } else if (transactionType.equals(TransactionType.DEPOSIT)) {
+            return deposit(fromUsername, amount);
+        }
+        return "unsuccessful";
+    }
+
+    public static Transaction getTransactionBasedOnID(int id) {
+        for (Transaction transaction : allTransaction) {
+            if (transaction.ID == id) {
+                return transaction;
+            }
+        }
+        return null;
+    }
+
 }
