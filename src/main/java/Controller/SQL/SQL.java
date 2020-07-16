@@ -1,14 +1,30 @@
 package Controller.SQL;
 
+import Model.RandomString;
+
 import java.sql.*;
 import java.util.Base64;
 
 public class SQL {
     private Connection connection;
+    private static final Base64.Encoder base64Encoder = Base64.getUrlEncoder();
 
     public SQL() {
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost/test?" + "user=root&password=");
+            String DB_URL = "jdbc:mysql://localhost/";
+            String USER = "root";
+            String PASS = "";
+            connection = DriverManager.getConnection(DB_URL, USER, PASS);
+            connection.createStatement();
+            Statement stmt;
+            stmt = connection.createStatement();
+            String sql = "CREATE DATABASE fuckyou";
+            stmt.executeUpdate(sql);
+        } catch (Exception s) {
+            System.out.println(s.getMessage());
+        }
+        try {
+            connection = DriverManager.getConnection("jdbc:mysql://localhost/fuckyou?" + "user=root&password=");
             Statement stmt = connection.createStatement();
             String sql;
             sql = "CREATE TABLE Neuer " + "(id INTEGER not NULL, " + "name blob, " + " PRIMARY KEY ( id ))";
@@ -28,6 +44,7 @@ public class SQL {
 
     public void insert(String data) {
         try {
+            data = encode(data);
             PreparedStatement statement = connection.prepareStatement("INSERT  INTO Neuer  (id,name) values (?,?)");
             statement.executeUpdate("DELETE FROM Neuer");
             statement.setInt(1, 1);
@@ -48,6 +65,7 @@ public class SQL {
             rs.getInt("id");
             string = rs.getString("name");
         }
+        string = decode(string);
         rs.close();
         return Base64.getDecoder().decode(string);
     }
@@ -67,4 +85,23 @@ public class SQL {
             System.out.println(exception.getMessage());
         }
     }
+
+    private String encode(String string) {
+        String result = RandomString.getRandomString(100) + string;
+        result = base64Encoder.encodeToString(result.getBytes());
+        result = ".xs,dsghjkdf,a3uih238ewajnksdhjf hsjkd jdzjfhgs " + result;
+        result = base64Encoder.encodeToString(result.getBytes());
+        result = new StringBuilder(result).reverse().toString();
+        return result;
+    }
+
+    private String decode(String string) {
+        string = new StringBuilder(string).reverse().toString();
+        String result = new String(Base64.getDecoder().decode(string));
+        result = result.substring(".xs,dsghjkdf,a3uih238ewajnksdhjf hsjkd jdzjfhgs ".length());
+        result = new String(Base64.getDecoder().decode(result));
+        result = result.substring(100);
+        return result;
+    }
+
 }
