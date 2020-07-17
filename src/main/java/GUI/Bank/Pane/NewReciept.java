@@ -2,6 +2,7 @@ package GUI.Bank.Pane;
 
 import GUI.Bank.Bank;
 import GUI.MenuHandler;
+import Menus.Menu;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -23,7 +24,10 @@ public class NewReciept {
     public TextField depositDescription;
     public TextField withdrawDescription;
     public TextField transferDescription;
-    private String username = MenuHandler.getUsername();
+    public Button deposit;
+    public Button withdraw;
+    private String username;
+
 
     public void depositDone(ActionEvent actionEvent) throws ParseException, IOException {
         long amount;
@@ -116,22 +120,35 @@ public class NewReciept {
 
     public void transferDone(ActionEvent actionEvent) throws ParseException, IOException {
         String otherUser = transferUsername.getText();
-        Alert alert = new Alert(Alert.AlertType.WARNING, "", ButtonType.OK);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, "", ButtonType.OK);
         long amount;
         String description;
-
-        MenuHandler.getServer().clientToServer("bank " + "is there person with username+" + otherUser);
-        String answer = MenuHandler.getServer().serverToClient();
-        if (answer.equals("false")) {
-            alert.setContentText("the username entered isn't valid, try something valid");
-            alert.showAndWait();
-            return;
-        }
 
         try {
             amount = Long.parseLong(transferAmount.getText());
         } catch (Exception e) {
             alert.setContentText("invalid amount");
+            alert.showAndWait();
+            return;
+        }
+
+        if (otherUser == null || otherUser.equals("")) {
+            alert.setContentText("the username field cannot be empty");
+            alert.showAndWait();
+            return;
+        }
+
+        if (otherUser.equals(username)) {
+            alert.setContentText("you cannot transfer money to your own account");
+            alert.showAndWait();
+            return;
+        }
+
+        MenuHandler.getServer().clientToServer("bank " + "is there person with username+" + otherUser);
+        String answer = MenuHandler.getServer().serverToClient();
+        System.out.println("there it is: " + answer);
+        if (answer.equals("false")) {
+            alert.setContentText("the username entered isn't valid, try something valid");
             alert.showAndWait();
             return;
         }
@@ -164,6 +181,22 @@ public class NewReciept {
         } else {
             alert.setContentText("something has gone wrong, try again");
             alert.showAndWait();
+        }
+    }
+
+    public void initialize() {
+
+        if (MenuHandler.getRole().equalsIgnoreCase("boss")) {
+            username = "BOSS";
+        } else {
+            username = MenuHandler.getUsername();
+        }
+
+        if (MenuHandler.getRole().equalsIgnoreCase("customer")) {
+            deposit.setDisable(true);
+        } else if (MenuHandler.getRole().equalsIgnoreCase("boss")) {
+            withdraw.setDisable(true);
+            deposit.setDisable(true);
         }
     }
 

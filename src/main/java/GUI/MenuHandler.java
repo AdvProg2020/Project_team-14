@@ -27,6 +27,15 @@ public class MenuHandler {
     static private ArrayList<Triplet<String, String, Integer>> cart = new ArrayList<>();
     public static String selectedCategory;
 
+    public static String getRole() {
+        try {
+            getServer().clientToServer("what is account role+" + username);
+            return getServer().serverToClient();
+        } catch (Exception e) {
+            return "none";
+        }
+    }
+
     public static String getRequestID() {
         return requestID;
     }

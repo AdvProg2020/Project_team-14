@@ -34,7 +34,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </TextField>
-      <Button layoutX="569.0" layoutY="97.0" mnemonicParsing="false" onAction="#depositDone" prefHeight="40.0" prefWidth="72.0" style="-fx-background-color: yellow;" text="Done!" textFill="#e30bb8">
+      <Button fx:id="deposit" layoutX="569.0" layoutY="97.0" mnemonicParsing="false" onAction="#depositDone" prefHeight="40.0" prefWidth="72.0" style="-fx-background-color: yellow;" text="Done!" textFill="#e30bb8">
          <font>
             <Font size="15.0" />
          </font>
@@ -52,7 +52,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </TextField>
-      <Button layoutX="569.0" layoutY="261.0" mnemonicParsing="false" onAction="#withdrawDone" prefHeight="40.0" prefWidth="72.0" style="-fx-background-color: yellow;" text="Done!" textFill="#e30bb8">
+      <Button fx:id="withdraw" layoutX="569.0" layoutY="261.0" mnemonicParsing="false" onAction="#withdrawDone" prefHeight="40.0" prefWidth="72.0" style="-fx-background-color: yellow;" text="Done!" textFill="#e30bb8">
          <font>
             <Font size="15.0" />
          </font>

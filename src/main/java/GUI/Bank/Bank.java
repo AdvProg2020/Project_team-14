@@ -52,9 +52,18 @@ public class Bank {
     }
 
     public void initialize() throws IOException, ParseException {
-        pane.getChildren().remove(pane.getChildren().get(0));
+        try {
+            pane.getChildren().remove(pane.getChildren().get(0));
+        } catch (Exception ignored) {
+        }
         pane.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/Bank/Pane/NewReciept.fxml")));
-        MenuHandler.getServer().clientToServer("get balance+" + Bank.getToken() + "+" + MenuHandler.getUsername());
+
+        if (MenuHandler.getRole().equalsIgnoreCase("boss")) {
+            MenuHandler.getServer().clientToServer("bank " + "get balance+" + Bank.getToken() + "+" + "BOSS");
+        } else {
+            MenuHandler.getServer().clientToServer("bank " + "get balance+" + Bank.getToken() + "+" + MenuHandler.getUsername());
+        }
+
         String credit = MenuHandler.getServer().serverToClient();
 
         if (credit.equals("token has expired")) {
@@ -64,7 +73,7 @@ public class Bank {
         if (credit.matches("\\d+")) {
             creditLabel.setText(" your credit: " + credit);
         } else {
-            creditLabel.setText(" something has gone wrong ");
+            creditLabel.setText("oops .... ");
         }
     }
 

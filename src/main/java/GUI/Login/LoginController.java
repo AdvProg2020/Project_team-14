@@ -71,7 +71,7 @@ public class LoginController {
                 MenuHandler.setUsername(serverAnswer.split("\\s")[4]);
                 setAvatarInClient();
                 alert.setAlertType(Alert.AlertType.INFORMATION);
-                alert.setContentText("Login Successful" + "\n" + "Welcome");
+                alert.setContentText("Login Successful, " + "Welcome");
                 alert.showAndWait();
                 Parent root = FXMLLoader.load(getClass().getResource(MenuHandler.getLoginBackAddress()));
                 Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();

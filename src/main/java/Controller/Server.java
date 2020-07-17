@@ -55,7 +55,6 @@ public class Server {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        System.out.println(Storage.getAllBosses().size() + " the start size");
         hasBoss = (Storage.getAllBosses().size() != 0);
     }
 
@@ -83,11 +82,10 @@ public class Server {
 
             //checking IP
             //checking token ...
-
             // if it doesn't ask for secret stuff
             //takeNormalAction(command);
-
             //if it's secret
+
             takeAction(command);
         } catch (Exception ignored) {
         }
@@ -282,8 +280,18 @@ public class Server {
             getProductSale(command);
         }
         //bank parts
-        else if (command.startsWith("bank ")){
+        else if (command.startsWith("bank ")) {
             setAnswer(BankConnector.sendToBank(command.substring("bank ".length())));
+        }
+        //financial parts
+        else if (command.startsWith("get wage+")) {
+            getWage();
+        } else if (command.startsWith("set wage+")) {
+            setWage(command);
+        } else if (command.startsWith("get min credit+")) {
+            getMinCredit();
+        } else if (command.startsWith("set min credit+")) {
+            setMinCredit(command);
         }
         //end parts
         else if (command.startsWith("show balance")) {
@@ -305,6 +313,27 @@ public class Server {
         }
 
     }
+
+    private void getWage() {
+        setAnswer(Integer.toString(CreditController.getCreditController().getWagePercentage()));
+    }
+
+    private void setWage(String command) {
+        int wage = Integer.parseInt(command.split("\\+")[1]);
+        CreditController.getCreditController().setWagePercentage(wage);
+        setAnswer("successful");
+    }
+
+    private void getMinCredit() {
+        setAnswer(Integer.toString(CreditController.getCreditController().getMinimumCredit()));
+    }
+
+    private void setMinCredit(String command) {
+        int wage = Integer.parseInt(command.split("\\+")[1]);
+        CreditController.getCreditController().setWagePercentage(wage);
+        setAnswer("successful");
+    }
+
 
     private void makeNewSupporter(String command) {
         SupporterController.makeNewSupporter(command.split("\\+")[1], command.split("\\+")[2]);

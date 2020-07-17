@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Base64;
 
 public class Controller {
-    private ArrayList<String> tokens = new ArrayList<>();
+    private static ArrayList<String> tokens = new ArrayList<>();
     private String clientRequest;
     private String serverAnswer;
     private static final SecureRandom secureRandom = new SecureRandom();
@@ -51,12 +51,16 @@ public class Controller {
     }
 
     private void isTherePersonWithUsername(String command) {
-        String username = command.split("\\+")[1];
-        Account account = Account.getAccountWithUsername(username);
-        if (account == null) {
-            serverAnswer = "false";
-        } else {
-            serverAnswer = "true";
+        try {
+            String username = command.split("\\+")[1];
+            Account account = Account.getAccountWithUsername(username);
+            if (account == null) {
+                serverAnswer = "false";
+            } else {
+                serverAnswer = "true";
+            }
+        } catch (Exception e) {
+            serverAnswer = "something went wrong";
         }
     }
 
@@ -167,6 +171,8 @@ public class Controller {
     private void getBalance(String command) {
         try {
             String token = command.split("\\+")[1];
+            System.out.println("this is the wrong one: " + token);
+            System.out.println(tokens.get(0));
             String username = command.split("\\+")[2];
             Account account = Account.getAccountWithUsername(username);
             if (!tokenIsAuthentic(token)) {
@@ -183,6 +189,7 @@ public class Controller {
                 serverAnswer = "the username is invalid";
             }
         } catch (Exception e) {
+            e.printStackTrace();
             serverAnswer = "something went wrong";
         }
     }
@@ -210,7 +217,11 @@ public class Controller {
         }
     }
 
+    public String getServerAnswer() {
+        return serverAnswer;
+    }
 }
+
 
 // create account+username+password+firstName+secondName
 // get token+username+password

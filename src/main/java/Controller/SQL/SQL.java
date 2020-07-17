@@ -18,13 +18,13 @@ public class SQL {
             connection.createStatement();
             Statement stmt;
             stmt = connection.createStatement();
-            String sql = "CREATE DATABASE fuckyou";
+            String sql = "CREATE DATABASE ktb";
             stmt.executeUpdate(sql);
         } catch (Exception s) {
             System.out.println(s.getMessage());
         }
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost/fuckyou?" + "user=root&password=");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost/ktb?" + "user=root&password=");
             Statement stmt = connection.createStatement();
             String sql;
             sql = "CREATE TABLE Neuer " + "(id INTEGER not NULL, " + "name blob, " + " PRIMARY KEY ( id ))";

@@ -136,6 +136,9 @@ public class RegisterController {
         } else if (telephone.getText().equals("")) {
             alert.setContentText("Telephone Field Must Not Be Empty");
             alert.showAndWait();
+        } else if(username.getText().equalsIgnoreCase("boss")){
+            alert.setContentText("the username cannot be case insensitive equal to boss");
+            alert.showAndWait();
         } else if (((String) role.getValue()).equalsIgnoreCase("salesman") && company.getText().equals("")) {
             alert.setContentText("Company Field Must Not Be Empty");
             alert.showAndWait();

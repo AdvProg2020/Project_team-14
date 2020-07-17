@@ -14,7 +14,7 @@ import java.text.ParseException;
 public class LogOrRegister {
     public PasswordField loginPassword;
     public PasswordField createAccountPassword;
-    private String username = MenuHandler.getUsername();
+    private String username;
 
     public void login(ActionEvent actionEvent) throws ParseException, IOException {
         Alert alert = new Alert(Alert.AlertType.WARNING, "", ButtonType.OK);
@@ -24,6 +24,26 @@ public class LogOrRegister {
         if (username == null) {
             alert.setContentText("you should login first in the store, go back and login!");
             alert.showAndWait();
+            return;
+        }
+
+        //it's a boss
+
+        if (MenuHandler.getRole().equalsIgnoreCase("boss")) {
+            MenuHandler.getServer().clientToServer("bank " + "get token+" + "BOSS" + "+" + loginPassword.getText());
+            String token = MenuHandler.getServer().serverToClient();
+            System.out.println("this is the token " + token);
+            if (!token.equals("fuck off, identification was wrong") && !token.equals("something went wrong")) {
+                Bank.setToken(token);
+                alert.setContentText("login successful");
+                alert.showAndWait();
+                Parent root = FXMLLoader.load(getClass().getResource("/GUI/Bank/Bank.fxml"));
+                Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+                stage.setScene(new Scene(root));
+            } else {
+                alert.setContentText("wrong identification");
+                alert.showAndWait();
+            }
             return;
         }
 
@@ -41,7 +61,7 @@ public class LogOrRegister {
         String token = MenuHandler.getServer().serverToClient();
         if (!token.equals("fuck off, identification was wrong") && !token.equals("something went wrong")) {
             Bank.setToken(token);
-            alert.setContentText("login successful");
+            alert.setContentText("wrong password, try again");
             alert.showAndWait();
             Parent root = FXMLLoader.load(getClass().getResource("/GUI/Bank/Bank.fxml"));
             Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
@@ -60,6 +80,12 @@ public class LogOrRegister {
 
         if (username == null) {
             alert.setContentText("you should login first in the store, go back and login!");
+            alert.showAndWait();
+            return;
+        }
+
+        if (MenuHandler.getRole().equalsIgnoreCase("boss")) {
+            alert.setContentText("as a boss you don't need to register, used the store bank password to login");
             alert.showAndWait();
             return;
         }
@@ -85,5 +111,13 @@ public class LogOrRegister {
 
     public void back(ActionEvent actionEvent) {
 
+    }
+
+    public void initialize() {
+        if (MenuHandler.getRole().equalsIgnoreCase("boss")) {
+            username = "BOSS";
+        } else {
+            username = MenuHandler.getUsername();
+        }
     }
 }

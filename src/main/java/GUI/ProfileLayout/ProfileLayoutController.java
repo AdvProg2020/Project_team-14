@@ -121,7 +121,17 @@ public class ProfileLayoutController {
         Parent root = FXMLLoader.load(getClass().getResource("/GUI/Supporter/Supporter.fxml"));
         Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
-
     }
 
+    public void Bank(ActionEvent actionEvent) throws IOException {
+        Audio.playClick7();
+        Parent root = FXMLLoader.load(getClass().getResource("/GUI/Bank/LogOrRegister.fxml"));
+        Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root));
+    }
+
+    public void Financial(ActionEvent actionEvent) throws IOException {
+        pane.getChildren().remove(pane.getChildren().get(0));
+        pane.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/SalesmanProfile/ManageSale/ManageSalesLayout.fxml")));
+    }
 }

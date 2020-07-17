@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 public class Account {
     private static ArrayList<Account> allAccounts = new ArrayList<>();
+    private static String bossUsername = "BOSS";
+    private static String bossPassword = "manuel neuer is the best";
+    private static Account bossAccount = new Account(bossUsername, bossPassword, "first name", "second name");
     private String firstName;
     private String secondName;
     private String username;

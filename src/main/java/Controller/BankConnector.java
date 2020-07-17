@@ -1,11 +1,16 @@
 package Controller;
 
+import Bank.Controller;
+import Bank.Controller.*;
+
 public class BankConnector {
     private static final int bankPort = 1989;
-    private static String bankAnswer;
 
     public static String sendToBank(String command) {
-        // sending thing to bank and getting bank answer
-        return bankAnswer;
+        Controller controller = new Controller();
+        controller.takeAction(command);
+        System.out.println("result: "+ controller.getServerAnswer());
+        return controller.getServerAnswer();
     }
+
 }

@@ -14,11 +14,12 @@ import static Model.Storage.*;
 public class Customer extends Account implements Serializable {
     private int credit;
     private Cart cart;
-    private HashMap<String, Integer> customerOffCodes=new HashMap<>();
+    private HashMap<String, Integer> customerOffCodes = new HashMap<>();
 
     public Customer(String username, String password, String firstName, String secondName, String Email, String telephone,
                     String role, int credit) {
         super(username, password, firstName, secondName, Email, telephone, role);
+        this.credit = credit;
         this.credit = credit;
         customerOffCodes = new HashMap<>();
     }
