@@ -23,7 +23,7 @@ public class Transaction {
         this.description = description;
         allTransaction.add(this);
         Random random = new Random();
-        ID = random.nextInt(100000);
+        ID = random.nextInt(1000000);
     }
 
     public Transaction(String fromUsername, String toUsername, long amount, String description) {
@@ -35,18 +35,22 @@ public class Transaction {
         allTransaction.add(this);
     }
 
+    public String getFromUsername() {
+        return fromUsername;
+    }
+
     public String toString() {
         if (transactionType.equals(TransactionType.WITHDRAW)) {
-            return "withdraw from " + this.fromUsername + " with amount " + this.amount;
+            return "withdraw from " + this.fromUsername + " with amount " + this.amount + ", ID:" + ID;
         } else if (transactionType.equals(TransactionType.TRANSFER)) {
-            return "transfer from " + this.fromUsername + " to " + this.toUsername + " with amount " + this.amount;
+            return "transfer from " + this.fromUsername + " to " + this.toUsername + " with amount " + this.amount + ", ID:" + ID;
         } else if (transactionType.equals(TransactionType.DEPOSIT)) {
-            return "deposit from " + this.fromUsername + " with amount " + amount;
+            return "deposit from " + this.fromUsername + " with amount " + amount + ", ID:" + ID;
         }
         return null;
     }
 
-    public ArrayList<String> getAllTransactionsWithSource(String sourceUsername) {
+    public static ArrayList<String> getAllTransactionsWithSource(String sourceUsername) {
         ArrayList<String> arrayList = new ArrayList<>();
         for (Transaction transaction : allTransaction) {
             if (transaction.fromUsername.equals(sourceUsername)) {
@@ -56,7 +60,7 @@ public class Transaction {
         return arrayList;
     }
 
-    public ArrayList<String> getAllTransactionsInvolvingUsername(String username) {
+    public static ArrayList<String> getAllTransactionsInvolvingUsername(String username) {
         ArrayList<String> arrayList = new ArrayList<>();
         for (Transaction transaction : allTransaction) {
             if (transaction.fromUsername.equals(username) || transaction.toUsername.equals(username)) {
@@ -70,24 +74,22 @@ public class Transaction {
         Account account = Account.getAccountWithUsername(username);
         if (account == null) {
             return "invalid username";
-        } else {
-            if (account.getBalance() > amount) {
-                account.setBalance(account.getBalance() - amount);
-                return "successful";
-            } else {
-                return "not enough credit";
-            }
         }
+        if (account.getBalance() > amount) {
+            account.setBalance(account.getBalance() - amount);
+            return "successful";
+        }
+        return "not enough credit";
     }
 
     public String deposit(String username, long amount) {
         Account account = Account.getAccountWithUsername(username);
         if (account == null) {
             return "invalid username";
-        } else {
-            account.setBalance(account.getBalance() + amount);
-            return "successful";
         }
+        account.setBalance(account.getBalance() + amount);
+        return "successful";
+
     }
 
     public String transfer(String fromUsername, String toUsername, long amount) {
@@ -95,15 +97,13 @@ public class Transaction {
         Account secondAccount = Account.getAccountWithUsername(toUsername);
         if (firstAccount == null || secondAccount == null) {
             return "one of usernames is invalid";
-        } else {
-            if (firstAccount.getBalance() >= amount) {
-                firstAccount.setBalance(firstAccount.getBalance() - amount);
-                secondAccount.setBalance(secondAccount.getBalance() + amount);
-                return "successful";
-            } else {
-                return "not enough credit";
-            }
         }
+        if (firstAccount.getBalance() >= amount) {
+            firstAccount.setBalance(firstAccount.getBalance() - amount);
+            secondAccount.setBalance(secondAccount.getBalance() + amount);
+            return "successful";
+        }
+        return "not enough credit";
     }
 
     public boolean isDone() {

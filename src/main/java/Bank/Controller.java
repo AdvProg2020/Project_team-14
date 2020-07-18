@@ -1,7 +1,5 @@
 package Bank;
 
-import jdk.nashorn.internal.codegen.LocalStateRestorationInfo;
-
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Base64;
@@ -21,8 +19,8 @@ public class Controller {
         return token;
     }
 
-    public boolean tokenIsAuthentic(String token) {
-        return tokens.contains(token);
+    public boolean tokenIsWrong(String token) {
+        return !tokens.contains(token);
     }
 
     public boolean tokenIsExpired(String token) {
@@ -47,6 +45,54 @@ public class Controller {
             pay(command);
         } else if (command.startsWith("is there person with username+")) {
             isTherePersonWithUsername(command);
+        } else if (command.startsWith("get all receipts by me+")) {
+            getAllReceiptsByMe(command);
+        } else if (command.startsWith("get all receipts involving me+")) {
+            getAllReceiptsInvolvingMe(command);
+        } else {
+            serverAnswer = "invalid input";
+        }
+    }
+
+    private void getAllReceiptsInvolvingMe(String command) {
+        try {
+            StringBuilder result = new StringBuilder("");
+            String token = command.split("\\+")[1];
+            if (tokenIsWrong(token)) {
+                serverAnswer = "token isn't authentic";
+                return;
+            }
+            if (tokenIsExpired(token)) {
+                serverAnswer = "token has expired";
+                return;
+            }
+            for (String string : Transaction.getAllTransactionsInvolvingUsername(command.split("\\+")[2])) {
+                result.append(string).append("\n");
+            }
+            serverAnswer = result.toString();
+        } catch (Exception e) {
+            serverAnswer = "something went wrong";
+        }
+    }
+
+    private void getAllReceiptsByMe(String command) {
+        try {
+            StringBuilder result = new StringBuilder("");
+            String token = command.split("\\+")[1];
+            if (tokenIsWrong(token)) {
+                serverAnswer = "token isn't authentic";
+                return;
+            }
+            if (tokenIsExpired(token)) {
+                serverAnswer = "token has expired";
+                return;
+            }
+            for (String string : Transaction.getAllTransactionsWithSource(command.split("\\+")[2])) {
+                result.append(string).append("\n");
+            }
+            serverAnswer = result.toString();
+        } catch (Exception e) {
+            serverAnswer = "something went wrong";
         }
     }
 
@@ -99,7 +145,7 @@ public class Controller {
             String username2 = command.split("\\+")[3];
             long amount = Long.parseLong(command.split("\\+")[4]);
             String description = command.split("\\+")[5];
-            if (!tokenIsAuthentic(token)) {
+            if (tokenIsWrong(token)) {
                 serverAnswer = "token isn't authentic";
                 return;
             }
@@ -124,7 +170,7 @@ public class Controller {
             String username = command.split("\\+")[2];
             long amount = Long.parseLong(command.split("\\+")[3]);
             String description = command.split("\\+")[4];
-            if (!tokenIsAuthentic(token)) {
+            if (tokenIsWrong(token)) {
                 serverAnswer = "token isn't authentic";
                 return;
             }
@@ -149,7 +195,7 @@ public class Controller {
             String username = command.split("\\+")[2];
             long amount = Long.parseLong(command.split("\\+")[3]);
             String description = command.split("\\+")[4];
-            if (!tokenIsAuthentic(token)) {
+            if (tokenIsWrong(token)) {
                 serverAnswer = "token isn't authentic";
                 return;
             }
@@ -175,7 +221,7 @@ public class Controller {
             System.out.println(tokens.get(0));
             String username = command.split("\\+")[2];
             Account account = Account.getAccountWithUsername(username);
-            if (!tokenIsAuthentic(token)) {
+            if (tokenIsWrong(token)) {
                 serverAnswer = "token isn't authentic";
                 return;
             }
@@ -189,37 +235,46 @@ public class Controller {
                 serverAnswer = "the username is invalid";
             }
         } catch (Exception e) {
-            e.printStackTrace();
             serverAnswer = "something went wrong";
         }
     }
 
     private void pay(String command) {
-        String token = command.split("\\+")[1];
-        int id = Integer.parseInt(command.split("\\+")[2]);
-        if (!tokenIsAuthentic(token)) {
-            serverAnswer = "token isn't authentic";
-            return;
-        }
-        if (tokenIsExpired(token)) {
-            serverAnswer = "token has expired";
-            return;
-        }
-        Transaction transaction = Transaction.getTransactionBasedOnID(id);
-        if (transaction == null) {
-            serverAnswer = "transaction ID is not authentic";
-        } else {
+        try {
+            String token = command.split("\\+")[1];
+            int id = Integer.parseInt(command.split("\\+")[2]);
+            String username = command.split("\\+")[3];
+            if (tokenIsWrong(token)) {
+                serverAnswer = "token isn't authentic";
+                return;
+            }
+            if (tokenIsExpired(token)) {
+                serverAnswer = "token has expired";
+                return;
+            }
+            Transaction transaction = Transaction.getTransactionBasedOnID(id);
+            if (transaction == null) {
+                serverAnswer = "transaction ID is not authentic";
+                return;
+            }
+            if (transaction.getFromUsername().equals(username)) {
+                serverAnswer = "that's not your receipt to pay";
+                return;
+            }
             if (transaction.isDone()) {
                 serverAnswer = "it's already done";
             } else {
                 serverAnswer = transaction.Do();
             }
+        } catch (Exception e) {
+            serverAnswer = "something went wrong";
         }
     }
 
     public String getServerAnswer() {
         return serverAnswer;
     }
+
 }
 
 
@@ -229,3 +284,6 @@ public class Controller {
 // create withdraw receipt+token+username+amount+description
 // create deposit receipt+token+username+amount+description
 // get balance+token+username
+// pay transaction with id+token+id+username
+// get all receipts by me+token+username
+// get all receipts involving me+token+username

@@ -76,4 +76,12 @@ public class CustomerProfileController {
         pane.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/Log/Log.fxml")));
 
     }
+
+    public void Banking(ActionEvent actionEvent) throws IOException {
+        Audio.playClick2();
+        Parent root = FXMLLoader.load(getClass().getResource("/GUI/Bank/LogOrRegister.fxml"));
+        Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root));
+    }
+
 }

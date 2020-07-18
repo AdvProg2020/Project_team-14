@@ -25,14 +25,20 @@ public class Bank {
         stage.setScene(new Scene(root));
     }
 
-    public void manageReciept(ActionEvent actionEvent) throws IOException {
-        pane.getChildren().remove(pane.getChildren().get(0));
-        pane.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/Bank/Pane/ManageReciept.fxml")));
+    public void manageReceipt(ActionEvent actionEvent) throws IOException {
+        try {
+            pane.getChildren().remove(pane.getChildren().get(0));
+            pane.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/Bank/Pane/ManageReceipt.fxml")));
+        } catch (Exception ignored) {
+        }
     }
 
-    public void newReciept(ActionEvent actionEvent) throws IOException {
-        pane.getChildren().remove(pane.getChildren().get(0));
-        pane.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/Bank/Pane/NewReciept.fxml")));
+    public void newReceipt(ActionEvent actionEvent) throws IOException {
+        try {
+            pane.getChildren().remove(pane.getChildren().get(0));
+            pane.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/Bank/Pane/NewReceipt.fxml")));
+        } catch (Exception ignored) {
+        }
     }
 
     public static String getToken() {
@@ -54,9 +60,9 @@ public class Bank {
     public void initialize() throws IOException, ParseException {
         try {
             pane.getChildren().remove(pane.getChildren().get(0));
-        } catch (Exception ignored) {
-        }
-        pane.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/Bank/Pane/NewReciept.fxml")));
+        } catch (Exception ignored) {}
+
+        pane.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/Bank/Pane/NewReceipt.fxml")));
 
         if (MenuHandler.getRole().equalsIgnoreCase("boss")) {
             MenuHandler.getServer().clientToServer("bank " + "get balance+" + Bank.getToken() + "+" + "BOSS");

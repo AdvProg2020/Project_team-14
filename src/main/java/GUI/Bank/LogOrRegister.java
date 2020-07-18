@@ -1,5 +1,6 @@
 package GUI.Bank;
 
+import GUI.Media.Audio;
 import GUI.MenuHandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -8,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
+import javax.sound.sampled.AudioInputStream;
 import java.io.IOException;
 import java.text.ParseException;
 
@@ -109,8 +111,11 @@ public class LogOrRegister {
         }
     }
 
-    public void back(ActionEvent actionEvent) {
-
+    public void back(ActionEvent actionEvent) throws IOException {
+        Audio.playClick1();
+        Parent root = FXMLLoader.load(getClass().getResource("/GUI/ProfileLayout/ProfileLayout.fxml"));
+        Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root));
     }
 
     public void initialize() {

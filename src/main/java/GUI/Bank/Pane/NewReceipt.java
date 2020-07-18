@@ -16,7 +16,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.text.ParseException;
 
-public class NewReciept {
+public class NewReceipt {
     public TextField depositAmount;
     public TextField withdrawAmount;
     public TextField transferAmount;
