@@ -1,8 +1,10 @@
 package Bank;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Account {
+public class Account implements Serializable {
+    public static long sumOfCredits = 0;
     private static ArrayList<Account> allAccounts = new ArrayList<>();
     private static String bossUsername = "BOSS";
     private static String bossPassword = "manuel neuer is the best";
@@ -22,7 +24,7 @@ public class Account {
     }
 
     public long getBalance() {
-        return balance;
+        return this == bossAccount ? sumOfCredits + balance : this.balance;
     }
 
     public String getUsername() {
@@ -44,6 +46,10 @@ public class Account {
             }
         }
         return null;
+    }
+
+    public static ArrayList<Account> getAllAccounts() {
+        return allAccounts;
     }
 
 }

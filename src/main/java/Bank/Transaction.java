@@ -1,11 +1,10 @@
 package Bank;
 
-import com.google.gson.internal.bind.SqlDateTypeAdapter;
-
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Transaction {
+public class Transaction implements Serializable {
     private static ArrayList<Transaction> allTransaction = new ArrayList<>();
     private String fromUsername;
     private String toUsername;
@@ -23,7 +22,7 @@ public class Transaction {
         this.description = description;
         allTransaction.add(this);
         Random random = new Random();
-        ID = random.nextInt(1000000);
+        ID = transactionType.equals(TransactionType.DEPOSIT) ? 100000 + random.nextInt(100000) : 200000 + random.nextInt(100000);
     }
 
     public Transaction(String fromUsername, String toUsername, long amount, String description) {
@@ -33,6 +32,8 @@ public class Transaction {
         this.amount = amount;
         this.description = description;
         allTransaction.add(this);
+        Random random = new Random();
+        ID = random.nextInt(100000) + 300000;
     }
 
     public String getFromUsername() {
@@ -41,11 +42,11 @@ public class Transaction {
 
     public String toString() {
         if (transactionType.equals(TransactionType.WITHDRAW)) {
-            return "withdraw from " + this.fromUsername + " with amount " + this.amount + ", ID:" + ID;
+            return "withdraw from " + this.fromUsername + " with amount " + this.amount + ",description: " + description + ", ID: " + ID;
         } else if (transactionType.equals(TransactionType.TRANSFER)) {
-            return "transfer from " + this.fromUsername + " to " + this.toUsername + " with amount " + this.amount + ", ID:" + ID;
+            return "transfer from " + this.fromUsername + " to " + this.toUsername + " with amount " + this.amount + ",description: " + description + ", ID: " + ID;
         } else if (transactionType.equals(TransactionType.DEPOSIT)) {
-            return "deposit from " + this.fromUsername + " with amount " + amount + ", ID:" + ID;
+            return "deposit from " + this.fromUsername + " with amount " + amount + ",description: " + description + ", ID: " + ID;
         }
         return null;
     }
@@ -53,6 +54,8 @@ public class Transaction {
     public static ArrayList<String> getAllTransactionsWithSource(String sourceUsername) {
         ArrayList<String> arrayList = new ArrayList<>();
         for (Transaction transaction : allTransaction) {
+            if (transaction.isDone)
+                continue;
             if (transaction.fromUsername.equals(sourceUsername)) {
                 arrayList.add(transaction.toString());
             }
@@ -63,6 +66,8 @@ public class Transaction {
     public static ArrayList<String> getAllTransactionsInvolvingUsername(String username) {
         ArrayList<String> arrayList = new ArrayList<>();
         for (Transaction transaction : allTransaction) {
+            if (transaction.isDone)
+                continue;
             if (transaction.fromUsername.equals(username) || transaction.toUsername.equals(username)) {
                 arrayList.add(transaction.toString());
             }
@@ -77,6 +82,8 @@ public class Transaction {
         }
         if (account.getBalance() > amount) {
             account.setBalance(account.getBalance() - amount);
+            this.isDone = true;
+            Account.sumOfCredits += amount;
             return "successful";
         }
         return "not enough credit";
@@ -88,6 +95,7 @@ public class Transaction {
             return "invalid username";
         }
         account.setBalance(account.getBalance() + amount);
+        this.isDone = true;
         return "successful";
 
     }
@@ -101,6 +109,7 @@ public class Transaction {
         if (firstAccount.getBalance() >= amount) {
             firstAccount.setBalance(firstAccount.getBalance() - amount);
             secondAccount.setBalance(secondAccount.getBalance() + amount);
+            this.isDone = true;
             return "successful";
         }
         return "not enough credit";
@@ -130,4 +139,11 @@ public class Transaction {
         return null;
     }
 
+    public long getAmount() {
+        return amount;
+    }
+
+    public static ArrayList<Transaction> getAllTransaction() {
+        return allTransaction;
+    }
 }

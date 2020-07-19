@@ -82,9 +82,7 @@ public class Object implements Serializable {
     }
 
     private static void addToMemory(Object object) {
-        System.out.println(object.bosses.size());
         Storage.getAllAccounts().addAll(object.bosses);
-        System.out.println(Storage.getAllBosses().size());
         Storage.allBuyLogs.addAll(object.buyLogs);
         Storage.getAllCategories().addAll(object.categories);
         Storage.allComments.addAll(object.comments);

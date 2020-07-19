@@ -18,6 +18,7 @@ public class Bank {
     private static String token;
     private static String password;
     public Label creditLabel;
+    public static Bank bank;
 
     public void back(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/GUI/Bank/LogOrRegister.fxml"));
@@ -58,12 +59,12 @@ public class Bank {
     }
 
     public void initialize() throws IOException, ParseException {
-        try {
-            pane.getChildren().remove(pane.getChildren().get(0));
-        } catch (Exception ignored) {}
-
         pane.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/Bank/Pane/NewReceipt.fxml")));
+        updateCredit();
+        bank = this;
+    }
 
+    public void updateCredit() throws IOException, ParseException {
         if (MenuHandler.getRole().equalsIgnoreCase("boss")) {
             MenuHandler.getServer().clientToServer("bank " + "get balance+" + Bank.getToken() + "+" + "BOSS");
         } else {
@@ -73,14 +74,13 @@ public class Bank {
         String credit = MenuHandler.getServer().serverToClient();
 
         if (credit.equals("token has expired")) {
-            //going back
             return;
         }
         if (credit.matches("\\d+")) {
             creditLabel.setText(" your credit: " + credit);
-        } else {
-            creditLabel.setText("oops .... ");
+            return;
         }
+        creditLabel.setText("oops .... ");
     }
 
 }

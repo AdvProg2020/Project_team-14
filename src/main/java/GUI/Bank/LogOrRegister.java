@@ -16,6 +16,7 @@ import java.text.ParseException;
 public class LogOrRegister {
     public PasswordField loginPassword;
     public PasswordField createAccountPassword;
+    public PasswordField createAccountConfirmation;
     private String username;
 
     public void login(ActionEvent actionEvent) throws ParseException, IOException {
@@ -28,7 +29,7 @@ public class LogOrRegister {
             alert.showAndWait();
             return;
         }
-
+        
         //it's a boss
 
         if (MenuHandler.getRole().equalsIgnoreCase("boss")) {
@@ -63,7 +64,7 @@ public class LogOrRegister {
         String token = MenuHandler.getServer().serverToClient();
         if (!token.equals("fuck off, identification was wrong") && !token.equals("something went wrong")) {
             Bank.setToken(token);
-            alert.setContentText("wrong password, try again");
+            alert.setContentText("login successful");
             alert.showAndWait();
             Parent root = FXMLLoader.load(getClass().getResource("/GUI/Bank/Bank.fxml"));
             Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
@@ -86,6 +87,12 @@ public class LogOrRegister {
             return;
         }
 
+        if (!createAccountPassword.getText().equals(createAccountConfirmation.getText())) {
+            alert.setContentText("the password and confirmation aren't the same");
+            alert.showAndWait();
+            return;
+        }
+
         if (MenuHandler.getRole().equalsIgnoreCase("boss")) {
             alert.setContentText("as a boss you don't need to register, used the store bank password to login");
             alert.showAndWait();
@@ -95,20 +102,22 @@ public class LogOrRegister {
         //they already have an account
 
         MenuHandler.getServer().clientToServer("bank " + "is there person with username+" + username);
+
         String answer = MenuHandler.getServer().serverToClient();
         if (answer.equals("true")) {
             alert.setContentText("you already have an account");
             alert.showAndWait();
             return;
         }
+
         MenuHandler.getServer().clientToServer("bank " + "create account+" + username + "+" + createAccountPassword.getText() + "+first name+second name");
+
         if (MenuHandler.getServer().serverToClient().equals("created successfully")) {
             alert.setContentText("created successfully");
-            alert.showAndWait();
         } else {
             alert.setContentText("something went wrong, try again");
-            alert.showAndWait();
         }
+        alert.showAndWait();
     }
 
     public void back(ActionEvent actionEvent) throws IOException {

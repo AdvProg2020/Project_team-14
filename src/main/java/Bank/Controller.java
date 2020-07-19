@@ -1,5 +1,7 @@
 package Bank;
 
+import Bank.SQL.SQL;
+
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Base64;
@@ -10,6 +12,8 @@ public class Controller {
     private String serverAnswer;
     private static final SecureRandom secureRandom = new SecureRandom();
     private static final Base64.Encoder base64Encoder = Base64.getUrlEncoder();
+    private static SQL sql = new SQL();
+    private static boolean flag = true;
 
     public String getToken() {
         byte[] randomBytes = new byte[100];
@@ -29,6 +33,14 @@ public class Controller {
     }
 
     public void takeAction(String command) {
+
+        if (flag) {
+            flag = false;
+            sql.startProgramme();
+        } else {
+            sql.updateProgramme();
+        }
+
         if (command.startsWith("create account+")) {
             createAccount(command);
         } else if (command.startsWith("get token+")) {
@@ -49,8 +61,38 @@ public class Controller {
             getAllReceiptsByMe(command);
         } else if (command.startsWith("get all receipts involving me+")) {
             getAllReceiptsInvolvingMe(command);
+        } else if (command.startsWith("get amount of transaction+")) {
+            getTransactionAmount(command);
         } else {
             serverAnswer = "invalid input";
+        }
+    }
+
+    private void getTransactionAmount(String command) {
+        try {
+            String token = command.split("\\+")[1];
+            int ID = Integer.parseInt(command.split("\\+")[2]);
+            Transaction transaction = Transaction.getTransactionBasedOnID(ID);
+
+            if (tokenIsWrong(token)) {
+                serverAnswer = "token isn't authentic";
+                return;
+            }
+
+            if (tokenIsExpired(token)) {
+                serverAnswer = "token has expired";
+                return;
+            }
+
+            if (transaction == null) {
+                serverAnswer = "wrong transaction id";
+                return;
+            }
+
+            serverAnswer = Long.toString(transaction.getAmount());
+
+        } catch (Exception e) {
+            serverAnswer = "something went wrong";
         }
     }
 
@@ -79,17 +121,21 @@ public class Controller {
         try {
             StringBuilder result = new StringBuilder("");
             String token = command.split("\\+")[1];
+
             if (tokenIsWrong(token)) {
                 serverAnswer = "token isn't authentic";
                 return;
             }
+
             if (tokenIsExpired(token)) {
                 serverAnswer = "token has expired";
                 return;
             }
+
             for (String string : Transaction.getAllTransactionsWithSource(command.split("\\+")[2])) {
                 result.append(string).append("\n");
             }
+
             serverAnswer = result.toString();
         } catch (Exception e) {
             serverAnswer = "something went wrong";
@@ -102,9 +148,9 @@ public class Controller {
             Account account = Account.getAccountWithUsername(username);
             if (account == null) {
                 serverAnswer = "false";
-            } else {
-                serverAnswer = "true";
+                return;
             }
+            serverAnswer = "true";
         } catch (Exception e) {
             serverAnswer = "something went wrong";
         }
@@ -114,10 +160,10 @@ public class Controller {
         try {
             if (Account.getAccountWithUsername(command.split("\\+")[1]) != null) {
                 serverAnswer = "you already have an account";
-            } else {
-                new Account(command.split("\\+")[1], command.split("\\+")[2], command.split("\\+")[3], command.split("\\+")[4]);
-                serverAnswer = "created successfully";
+                return;
             }
+            new Account(command.split("\\+")[1], command.split("\\+")[2], command.split("\\+")[3], command.split("\\+")[4]);
+            serverAnswer = "created successfully";
         } catch (Exception e) {
             serverAnswer = "something went wrong";
         }
@@ -130,9 +176,9 @@ public class Controller {
             Account account = Account.getAccountWithUsername(username);
             if (account != null && account.getPassword().equals(password)) {
                 serverAnswer = getToken();
-            } else {
-                serverAnswer = "fuck off, identification was wrong";
+                return;
             }
+            serverAnswer = "fuck off, identification was wrong";
         } catch (Exception e) {
             serverAnswer = "something went wrong";
         }
@@ -156,9 +202,9 @@ public class Controller {
             if (Account.getAccountWithUsername(username1) != null && Account.getAccountWithUsername(username2) != null) {
                 new Transaction(username1, username2, amount, description);
                 serverAnswer = "successful";
-            } else {
-                serverAnswer = "one of usernames isn't valid";
+                return;
             }
+            serverAnswer = "one of usernames isn't valid";
         } catch (Exception e) {
             serverAnswer = "something went wrong";
         }
@@ -181,9 +227,9 @@ public class Controller {
             if (Account.getAccountWithUsername(username) != null) {
                 new Transaction(TransactionType.WITHDRAW, username, amount, description);
                 serverAnswer = "successful";
-            } else {
-                serverAnswer = "the username is invalid";
+                return;
             }
+            serverAnswer = "the username is invalid";
         } catch (Exception e) {
             serverAnswer = "something went wrong";
         }
@@ -206,9 +252,9 @@ public class Controller {
             if (Account.getAccountWithUsername(username) != null) {
                 new Transaction(TransactionType.DEPOSIT, username, amount, description);
                 serverAnswer = "successful";
-            } else {
-                serverAnswer = "the username is invalid";
+                return;
             }
+            serverAnswer = "the username is invalid";
         } catch (Exception e) {
             serverAnswer = "something went wrong";
         }
@@ -231,9 +277,9 @@ public class Controller {
             }
             if (account != null) {
                 serverAnswer = Long.toString(account.getBalance());
-            } else {
-                serverAnswer = "the username is invalid";
+                return;
             }
+            serverAnswer = "the username is invalid";
         } catch (Exception e) {
             serverAnswer = "something went wrong";
         }
@@ -257,15 +303,15 @@ public class Controller {
                 serverAnswer = "transaction ID is not authentic";
                 return;
             }
-            if (transaction.getFromUsername().equals(username)) {
+            if (!transaction.getFromUsername().equals(username)) {
                 serverAnswer = "that's not your receipt to pay";
                 return;
             }
             if (transaction.isDone()) {
                 serverAnswer = "it's already done";
-            } else {
-                serverAnswer = transaction.Do();
+                return;
             }
+            serverAnswer = transaction.Do();
         } catch (Exception e) {
             serverAnswer = "something went wrong";
         }

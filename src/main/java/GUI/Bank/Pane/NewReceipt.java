@@ -7,10 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -26,8 +23,19 @@ public class NewReceipt {
     public TextField transferDescription;
     public Button deposit;
     public Button withdraw;
+    public Label depositLabel;
+    public Label withdrawLabel;
     private String username;
 
+    private void resetTextFields() {
+        depositAmount.setText("");
+        withdrawAmount.setText("");
+        transferAmount.setText("");
+        transferUsername.setText("");
+        depositDescription.setText("");
+        withdrawDescription.setText("");
+        transferDescription.setText("");
+    }
 
     public void depositDone(ActionEvent actionEvent) throws ParseException, IOException {
         long amount;
@@ -36,26 +44,25 @@ public class NewReceipt {
         try {
             amount = Long.parseLong(depositAmount.getText());
         } catch (Exception e) {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "", ButtonType.OK);
-            alert.setContentText("invalid amount");
+            Alert alert = new Alert(Alert.AlertType.WARNING, "invalid amount", ButtonType.OK);
             alert.showAndWait();
             return;
         }
 
-        if (depositDescription.getText() == null || depositDescription.getText().equals("")) {
-            description = " ";
-        } else {
-            description = depositDescription.getText();
-        }
+        description = (depositDescription.getText() == null || depositDescription.getText().equals("")) ? "" : depositDescription.getText();
 
-        MenuHandler.getServer().clientToServer("create deposit receipt+" + Bank.getToken() + "+" + username + "+" + amount + "+" + description);
+        MenuHandler.getServer().clientToServer("bank " + "create deposit receipt+" + Bank.getToken() + "+" + username + "+" + amount + "+" + description);
+
         String result = MenuHandler.getServer().serverToClient();
 
         if (result.equals("successful")) {
             Alert alert = new Alert(Alert.AlertType.WARNING, "created successfully", ButtonType.OK);
             alert.showAndWait();
-        } else if (result.equals("token has expired")) {
+            resetTextFields();
+            return;
+        }
 
+        if (result.equals("token has expired")) {
             Alert alert = new Alert(Alert.AlertType.WARNING, "you token is expired, you may wanna login again", ButtonType.OK);
             alert.showAndWait();
 
@@ -66,10 +73,11 @@ public class NewReceipt {
             stage.setScene(new Scene(root));
             Bank.setToken(null);
             Bank.setPassword(null);
-        } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "something has gone wrong, try again", ButtonType.OK);
-            alert.showAndWait();
+            return;
         }
+
+        Alert alert = new Alert(Alert.AlertType.ERROR, "something has gone wrong, try again", ButtonType.OK);
+        alert.showAndWait();
 
     }
 
@@ -80,26 +88,24 @@ public class NewReceipt {
         try {
             amount = Long.parseLong(withdrawAmount.getText());
         } catch (Exception e) {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "", ButtonType.OK);
-            alert.setContentText("invalid amount");
+            Alert alert = new Alert(Alert.AlertType.WARNING, "invalid amount", ButtonType.OK);
             alert.showAndWait();
             return;
         }
 
-        if (withdrawDescription.getText() == null || withdrawDescription.getText().equals("")) {
-            description = " ";
-        } else {
-            description = withdrawDescription.getText();
-        }
+        description = (withdrawDescription.getText() == null || withdrawDescription.getText().equals("")) ? " " : withdrawDescription.getText();
 
-        MenuHandler.getServer().clientToServer("create withdraw receipt+" + Bank.getToken() + "+" + username + "+" + amount + "+" + description);
+        MenuHandler.getServer().clientToServer("bank " + "create withdraw receipt+" + Bank.getToken() + "+" + username + "+" + amount + "+" + description);
+
         String result = MenuHandler.getServer().serverToClient();
 
         if (result.equals("successful")) {
             Alert alert = new Alert(Alert.AlertType.WARNING, "created successfully", ButtonType.OK);
             alert.showAndWait();
-        } else if (result.equals("token has expired")) {
-
+            resetTextFields();
+            return;
+        }
+        if (result.equals("token has expired")) {
             Alert alert = new Alert(Alert.AlertType.WARNING, "you token is expired, you may wanna login again", ButtonType.OK);
             alert.showAndWait();
 
@@ -110,12 +116,10 @@ public class NewReceipt {
             stage.setScene(new Scene(root));
             Bank.setToken(null);
             Bank.setPassword(null);
-
-        } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "something has gone wrong, try again", ButtonType.OK);
-            alert.showAndWait();
+            return;
         }
-
+        Alert alert = new Alert(Alert.AlertType.ERROR, "something has gone wrong, try again", ButtonType.OK);
+        alert.showAndWait();
     }
 
     public void transferDone(ActionEvent actionEvent) throws ParseException, IOException {
@@ -146,26 +150,25 @@ public class NewReceipt {
 
         MenuHandler.getServer().clientToServer("bank " + "is there person with username+" + otherUser);
         String answer = MenuHandler.getServer().serverToClient();
-        System.out.println("there it is: " + answer);
         if (answer.equals("false")) {
             alert.setContentText("the username entered isn't valid, try something valid");
             alert.showAndWait();
             return;
         }
 
-        if (transferDescription.getText() == null || transferDescription.getText().equals("")) {
-            description = " ";
-        } else {
-            description = transferDescription.getText();
-        }
-        MenuHandler.getServer().clientToServer("create transfer receipt+" + Bank.getToken() + "+" + username + "+" + otherUser + "+" + amount + "+" + description);
+        description = (transferDescription.getText() == null || transferDescription.getText().equals("")) ? "" : transferDescription.getText();
+
+        MenuHandler.getServer().clientToServer("bank " + "create transfer receipt+" + Bank.getToken() + "+" + username + "+" + otherUser + "+" + amount + "+" + description);
 
         String result = MenuHandler.getServer().serverToClient();
 
         if (result.equals("successful")) {
             alert.setContentText("created successfully");
             alert.showAndWait();
-        } else if (result.equals("token has expired")) {
+            return;
+        }
+
+        if (result.equals("token has expired")) {
 
             alert.setContentText("you token is expired, you may wanna login again");
             alert.showAndWait();
@@ -177,26 +180,25 @@ public class NewReceipt {
             stage.setScene(new Scene(root));
             Bank.setToken(null);
             Bank.setPassword(null);
-
-        } else {
-            alert.setContentText("something has gone wrong, try again");
-            alert.showAndWait();
+            return;
         }
+
+        alert.setContentText("something has gone wrong, try again");
+        alert.showAndWait();
     }
 
     public void initialize() {
-
-        if (MenuHandler.getRole().equalsIgnoreCase("boss")) {
-            username = "BOSS";
-        } else {
-            username = MenuHandler.getUsername();
-        }
-
-        if (MenuHandler.getRole().equalsIgnoreCase("customer")) {
-            deposit.setDisable(true);
-        } else if (MenuHandler.getRole().equalsIgnoreCase("boss")) {
+        username = MenuHandler.getRole().equalsIgnoreCase("boss") ? "BOSS" : MenuHandler.getUsername();
+        String role = MenuHandler.getRole();
+        if (role.equalsIgnoreCase("boss")) {
             withdraw.setDisable(true);
             deposit.setDisable(true);
+        } else if (role.equalsIgnoreCase("customer")) {
+            depositLabel.setText("deposit (add money to your account)");
+            withdrawLabel.setText("withdraw (add credit to your account)");
+        } else if (role.equalsIgnoreCase("salesman")){
+            withdraw.setDisable(true);
+            depositLabel.setText("deposit (add to you bank account from credits)");
         }
     }
 

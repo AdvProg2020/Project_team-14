@@ -36,7 +36,7 @@
             <Font name="Arabic Typesetting" size="34.0" />
          </font>
       </Label>
-      <Button layoutX="465.0" layoutY="250.0" mnemonicParsing="false" onAction="#login" prefHeight="39.0" prefWidth="102.0" style="-fx-background-color: yellow;" text="login" textFill="#ba00fe">
+      <Button layoutX="475.0" layoutY="271.0" mnemonicParsing="false" onAction="#login" prefHeight="39.0" prefWidth="102.0" style="-fx-background-color: yellow;" text="login" textFill="#ba00fe">
          <font>
             <Font size="19.0" />
          </font>
@@ -49,7 +49,7 @@
             <Font name="Arabic Typesetting" size="34.0" />
          </font>
       </Label>
-      <Button layoutX="88.0" layoutY="250.0" mnemonicParsing="false" onAction="#createAccount" prefHeight="42.0" prefWidth="184.0" style="-fx-background-color: yellow;" text="create account" textFill="#ba00fe">
+      <Button layoutX="88.0" layoutY="271.0" mnemonicParsing="false" onAction="#createAccount" prefHeight="42.0" prefWidth="184.0" style="-fx-background-color: yellow;" text="create account" textFill="#ba00fe">
          <font>
             <Font size="19.0" />
          </font>
@@ -65,5 +65,15 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
+      <PasswordField fx:id="createAccountConfirmation" layoutX="180.0" layoutY="204.0" opacity="0.69">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </PasswordField>
+      <Label layoutX="31.0" layoutY="194.0" text="confirmation:" textFill="#00ff2b">
+         <font>
+            <Font name="Arabic Typesetting" size="34.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
