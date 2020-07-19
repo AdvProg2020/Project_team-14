@@ -79,7 +79,9 @@ public class MoveInformationPopOut {
         }
     }
 
-    public void remove(ActionEvent actionEvent) {
+    public void remove(ActionEvent actionEvent) throws ParseException {
+        MenuHandler.getServer().clientToServer("delete account+" + MenuHandler.getUsername() + "+" + MenuHandler.getSeeingUsername());
+        ((Button) actionEvent.getSource()).getScene().getWindow().hide();
         Audio.playClick4();
     }
 

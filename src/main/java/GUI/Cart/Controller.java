@@ -82,6 +82,10 @@ public class Controller {
             alert.setAlertType(Alert.AlertType.ERROR);
         } else {
             usedOffCode.setText(offCodeId.getText());
+            MenuHandler.getServer().clientToServer("get offCode percentage+" + MenuHandler.getUsername() + "+" + usedOffCode.getText());
+            int x = Integer.parseInt(MenuHandler.getServer().serverToClient());
+            System.out.println(x);
+            finalPrice.setText(String.valueOf(x * ans / 100));
         }
         alert.showAndWait();
     }
@@ -101,6 +105,7 @@ public class Controller {
                     products += cart.getSalesman() + "+" + cart.getProductId() + "+" + cart.getCount() + "\n";
                 }
                 MenuHandler.getServer().clientToServer(products);
+                System.out.println(products);
                 if (MenuHandler.getServer().serverToClient().equals("Buy Successful")) {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION, "Buy Successful", ButtonType.OK);
                     alert.showAndWait();

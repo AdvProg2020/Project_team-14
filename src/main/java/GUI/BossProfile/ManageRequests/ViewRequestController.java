@@ -111,7 +111,7 @@ public class ViewRequestController {
                 ans += serverAnswer.split("\n")[6].split("\\s")[0] + " " + serverAnswer.split("\n")[6].split("\\s")[1] + " " +
                         serverAnswer.split("\n")[6].split("\\s")[2] + "\n";
                 ans += serverAnswer.split("\n")[7].split("\\s")[0] + " " + serverAnswer.split("\n")[7].split("\\s")[1] + " " +
-                        serverAnswer.split("\n")[7].split("\\s")[2] + " " + serverAnswer.split("\n")[8].split("\\s")[3] + "\n";
+                        serverAnswer.split("\n")[7].split("\\s")[2] + " " + serverAnswer.split("\n")[7].split("\\s")[3] + "\n";
                 ans += "Request ID: " + requestID;
                 requestContent.setText(ans);
                 break;

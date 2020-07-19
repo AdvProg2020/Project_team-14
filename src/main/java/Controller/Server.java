@@ -276,7 +276,21 @@ public class Server {
             this.buy(command);
         } else if (command.startsWith("can use offCode+")) {
             this.canUserOffCode(command);
+        } else if (command.startsWith("get offCode percentage+")) {
+            this.getOffCodePercentage(command);
+        } else if (command.startsWith("use offCode")) {
+            this.useOffCode(command);
         }
+    }
+
+    private void useOffCode(String command) {
+        Storage.getOffCodeById(command.split("\\+")[1]).setNumberOfTimesCanBeUsed
+                (Storage.getOffCodeById(command.split("\\+")[1]).getNumberOfTimesCanBeUsed() - 1);
+    }
+
+    private void getOffCodePercentage(String command) {
+        String offCodeId = command.split("\\+")[2];
+        setAnswer(String.valueOf(Storage.getOffCodeById(offCodeId).getPercentage()));
     }
 
     private void canUserOffCode(String command) {
@@ -295,11 +309,12 @@ public class Server {
     }
 
     private void buy(String command) {
+        System.out.println(command);
         for (String s : command.split("\n")) {
             if (s.startsWith("buy")) continue;
             Product product = Storage.getProductById(s.split("\\+")[1]);
             product.setRemainderForSalesman(product.getRemainderForSalesman(s.split("\\+")[0]) - Integer.parseInt(s.split("\\+")[2]), s.split("\\+")[0]);
-            Account account = Storage.getAccountWithUsername(command.split("\\+")[1]);
+            Account account = Storage.getAccountWithUsername(command.split("\n")[0].split("\\+")[1]);
             Account account1 = Storage.getAccountWithUsername(s.split("\\+")[0]);
             ((Salesman) account1).setCredit(account.getCredit() + product.getPriceBySalesmanID(s.split("\\+")[0]) * Integer.parseInt(s.split("\\+")[2]));
             ((Customer) account).setCredit(account.getCredit() - product.getPriceBySalesmanID(s.split("\\+")[0]) * Integer.parseInt(s.split("\\+")[2]));
@@ -1383,7 +1398,7 @@ public class Server {
     }
 
     public String serverToClient() throws IOException {
-        //endOfProgramme.updateFiles();
+        endOfProgramme.updateFiles();
         return Server.answer;
     }
 

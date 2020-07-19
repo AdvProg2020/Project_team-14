@@ -412,7 +412,8 @@ public class Controller {
             popup.getContent().addAll(addProductPopup);
             popup.show(stage);
         } else {
-            //delete product
+            MenuHandler.getServer().clientToServer("delete product+" + MenuHandler.getUsername() + "+" + MenuHandler.getProductID());
+            MenuHandler.getStage().setScene(new Scene(FXMLLoader.load(getClass().getResource("/GUI/ProfileLayout/ProfileLayout.fxml"))));
         }
     }
 

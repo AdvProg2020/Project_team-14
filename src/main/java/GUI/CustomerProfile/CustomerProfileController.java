@@ -69,11 +69,14 @@ public class CustomerProfileController {
     }
 
 
-
     public void logging(ActionEvent actionEvent) throws IOException {
         Audio.playClick3();
         pane.getChildren().clear();
         pane.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/Log/Log.fxml")));
 
+    }
+
+    public void showCart(MouseEvent mouseEvent) throws IOException {
+        MenuHandler.getStage().setScene(new Scene(FXMLLoader.load(getClass().getResource("/GUI/Cart/Cart.fxml"))));
     }
 }
