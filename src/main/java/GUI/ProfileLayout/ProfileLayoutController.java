@@ -132,6 +132,6 @@ public class ProfileLayoutController {
 
     public void Financial(ActionEvent actionEvent) throws IOException {
         pane.getChildren().remove(pane.getChildren().get(0));
-        pane.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/SalesmanProfile/ManageSale/ManageSalesLayout.fxml")));
+        pane.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/ProfileLayout/Financial/Financial.fxml")));
     }
 }

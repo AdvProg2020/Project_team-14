@@ -330,7 +330,7 @@ public class Server {
 
     private void setMinCredit(String command) {
         int wage = Integer.parseInt(command.split("\\+")[1]);
-        CreditController.getCreditController().setWagePercentage(wage);
+        CreditController.getCreditController().setMinimumCredit(wage);
         setAnswer("successful");
     }
 

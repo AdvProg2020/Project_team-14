@@ -29,7 +29,7 @@ public class LogOrRegister {
             alert.showAndWait();
             return;
         }
-        
+
         //it's a boss
 
         if (MenuHandler.getRole().equalsIgnoreCase("boss")) {
@@ -114,24 +114,21 @@ public class LogOrRegister {
 
         if (MenuHandler.getServer().serverToClient().equals("created successfully")) {
             alert.setContentText("created successfully");
-        } else {
-            alert.setContentText("something went wrong, try again");
+            createAccountConfirmation.setText("");
+            createAccountPassword.setText("");
         }
+        alert.setContentText("something went wrong, try again");
         alert.showAndWait();
     }
 
     public void back(ActionEvent actionEvent) throws IOException {
         Audio.playClick1();
-        Parent root = FXMLLoader.load(getClass().getResource("/GUI/ProfileLayout/ProfileLayout.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/GUI/ProductScene/ProductScene.fxml"));
         Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
     }
 
     public void initialize() {
-        if (MenuHandler.getRole().equalsIgnoreCase("boss")) {
-            username = "BOSS";
-        } else {
-            username = MenuHandler.getUsername();
-        }
+        username = MenuHandler.getRole().equalsIgnoreCase("boss") ? "BOSS" : MenuHandler.getUsername();
     }
 }

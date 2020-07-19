@@ -108,9 +108,6 @@ public class NewReceipt {
         if (result.equals("token has expired")) {
             Alert alert = new Alert(Alert.AlertType.WARNING, "you token is expired, you may wanna login again", ButtonType.OK);
             alert.showAndWait();
-
-            //going back to register login page
-
             Parent root = FXMLLoader.load(getClass().getResource("/GUI/Bank/LogOrRegister.fxml"));
             Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
@@ -135,19 +132,16 @@ public class NewReceipt {
             alert.showAndWait();
             return;
         }
-
         if (otherUser == null || otherUser.equals("")) {
             alert.setContentText("the username field cannot be empty");
             alert.showAndWait();
             return;
         }
-
         if (otherUser.equals(username)) {
             alert.setContentText("you cannot transfer money to your own account");
             alert.showAndWait();
             return;
         }
-
         MenuHandler.getServer().clientToServer("bank " + "is there person with username+" + otherUser);
         String answer = MenuHandler.getServer().serverToClient();
         if (answer.equals("false")) {
@@ -169,12 +163,8 @@ public class NewReceipt {
         }
 
         if (result.equals("token has expired")) {
-
             alert.setContentText("you token is expired, you may wanna login again");
             alert.showAndWait();
-
-            //going back to register login page
-
             Parent root = FXMLLoader.load(getClass().getResource("/GUI/Bank/LogOrRegister.fxml"));
             Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
@@ -196,7 +186,7 @@ public class NewReceipt {
         } else if (role.equalsIgnoreCase("customer")) {
             depositLabel.setText("deposit (add money to your account)");
             withdrawLabel.setText("withdraw (add credit to your account)");
-        } else if (role.equalsIgnoreCase("salesman")){
+        } else if (role.equalsIgnoreCase("salesman")) {
             withdraw.setDisable(true);
             depositLabel.setText("deposit (add to you bank account from credits)");
         }

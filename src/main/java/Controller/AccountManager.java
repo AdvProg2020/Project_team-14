@@ -51,16 +51,6 @@ public class AccountManager {
         Server.setAnswer("logout successful");
     }
 
-    /*public void forgotPassword(String username) {
-        if (Storage.isThereAccountWithUsername(username)) {
-            Account account = Storage.getAccountWithUsername(username);
-            assert account != null;
-            Server.setAnswer("here is your password: " + account.getPassword());
-        } else {
-            Server.setAnswer("the username doesn't exists");
-        }
-    }*/
-
     public void viewAccountInformation(String username) {
         Account account = Storage.getAccountWithUsername(username);
         assert account != null;

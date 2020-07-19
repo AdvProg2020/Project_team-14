@@ -29,7 +29,7 @@ public class Controller {
 
     public boolean tokenIsExpired(String token) {
         long past = Long.parseLong(token.substring(0, 13));
-        return System.currentTimeMillis() - past > 1000000;
+        return System.currentTimeMillis() - past > 10000;
     }
 
     public void takeAction(String command) {
@@ -73,24 +73,19 @@ public class Controller {
             String token = command.split("\\+")[1];
             int ID = Integer.parseInt(command.split("\\+")[2]);
             Transaction transaction = Transaction.getTransactionBasedOnID(ID);
-
             if (tokenIsWrong(token)) {
                 serverAnswer = "token isn't authentic";
                 return;
             }
-
             if (tokenIsExpired(token)) {
                 serverAnswer = "token has expired";
                 return;
             }
-
             if (transaction == null) {
                 serverAnswer = "wrong transaction id";
                 return;
             }
-
             serverAnswer = Long.toString(transaction.getAmount());
-
         } catch (Exception e) {
             serverAnswer = "something went wrong";
         }

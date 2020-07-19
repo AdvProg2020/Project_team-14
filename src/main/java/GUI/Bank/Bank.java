@@ -5,7 +5,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -26,7 +28,21 @@ public class Bank {
         stage.setScene(new Scene(root));
     }
 
-    public void manageReceipt(ActionEvent actionEvent) throws IOException {
+    private void checkExpired(ActionEvent actionEvent) throws IOException, ParseException {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, "", ButtonType.OK);
+        MenuHandler.getServer().clientToServer("bank " + "get all receipts by me+" + Bank.getToken() + "+" + MenuHandler.getUsername());
+        String answer = MenuHandler.getServer().serverToClient();
+        if (answer.equals("token isn't authentic") || answer.equals("something went wrong") || answer.contains("expired")) {
+            alert.setContentText("you token is expired, you may wanna login again");
+            alert.showAndWait();
+            Parent root = FXMLLoader.load(getClass().getResource("/GUI/Bank/LogOrRegister.fxml"));
+            Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+        }
+    }
+
+    public void manageReceipt(ActionEvent actionEvent) throws IOException, ParseException {
+        checkExpired(actionEvent);
         try {
             pane.getChildren().remove(pane.getChildren().get(0));
             pane.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/Bank/Pane/ManageReceipt.fxml")));
@@ -34,7 +50,8 @@ public class Bank {
         }
     }
 
-    public void newReceipt(ActionEvent actionEvent) throws IOException {
+    public void newReceipt(ActionEvent actionEvent) throws IOException, ParseException {
+        checkExpired(actionEvent);
         try {
             pane.getChildren().remove(pane.getChildren().get(0));
             pane.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/Bank/Pane/NewReceipt.fxml")));
@@ -70,9 +87,7 @@ public class Bank {
         } else {
             MenuHandler.getServer().clientToServer("bank " + "get balance+" + Bank.getToken() + "+" + MenuHandler.getUsername());
         }
-
         String credit = MenuHandler.getServer().serverToClient();
-
         if (credit.equals("token has expired")) {
             return;
         }
@@ -81,6 +96,14 @@ public class Bank {
             return;
         }
         creditLabel.setText("oops .... ");
+    }
+
+    public static boolean isPossibleToDepositForSalesman(long amount) throws IOException, ParseException {
+        if (!MenuHandler.getRole().equalsIgnoreCase("salesman")) {
+            return false;
+        }
+        long credit = MenuHandler.getCredit();
+        return credit - amount >= MenuHandler.getMinCredit();
     }
 
 }

@@ -6,6 +6,8 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import org.javatuples.Triplet;
 
+import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 public class MenuHandler {
@@ -170,5 +172,20 @@ public class MenuHandler {
 
     public static void setUserAvatar(String userAvatar) {
         MenuHandler.userAvatar = userAvatar;
+    }
+
+    public static long getCredit() throws ParseException, IOException {
+        MenuHandler.getServer().clientToServer("show balance+" + username);
+        return Long.parseLong(MenuHandler.getServer().serverToClient().substring("Your Balance is : ".length()));
+    }
+
+    public static int getWagePercentage() throws ParseException, IOException {
+        MenuHandler.getServer().clientToServer("get wage+");
+        return Integer.parseInt(MenuHandler.getServer().serverToClient());
+    }
+
+    public static long getMinCredit() throws ParseException, IOException {
+        MenuHandler.getServer().clientToServer("get min credit+");
+        return Long.parseLong(MenuHandler.getServer().serverToClient());
     }
 }
