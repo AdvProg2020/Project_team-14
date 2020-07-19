@@ -1,11 +1,7 @@
 package Controller;
 
-//import Model.Cart.Cart;
-//import Model.Category.Category;
-//import Model.Storage;
-
 import java.io.IOException;
-import java.net.ServerSocket;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -16,16 +12,13 @@ import java.util.regex.Pattern;
 
 import Controller.DataBase.EndOfProgramme;
 import Controller.DataBase.startOfProgramme;
-import Menus.shows.ShowRequestsMenu;
+import Controller.SQL.SQL;
 import Model.Account.Account;
 import Model.Account.Customer;
 import Model.Account.Role;
 import Model.Account.Salesman;
-import Model.Cart.Cart;
 import Model.Category.Category;
 import Model.Confirmation;
-import Model.Log.BuyLog;
-import Model.Log.Log;
 import Model.Off.OffCode;
 import Model.Off.Sale;
 import Model.Product.Comment;
@@ -33,7 +26,8 @@ import Model.Product.Point;
 import Model.Product.Product;
 import Model.Request.Request;
 import Model.Storage;
-import org.javatuples.Triplet;
+
+import static Controller.Security.Methods.*;
 
 public class Server {
     static private boolean hasBoss;
@@ -43,22 +37,25 @@ public class Server {
     private SalesmanManager salesmanManager;
     private CustomerManager customerManager;
     private EndOfProgramme endOfProgramme = new EndOfProgramme();
+    private SQL sql = new SQL();
 
     //first is username, second is a cart
     //private HashMap<String, Cart> abstractCarts;
     static private String answer;
 
-    public Server() throws IOException, ClassNotFoundException {
+    public Server() throws IOException, ClassNotFoundException, SQLException {
         answer = "";
         this.accountManager = new AccountManager();
         this.bossManager = new BossManager();
         this.customerManager = new CustomerManager();
         this.salesmanManager = new SalesmanManager();
         this.productManager = new ProductManager();
-        startOfProgramme startOfProgramme = new startOfProgramme();
-        startOfProgramme.startProgramme();
+        try {
+            sql.startProgramme();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
         hasBoss = (Storage.getAllBosses().size() != 0);
-        //abstractCarts = new HashMap<>();
     }
 
     public static void setAnswer(String answer) {
@@ -75,6 +72,27 @@ public class Server {
     }
 
     public void clientToServer(String command) throws ParseException {
+        try {
+
+            //running security checks
+
+            if (checkStringLength(command) || mayContainScript(command)) {
+                return;
+            }
+
+            //checking IP
+            //checking token ...
+            // if it doesn't ask for secret stuff
+            //takeNormalAction(command);
+            //if it's secret
+
+            takeAction(command);
+        } catch (Exception ignored) {
+        }
+
+    }
+
+    public void takeAction(String command) throws ParseException {
         Matcher matcher;
         if ((matcher = getMatcher("login\\+(\\w+)\\+(\\w+)", command)).find()) {
             this.login(matcher);
@@ -82,8 +100,6 @@ public class Server {
             this.register(command);
         } else if (command.startsWith("logout+")) {
             this.logout(command);
-        } else if (command.startsWith("forgot password+")) {
-            this.forgotPassword(command);
         } else if (command.startsWith("what is account role+")) {
             this.getAccountRole(command);
         } else if (command.startsWith("view personal info+")) {
@@ -263,6 +279,20 @@ public class Server {
         } else if (command.startsWith("get product sale")) {
             getProductSale(command);
         }
+        //bank parts
+        else if (command.startsWith("bank ")) {
+            setAnswer(BankConnector.sendToBank(command.substring("bank ".length())));
+        }
+        //financial parts
+        else if (command.startsWith("get wage+")) {
+            getWage();
+        } else if (command.startsWith("set wage+")) {
+            setWage(command);
+        } else if (command.startsWith("get min credit+")) {
+            getMinCredit();
+        } else if (command.startsWith("set min credit+")) {
+            setMinCredit(command);
+        }
         //end parts
         else if (command.startsWith("show balance")) {
             this.showBalance(command);
@@ -276,21 +306,41 @@ public class Server {
             this.buy(command);
         } else if (command.startsWith("can use offCode+")) {
             this.canUserOffCode(command);
-        } else if (command.startsWith("get offCode percentage+")) {
-            this.getOffCodePercentage(command);
-        } else if (command.startsWith("use offCode")) {
-            this.useOffCode(command);
+        } else if (command.startsWith("make new supporter+")) {
+            this.makeNewSupporter(command);
+        } else if (command.startsWith("delete supporter+")) {
+            this.deleteSupporter(command);
         }
+
     }
 
-    private void useOffCode(String command) {
-        Storage.getOffCodeById(command.split("\\+")[1]).setNumberOfTimesCanBeUsed
-                (Storage.getOffCodeById(command.split("\\+")[1]).getNumberOfTimesCanBeUsed() - 1);
+    private void getWage() {
+        setAnswer(Integer.toString(CreditController.getCreditController().getWagePercentage()));
     }
 
-    private void getOffCodePercentage(String command) {
-        String offCodeId = command.split("\\+")[2];
-        setAnswer(String.valueOf(Storage.getOffCodeById(offCodeId).getPercentage()));
+    private void setWage(String command) {
+        int wage = Integer.parseInt(command.split("\\+")[1]);
+        CreditController.getCreditController().setWagePercentage(wage);
+        setAnswer("successful");
+    }
+
+    private void getMinCredit() {
+        setAnswer(Integer.toString(CreditController.getCreditController().getMinimumCredit()));
+    }
+
+    private void setMinCredit(String command) {
+        int wage = Integer.parseInt(command.split("\\+")[1]);
+        CreditController.getCreditController().setWagePercentage(wage);
+        setAnswer("successful");
+    }
+
+
+    private void makeNewSupporter(String command) {
+        SupporterController.makeNewSupporter(command.split("\\+")[1], command.split("\\+")[2]);
+    }
+
+    private void deleteSupporter(String command) {
+        SupporterController.deleteSupporter(command.split("\\+")[1]);
     }
 
     private void canUserOffCode(String command) {
@@ -309,12 +359,11 @@ public class Server {
     }
 
     private void buy(String command) {
-        System.out.println(command);
         for (String s : command.split("\n")) {
             if (s.startsWith("buy")) continue;
             Product product = Storage.getProductById(s.split("\\+")[1]);
             product.setRemainderForSalesman(product.getRemainderForSalesman(s.split("\\+")[0]) - Integer.parseInt(s.split("\\+")[2]), s.split("\\+")[0]);
-            Account account = Storage.getAccountWithUsername(command.split("\n")[0].split("\\+")[1]);
+            Account account = Storage.getAccountWithUsername(command.split("\\+")[1]);
             Account account1 = Storage.getAccountWithUsername(s.split("\\+")[0]);
             ((Salesman) account1).setCredit(account.getCredit() + product.getPriceBySalesmanID(s.split("\\+")[0]) * Integer.parseInt(s.split("\\+")[2]));
             ((Customer) account).setCredit(account.getCredit() - product.getPriceBySalesmanID(s.split("\\+")[0]) * Integer.parseInt(s.split("\\+")[2]));
@@ -1309,10 +1358,6 @@ public class Server {
         accountManager.viewAccountInformation(input[1]);
     }
 
-    private void forgotPassword(String command) {
-        accountManager.forgotPassword(command.split("\\+")[1]);
-    }
-
     private void getAccountRole(String command) {
         setAnswer(Storage.getAccountWithUsername(command.split("\\+")[1]).getRole().name());
     }
@@ -1399,12 +1444,9 @@ public class Server {
 
     public String serverToClient() throws IOException {
         endOfProgramme.updateFiles();
+        sql.updateProgramme();
         return Server.answer;
     }
-
-    /*
-     * ---------[ here are common parts, server handel this by itself, no manager required ]--------
-     */
 
     public void showBalance(String command) {
         String username = command.split("\\+")[1];

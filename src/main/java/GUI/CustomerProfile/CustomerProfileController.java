@@ -69,6 +69,7 @@ public class CustomerProfileController {
     }
 
 
+
     public void logging(ActionEvent actionEvent) throws IOException {
         Audio.playClick3();
         pane.getChildren().clear();
@@ -76,7 +77,11 @@ public class CustomerProfileController {
 
     }
 
-    public void showCart(MouseEvent mouseEvent) throws IOException {
-        MenuHandler.getStage().setScene(new Scene(FXMLLoader.load(getClass().getResource("/GUI/Cart/Cart.fxml"))));
+    public void Banking(ActionEvent actionEvent) throws IOException {
+        Audio.playClick2();
+        Parent root = FXMLLoader.load(getClass().getResource("/GUI/Bank/LogOrRegister.fxml"));
+        Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root));
     }
+
 }

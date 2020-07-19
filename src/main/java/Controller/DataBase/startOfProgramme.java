@@ -43,9 +43,7 @@ public class startOfProgramme extends DataBase {
         updateSellLogs();
         updateCarts();
         updateRequests();
-
     }
-
 
     @Override
     protected void updateCustomers() throws IOException, ClassNotFoundException {
@@ -57,7 +55,6 @@ public class startOfProgramme extends DataBase {
             Account s = (Account) in.readObject();
             Storage.getAllAccounts().add(s);
         }
-
     }
 
     @Override
@@ -131,7 +128,6 @@ public class startOfProgramme extends DataBase {
             OffCode s = (OffCode) in.readObject();
             allOffCodes.add(s);
         }
-
     }
 
     @Override
@@ -144,7 +140,6 @@ public class startOfProgramme extends DataBase {
             Product s = (Product) in.readObject();
             Storage.getAllProducts().add(s);
         }
-
     }
 
     @Override
@@ -222,6 +217,4 @@ public class startOfProgramme extends DataBase {
             allSellLogs.add(s);
         }
     }
-
 }
-

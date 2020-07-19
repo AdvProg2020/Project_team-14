@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.AccessibleRole;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -24,6 +25,7 @@ import javafx.util.Duration;
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -32,6 +34,12 @@ public class RegisterController {
 
     public Label companyLabel;
     public MediaView mediaView;
+    public TextField indegtification;
+    public Label identificationLabel;
+    private int numberOfTimesTried;
+    private int numberOfBadTries;
+    private boolean checkSecurity;
+    private Random random = new Random();
     ObservableList<String> rolesIfHasNotBoss = FXCollections.observableArrayList("Boss", "Salesman", "Customer");
     ObservableList<String> rolesIfHasBoss = FXCollections.observableArrayList("Customer", "Salesman");
 
@@ -49,13 +57,10 @@ public class RegisterController {
 
     @FXML
     public void initialize() throws ParseException, IOException {
-        String path = "src/main/java/GUI/Login/resources/mp4.mp4";
-        Media media = new Media(new File(path).toURI().toString());
-        MediaPlayer mediaPlayer = new MediaPlayer(media);
-//        mediaView.setMediaPlayer(mediaPlayer);
-        mediaPlayer.setAutoPlay(true);
-        mediaPlayer.setOnEndOfMedia(() -> mediaPlayer.seek(Duration.ZERO));
-
+        checkSecurity = false;
+        numberOfBadTries = 0;
+        numberOfTimesTried = 0;
+        identificationLabel.setText(String.valueOf(random.nextInt(10000)));
         MenuHandler.getServer().clientToServer("is server has boss");
         if (MenuHandler.getServer().serverToClient().equalsIgnoreCase("yes")) {
             role.setItems(rolesIfHasBoss);
@@ -100,8 +105,17 @@ public class RegisterController {
 
     public void register(ActionEvent actionEvent) throws ParseException, IOException {
         Audio.playClick5();
+        checkSecurity(actionEvent);
+        numberOfTimesTried++;
+        numberOfBadTries++;
+        if (checkSecurity) {
+            return;
+        }
         Alert alert = new Alert(Alert.AlertType.ERROR, "", ButtonType.OK);
-        if (username.getText().equals("")) {
+        if (!indegtification.getText().equals(identificationLabel.getText())) {
+            alert.setContentText("the code is wrong try again");
+            alert.showAndWait();
+        } else if (username.getText().equals("")) {
             alert.setContentText("Username Field Must Not Be Empty");
             alert.showAndWait();
         } else if (password.getText().equals("")) {
@@ -122,10 +136,13 @@ public class RegisterController {
         } else if (telephone.getText().equals("")) {
             alert.setContentText("Telephone Field Must Not Be Empty");
             alert.showAndWait();
+        } else if(username.getText().equalsIgnoreCase("boss")){
+            alert.setContentText("the username cannot be case insensitive equal to boss");
+            alert.showAndWait();
         } else if (((String) role.getValue()).equalsIgnoreCase("salesman") && company.getText().equals("")) {
             alert.setContentText("Company Field Must Not Be Empty");
             alert.showAndWait();
-        } else if(((Label) (((AnchorPane) avatarPane.getChildren().get(0)).getChildren().get(12))).getText().equals("")) {
+        } else if (((Label) (((AnchorPane) avatarPane.getChildren().get(0)).getChildren().get(12))).getText().equals("")) {
             alert.setContentText("please chose your avatar");
             alert.showAndWait();
         } else {
@@ -160,6 +177,7 @@ public class RegisterController {
                 if (serverAnswer.equalsIgnoreCase("the username is already taken, try something else")) {
                     alert.setContentText("This Username Has Been Taken Please Try Something Else");
                 } else {
+                    numberOfTimesTried--;
                     alert.setAlertType(Alert.AlertType.CONFIRMATION);
                     alert.setContentText("Your Register Was Successful");
                     setAvatarInServer(username.getText());
@@ -228,4 +246,20 @@ public class RegisterController {
             System.exit(1989);
         }
     }
+
+    public void reset(ActionEvent actionEvent) {
+        identificationLabel.setText(String.valueOf(random.nextInt(10000)));
+    }
+
+    public void checkSecurity(ActionEvent actionEvent) throws IOException {
+        if (numberOfTimesTried == 3 || numberOfBadTries == 5) {
+            checkSecurity = true;
+            Parent root = FXMLLoader.load(getClass().getResource("/GUI/Register/Lock/Lock.fxml"));
+            Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            numberOfBadTries = 0;
+            numberOfTimesTried = 0;
+        }
+    }
+
 }

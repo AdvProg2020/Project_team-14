@@ -1,7 +1,5 @@
 package Model;
 
-import java.io.Serializable;
-
 public abstract class RandomString {
     public static String getRandomString(int n) {
         String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -26,4 +24,5 @@ public abstract class RandomString {
         result += getRandomString(23);
         return result;
     }
+
 }

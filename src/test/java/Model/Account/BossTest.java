@@ -28,7 +28,7 @@ public class BossTest {
         Boss boss = new Boss("username", "password", "manuel",
                 "neuer", "h.hafezi2000@gmail.com", "09333805288", "Boss");
         String result = "Username: " + "username" + "\n";
-        result += "Password: " + "password" + "\n";
+        result += "Password: password" + "\n";
         result += "Name: " + "" + "manuel" + " neuer" + "\n";
         result += "Email: " + "h.hafezi2000@gmail.com" + "\n";
         result += "Telephone: " + "09333805288" + "\n";

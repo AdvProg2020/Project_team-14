@@ -6,6 +6,7 @@ import Model.Confirmation;
 import Model.Storage;
 import org.junit.Assert;
 import org.junit.Test;
+
 import java.util.ArrayList;
 
 public class ProductTest {
@@ -111,12 +112,8 @@ public class ProductTest {
         String result = "Name: name" + "\n";
         result += "Brand: brand" + "\n";
         result += "Description: description" + "\n";
-        result += "Sellers: " + "\n";
-        result += "Salesman: salesmanUser1";
-        result += " Price: 10" + "\n";
-        result += "Salesman: salesmanUser2";
-        result += " Price: 100" + "\n";
-        Assert.assertEquals(product.toStringForCustomerView(), result);
+        result += "Price: 10" + "\n";
+        Assert.assertTrue(product.toStringForCustomerView().contains(result));
     }
 
     @Test
@@ -126,22 +123,19 @@ public class ProductTest {
         product.deleteForSalesman(salesman3.getUsername());
         product.setConfirmationState(salesman2.getUsername(), Confirmation.ACCEPTED);
         product.setConfirmationState(salesman1.getUsername(), Confirmation.ACCEPTED);
-        String result = "Name: name" + "\n";
-        result += "Brand: brand" + "\n";
-        result += "Description: description" + "\n";
-        result += "Sellers: " + "\n";
-        result += "Salesman: salesmanUser1";
-        result += " Price: 10" + "\n";
-        result += "Salesman: salesmanUser2";
-        result += " Price: 100" + "\n";
-        result += "Confirmation state for you: ACCEPTED" + "\n";
-        result += "Your remainder: 10" + "\n";
-        Assert.assertTrue(product.toStringForSalesmanView(salesman1.getUsername()).startsWith(result));
-        String s=result+"The product isn't on sale"+"\n";
-        Assert.assertEquals(s,product.toStringForSalesmanView(salesman1.getUsername()));
-        result += "The product is on sale"+"\n";
-        product.setIsOnSale(salesman1.getUsername(),true);
-        Assert.assertEquals(result,product.toStringForSalesmanView(salesman1.getUsername()));
+        String result =
+                "Name: name\n" +
+                        "Brand: brand\n" +
+                        "Description: description\n" +
+                        "Confirmation state for you: ACCEPTED\n" +
+                        "Your Price: 10\n" +
+                        "Your remainder: 10" + "\n";
+        Assert.assertEquals(product.toStringForSalesmanView(salesman1.getUsername()).trim().length() + 1, product.toStringForSalesmanView(salesman1.getUsername()).length());
+        String s = result + "The product isn't on sale" + "\n";
+        Assert.assertTrue( product.toStringForSalesmanView(salesman1.getUsername()).contains(s));
+        result += "The product is on sale" + "\n";
+        product.setIsOnSale(salesman1.getUsername(), true);
+        Assert.assertTrue(product.toStringForSalesmanView(salesman1.getUsername()).contains(result));
     }
 
 

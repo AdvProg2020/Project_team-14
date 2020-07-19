@@ -4,7 +4,6 @@ import Model.Confirmation;
 import Model.Off.Sale;
 import Model.RandomString;
 import Model.Storage;
-import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 
 import java.io.Serializable;
 import java.util.*;

@@ -14,11 +14,11 @@ public class Audio {
     private static MediaPlayer mediaPlayer = new MediaPlayer(media);
 
     public static void playBackGroundMusic() {
-        /*if (muteness) {
+        if (muteness) {
             return;
         }
-        mediaPlayer.setAutoPlay(true);
-        mediaPlayer.setOnEndOfMedia(() -> mediaPlayer.seek(Duration.ZERO));*/
+       // mediaPlayer.setAutoPlay(true);
+        //mediaPlayer.setOnEndOfMedia(() -> mediaPlayer.seek(Duration.ZERO));
 
     }
 

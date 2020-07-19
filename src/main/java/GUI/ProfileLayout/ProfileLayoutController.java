@@ -29,7 +29,7 @@ public class ProfileLayoutController {
     public void initialize() throws IOException, ParseException {
         MenuHandler.setBackProduct("GUI/ProfileLayout/ProfileLayout.fxml");
         pane.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/ProfileLayout/PersonalInfoLayout.fxml")));
-        setProfileImage();
+        //setProfileImage();
     }
 
     public void setProfileImage() throws ParseException, IOException {
@@ -112,6 +112,25 @@ public class ProfileLayoutController {
 
     public void manageSales(ActionEvent actionEvent) throws IOException {
         Audio.playClick1();
+        pane.getChildren().remove(pane.getChildren().get(0));
+        pane.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/SalesmanProfile/ManageSale/ManageSalesLayout.fxml")));
+    }
+
+    public void manageSupporter(ActionEvent actionEvent) throws IOException {
+        Audio.playClick1();
+        Parent root = FXMLLoader.load(getClass().getResource("/GUI/Supporter/Supporter.fxml"));
+        Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root));
+    }
+
+    public void Bank(ActionEvent actionEvent) throws IOException {
+        Audio.playClick7();
+        Parent root = FXMLLoader.load(getClass().getResource("/GUI/Bank/LogOrRegister.fxml"));
+        Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root));
+    }
+
+    public void Financial(ActionEvent actionEvent) throws IOException {
         pane.getChildren().remove(pane.getChildren().get(0));
         pane.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/SalesmanProfile/ManageSale/ManageSalesLayout.fxml")));
     }

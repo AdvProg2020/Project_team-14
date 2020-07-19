@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="810.0" prefWidth="795.0" style="-fx-background-color: royalblue;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Bank.Bank">
+   <children>
+      <Pane fx:id="pane" layoutX="25.0" layoutY="142.0" prefHeight="667.0" prefWidth="743.0" />
+      <Button layoutX="306.0" layoutY="41.0" mnemonicParsing="false" onAction="#back" prefHeight="54.0" prefWidth="91.0" style="-fx-background-color: yellow;" text="Back" textFill="#df1616">
+         <font>
+            <Font name="System Italic" size="18.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button layoutX="425.0" layoutY="41.0" mnemonicParsing="false" onAction="#manageReceipt" prefHeight="54.0" prefWidth="154.0" style="-fx-background-color: yellow;" text="manage reciepts" textFill="#df1616">
+         <font>
+            <Font name="System Italic" size="18.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button layoutX="607.0" layoutY="41.0" mnemonicParsing="false" onAction="#newReceipt" prefHeight="54.0" prefWidth="154.0" style="-fx-background-color: yellow;" text="new reciept" textFill="#df1616">
+         <font>
+            <Font name="System Italic" size="18.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Label fx:id="creditLabel" alignment="CENTER" layoutX="62.0" layoutY="41.0" prefHeight="54.0" prefWidth="218.0" style="-fx-background-color: yellow;" text="  your credit: 19891989" textFill="#e81515">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

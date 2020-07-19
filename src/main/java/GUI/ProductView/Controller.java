@@ -3,6 +3,8 @@ package GUI.ProductView;
 import GUI.Media.Audio;
 import GUI.MenuHandler;
 import Menus.Menu;
+import Model.Off.Sale;
+import Model.Storage;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -63,18 +65,15 @@ public class Controller {
     public Label productName;
 
     private void setStatus() throws IOException, ParseException {
-        MenuHandler.getServer().clientToServer("is product on sale+" + MenuHandler.getProductID());
-        if (MenuHandler.getServer().serverToClient().equalsIgnoreCase("true")) {
-            status.setImage(new Image(new FileInputStream("src/main/java/GUI/ProductView/resources/sale.jpg")));
-        } else {
-            MenuHandler.getServer().clientToServer("is product finished+" + MenuHandler.getProductID());
-            if (MenuHandler.getServer().serverToClient().equalsIgnoreCase("true")) {
-                status.setImage(new Image(new FileInputStream("src/main/java/GUI/ProductView/resources/images (1).png")));
-            } else {
-                status.setImage(new Image(new FileInputStream("src/main/java/GUI/ProductView/resources/images.png")));
+        boolean x = true;
+        for (Sale sale : Storage.allSales) {
+            if (sale.doesContainProduct(MenuHandler.getProductID())) {
+                status.setImage(new Image(new FileInputStream("src/main/java/GUI/ProductView/resources/sale.jpg")));
+                x = false;
             }
-
         }
+        if (x)
+            status.setImage(new Image(new FileInputStream("src/main/java/GUI/ProductView/resources/images.png")));
     }
 
     private void reset(ImageView imageView, double width, double height) {

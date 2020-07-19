@@ -27,7 +27,7 @@ public class Controller {
     public Label usedOffCode;
     public Label finalPrice;
     public TextField offCodeId;
-    private int ans = 0;
+    public int ans;
 
     ObservableList<Cart> list = FXCollections.observableArrayList();
 
@@ -82,10 +82,6 @@ public class Controller {
             alert.setAlertType(Alert.AlertType.ERROR);
         } else {
             usedOffCode.setText(offCodeId.getText());
-            MenuHandler.getServer().clientToServer("get offCode percentage+" + MenuHandler.getUsername() + "+" + usedOffCode.getText());
-            int x = Integer.parseInt(MenuHandler.getServer().serverToClient());
-            System.out.println(x);
-            finalPrice.setText(String.valueOf(x * ans / 100));
         }
         alert.showAndWait();
     }
@@ -95,17 +91,15 @@ public class Controller {
         if (MenuHandler.isIsUserLogin()) {
             MenuHandler.getServer().clientToServer("get money+" + MenuHandler.getUsername());
             int money = Integer.parseInt(MenuHandler.getServer().serverToClient());
-            System.out.println(money);
             if (money < ans) {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Not Enough Money", ButtonType.OK);
                 alert.showAndWait();
             } else {
-                String products = "buy+" + MenuHandler.getUsername() + "\n";
+                StringBuilder products = new StringBuilder("buy+" + MenuHandler.getUsername() + "\n");
                 for (Cart cart : list) {
-                    products += cart.getSalesman() + "+" + cart.getProductId() + "+" + cart.getCount() + "\n";
+                    products.append(cart.getSalesman()).append("+").append(cart.getProductId()).append("+").append(cart.getCount()).append("\n");
                 }
-                MenuHandler.getServer().clientToServer(products);
-                System.out.println(products);
+                MenuHandler.getServer().clientToServer(products.toString());
                 if (MenuHandler.getServer().serverToClient().equals("Buy Successful")) {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION, "Buy Successful", ButtonType.OK);
                     alert.showAndWait();
@@ -129,13 +123,12 @@ public class Controller {
         Cart cart = products.getSelectionModel().getSelectedItem();
         ArrayList<Triplet<String, String, Integer>> items = MenuHandler.getCart();
         for (Triplet<String, String, Integer> item : items) {
-            if (item.getValue0().equals(cart.getSalesman())) {
-                if (item.getValue1().equals(cart.getProductId())) {
-                    items.remove(item);
-                    update();
-                    return;
-                }
+            if (item.getValue0().equals(cart.getSalesman()) && item.getValue1().equals(cart.getProductId())) {
+                items.remove(item);
+                update();
+                return;
             }
         }
     }
+
 }

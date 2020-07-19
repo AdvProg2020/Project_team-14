@@ -46,11 +46,11 @@
                 </ImageView>
             </children>
         </HBox>
-        <ImageView fx:id="profileImage" fitHeight="400.0" fitWidth="300.0" layoutX="65.0" layoutY="55.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="profileImage" fitHeight="181.0" fitWidth="200.0" layoutX="130.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../ProductScene/resources/user.png" />
          </image></ImageView>
-        <VBox alignment="CENTER" layoutX="65.0" layoutY="367.0" prefHeight="300.0" prefWidth="300.0" spacing="10.0" style="-fx-background-color: RoyalBlue;">
+        <VBox alignment="CENTER" layoutX="71.0" layoutY="226.0" prefHeight="300.0" prefWidth="300.0" spacing="10.0" style="-fx-background-color: RoyalBlue;">
             <children>
                 <Button mnemonicParsing="false" onAction="#managePersonalInfo" prefHeight="40.0" prefWidth="300.0" style="-fx-background-color: blue;" styleClass="my-button" text="Manage Personal Info" textFill="#e50d0d">
                     <font>
@@ -95,11 +95,29 @@
                         <Cursor fx:constant="HAND" />
                     </cursor>
                 </Button>
+            <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#manageSupporter" prefHeight="40.0" prefWidth="300.0" style="-fx-background-color: blue;" styleClass="my-button" text="Manage Supporters" textFill="#e50d0d">
+               <font>
+                  <Font name="System Italic" size="12.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button layoutX="10.0" layoutY="346.0" mnemonicParsing="false" onAction="#Bank" prefHeight="40.0" prefWidth="300.0" style="-fx-background-color: green;" styleClass="my-button" text="Banking" textFill="#ea0404">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
                 <Button mnemonicParsing="false" onAction="#logout" prefHeight="40.0" prefWidth="300.0" style="-fx-background-color: blue;" styleClass="my-button" text="logOut" textFill="#ec0f0f">
                     <cursor>
                         <Cursor fx:constant="HAND" />
                     </cursor>
                 </Button>
+            <Button layoutX="10.0" layoutY="442.0" mnemonicParsing="false" onAction="#Financial" prefHeight="40.0" prefWidth="300.0" style="-fx-background-color: green;" styleClass="my-button" text="Financial" textFill="#ea0404">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
             </children>
             <cursor>
                 <Cursor fx:constant="HAND" />

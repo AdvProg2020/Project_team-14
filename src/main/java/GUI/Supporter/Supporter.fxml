@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="599.0" prefWidth="808.0" style="-fx-background-color: Cyan;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Supporter.Controller">
+   <children>
+      <Label layoutX="324.0" layoutY="35.0" text="New Supporter">
+         <font>
+            <Font name="System Bold Italic" size="23.0" />
+         </font>
+      </Label>
+      <Label layoutX="373.0" layoutY="133.0" text="Username:" textFill="RED">
+         <font>
+            <Font name="System Italic" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="376.0" layoutY="197.0" text="Password:" textFill="RED">
+         <font>
+            <Font name="System Italic" size="16.0" />
+         </font>
+      </Label>
+      <TextField fx:id="createUsernameField" alignment="CENTER" layoutX="464.0" layoutY="130.0" opacity="0.63" promptText="enter username">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font size="15.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="createPasswordField" alignment="CENTER" layoutX="464.0" layoutY="194.0" opacity="0.63" promptText="enter username">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font size="15.0" />
+         </font>
+      </TextField>
+      <Button layoutX="512.0" layoutY="255.0" mnemonicParsing="false" onAction="#create" text="Create" textFill="#1709e1">
+         <font>
+            <Font size="17.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Separator prefWidth="200.0" />
+      <Separator layoutX="22.0" layoutY="293.0" prefHeight="38.0" prefWidth="758.0" />
+      <Separator layoutX="294.0" layoutY="94.0" orientation="VERTICAL" prefHeight="200.0" />
+      <VBox layoutX="22.0" layoutY="117.0" prefHeight="154.0" prefWidth="268.0">
+         <children>
+            <Label text="try to use appropriate username">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label text="because supporters are known">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label text="mainly by their usernames because">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="10.0" layoutY="61.0" text="there are only two piece of avaiable">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="10.0" layoutY="86.0" text="information about them!!!!!">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+      <Label layoutX="373.0" layoutY="383.0" text="Username:" textFill="RED">
+         <font>
+            <Font name="System Italic" size="16.0" />
+         </font>
+      </Label>
+      <ScrollPane layoutX="36.0" layoutY="335.0" prefHeight="208.0" prefWidth="241.0">
+         <content>
+            <TableView prefHeight="202.0" prefWidth="241.0">
+              <columns>
+                <TableColumn prefWidth="104.33331680297852" text="Username" />
+                <TableColumn prefWidth="120.66664123535156" text="Password" />
+              </columns>
+            </TableView>
+         </content>
+      </ScrollPane>
+      <TextField fx:id="deleteUsernameField" alignment="CENTER" layoutX="491.0" layoutY="380.0" opacity="0.63" promptText="enter username">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font size="15.0" />
+         </font>
+      </TextField>
+      <Button layoutX="512.0" layoutY="452.0" mnemonicParsing="false" onAction="#delete" text="Delete" textFill="#1709e1">
+         <font>
+            <Font size="17.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Separator layoutX="294.0" layoutY="328.0" orientation="VERTICAL" prefHeight="247.0" prefWidth="6.0" />
+      <Button layoutX="720.0" layoutY="33.0" mnemonicParsing="false" onAction="#back" text="Back" textFill="#1709e1">
+         <font>
+            <Font size="17.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+   </children>
+</AnchorPane>
