@@ -9,9 +9,6 @@ import java.util.Arrays;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import Controller.DataBase.EndOfProgramme;
-import Controller.DataBase.startOfProgramme;
 import Controller.SQL.SQL;
 import Model.Account.Account;
 import Model.Account.Customer;
@@ -36,14 +33,13 @@ public class Server {
     private BossManager bossManager;
     private SalesmanManager salesmanManager;
     private CustomerManager customerManager;
-    private EndOfProgramme endOfProgramme = new EndOfProgramme();
     private SQL sql = new SQL();
 
     //first is username, second is a cart
     //private HashMap<String, Cart> abstractCarts;
     static private String answer;
 
-    public Server() throws IOException, ClassNotFoundException, SQLException {
+    public Server() {
         answer = "";
         this.accountManager = new AccountManager();
         this.bossManager = new BossManager();
@@ -1443,7 +1439,6 @@ public class Server {
     }
 
     public String serverToClient() throws IOException {
-        endOfProgramme.updateFiles();
         sql.updateProgramme();
         return Server.answer;
     }

@@ -2,12 +2,16 @@ package Controller.SQL;
 
 import Model.RandomString;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.*;
 import java.util.Base64;
 
 public class SQL {
     private Connection connection;
     private static final Base64.Encoder base64Encoder = Base64.getUrlEncoder();
+    private FileManager fileManager = new FileManager();
 
     public SQL() {
         try {
@@ -72,21 +76,28 @@ public class SQL {
 
     public void updateProgramme() {
         try {
+            fileManager.updateFile(Object.object.serialise(new Object()));
             insert(Object.object.serialise(new Object()));
         } catch (Exception exception) {
-            exception.printStackTrace();
+            System.out.println(exception.getMessage());
         }
     }
 
     public void startProgramme() {
         try {
             Object.deserialize(show());
+            return;
         } catch (Exception exception) {
             System.out.println(exception.getMessage());
         }
+        try {
+            Object.deserialize(fileManager.readFromFile());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
-    private String encode(String string) {
+    static String encode(String string) {
         String result = RandomString.getRandomString(100) + string;
         result = base64Encoder.encodeToString(result.getBytes());
         result = ".xs,dsghjkdf,a3uih238ewajnksdhjf hsjkd jdzjfhgs " + result;
@@ -95,7 +106,7 @@ public class SQL {
         return result;
     }
 
-    private String decode(String string) {
+    static String decode(String string) {
         string = new StringBuilder(string).reverse().toString();
         String result = new String(Base64.getDecoder().decode(string));
         result = result.substring(".xs,dsghjkdf,a3uih238ewajnksdhjf hsjkd jdzjfhgs ".length());
