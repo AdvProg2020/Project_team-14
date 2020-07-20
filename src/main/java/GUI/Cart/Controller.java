@@ -7,9 +7,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import org.javatuples.Triplet;
 
 import java.io.IOException;
@@ -28,10 +30,13 @@ public class Controller {
     public Label finalPrice;
     public TextField offCodeId;
     public int ans;
+    public static Controller controller;
 
     ObservableList<Cart> list = FXCollections.observableArrayList();
 
     public void initialize() throws IOException, ParseException {
+        ans = 0;
+        controller = this;
         update();
     }
 
@@ -86,11 +91,19 @@ public class Controller {
         alert.showAndWait();
     }
 
-    public void buy(ActionEvent mouseEvent) throws IOException, ParseException {
+    public void buy(ActionEvent actionEvent) throws IOException, ParseException {
         Audio.playClick3();
         if (MenuHandler.isIsUserLogin()) {
-            MenuHandler.getServer().clientToServer("get money+" + MenuHandler.getUsername());
+
+            //going to pay page
+
+            Parent root = FXMLLoader.load(getClass().getResource("/GUI/Cart/Pay.fxml"));
+            Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+
+            /*MenuHandler.getServer().clientToServer("get money+" + MenuHandler.getUsername());
             int money = Integer.parseInt(MenuHandler.getServer().serverToClient());
+
             if (money < ans) {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Not Enough Money", ButtonType.OK);
                 alert.showAndWait();
@@ -104,14 +117,13 @@ public class Controller {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION, "Buy Successful", ButtonType.OK);
                     alert.showAndWait();
                 }
-            }
+            }  */
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR, "You Should Login First", ButtonType.OK);
             alert.showAndWait();
             MenuHandler.setLoginBackAddress("/GUI/Cart/Cart.fxml");
             MenuHandler.getStage().setScene(new Scene(FXMLLoader.load(getClass().getResource("/GUI/Login/Login.fxml"))));
         }
-        MenuHandler.getStage().setScene(new Scene(FXMLLoader.load(getClass().getResource("/GUI/ProductScene/ProductScene.fxml"))));
     }
 
     public void deleteFromCart(ActionEvent actionEvent) throws IOException, ParseException {

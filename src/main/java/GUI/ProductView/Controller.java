@@ -64,17 +64,6 @@ public class Controller {
     public ImageView status;
     public Label productName;
 
-    private void setStatus() throws IOException, ParseException {
-        boolean x = true;
-        for (Sale sale : Storage.allSales) {
-            if (sale.doesContainProduct(MenuHandler.getProductID())) {
-                status.setImage(new Image(new FileInputStream("src/main/java/GUI/ProductView/resources/sale.jpg")));
-                x = false;
-            }
-        }
-        if (x)
-            status.setImage(new Image(new FileInputStream("src/main/java/GUI/ProductView/resources/images.png")));
-    }
 
     private void reset(ImageView imageView, double width, double height) {
         imageView.setViewport(new Rectangle2D(0, 0, width, height));
@@ -158,7 +147,6 @@ public class Controller {
 
 
     public void initialize() throws ParseException, IOException {
-        setStatus();
         String productId = MenuHandler.getProductID();
         MenuHandler.getServer().clientToServer("what is comment product ID+" + productId);
         String allComments = MenuHandler.getServer().serverToClient();
