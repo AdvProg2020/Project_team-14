@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.*;
+import java.util.Arrays;
 import java.util.Base64;
 
 public class SQL {
@@ -88,12 +89,12 @@ public class SQL {
             Object.deserialize(show());
             return;
         } catch (Exception exception) {
-            System.out.println(exception.getMessage());
+            System.out.println("sql is bullshit");
         }
         try {
             Object.deserialize(fileManager.readFromFile());
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println("file is also bullshit");
         }
     }
 
