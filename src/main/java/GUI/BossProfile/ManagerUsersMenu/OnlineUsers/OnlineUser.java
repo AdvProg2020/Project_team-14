@@ -21,8 +21,8 @@ public class OnlineUser {
     }
 
     public void initialize() throws ParseException, IOException {
-        MenuHandler.getServer().clientToServer("get online users+");
-        String result = MenuHandler.getServer().serverToClient();
+        MenuHandler.getConnector().clientToServer("get online users+");
+        String result = MenuHandler.getConnector().serverToClient();
         if (result.equals("")) {
             Label label = new Label("no user in online");
             label.setFont(new Font("Arial", 30));
