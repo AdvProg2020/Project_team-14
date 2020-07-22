@@ -4,17 +4,29 @@ import Controller.Server;
 import Model.Account.Account;
 import Model.Storage;
 import Model.Token.Token;
+import com.sun.prism.shader.Solid_TextureYV12_AlphaTest_Loader;
 
 import java.awt.*;
+import java.net.*;
 import java.security.SecureRandom;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.HashMap;
 
 public class Security {
     public static boolean checkStringLength(String command) {
-        return command.length() >= 10000;
+        try {
+            command.charAt(10000);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
+
+    public static HashMap<String, Integer> IP_Counter = new HashMap<>();
+
+    private static ArrayList<String> blackListOfIPs = new ArrayList<>();
 
     public static boolean mayContainScript(String command) {
         return command.contains("<") || command.contains(">") || command.contains("\\") || command.contains("/");
@@ -36,17 +48,23 @@ public class Security {
         return new String(Base64.getDecoder().decode(s1));
     }
 
-    public static void securityCheck(String command) throws ParseException {
+    public static void securityCheck(String command, Socket socket) throws ParseException {
+
+        if (blackListOfIPs.contains(getIP(socket))) {
+            return;
+        }
 
         //running basic security checks
 
         if (checkStringLength(command) || mayContainScript(command)) {
+            blackListOfIPs.add(getIP(socket));
             return;
         }
 
         // if it doesn't start with the specified string
 
         if (!command.startsWith("this is a client")) {
+            blackListOfIPs.add(getIP(socket));
             return;
         }
 
@@ -59,12 +77,14 @@ public class Security {
             time_sent = Long.parseLong(command.split("--1989--")[3]);
         } catch (Exception e) {
             System.out.println("we're under attackkkkkkk");
+            blackListOfIPs.add(getIP(socket));
             return;
         }
 
         //the time is old
 
         if (System.currentTimeMillis() - time_sent > 100) {
+            blackListOfIPs.add(getIP(socket));
             return;
         }
 
@@ -79,16 +99,14 @@ public class Security {
 
         if (Token.isTokenValid(token)) {
 
-            String username;
-            long time;
-
             try {
                 String decodedToken = Token.decode(token);
-                time = Long.parseLong(decodedToken.split("--caption neuer--")[0]);
+                long time = Long.parseLong(decodedToken.split("--caption neuer--")[0]);
                 Account account = Storage.getAccountWithUsername(decodedToken.split("--caption neuer--")[1]);
                 account.getUsername();
             } catch (Exception e) {
                 System.out.println("we're under attack by trying wring tokens");
+                blackListOfIPs.add(getIP(socket));
             }
 
             //checking that it's still authentic
@@ -98,6 +116,25 @@ public class Security {
             }
 
         }
+    }
+
+    public static String getIP(Socket socket) {
+        SocketAddress socketAddress = socket.getRemoteSocketAddress();
+        if (socketAddress instanceof InetSocketAddress) {
+            InetAddress inetAddress = ((InetSocketAddress) socketAddress).getAddress();
+            if (inetAddress instanceof Inet4Address)
+                return inetAddress.getHostAddress();
+            else if (inetAddress instanceof Inet6Address)
+                return inetAddress.getHostAddress();
+            else
+                return "not an ip";
+        } else {
+            return null;
+        }
+    }
+
+    public static boolean isInBlackList(Socket socket) {
+        return blackListOfIPs.contains(getIP(socket));
     }
 
 }

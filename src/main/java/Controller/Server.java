@@ -1,8 +1,7 @@
 package Controller;
 
 import java.io.*;
-import java.net.ServerSocket;
-import java.net.Socket;
+import java.net.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -68,8 +67,15 @@ public class Server {
         System.out.println("**** ServerSocket created successfully ****");
         Socket clientSocket;
         while (true) {
-            System.out.println("----------------------------------\nServer listening ....");
+            System.out.println("-------------------------------------------------\n" + "Server listening ....");
             clientSocket = serverSocket.accept();
+
+            //if the socket is in the black list we would just return
+
+            if (Security.isInBlackList(clientSocket)) {
+                continue;
+            }
+
             System.out.println("client accepted");
             allClientSockets.add(clientSocket);
             DataInputStream dataInputStream = new DataInputStream(new BufferedInputStream(clientSocket.getInputStream()));
@@ -95,17 +101,21 @@ public class Server {
         public void run() {
             while (!Thread.interrupted()) {
                 try {
+                    if (Security.isInBlackList(clientSocket)) {
+                        throw new Exception("piss off");
+                    }
                     String command = dataInputStream.readUTF();
                     System.out.println(command);
                     String respond = "";
                     synchronized (server) {
-                        server.clientToServer(command);
+                        server.clientToServer(command, clientSocket);
+                        System.out.println(Security.getIP(clientSocket));
                         respond = server.serverToClient();
                         System.out.println(respond);
                     }
                     dataOutputStream.writeUTF(respond);
                     dataOutputStream.flush();
-                } catch (IOException e) {
+                } catch (Exception e) {
                     System.out.println("something went wrong, connection to client lost :(");
                     server.allClientSockets.remove(clientSocket);
                     Thread.currentThread().interrupt();
@@ -127,9 +137,9 @@ public class Server {
         return pattern.matcher(command);
     }
 
-    public void clientToServer(String command) {
+    public void clientToServer(String command, Socket socket) {
         try {
-            Security.securityCheck(command);
+            Security.securityCheck(command, socket);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1383,7 +1393,8 @@ public class Server {
 
     private void login(Matcher matcher) {
         accountManager.login(matcher.group(1), matcher.group(2));
-        answer = answer + "\n" + Token.generateNewToken(matcher.group(1));
+        if (answer.startsWith("login successful as"))
+            answer = answer + "\n" + Token.generateNewToken(matcher.group(1));
     }
 
     private boolean checkMoneyFormat(String money) {

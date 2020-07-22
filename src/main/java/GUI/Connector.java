@@ -1,5 +1,8 @@
 package GUI;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+
 import java.io.*;
 import java.net.Socket;
 
@@ -23,11 +26,17 @@ public class Connector {
     }
 
     public void clientToServer(String command) throws IOException {
-        command = addTheSecurity(command);
-        dataOutputStream.writeUTF(command);
-        dataOutputStream.flush();
+        try {
+            command = addTheSecurity(command);
+            dataOutputStream.writeUTF(command);
+            dataOutputStream.flush();
 
-        this.response = dataInputStream.readUTF();
+            this.response = dataInputStream.readUTF();
+        } catch (Exception e){
+            Alert alert = new Alert(Alert.AlertType.ERROR, "your connection to server failed ): try again later", ButtonType.OK);
+            alert.showAndWait();
+            System.exit(1989);
+        }
     }
 
     public String serverToClient() {

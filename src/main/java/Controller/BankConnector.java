@@ -28,7 +28,7 @@ public class BankConnector {
             socket.close();
         } catch (IOException e) {
             System.out.println("something went wrong with bank server");
-            result = "error occurred";
+            result = "something went wrong";
         }
         return result;
         /*Controller controller = new Controller();
