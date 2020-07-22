@@ -3,14 +3,9 @@ package GUI.BossProfile.ManagerUsersMenu;
 import GUI.Media.Audio;
 import GUI.MenuHandler;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.stage.Stage;
 
-import javax.sound.sampled.AudioInputStream;
 import java.io.IOException;
 import java.text.ParseException;
 
@@ -35,8 +30,8 @@ public class MoveInformationPopOut {
 
     public void initialize() throws ParseException, IOException {
         seeingUsername = MenuHandler.getSeeingUsername();
-        MenuHandler.getServer().clientToServer("view account info+" + MenuHandler.getUsername() + "+" + seeingUsername);
-        String serverAnswer = MenuHandler.getServer().serverToClient();
+        MenuHandler.getConnector().clientToServer("view account info+" + MenuHandler.getUsername() + "+" + seeingUsername);
+        String serverAnswer = MenuHandler.getConnector().serverToClient();
         String[] information = serverAnswer.split("\n");
         username.setText(information[0].split("\\s")[1]);
         name.setText(information[2].split("\\s")[1] + " " + information[2].split("\\s")[2]);
@@ -72,8 +67,8 @@ public class MoveInformationPopOut {
             company.setVisible(false);
             companyField.setVisible(false);
         }
-        MenuHandler.getServer().clientToServer("see authorization+" + MenuHandler.getUsername() + "+" + this.seeingUsername);
-        String respond = MenuHandler.getServer().serverToClient();
+        MenuHandler.getConnector().clientToServer("see authorization+" + MenuHandler.getUsername() + "+" + this.seeingUsername);
+        String respond = MenuHandler.getConnector().serverToClient();
         if (respond.equalsIgnoreCase("boss no")) {
             removeButton.setVisible(false);
         }

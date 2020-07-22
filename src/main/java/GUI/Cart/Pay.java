@@ -1,8 +1,6 @@
 package GUI.Cart;
 
-import GUI.Bank.Bank;
 import GUI.MenuHandler;
-import Menus.Menu;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -31,8 +29,8 @@ public class Pay {
         for (Cart cart : Controller.controller.list) {
             products.append(cart.getSalesman()).append("+").append(cart.getProductId()).append("+").append(cart.getCount()).append("\n");
         }
-        MenuHandler.getServer().clientToServer(products.toString());
-        if (MenuHandler.getServer().serverToClient().equals("Buy Successful")) {
+        MenuHandler.getConnector().clientToServer(products.toString());
+        if (MenuHandler.getConnector().serverToClient().equals("Buy Successful")) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Buy Successful", ButtonType.OK);
             alert.showAndWait();
         }
@@ -40,16 +38,16 @@ public class Pay {
 
     public void ByFromBankButton(ActionEvent actionEvent) throws IOException, ParseException {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, "", ButtonType.OK);
-        MenuHandler.getServer().clientToServer("bank " + "get token+" + username + "+" + password.getText());
-        String token = MenuHandler.getServer().serverToClient();
+        MenuHandler.getConnector().clientToServer("bank " + "get token+" + username + "+" + password.getText());
+        String token = MenuHandler.getConnector().serverToClient();
         if (!token.equals("fuck off, identification was wrong") && !token.equals("something went wrong")) {
             alert.setContentText("login successful");
             alert.showAndWait();
             this.token = token;
-            MenuHandler.getServer().clientToServer("bank " + "get money from+" + token + "+" + username + "+" + Controller.controller.ans);
-            alert.setContentText(MenuHandler.getServer().serverToClient());
+            MenuHandler.getConnector().clientToServer("bank " + "get money from+" + token + "+" + username + "+" + Controller.controller.ans);
+            alert.setContentText(MenuHandler.getConnector().serverToClient());
             alert.showAndWait();
-            MenuHandler.getServer().clientToServer("add balance+" + username + "+" + Controller.controller.ans);
+            MenuHandler.getConnector().clientToServer("add balance+" + username + "+" + Controller.controller.ans);
             buyFromCredit();
             return;
         }
@@ -76,8 +74,8 @@ public class Pay {
             buyFromCreditButton.setDisable(true);
             buyFromCreditButton.setVisible(false);
         }
-        MenuHandler.getServer().clientToServer("bank " + "is there person with username+" + MenuHandler.getUsername());
-        String answer = MenuHandler.getServer().serverToClient();
+        MenuHandler.getConnector().clientToServer("bank " + "is there person with username+" + MenuHandler.getUsername());
+        String answer = MenuHandler.getConnector().serverToClient();
         if (!answer.equals("true")) {
             buyFromCreditButton.setDisable(true);
             haveBankAccount.setVisible(true);

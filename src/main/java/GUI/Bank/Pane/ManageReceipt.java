@@ -28,8 +28,8 @@ public class ManageReceipt {
 
     private void updateBoxOne() throws ParseException, IOException {
         box1.getChildren().clear();
-        MenuHandler.getServer().clientToServer("bank " + "get all receipts by me+" + Bank.getToken() + "+" + MenuHandler.getUsername());
-        String answer = MenuHandler.getServer().serverToClient();
+        MenuHandler.getConnector().clientToServer("bank " + "get all receipts by me+" + Bank.getToken() + "+" + MenuHandler.getUsername());
+        String answer = MenuHandler.getConnector().serverToClient();
         if (answer.equals("token isn't authentic") || answer.equals("something went wrong")) {
             //logout
             return;
@@ -53,8 +53,8 @@ public class ManageReceipt {
 
     private void updateBoxTwo() throws ParseException, IOException {
         box2.getChildren().clear();
-        MenuHandler.getServer().clientToServer("bank " + "get all receipts involving me+" + Bank.getToken() + "+" + MenuHandler.getUsername());
-        String answer = MenuHandler.getServer().serverToClient();
+        MenuHandler.getConnector().clientToServer("bank " + "get all receipts involving me+" + Bank.getToken() + "+" + MenuHandler.getUsername());
+        String answer = MenuHandler.getConnector().serverToClient();
         if (answer.equals("token isn't authentic") || answer.equals("something went wrong")) {
             //logout
             return;
@@ -77,8 +77,8 @@ public class ManageReceipt {
     }
 
     public void done(ActionEvent actionEvent) throws ParseException, IOException {
-        MenuHandler.getServer().clientToServer("bank " + "pay transaction with id+" + Bank.getToken() + "+" + receiptID.getText() + "+" + username);
-        String answer = MenuHandler.getServer().serverToClient();
+        MenuHandler.getConnector().clientToServer("bank " + "pay transaction with id+" + Bank.getToken() + "+" + receiptID.getText() + "+" + username);
+        String answer = MenuHandler.getConnector().serverToClient();
         if (receiptID.getText().equals("") || receiptID.getText() == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "the receipt ID cannot be empty", ButtonType.OK);
             alert.showAndWait();
@@ -108,9 +108,9 @@ public class ManageReceipt {
         }
 
         try {
-            MenuHandler.getServer().clientToServer("bank " + "get amount of transaction+" + Bank.getToken() + "+" + receiptID.getText());
+            MenuHandler.getConnector().clientToServer("bank " + "get amount of transaction+" + Bank.getToken() + "+" + receiptID.getText());
             long ID = Long.parseLong(receiptID.getText());
-            long amount = Long.parseLong(MenuHandler.getServer().serverToClient());
+            long amount = Long.parseLong(MenuHandler.getConnector().serverToClient());
             if (200000 > ID && ID >= 100000 && !Bank.isPossibleToDepositForSalesman(amount)) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, "you should keep the min credit", ButtonType.OK);
                 alert.showAndWait();
@@ -135,15 +135,15 @@ public class ManageReceipt {
 
     private void manageCredit(String string) {
         try {
-            MenuHandler.getServer().clientToServer("bank " + "get amount of transaction+" + Bank.getToken() + "+" + string);
+            MenuHandler.getConnector().clientToServer("bank " + "get amount of transaction+" + Bank.getToken() + "+" + string);
             long ID = Long.parseLong(string);
-            long amount = Long.parseLong(MenuHandler.getServer().serverToClient());
+            long amount = Long.parseLong(MenuHandler.getConnector().serverToClient());
             if (200000 > ID && ID >= 100000 && MenuHandler.getRole().equalsIgnoreCase("salesman")) {
                 amount = -amount;
-                MenuHandler.getServer().clientToServer("add balance+" + MenuHandler.getUsername() + "+" + amount);
+                MenuHandler.getConnector().clientToServer("add balance+" + MenuHandler.getUsername() + "+" + amount);
             }
             if (300000 > ID && ID >= 200000 && MenuHandler.getRole().equalsIgnoreCase("customer")) {
-                MenuHandler.getServer().clientToServer("add balance+" + MenuHandler.getUsername() + "+" + amount);
+                MenuHandler.getConnector().clientToServer("add balance+" + MenuHandler.getUsername() + "+" + amount);
                 System.out.println("we're here");
             }
         } catch (Exception e) {

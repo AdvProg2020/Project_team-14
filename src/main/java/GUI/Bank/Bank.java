@@ -30,8 +30,8 @@ public class Bank {
 
     private void checkExpired(ActionEvent actionEvent) throws IOException, ParseException {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, "", ButtonType.OK);
-        MenuHandler.getServer().clientToServer("bank " + "get all receipts by me+" + Bank.getToken() + "+" + MenuHandler.getUsername());
-        String answer = MenuHandler.getServer().serverToClient();
+        MenuHandler.getConnector().clientToServer("bank " + "get all receipts by me+" + Bank.getToken() + "+" + MenuHandler.getUsername());
+        String answer = MenuHandler.getConnector().serverToClient();
         if (answer.equals("token isn't authentic") || answer.equals("something went wrong") || answer.contains("expired")) {
             alert.setContentText("you token is expired, you may wanna login again");
             alert.showAndWait();
@@ -83,11 +83,11 @@ public class Bank {
 
     public void updateCredit() throws IOException, ParseException {
         if (MenuHandler.getRole().equalsIgnoreCase("boss")) {
-            MenuHandler.getServer().clientToServer("bank " + "get balance+" + Bank.getToken() + "+" + "BOSS");
+            MenuHandler.getConnector().clientToServer("bank " + "get balance+" + Bank.getToken() + "+" + "BOSS");
         } else {
-            MenuHandler.getServer().clientToServer("bank " + "get balance+" + Bank.getToken() + "+" + MenuHandler.getUsername());
+            MenuHandler.getConnector().clientToServer("bank " + "get balance+" + Bank.getToken() + "+" + MenuHandler.getUsername());
         }
-        String credit = MenuHandler.getServer().serverToClient();
+        String credit = MenuHandler.getConnector().serverToClient();
         if (credit.equals("token has expired")) {
             return;
         }

@@ -2,7 +2,6 @@ package GUI.Login;
 
 import GUI.Media.Audio;
 import GUI.MenuHandler;
-import Menus.Menu;
 import javafx.animation.FadeTransition;
 import javafx.animation.ParallelTransition;
 import javafx.event.ActionEvent;
@@ -15,13 +14,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Random;
@@ -57,8 +52,8 @@ public class LoginController {
             alert.setContentText("Password Field Must Not Be Empty");
             alert.showAndWait();
         } else {
-            MenuHandler.getServer().clientToServer("login+" + username.getText() + "+" + password.getText());
-            String serverAnswer = MenuHandler.getServer().serverToClient();
+            MenuHandler.getConnector().clientToServer("login+" + username.getText() + "+" + password.getText());
+            String serverAnswer = MenuHandler.getConnector().serverToClient();
             if (serverAnswer.startsWith("login successful ")) {
                 MenuHandler.setIsUserLogin(true);
                 if (serverAnswer.contains("BOSS")) {
@@ -85,8 +80,8 @@ public class LoginController {
 
     private void setAvatarInClient() throws ParseException, IOException {
         String toServer = "get person image+" + MenuHandler.getUsername();
-        MenuHandler.getServer().clientToServer(toServer);
-        String respond = MenuHandler.getServer().serverToClient();
+        MenuHandler.getConnector().clientToServer(toServer);
+        String respond = MenuHandler.getConnector().serverToClient();
         MenuHandler.setUserAvatar(respond);
     }
 

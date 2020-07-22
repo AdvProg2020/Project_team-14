@@ -2,9 +2,6 @@ package GUI.ProductView;
 
 import GUI.Media.Audio;
 import GUI.MenuHandler;
-import Menus.Menu;
-import Model.Off.Sale;
-import Model.Storage;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -26,8 +23,6 @@ import javafx.stage.Popup;
 import javafx.stage.Stage;
 import org.javatuples.Triplet;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -148,8 +143,8 @@ public class Controller {
 
     public void initialize() throws ParseException, IOException {
         String productId = MenuHandler.getProductID();
-        MenuHandler.getServer().clientToServer("what is comment product ID+" + productId);
-        String allComments = MenuHandler.getServer().serverToClient();
+        MenuHandler.getConnector().clientToServer("what is comment product ID+" + productId);
+        String allComments = MenuHandler.getConnector().serverToClient();
         if (!allComments.equals("none")) {
             for (String s : allComments.split("\n")) {
                 String sender = s.split("\\+")[0].substring(8);
@@ -162,8 +157,8 @@ public class Controller {
                 comments.getChildren().add((Node) object);
             }
         }
-        MenuHandler.getServer().clientToServer("get product picture path+" + productId);
-        String path = MenuHandler.getServer().serverToClient();
+        MenuHandler.getConnector().clientToServer("get product picture path+" + productId);
+        String path = MenuHandler.getConnector().serverToClient();
         if (path != null) {
             if (!path.equalsIgnoreCase("none")) {
                 imageView.setImage(new Image(path));
@@ -171,11 +166,11 @@ public class Controller {
         }
         zoom();
         if (MenuHandler.isIsUserLogin()) {
-            MenuHandler.getServer().clientToServer("view product+" + MenuHandler.getUsername() + "+" + productId);
+            MenuHandler.getConnector().clientToServer("view product+" + MenuHandler.getUsername() + "+" + productId);
         } else {
-            MenuHandler.getServer().clientToServer("view product+" + "offLine" + "+" + productId);
+            MenuHandler.getConnector().clientToServer("view product+" + "offLine" + "+" + productId);
         }
-        String serverAnswer = MenuHandler.getServer().serverToClient();
+        String serverAnswer = MenuHandler.getConnector().serverToClient();
         StringBuilder ans = new StringBuilder();
         if (!MenuHandler.isIsUserLogin()) {
             for (int i = 0; i < serverAnswer.split("\n").length - 1; i++) {
@@ -213,11 +208,11 @@ public class Controller {
     }
 
     private void customerLoad(String serverAnswer) throws ParseException, IOException {
-        MenuHandler.getServer().clientToServer("get product min price+" + MenuHandler.getProductID());
-        minPrice.setText(MenuHandler.getServer().serverToClient() + "$");
-        MenuHandler.getServer().clientToServer("get product sellers+" + MenuHandler.getProductID());
+        MenuHandler.getConnector().clientToServer("get product min price+" + MenuHandler.getProductID());
+        minPrice.setText(MenuHandler.getConnector().serverToClient() + "$");
+        MenuHandler.getConnector().clientToServer("get product sellers+" + MenuHandler.getProductID());
         boolean yourProduct = false;
-        for (String seller : MenuHandler.getServer().serverToClient().split(",")) {
+        for (String seller : MenuHandler.getConnector().serverToClient().split(",")) {
             if (seller.startsWith("[")) {
                 seller = seller.substring(1);
             }
@@ -238,11 +233,11 @@ public class Controller {
         comment.setEditable(false);
         starButton.setDisable(true);
         commentTitle.setEditable(false);
-        MenuHandler.getServer().clientToServer("get product min price+" + MenuHandler.getProductID());
-        minPrice.setText(MenuHandler.getServer().serverToClient() + "$");
-        MenuHandler.getServer().clientToServer("get product sellers+" + MenuHandler.getProductID());
+        MenuHandler.getConnector().clientToServer("get product min price+" + MenuHandler.getProductID());
+        minPrice.setText(MenuHandler.getConnector().serverToClient() + "$");
+        MenuHandler.getConnector().clientToServer("get product sellers+" + MenuHandler.getProductID());
         boolean yourProduct = false;
-        for (String seller : MenuHandler.getServer().serverToClient().split(",")) {
+        for (String seller : MenuHandler.getConnector().serverToClient().split(",")) {
             if (seller.startsWith("[")) {
                 seller = seller.substring(1);
             }
@@ -268,11 +263,11 @@ public class Controller {
         comment.setEditable(false);
         starButton.setDisable(true);
         commentTitle.setEditable(false);
-        MenuHandler.getServer().clientToServer("get product min price+" + MenuHandler.getProductID());
-        minPrice.setText(MenuHandler.getServer().serverToClient() + "$");
-        MenuHandler.getServer().clientToServer("get product sellers+" + MenuHandler.getProductID());
+        MenuHandler.getConnector().clientToServer("get product min price+" + MenuHandler.getProductID());
+        minPrice.setText(MenuHandler.getConnector().serverToClient() + "$");
+        MenuHandler.getConnector().clientToServer("get product sellers+" + MenuHandler.getProductID());
         boolean yourProduct = false;
-        for (String seller : MenuHandler.getServer().serverToClient().split(",")) {
+        for (String seller : MenuHandler.getConnector().serverToClient().split(",")) {
             if (seller.startsWith("[")) {
                 seller = seller.substring(1);
             }
@@ -301,8 +296,8 @@ public class Controller {
         String s = (String) chooseSeller.getValue();
         if (s == null) return;
         if (s.equals("")) return;
-        MenuHandler.getServer().clientToServer("view product+" + s + "+" + MenuHandler.getProductID());
-        String respond = MenuHandler.getServer().serverToClient();
+        MenuHandler.getConnector().clientToServer("view product+" + s + "+" + MenuHandler.getProductID());
+        String respond = MenuHandler.getConnector().serverToClient();
         seller.setText(s);
         System.out.println(respond);
         for (String string : respond.split("\n")) {
@@ -330,7 +325,7 @@ public class Controller {
 
         if (checkProductNameFormat(commentTitle.getText())) {
             if (checkDescriptionFormat(comment.getText())) {
-                MenuHandler.getServer().clientToServer("comment product+" + MenuHandler.getUsername() + "+" +
+                MenuHandler.getConnector().clientToServer("comment product+" + MenuHandler.getUsername() + "+" +
                         MenuHandler.getProductID() + "+" + commentTitle.getText() + "+" + comment.getText());
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, "Comment Request Submitted", ButtonType.OK);
                 alert.showAndWait();
@@ -367,7 +362,7 @@ public class Controller {
                                 Alert alert = new Alert(Alert.AlertType.ERROR, "The Current Number Of Items + The Items You Already Added To Your Cart Is More Than Remainder", ButtonType.OK);
                                 alert.showAndWait();
                             } else {
-                                MenuHandler.getServer().clientToServer("Add To Cart+" + MenuHandler.getUsername() + "+" + (String) chooseSeller.getValue() + "+" + MenuHandler.getProductID() + "+" + (Integer) count.getValue());
+                                MenuHandler.getConnector().clientToServer("Add To Cart+" + MenuHandler.getUsername() + "+" + (String) chooseSeller.getValue() + "+" + MenuHandler.getProductID() + "+" + (Integer) count.getValue());
                                 Triplet addedItem = new Triplet<>((String) chooseSeller.getValue(), MenuHandler.getProductID(), (Integer) count.getValue() + counter);
                                 MenuHandler.getCart().remove(item);
                                 MenuHandler.getCart().add(addedItem);
@@ -435,8 +430,8 @@ public class Controller {
     }
 
     public void similarProducts(ActionEvent actionEvent) throws IOException, ParseException {
-        MenuHandler.getServer().clientToServer("similar product+" + MenuHandler.getProductID());
-        if (!MenuHandler.getServer().serverToClient().equals("nothing")) {
+        MenuHandler.getConnector().clientToServer("similar product+" + MenuHandler.getProductID());
+        if (!MenuHandler.getConnector().serverToClient().equals("nothing")) {
             Audio.playClick4();
             Parent root = FXMLLoader.load(getClass().getResource("/GUI/ProductView/SimilarProduct/SimilarProduct.fxml"));
             Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();

@@ -2,7 +2,6 @@ package GUI.Bank.Pane;
 
 import GUI.Bank.Bank;
 import GUI.MenuHandler;
-import Menus.Menu;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -51,9 +50,9 @@ public class NewReceipt {
 
         description = (depositDescription.getText() == null || depositDescription.getText().equals("")) ? "" : depositDescription.getText();
 
-        MenuHandler.getServer().clientToServer("bank " + "create deposit receipt+" + Bank.getToken() + "+" + username + "+" + amount + "+" + description);
+        MenuHandler.getConnector().clientToServer("bank " + "create deposit receipt+" + Bank.getToken() + "+" + username + "+" + amount + "+" + description);
 
-        String result = MenuHandler.getServer().serverToClient();
+        String result = MenuHandler.getConnector().serverToClient();
 
         if (result.equals("successful")) {
             Alert alert = new Alert(Alert.AlertType.WARNING, "created successfully", ButtonType.OK);
@@ -95,9 +94,9 @@ public class NewReceipt {
 
         description = (withdrawDescription.getText() == null || withdrawDescription.getText().equals("")) ? " " : withdrawDescription.getText();
 
-        MenuHandler.getServer().clientToServer("bank " + "create withdraw receipt+" + Bank.getToken() + "+" + username + "+" + amount + "+" + description);
+        MenuHandler.getConnector().clientToServer("bank " + "create withdraw receipt+" + Bank.getToken() + "+" + username + "+" + amount + "+" + description);
 
-        String result = MenuHandler.getServer().serverToClient();
+        String result = MenuHandler.getConnector().serverToClient();
 
         if (result.equals("successful")) {
             Alert alert = new Alert(Alert.AlertType.WARNING, "created successfully", ButtonType.OK);
@@ -142,8 +141,8 @@ public class NewReceipt {
             alert.showAndWait();
             return;
         }
-        MenuHandler.getServer().clientToServer("bank " + "is there person with username+" + otherUser);
-        String answer = MenuHandler.getServer().serverToClient();
+        MenuHandler.getConnector().clientToServer("bank " + "is there person with username+" + otherUser);
+        String answer = MenuHandler.getConnector().serverToClient();
         if (answer.equals("false")) {
             alert.setContentText("the username entered isn't valid, try something valid");
             alert.showAndWait();
@@ -152,9 +151,9 @@ public class NewReceipt {
 
         description = (transferDescription.getText() == null || transferDescription.getText().equals("")) ? "" : transferDescription.getText();
 
-        MenuHandler.getServer().clientToServer("bank " + "create transfer receipt+" + Bank.getToken() + "+" + username + "+" + otherUser + "+" + amount + "+" + description);
+        MenuHandler.getConnector().clientToServer("bank " + "create transfer receipt+" + Bank.getToken() + "+" + username + "+" + otherUser + "+" + amount + "+" + description);
 
-        String result = MenuHandler.getServer().serverToClient();
+        String result = MenuHandler.getConnector().serverToClient();
 
         if (result.equals("successful")) {
             alert.setContentText("created successfully");

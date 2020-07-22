@@ -9,7 +9,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
-import javax.sound.sampled.AudioInputStream;
 import java.io.IOException;
 import java.text.ParseException;
 
@@ -33,8 +32,8 @@ public class LogOrRegister {
         //it's a boss
 
         if (MenuHandler.getRole().equalsIgnoreCase("boss")) {
-            MenuHandler.getServer().clientToServer("bank " + "get token+" + "BOSS" + "+" + loginPassword.getText());
-            String token = MenuHandler.getServer().serverToClient();
+            MenuHandler.getConnector().clientToServer("bank " + "get token+" + "BOSS" + "+" + loginPassword.getText());
+            String token = MenuHandler.getConnector().serverToClient();
             System.out.println("this is the token " + token);
             if (!token.equals("fuck off, identification was wrong") && !token.equals("something went wrong")) {
                 Bank.setToken(token);
@@ -52,16 +51,16 @@ public class LogOrRegister {
 
         //they don't have an account
 
-        MenuHandler.getServer().clientToServer("bank " + "is there person with username+" + username);
-        String answer = MenuHandler.getServer().serverToClient();
+        MenuHandler.getConnector().clientToServer("bank " + "is there person with username+" + username);
+        String answer = MenuHandler.getConnector().serverToClient();
         if (answer.equals("false")) {
             alert.setContentText("you don't have an account, create one first!");
             alert.showAndWait();
             return;
         }
 
-        MenuHandler.getServer().clientToServer("bank " + "get token+" + username + "+" + loginPassword.getText());
-        String token = MenuHandler.getServer().serverToClient();
+        MenuHandler.getConnector().clientToServer("bank " + "get token+" + username + "+" + loginPassword.getText());
+        String token = MenuHandler.getConnector().serverToClient();
         if (!token.equals("fuck off, identification was wrong") && !token.equals("something went wrong")) {
             Bank.setToken(token);
             alert.setContentText("login successful");
@@ -101,18 +100,18 @@ public class LogOrRegister {
 
         //they already have an account
 
-        MenuHandler.getServer().clientToServer("bank " + "is there person with username+" + username);
+        MenuHandler.getConnector().clientToServer("bank " + "is there person with username+" + username);
 
-        String answer = MenuHandler.getServer().serverToClient();
+        String answer = MenuHandler.getConnector().serverToClient();
         if (answer.equals("true")) {
             alert.setContentText("you already have an account");
             alert.showAndWait();
             return;
         }
 
-        MenuHandler.getServer().clientToServer("bank " + "create account+" + username + "+" + createAccountPassword.getText() + "+first name+second name");
+        MenuHandler.getConnector().clientToServer("bank " + "create account+" + username + "+" + createAccountPassword.getText() + "+first name+second name");
 
-        if (MenuHandler.getServer().serverToClient().equals("created successfully")) {
+        if (MenuHandler.getConnector().serverToClient().equals("created successfully")) {
             alert.setContentText("created successfully");
             createAccountConfirmation.setText("");
             createAccountPassword.setText("");

@@ -8,12 +8,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 
-import javax.sound.sampled.AudioInputStream;
 import java.io.IOException;
 import java.text.ParseException;
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.ZoneId;
 
 public class ViewOffCodeController {
     public DatePicker startDate;
@@ -32,8 +29,8 @@ public class ViewOffCodeController {
     @FXML
     public void initialize() throws IOException, ParseException {
         String toServer = "view offCode" + "+" + MenuHandler.getUsername() + "+" + MenuHandler.getSeeingOffCode();
-        MenuHandler.getServer().clientToServer(toServer);
-        String respond = MenuHandler.getServer().serverToClient();
+        MenuHandler.getConnector().clientToServer(toServer);
+        String respond = MenuHandler.getConnector().serverToClient();
 
         setInitialValue(respond.split("\n"));
     }
@@ -77,23 +74,23 @@ public class ViewOffCodeController {
         StringBuilder respond = new StringBuilder();
         if (!startDate.getValue().toString().equals(initStartDate)) {
             String toServer = "edit offCode" + "+" + MenuHandler.getSeeingOffCode() + "+" + "start date" + "+" + startDate.getValue().toString();
-            MenuHandler.getServer().clientToServer(toServer);
-            respond.append(MenuHandler.getServer().serverToClient()).append("\n");
+            MenuHandler.getConnector().clientToServer(toServer);
+            respond.append(MenuHandler.getConnector().serverToClient()).append("\n");
         }
         if (!endDate.getValue().toString().equals(initEndDate)) {
             String toServer = "edit offCode" + "+" + MenuHandler.getSeeingOffCode() + "+" + "end date" + "+" + endDate.getValue().toString();
-            MenuHandler.getServer().clientToServer(toServer);
-            respond.append(MenuHandler.getServer().serverToClient()).append("\n");
+            MenuHandler.getConnector().clientToServer(toServer);
+            respond.append(MenuHandler.getConnector().serverToClient()).append("\n");
         }
         if (!percentage.getText().equals(initPercentage)) {
             String toServer = "edit offCode" + "+" + MenuHandler.getSeeingOffCode() + "+" + "percentage" + "+" + percentage.getText();
-            MenuHandler.getServer().clientToServer(toServer);
-            respond.append(MenuHandler.getServer().serverToClient()).append("\n");
+            MenuHandler.getConnector().clientToServer(toServer);
+            respond.append(MenuHandler.getConnector().serverToClient()).append("\n");
         }
         if (!max.getText().equals(initMax)) {
             String toServer = "edit offCode" + "+" + MenuHandler.getSeeingOffCode() + "+" + "ceiling" + "+" + max.getText();
-            MenuHandler.getServer().clientToServer(toServer);
-            respond.append(MenuHandler.getServer().serverToClient()).append("\n");
+            MenuHandler.getConnector().clientToServer(toServer);
+            respond.append(MenuHandler.getConnector().serverToClient()).append("\n");
         }
 
         if (respond.toString().startsWith("ERRORS")) {

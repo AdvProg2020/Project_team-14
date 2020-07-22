@@ -3,9 +3,6 @@ package GUI.ProfileLayout;
 import GUI.Media.Audio;
 import GUI.MenuHandler;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
@@ -50,8 +47,8 @@ public class ChargeWalletController {
             alert.setContentText("invalid date");
             alert.showAndWait();
         } else {
-            MenuHandler.getServer().clientToServer("add balance+" + MenuHandler.getUsername() + "+" + amount.getText());
-            if(MenuHandler.getServer().serverToClient().startsWith("suc")){
+            MenuHandler.getConnector().clientToServer("add balance+" + MenuHandler.getUsername() + "+" + amount.getText());
+            if(MenuHandler.getConnector().serverToClient().startsWith("suc")){
                 alert.setContentText("successfully added to your account");
                 alert.showAndWait();
             } else {

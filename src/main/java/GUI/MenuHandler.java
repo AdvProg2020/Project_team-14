@@ -1,7 +1,6 @@
 package GUI;
 
 import Controller.Server;
-import GUI.CategoryMenu.Category;
 import GUI.Media.Audio;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -54,23 +53,23 @@ public class MenuHandler extends Application {
             String response = connector.serverToClient();
             Parent root;
             if (response.equalsIgnoreCase("yes")) {
-                root = FXMLLoader.load(getClass().getResource("GUI/ProductScene/ProductScene.fxml"));
+                root = FXMLLoader.load(getClass().getResource("/GUI/ProductScene/ProductScene.fxml"));
             } else {
-                root = FXMLLoader.load(getClass().getResource("GUI/RegisterBoss/RegisterBoss.fxml"));
+                root = FXMLLoader.load(getClass().getResource("/GUI/RegisterBoss/RegisterBoss.fxml"));
             }
             primaryStage.setScene(new Scene(root));
             MenuHandler.setStage(primaryStage);
             primaryStage.show();
 
         } catch (IOException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "your connection to server failed ):, try again later", ButtonType.OK);
+            Alert alert = new Alert(Alert.AlertType.ERROR, "your connection to server failed ): try again later", ButtonType.OK);
             alert.showAndWait();
         }
     }
 
-    /*public static Connector getConnector() {
+    public static Connector getConnector() {
         return connector;
-    }*/
+    }
 
     public static void setConnector(Connector connector) {
         MenuHandler.connector = connector;
@@ -78,8 +77,8 @@ public class MenuHandler extends Application {
 
     public static String getRole() {
         try {
-            getServer().clientToServer("what is account role+" + username);
-            return getServer().serverToClient();
+            getConnector().clientToServer("what is account role+" + username);
+            return getConnector().serverToClient();
         } catch (Exception e) {
             return "none";
         }
@@ -101,12 +100,8 @@ public class MenuHandler extends Application {
         MenuHandler.username = username;
     }
 
-    public static Server getServer() {
+    /*public static Server getServer() {
         return server;
-    }
-
-    /*public static Connector getServer() {
-        return connector;
     }*/
 
     public static void setServer(Server server) {
@@ -226,21 +221,21 @@ public class MenuHandler extends Application {
     }
 
     public static long getCredit() throws ParseException, IOException {
-        MenuHandler.getServer().clientToServer("show balance+" + username);
-        return Long.parseLong(MenuHandler.getServer().serverToClient().substring("Your Balance is : ".length()));
+        MenuHandler.getConnector().clientToServer("show balance+" + username);
+        return Long.parseLong(MenuHandler.getConnector().serverToClient().substring("Your Balance is : ".length()));
     }
 
     public static int getWagePercentage() throws ParseException, IOException {
-        MenuHandler.getServer().clientToServer("get wage+");
-        return Integer.parseInt(MenuHandler.getServer().serverToClient());
+        MenuHandler.getConnector().clientToServer("get wage+");
+        return Integer.parseInt(MenuHandler.getConnector().serverToClient());
     }
 
     public static long getMinCredit() throws ParseException, IOException {
-        MenuHandler.getServer().clientToServer("get min credit+");
-        return Long.parseLong(MenuHandler.getServer().serverToClient());
+        MenuHandler.getConnector().clientToServer("get min credit+");
+        return Long.parseLong(MenuHandler.getConnector().serverToClient());
     }
 
-    static class Connector {
+    /*static class Connector {
         private Socket mySocket;
         private String host;
         private int port;
@@ -269,6 +264,5 @@ public class MenuHandler extends Application {
         public String serverToClient() {
             return response;
         }
-
-    }
+    }*/
 }

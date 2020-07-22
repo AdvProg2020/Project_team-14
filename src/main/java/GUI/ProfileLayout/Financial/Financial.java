@@ -5,7 +5,6 @@ import GUI.MenuHandler;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.Menu;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
@@ -50,10 +49,10 @@ public class Financial {
                 }
             }
             if (minAmount != Integer.parseInt(min.getText())) {
-                MenuHandler.getServer().clientToServer("set min credit+" + min.getText());
+                MenuHandler.getConnector().clientToServer("set min credit+" + min.getText());
             }
             if (wageAmount != Integer.parseInt(wage.getText())) {
-                MenuHandler.getServer().clientToServer("set wage+" + wage.getText());
+                MenuHandler.getConnector().clientToServer("set wage+" + wage.getText());
             }
         } catch (Exception e) {
             alert.setContentText(e.getMessage());
@@ -68,10 +67,10 @@ public class Financial {
     }
 
     public void initialize() throws ParseException, IOException {
-        MenuHandler.getServer().clientToServer("get wage+");
-        wageAmount = Integer.parseInt(MenuHandler.getServer().serverToClient());
-        MenuHandler.getServer().clientToServer("get min credit+");
-        minAmount = Integer.parseInt(MenuHandler.getServer().serverToClient());
+        MenuHandler.getConnector().clientToServer("get wage+");
+        wageAmount = Integer.parseInt(MenuHandler.getConnector().serverToClient());
+        MenuHandler.getConnector().clientToServer("get min credit+");
+        minAmount = Integer.parseInt(MenuHandler.getConnector().serverToClient());
         wage.setText(Integer.toString(wageAmount));
         min.setText(Integer.toString(minAmount));
     }

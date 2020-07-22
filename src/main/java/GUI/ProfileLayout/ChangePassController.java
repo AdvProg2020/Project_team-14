@@ -74,8 +74,8 @@ public class ChangePassController {
         String oldPass = textFields.get(0).isVisible() ? textFields.get(0).getText() : passFields.get(0).getText();
         String newPass = textFields.get(1).isVisible() ? textFields.get(0).getText() : passFields.get(1).getText();
         toServer.append("+").append(oldPass).append("+").append(newPass);
-        MenuHandler.getServer().clientToServer(toServer.toString());
-        String respond = MenuHandler.getServer().serverToClient();
+        MenuHandler.getConnector().clientToServer(toServer.toString());
+        String respond = MenuHandler.getConnector().serverToClient();
 
         if (respond.startsWith("Error:")) {
             System.out.println();
@@ -87,7 +87,7 @@ public class ChangePassController {
         ((Stage) alert.getDialogPane().getScene().getWindow()).setAlwaysOnTop(true);
         ((Stage) alert.getDialogPane().getScene().getWindow()).toFront();
         alert.showAndWait();
-        MenuHandler.getServer().clientToServer("change pass+" + MenuHandler.getUsername() + "+" + oldPass + "+" + newPass);
+        MenuHandler.getConnector().clientToServer("change pass+" + MenuHandler.getUsername() + "+" + oldPass + "+" + newPass);
         passPane.getScene().getWindow().hide();
 
     }

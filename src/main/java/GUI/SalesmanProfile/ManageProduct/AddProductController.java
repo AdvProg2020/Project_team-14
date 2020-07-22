@@ -120,10 +120,10 @@ public class AddProductController {
                 reset(actionEvent);
                 return;
             }
-            MenuHandler.getServer().clientToServer("create product+" + MenuHandler.getUsername() + "+" +
+            MenuHandler.getConnector().clientToServer("create product+" + MenuHandler.getUsername() + "+" +
                     productName.getText() + "+" + brand.getText() + "+" + description.getText() + "+" + price.getText()
                     + "+" + count.getValue());
-            String serverAnswer = MenuHandler.getServer().serverToClient();
+            String serverAnswer = MenuHandler.getConnector().serverToClient();
             if (serverAnswer.startsWith("product created")) {
                 alert.setAlertType(Alert.AlertType.INFORMATION);
                 alert.setContentText("Product Created");
@@ -133,10 +133,10 @@ public class AddProductController {
             alert.showAndWait();
             String productId = serverAnswer.split("\n")[1];
             if (!path.equals("")) {
-                MenuHandler.getServer().clientToServer("product picture path+" + productId + "+" + path);
+                MenuHandler.getConnector().clientToServer("product picture path+" + productId + "+" + path);
             }
             if (!pathVid.equals("")) {
-                MenuHandler.getServer().clientToServer("set product video+" + productId + "+" + pathVid);
+                MenuHandler.getConnector().clientToServer("set product video+" + productId + "+" + pathVid);
             }
             reset(actionEvent);
         }

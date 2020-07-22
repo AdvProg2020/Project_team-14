@@ -8,7 +8,6 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.AccessibleRole;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -16,17 +15,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Random;
-import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -61,8 +56,8 @@ public class RegisterController {
         numberOfBadTries = 0;
         numberOfTimesTried = 0;
         identificationLabel.setText(String.valueOf(random.nextInt(10000)));
-        MenuHandler.getServer().clientToServer("is server has boss");
-        if (MenuHandler.getServer().serverToClient().equalsIgnoreCase("yes")) {
+        MenuHandler.getConnector().clientToServer("is server has boss");
+        if (MenuHandler.getConnector().serverToClient().equalsIgnoreCase("yes")) {
             role.setItems(rolesIfHasBoss);
         } else {
             role.setItems(rolesIfHasNotBoss);
@@ -171,9 +166,9 @@ public class RegisterController {
                 if (((String) role.getValue()).equalsIgnoreCase("salesman")) {
                     message += "+" + company.getText();
                 }
-                (MenuHandler.getServer()).clientToServer(message);
+                (MenuHandler.getConnector()).clientToServer(message);
                 String serverAnswer;
-                serverAnswer = (MenuHandler.getServer()).serverToClient();
+                serverAnswer = (MenuHandler.getConnector()).serverToClient();
                 if (serverAnswer.equalsIgnoreCase("the username is already taken, try something else")) {
                     alert.setContentText("This Username Has Been Taken Please Try Something Else");
                 } else {
@@ -190,10 +185,10 @@ public class RegisterController {
         }
     }
 
-    private void setAvatarInServer(String username) throws ParseException {
+    private void setAvatarInServer(String username) throws ParseException, IOException {
         String avatar = ((Label) (((AnchorPane) avatarPane.getChildren().get(0)).getChildren().get(12))).getText();
         String toServer = "set person image+" + username + "+" + avatar;
-        MenuHandler.getServer().clientToServer(toServer);
+        MenuHandler.getConnector().clientToServer(toServer);
     }
 
     public void checkSalesmanRole() {

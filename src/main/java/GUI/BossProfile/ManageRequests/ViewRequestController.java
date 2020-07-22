@@ -3,13 +3,9 @@ package GUI.BossProfile.ManageRequests;
 import GUI.Media.Audio;
 import GUI.MenuHandler;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
-import javax.sound.sampled.AudioInputStream;
 import java.io.IOException;
 import java.text.ParseException;
 
@@ -25,10 +21,10 @@ public class ViewRequestController {
     public void initialize() throws ParseException, IOException {
         requestContent.setDisable(false);
         requestContent.setEditable(false);
-        MenuHandler.getServer().clientToServer("view request+" + MenuHandler.getUsername() + "+" + MenuHandler.getRequestID());
-        String serverAnswer = MenuHandler.getServer().serverToClient();
-        MenuHandler.getServer().clientToServer("is request state checking+" + MenuHandler.getRequestID());
-        if (!MenuHandler.getServer().serverToClient().equalsIgnoreCase("yes")) {
+        MenuHandler.getConnector().clientToServer("view request+" + MenuHandler.getUsername() + "+" + MenuHandler.getRequestID());
+        String serverAnswer = MenuHandler.getConnector().serverToClient();
+        MenuHandler.getConnector().clientToServer("is request state checking+" + MenuHandler.getRequestID());
+        if (!MenuHandler.getConnector().serverToClient().equalsIgnoreCase("yes")) {
             declineButton.setVisible(false);
             acceptButton.setText("Delete");
         }
@@ -134,8 +130,8 @@ public class ViewRequestController {
 
     public void declineRequest(ActionEvent actionEvent) throws ParseException, IOException {
         Audio.playClick5();
-        MenuHandler.getServer().clientToServer("decline request+" + MenuHandler.getUsername() + "+" + requestID);
-        if (MenuHandler.getServer().serverToClient().equalsIgnoreCase("declined successfully")) {
+        MenuHandler.getConnector().clientToServer("decline request+" + MenuHandler.getUsername() + "+" + requestID);
+        if (MenuHandler.getConnector().serverToClient().equalsIgnoreCase("declined successfully")) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Request Declined Successfully", ButtonType.OK);
             ((Stage) alert.getDialogPane().getScene().getWindow()).setAlwaysOnTop(true);
             ((Stage) alert.getDialogPane().getScene().getWindow()).toFront();
@@ -147,8 +143,8 @@ public class ViewRequestController {
     public void acceptRequest(ActionEvent actionEvent) throws ParseException, IOException {
         Audio.playClick4();
         if (acceptButton.getText().equalsIgnoreCase("accept")) {
-            MenuHandler.getServer().clientToServer("accept request+" + MenuHandler.getUsername() + "+" + requestID);
-            if (MenuHandler.getServer().serverToClient().equalsIgnoreCase("accepted successfully")) {
+            MenuHandler.getConnector().clientToServer("accept request+" + MenuHandler.getUsername() + "+" + requestID);
+            if (MenuHandler.getConnector().serverToClient().equalsIgnoreCase("accepted successfully")) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, "Request Accepted Successfully", ButtonType.OK);
                 ((Stage) alert.getDialogPane().getScene().getWindow()).setAlwaysOnTop(true);
                 ((Stage) alert.getDialogPane().getScene().getWindow()).toFront();
@@ -156,8 +152,8 @@ public class ViewRequestController {
                 ((Button) actionEvent.getSource()).getScene().getWindow().hide();
             }
         } else {
-            MenuHandler.getServer().clientToServer("delete request+" + MenuHandler.getUsername() + "+" + requestID);
-            if (MenuHandler.getServer().serverToClient().equalsIgnoreCase("deleted successfully")) {
+            MenuHandler.getConnector().clientToServer("delete request+" + MenuHandler.getUsername() + "+" + requestID);
+            if (MenuHandler.getConnector().serverToClient().equalsIgnoreCase("deleted successfully")) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, "Request Deleted Successfully", ButtonType.OK);
                 ((Stage) alert.getDialogPane().getScene().getWindow()).setAlwaysOnTop(true);
                 ((Stage) alert.getDialogPane().getScene().getWindow()).toFront();

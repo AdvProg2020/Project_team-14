@@ -20,7 +20,7 @@ public class Controller {
     public TextField createPasswordField;
     public TextField deleteUsernameField;
 
-    public void create(ActionEvent actionEvent) throws ParseException {
+    public void create(ActionEvent actionEvent) throws ParseException, IOException {
         Audio.playClick5();
         Alert alert = new Alert(Alert.AlertType.ERROR, "", ButtonType.OK);
 
@@ -33,7 +33,7 @@ public class Controller {
             alert.showAndWait();
             return;
         }
-        MenuHandler.getServer().clientToServer("make new supporter+" + createUsernameField.getText() + "+" + createPasswordField.getText());
+        MenuHandler.getConnector().clientToServer("make new supporter+" + createUsernameField.getText() + "+" + createPasswordField.getText());
     }
 
     public void delete(ActionEvent actionEvent) {

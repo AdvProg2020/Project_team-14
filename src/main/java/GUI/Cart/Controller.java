@@ -2,7 +2,6 @@ package GUI.Cart;
 
 import GUI.Media.Audio;
 import GUI.MenuHandler;
-import Menus.Menu;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -49,12 +48,12 @@ public class Controller {
         priceAll.setCellValueFactory(new PropertyValueFactory<>("finalPrice"));
         ArrayList<Triplet<String, String, Integer>> items = MenuHandler.getCart();
         for (Triplet<String, String, Integer> item : items) {
-            MenuHandler.getServer().clientToServer("what is product name+" + item.getValue1());
-            String productName = MenuHandler.getServer().serverToClient();
-            MenuHandler.getServer().clientToServer("is product on sale by+" + item.getValue0() + "+" + item.getValue1());
-            String isOnSale = MenuHandler.getServer().serverToClient();
-            MenuHandler.getServer().clientToServer("get product price by salesman+" + item.getValue0() + "+" + item.getValue1());
-            String price = MenuHandler.getServer().serverToClient();
+            MenuHandler.getConnector().clientToServer("what is product name+" + item.getValue1());
+            String productName = MenuHandler.getConnector().serverToClient();
+            MenuHandler.getConnector().clientToServer("is product on sale by+" + item.getValue0() + "+" + item.getValue1());
+            String isOnSale = MenuHandler.getConnector().serverToClient();
+            MenuHandler.getConnector().clientToServer("get product price by salesman+" + item.getValue0() + "+" + item.getValue1());
+            String price = MenuHandler.getConnector().serverToClient();
             Cart cart = new Cart(item.getValue0(), item.getValue1(), productName, Integer.parseInt(price),
                     getPrice(Integer.parseInt(price), item.getValue2(), isOnSale), item.getValue2(),
                     isOnSale.equalsIgnoreCase("none") ? "No" : "Yes", isOnSale);
@@ -81,9 +80,9 @@ public class Controller {
 
     public void useOffCode(ActionEvent mouseEvent) throws ParseException, IOException {
         Audio.playClick2();
-        MenuHandler.getServer().clientToServer("can use offCode+" + MenuHandler.getUsername() + "+" + offCodeId.getText());
-        Alert alert = new Alert(Alert.AlertType.INFORMATION, MenuHandler.getServer().serverToClient(), ButtonType.OK);
-        if (!MenuHandler.getServer().serverToClient().equals("Use It")) {
+        MenuHandler.getConnector().clientToServer("can use offCode+" + MenuHandler.getUsername() + "+" + offCodeId.getText());
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, MenuHandler.getConnector().serverToClient(), ButtonType.OK);
+        if (!MenuHandler.getConnector().serverToClient().equals("Use It")) {
             alert.setAlertType(Alert.AlertType.ERROR);
         } else {
             usedOffCode.setText(offCodeId.getText());

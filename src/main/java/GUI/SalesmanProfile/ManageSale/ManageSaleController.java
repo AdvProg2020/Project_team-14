@@ -52,8 +52,8 @@ public class ManageSaleController {
     private void update() throws ParseException, IOException {
         saleTable.getItems().clear();
         String toServer = "show sales" + "+" + MenuHandler.getUsername();
-        MenuHandler.getServer().clientToServer(toServer);
-        String respond = MenuHandler.getServer().serverToClient();
+        MenuHandler.getConnector().clientToServer(toServer);
+        String respond = MenuHandler.getConnector().serverToClient();
 
         if (respond.equals("nothing found")) {
             saleTable.setPlaceholder(new Label("You don't have any sale yet!!"));

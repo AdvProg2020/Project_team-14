@@ -32,8 +32,8 @@ public class PersonalInfoController {
     public Label balanceLabel;
 
     public void initialize() throws ParseException, IOException {
-        MenuHandler.getServer().clientToServer("view personal info+" + MenuHandler.getUsername());
-        String serverAnswer = MenuHandler.getServer().serverToClient();
+        MenuHandler.getConnector().clientToServer("view personal info+" + MenuHandler.getUsername());
+        String serverAnswer = MenuHandler.getConnector().serverToClient();
         String[] information = serverAnswer.split("\\s");
         username.setText(information[1]);
         password.setText(information[3]);
@@ -96,8 +96,8 @@ public class PersonalInfoController {
             if (!checkUsernameFormat(username.getText())) {
                 message += "Username Format Is Invalid\n";
             } else {
-                MenuHandler.getServer().clientToServer("edit personal info+username+" + username.getText() + "+" + MenuHandler.getUsername());
-                String serveAnswer = MenuHandler.getServer().serverToClient();
+                MenuHandler.getConnector().clientToServer("edit personal info+username+" + username.getText() + "+" + MenuHandler.getUsername());
+                String serveAnswer = MenuHandler.getConnector().serverToClient();
                 if (serveAnswer.equals("username already exists, choose another one!")) {
                     message += "username already exists, choose another one!\n";
                 } else {
@@ -111,8 +111,8 @@ public class PersonalInfoController {
             if (checkNameFormat(firstName.getText())) {
                 message += "First Name Format Is Invalid\n";
             } else {
-                MenuHandler.getServer().clientToServer("edit personal info+firstName+" + firstName.getText() + "+" + MenuHandler.getUsername());
-                String serveAnswer = MenuHandler.getServer().serverToClient();
+                MenuHandler.getConnector().clientToServer("edit personal info+firstName+" + firstName.getText() + "+" + MenuHandler.getUsername());
+                String serveAnswer = MenuHandler.getConnector().serverToClient();
                 message += "First Name Has Been Edited Successfully\n";
             }
         }
@@ -121,8 +121,8 @@ public class PersonalInfoController {
             if (checkNameFormat(lastName.getText())) {
                 message += "Last Name Format Is Invalid\n";
             } else {
-                MenuHandler.getServer().clientToServer("edit personal info+lastName+" + lastName.getText() + "+" + MenuHandler.getUsername());
-                String serveAnswer = MenuHandler.getServer().serverToClient();
+                MenuHandler.getConnector().clientToServer("edit personal info+lastName+" + lastName.getText() + "+" + MenuHandler.getUsername());
+                String serveAnswer = MenuHandler.getConnector().serverToClient();
                 message += "Last Name Has Been Edited Successfully\n";
             }
         }
@@ -131,8 +131,8 @@ public class PersonalInfoController {
             if (!checkEmailFormat(Email.getText())) {
                 message += "Email Format Is Invalid\n";
             } else {
-                MenuHandler.getServer().clientToServer("edit personal info+Email+" + Email.getText() + "+" + MenuHandler.getUsername());
-                String serveAnswer = MenuHandler.getServer().serverToClient();
+                MenuHandler.getConnector().clientToServer("edit personal info+Email+" + Email.getText() + "+" + MenuHandler.getUsername());
+                String serveAnswer = MenuHandler.getConnector().serverToClient();
                 message += "Email Has Been Edited Successfully\n";
             }
         }
@@ -141,15 +141,15 @@ public class PersonalInfoController {
             if (!checkTelephoneFormat(telephone.getText())) {
                 message += "Telephone Format Is Invalid\n";
             } else {
-                MenuHandler.getServer().clientToServer("edit personal info+telephone+" + telephone.getText() + "+" + MenuHandler.getUsername());
-                String serveAnswer = MenuHandler.getServer().serverToClient();
+                MenuHandler.getConnector().clientToServer("edit personal info+telephone+" + telephone.getText() + "+" + MenuHandler.getUsername());
+                String serveAnswer = MenuHandler.getConnector().serverToClient();
                 message += "Telephone Has Been Edited Successfully\n";
             }
         }
         if (!companyInfo.getText().equals(theCompanyInfo)) {
             edit = true;
-            MenuHandler.getServer().clientToServer("edit personal info+company+" + companyInfo.getText() + "+" + MenuHandler.getUsername());
-            String serveAnswer = MenuHandler.getServer().serverToClient();
+            MenuHandler.getConnector().clientToServer("edit personal info+company+" + companyInfo.getText() + "+" + MenuHandler.getUsername());
+            String serveAnswer = MenuHandler.getConnector().serverToClient();
             message += "Company Has Been Edited Successfully\n";
         }
         if (!edit) {

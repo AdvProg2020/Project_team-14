@@ -95,18 +95,22 @@ public class Server {
 
         @Override
         public void run() {
-            while (true) {
+            while (!Thread.interrupted()) {
                 try {
                     String command = dataInputStream.readUTF();
+                    System.out.println(command);
                     String respond = "";
                     synchronized (server) {
                         server.clientToServer(command);
                         respond = server.serverToClient();
+                        System.out.println(respond);
                     }
                     dataOutputStream.writeUTF(respond);
                     dataOutputStream.flush();
                 } catch (IOException e) {
-                    System.out.println(e.getMessage());
+                    System.out.println("something went wrong, connection to client lost :(");
+                    server.allClientSockets.remove(clientSocket);
+                    Thread.currentThread().interrupt();
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
