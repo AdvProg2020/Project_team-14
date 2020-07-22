@@ -1383,6 +1383,7 @@ public class Server {
 
     private void login(Matcher matcher) {
         accountManager.login(matcher.group(1), matcher.group(2));
+        answer = answer + "\n" + Token.generateNewToken(matcher.group(1));
     }
 
     private boolean checkMoneyFormat(String money) {

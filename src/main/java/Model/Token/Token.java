@@ -15,15 +15,16 @@ public class Token {
     // the first one is username and the other is time sent
 
     private static HashMap<String, Long> onlineUsers = new HashMap<>();
-
-
     private static final SecureRandom secureRandom = new SecureRandom();
     private static final Base64.Encoder base64Encoder = Base64.getUrlEncoder();
 
-    public static String generateNewToken() {
+    public static String generateNewToken(String username) {
         byte[] randomBytes = new byte[100];
         secureRandom.nextBytes(randomBytes);
-        return System.currentTimeMillis() + base64Encoder.encodeToString(randomBytes);
+        String s = System.currentTimeMillis() + "--caption neuer--" + username + "--caption neuer--" + base64Encoder.encodeToString(randomBytes);
+        String token = base64Encoder.encodeToString(s.getBytes());
+        Token.token.add(token);
+        return token;
     }
 
     public static boolean isTokenValid(String token) {
@@ -31,12 +32,17 @@ public class Token {
     }
 
     public static boolean hasTokenExpired(String token) {
-        long past = Long.parseLong(token.substring(0, 13));
-        return System.currentTimeMillis() - past > 1000000;
-    }
-
-    public static void createNewToken(String username) {
-        token.add(generateNewToken());
+        try {
+            token = new String(Base64.getDecoder().decode(token));
+            long past = Long.parseLong(token.substring(0, 13));
+            boolean flag = System.currentTimeMillis() - past > 1000000;
+            if (flag) {
+                Token.token.remove(token);
+            }
+            return flag;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public static void deleteToken(String username) {
@@ -63,6 +69,10 @@ public class Token {
             }
         }
         return arrayList;
+    }
+
+    public static String decode(String token) {
+        return new String(Base64.getDecoder().decode(token));
     }
 
 }

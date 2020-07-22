@@ -1,8 +1,11 @@
 package Controller.Security;
 
 import Controller.Server;
+import Model.Account.Account;
+import Model.Storage;
 import Model.Token.Token;
 
+import java.awt.*;
 import java.security.SecureRandom;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -75,9 +78,25 @@ public class Security {
         //asking for important information
 
         if (Token.isTokenValid(token)) {
+
+            String username;
+            long time;
+
+            try {
+                String decodedToken = Token.decode(token);
+                time = Long.parseLong(decodedToken.split("--caption neuer--")[0]);
+                Account account = Storage.getAccountWithUsername(decodedToken.split("--caption neuer--")[1]);
+                account.getUsername();
+            } catch (Exception e) {
+                System.out.println("we're under attack by trying wring tokens");
+            }
+
+            //checking that it's still authentic
+
             if (!Token.hasTokenExpired(token)) {
                 Server.server.takeAction(message);
             }
+
         }
     }
 
