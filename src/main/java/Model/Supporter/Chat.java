@@ -12,10 +12,12 @@ public class Chat {
     private ArrayList<String> sender = new ArrayList<>();
     private ArrayList<String> message = new ArrayList<>();
     private static ArrayList<Chat> allChats = new ArrayList<>();
+    private boolean hasUnreadMessage;
 
     public Chat(String firstPerson, String secondPerson) {
         this.firstPerson = firstPerson;
         this.secondPerson = secondPerson;
+        this.hasUnreadMessage = true;
         allChats.add(this);
     }
 
@@ -40,8 +42,17 @@ public class Chat {
         synchronized (MenuHandler.getNewMessageLock()) {
             this.sender.add(sender);
             this.message.add(message);
+            this.hasUnreadMessage = true;
             MenuHandler.getNewMessageLock().notifyAll();
         }
+    }
+
+    public boolean hasUnreadMessage() {
+        return hasUnreadMessage;
+    }
+
+    public void setMessagesRead() {
+        this.hasUnreadMessage = false;
     }
 
     public ArrayList<String> getSender() {
@@ -62,6 +73,15 @@ public class Chat {
 
     public String getSecondPerson() {
         return secondPerson;
+    }
+
+    public static Chat getChatWith(String personName, ArrayList<Chat> myChats) {
+        for (Chat chat : myChats) {
+            if (personName.equalsIgnoreCase(chat.getFirstPerson()) | personName.equalsIgnoreCase(chat.getSecondPerson())) {
+                return chat;
+            }
+        }
+        return null;
     }
 
     public ArrayList<Chat> getChatsOfSupporterWithUsername(String supporterUsername) {

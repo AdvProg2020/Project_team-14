@@ -29,33 +29,26 @@ public class ChatController {
     public FlowPane chatPane;
     public ScrollPane scrollPane;
     private String selectedSupporter = "";
-    private ArrayList<String> senders;
-    private ArrayList<String> messages;
+    private Listener listener;
 
     @FXML
     public void initialize() throws IOException {
-        MenuHandler.getConnector().clientToServer("I'm in chat" + "+" + MenuHandler.getUsername());
         MenuHandler.getConnector().clientToServer("get all online supporters");
         String response = MenuHandler.getConnector().serverToClient();
         if (response.equals("no supporter is online")) {
             showMessageOnChatBox("none of our supporters are online now :(\nHey dont worry they check very soon ;)\ntry again later.",
                     "serverMessage");
-            messageBox.setDisable(true);
             return;
         }
+        messageBox.setDisable(true);
         showMessageOnChatBox("chose one of our supporter and we solve your problem immediately", "serverMessage");
-        String supporterNames = response.substring("online supporters name+".length());
-        showSupportersAvatar(supporterNames.split("\\+"));
+        //String supporterNames = response.substring("online supporters name+".length());
+        showSupportersAvatar(/*supporterNames*/response.split("\\n"));
 
-        (new Listener(this)).start();
-    }
+        this.listener = new Listener(this);
+        listener.start();
 
-    public ArrayList<String> getSenders() {
-        return senders;
-    }
-
-    public ArrayList<String> getMessages() {
-        return messages;
+        scrollPane.vvalueProperty().bind(chatPane.heightProperty());
     }
 
     static class Listener extends Thread {
@@ -68,25 +61,28 @@ public class ChatController {
         @Override
         public void run() {
             while (!Thread.interrupted()) {
-                try {
-                    while (true) {
-                        synchronized (MenuHandler.getNewMessageLock()) {
-                            MenuHandler.getNewMessageLock().wait();
+                synchronized (MenuHandler.getNewMessageLock()) {
+                    try {
+                        MenuHandler.getNewMessageLock().wait();
+                        Chat chat = Chat.getChatWith(chatController.selectedSupporter, MenuHandler.getMyChats());
+                        if (chat != null) {
+                            if (chat.hasUnreadMessage()) {
+                                String sender = chat.getSender().get(chat.getSender().size() - 1);
+                                String message = chat.getMessage().get(chat.getMessage().size() - 1);
 
-                            String sender = chatController.getSenders().get(chatController.getSenders().size() - 1);
-                            String message = chatController.getMessages().get(chatController.getMessages().size() - 1);
-
-                            Platform.runLater(() -> {
-                                try {
-                                    chatController.showMessageOnChatBox(message, sender);
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                            });
+                                Platform.runLater(() -> {
+                                    try {
+                                        chatController.showMessageOnChatBox(message, sender);
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                });
+                                chat.setMessagesRead();
+                            }
                         }
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
                     }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
                 }
             }
         }
@@ -98,6 +94,7 @@ public class ChatController {
             ImageView imageView = new ImageView(img);
             imageView.setFitWidth(75);
             imageView.setFitHeight(65);
+            if (name.equalsIgnoreCase(MenuHandler.getUsername())) continue;
             imageView.setId(name);
             onlineSupporterBox.getChildren().add(imageView);
 
@@ -110,35 +107,35 @@ public class ChatController {
         if (!message.trim().equals("")) {
             String toServer = "send message to supporter" + "\n" + MenuHandler.getUsername() + "\n" + selectedSupporter + "\n" + message;
             MenuHandler.getConnector().clientToServer(toServer);
-            MenuHandler.addMessage(MenuHandler.getUsername(), selectedSupporter, message);
-            //showMessageOnChatBox(message, "from me");
         }
     }
 
     public void selectSupporter(MouseEvent mouseEvent) {
         ImageView imageView = (ImageView) mouseEvent.getSource();
-        selectedSupporter = imageView.getId();
-        updateChatBoxForSupporter(selectedSupporter);
+        if (!selectedSupporter.equals(imageView.getId())) {
+            selectedSupporter = imageView.getId();
+            messageBox.setDisable(false);
+            System.out.println(selectedSupporter);
+            updateChatBoxForSupporter(selectedSupporter);
+        }
     }
 
     private void updateChatBoxForSupporter(String selectedSupporter) {
         try {
-            this.senders = null;
-            this.messages = null;
-            for (Chat chat : MenuHandler.getMyChats()) {
-                if (chat.getFirstPerson().equalsIgnoreCase(selectedSupporter) | chat.getSecondPerson().equalsIgnoreCase(selectedSupporter)) {
-                    senders = chat.getSender();
-                    messages = chat.getMessage();
-                    break;
-                }
-            }
-            if (senders != null) {
+            chatPane.getChildren().clear();
+            Chat chat = Chat.getChatWith(selectedSupporter, MenuHandler.getMyChats());
+            if (chat != null) {
+                ArrayList<String> senders = chat.getSender();
+                ArrayList<String> messages = chat.getMessage();
                 for (int i = 0; i < senders.size(); i++) {
                     String sender = senders.get(i);
                     String message = messages.get(i);
 
                     showMessageOnChatBox(message, sender);
                 }
+                chat.setMessagesRead();
+            } else {
+                chatPane.getChildren().clear();
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -175,6 +172,7 @@ public class ChatController {
     public void closeChat(MouseEvent mouseEvent) throws IOException {
         Popup chatPopup = (Popup) ((ImageView) mouseEvent.getSource()).getScene().getWindow();
         chatPopup.hide();
+        listener.interrupt();
         MenuHandler.getSupporterPopup().show(MenuHandler.getSupporterPopup().getOwnerWindow());
     }
 

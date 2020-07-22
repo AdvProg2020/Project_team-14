@@ -114,13 +114,17 @@ public class Server {
                     dataOutputStream.flush();
                 } catch (IOException e) {
                     System.out.println("something went wrong, connection to client lost :(");
-                    server.allClientSockets.remove(clientSocket);
+                    server.getAllClientSockets().remove(clientSocket);
                     Thread.currentThread().interrupt();
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
             }
         }
+    }
+
+    public ArrayList<Socket> getAllClientSockets() {
+        return allClientSockets;
     }
 
     public static void setAnswer(String answer) {
@@ -359,14 +363,10 @@ public class Server {
             setMinCredit(command);
         }
         //supporter parts
-        else if (command.startsWith("I'm in chat")) {
-            joinChat(command);
-        } else if (command.startsWith("get all online supporters")) {
+        else if (command.startsWith("get all online supporters")) {
             getAllOnlineSupporters();
         } else if (command.startsWith("send message to supporter")) {
             sendMessage(command);
-        } else if (command.startsWith("show my chat with")) {
-            showChatWith(command);
         }
         //end parts
         else if (command.startsWith("show balance")) {
@@ -391,21 +391,23 @@ public class Server {
 
     }
 
-    private void joinChat(String command) {
-        //supporterManager.joinChat(command.split("\\+")[1], );
-    }
-
     private void getAllOnlineSupporters() {
-        setAnswer("no supporter is online");
+        setAnswer("Javad" + "\n" + "Matin" + "\n" + "hossein");
     }
 
     private void sendMessage(String command) {
         String[] info = command.split("\n");
-        supporterManager.sendMessage(info[1], info[2], info[3]);
-    }
+        String toBroadcastMessage = "this is a chat message" + "\n" + info[1] + "\n" + info[2] + "\n" + info[3];
+        for (Socket socket : allClientSockets) {
+            try {
+                DataOutputStream dataOutputStream = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
+                dataOutputStream.writeUTF(toBroadcastMessage);
+                dataOutputStream.flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
-    private void showChatWith(String command) {
-
+        }
     }
 
     private void getOnlineUsers() {

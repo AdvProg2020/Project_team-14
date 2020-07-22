@@ -19,8 +19,8 @@ public class SupporterManager {
         Supporter.getAllSupporters().remove(Supporter.getSupporterWithUsername(username));
     }
 
-    public void joinChat(String username, Socket socket) {
-
+    public void getAllOnlineSupporters() {
+        //....
     }
 
     public void sendMessage(String sender, String receiver, String content) {
