@@ -8,8 +8,7 @@ class FileManager {
     public FileManager() {
         File file = new File("database.Neuer");
         try {
-            if (!file.exists())
-                file.createNewFile();
+            file.createNewFile();
         } catch (IOException e) {
             e.printStackTrace();
         }

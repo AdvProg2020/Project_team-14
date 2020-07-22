@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import Controller.SQL.SQL;
 import Model.Account.Account;
 import Model.Account.Customer;
@@ -23,6 +24,7 @@ import Model.Product.Point;
 import Model.Product.Product;
 import Model.Request.Request;
 import Model.Storage;
+import Model.Token.Token;
 
 import static Controller.Security.Methods.*;
 
@@ -306,8 +308,18 @@ public class Server {
             this.makeNewSupporter(command);
         } else if (command.startsWith("delete supporter+")) {
             this.deleteSupporter(command);
+        } else if (command.startsWith("get online users+")) {
+            getOnlineUsers();
         }
 
+    }
+
+    private void getOnlineUsers() {
+        StringBuilder result = new StringBuilder();
+        for (String username : Token.getOnlineUsers()) {
+            result.append(username).append("\n");
+        }
+        setAnswer(result.toString());
     }
 
     private void getWage() {

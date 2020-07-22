@@ -188,4 +188,5 @@ public class MenuHandler {
         MenuHandler.getServer().clientToServer("get min credit+");
         return Long.parseLong(MenuHandler.getServer().serverToClient());
     }
+
 }
