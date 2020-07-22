@@ -23,7 +23,16 @@ public class Token {
         secureRandom.nextBytes(randomBytes);
         String s = System.currentTimeMillis() + "--caption neuer--" + username + "--caption neuer--" + base64Encoder.encodeToString(randomBytes);
         String token = base64Encoder.encodeToString(s.getBytes());
+        token = new StringBuilder(token).reverse().toString();
+        token = base64Encoder.encodeToString(token.getBytes());
         Token.token.add(token);
+        return token;
+    }
+
+    public static String decode(String token) {
+        token = new String(Base64.getDecoder().decode(token));
+        token = new StringBuilder(token).reverse().toString();
+        token = new String(Base64.getDecoder().decode(token));
         return token;
     }
 
@@ -33,7 +42,7 @@ public class Token {
 
     public static boolean hasTokenExpired(String token) {
         try {
-            token = new String(Base64.getDecoder().decode(token));
+            token = decode(token);
             long past = Long.parseLong(token.substring(0, 13));
             boolean flag = System.currentTimeMillis() - past > 1000000;
             if (flag) {
@@ -69,10 +78,6 @@ public class Token {
             }
         }
         return arrayList;
-    }
-
-    public static String decode(String token) {
-        return new String(Base64.getDecoder().decode(token));
     }
 
 }

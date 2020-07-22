@@ -4,17 +4,15 @@ import Controller.Server;
 import Model.Account.Account;
 import Model.Storage;
 import Model.Token.Token;
-import com.sun.prism.shader.Solid_TextureYV12_AlphaTest_Loader;
 
-import java.awt.*;
 import java.net.*;
-import java.security.SecureRandom;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.HashMap;
 
 public class Security {
+
     public static boolean checkStringLength(String command) {
         try {
             command.charAt(10000);
@@ -113,6 +111,8 @@ public class Security {
 
             if (!Token.hasTokenExpired(token)) {
                 Server.server.takeAction(message);
+            } else {
+                Server.server.takeAction("token has expired");
             }
 
         }

@@ -60,6 +60,7 @@ public class ProfileLayoutController {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are You Sure You Want To Logout?", ButtonType.YES, ButtonType.NO);
         alert.showAndWait();
         if (alert.getResult().equals(ButtonType.YES)) {
+            MenuHandler.setToken("no token");
             MenuHandler.setUsername(null);
             MenuHandler.setUserType(null);
             MenuHandler.setIsUserLogin(false);
