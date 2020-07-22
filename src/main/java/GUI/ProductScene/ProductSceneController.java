@@ -1,6 +1,7 @@
 package GUI.ProductScene;
 
 import GUI.MenuHandler;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -160,6 +161,23 @@ public class ProductSceneController {
                 filter.getItems().add("Category:" + s.split("\\s")[2]);
             }
         }
+        Platform.runLater(() -> {
+            try {
+                Stage stage = (Stage) accountMenuButton.getScene().getWindow();
+                Popup popup = new Popup();
+                HBox root = FXMLLoader.load(getClass().getResource("/GUI/Supporter/SupporterPopUp.fxml"));
+                popup.getContent().add(root);
+                double x = stage.getX() + stage.getWidth() - root.getPrefWidth() - 15;
+                double y = stage.getY() + stage.getHeight() - root.getPrefHeight() - 15;
+                popup.setAnchorX(x);
+                popup.setAnchorY(y);
+                MenuHandler.setSupporterPopup(popup);
+                popup.show(stage);
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.out.println("something is wrong with supporter popup");
+            }
+        });
         update();
     }
 
@@ -272,7 +290,6 @@ public class ProductSceneController {
                     + "-fx-border-radius: 2;" + "-fx-border-color: black;");
         }
     }
-
 
     public void chooseFilter() throws IOException, ParseException {
         String s = (String) filter.getValue();

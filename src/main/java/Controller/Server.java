@@ -26,6 +26,7 @@ import Model.Product.Point;
 import Model.Product.Product;
 import Model.Request.Request;
 import Model.Storage;
+import Model.Supporter.Supporter;
 import Model.Token.Token;
 
 import static Controller.Security.Methods.*;
@@ -38,6 +39,7 @@ public class Server {
     private BossManager bossManager;
     private SalesmanManager salesmanManager;
     private CustomerManager customerManager;
+    private SupporterManager supporterManager;
     private SQL sql = new SQL();
     private ServerSocket serverSocket;
     private ArrayList<Socket> allClientSockets;
@@ -53,6 +55,7 @@ public class Server {
         this.customerManager = new CustomerManager();
         this.salesmanManager = new SalesmanManager();
         this.productManager = new ProductManager();
+        this.supporterManager = new SupporterManager();
         this.allClientSockets = new ArrayList<>();
         try {
             sql.startProgramme();
@@ -355,6 +358,16 @@ public class Server {
         } else if (command.startsWith("set min credit+")) {
             setMinCredit(command);
         }
+        //supporter parts
+        else if (command.startsWith("I'm in chat")) {
+            joinChat(command);
+        } else if (command.startsWith("get all online supporters")) {
+            getAllOnlineSupporters();
+        } else if (command.startsWith("send message to supporter")) {
+            sendMessage(command);
+        } else if (command.startsWith("show my chat with")) {
+            showChatWith(command);
+        }
         //end parts
         else if (command.startsWith("show balance")) {
             this.showBalance(command);
@@ -375,6 +388,23 @@ public class Server {
         } else if (command.startsWith("get online users+")) {
             getOnlineUsers();
         }
+
+    }
+
+    private void joinChat(String command) {
+        //supporterManager.joinChat(command.split("\\+")[1], );
+    }
+
+    private void getAllOnlineSupporters() {
+        setAnswer("no supporter is online");
+    }
+
+    private void sendMessage(String command) {
+        String[] info = command.split("\n");
+        supporterManager.sendMessage(info[1], info[2], info[3]);
+    }
+
+    private void showChatWith(String command) {
 
     }
 
@@ -408,11 +438,11 @@ public class Server {
 
 
     private void makeNewSupporter(String command) {
-        SupporterController.makeNewSupporter(command.split("\\+")[1], command.split("\\+")[2]);
+        SupporterManager.makeNewSupporter(command.split("\\+")[1], command.split("\\+")[2]);
     }
 
     private void deleteSupporter(String command) {
-        SupporterController.deleteSupporter(command.split("\\+")[1]);
+        SupporterManager.deleteSupporter(command.split("\\+")[1]);
     }
 
     private void canUserOffCode(String command) {

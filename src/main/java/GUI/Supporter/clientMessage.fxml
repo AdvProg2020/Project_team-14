@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxWidth="380.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <CubicCurve controlX1="75.45977020263672" controlX2="75.57781982421875" controlY1="-45.46464538574219" controlY2="-10.776100158691406" endX="94.01485443115234" endY="-10.753839492797852" fill="#383838" layoutX="-79.0" layoutY="95.0" startX="76.26498413085938" startY="-10.857288360595703" stroke="#383838" strokeLineCap="ROUND" strokeMiterLimit="0.0" strokeType="INSIDE" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+      <Label layoutX="49.0" layoutY="14.0" lineSpacing="5.0" maxWidth="340.0" style="-fx-text-fill: #ffffff; -fx-background-color: #383838; -fx-background-radius: 15 15 0 15;" text="Message" AnchorPane.bottomAnchor="0.48" AnchorPane.rightAnchor="17.0" AnchorPane.topAnchor="0.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <padding>
+            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+         </padding>
+      </Label>
+   </children>
+</AnchorPane>

@@ -2,6 +2,7 @@ package GUI;
 
 import Controller.Server;
 import GUI.Media.Audio;
+import Model.Supporter.Chat;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,11 +10,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.Pane;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
 import org.javatuples.Triplet;
 
 import java.io.*;
-import java.net.Socket;
 import java.text.ParseException;
 import java.util.ArrayList;
 
@@ -37,6 +38,10 @@ public class MenuHandler extends Application {
     static private ArrayList<Triplet<String, String, Integer>> cart = new ArrayList<>();
     public static String selectedCategory;
     static private Connector connector;
+    static private Popup supporterPopup;
+    static private Object lock = new Object();
+    static private Object newMessageLock = new Object();
+    static private ArrayList<Chat> myChats = new ArrayList<>();
 
     public static void main(String[] args) {
         launch(args);
@@ -73,6 +78,32 @@ public class MenuHandler extends Application {
 
     public static void setConnector(Connector connector) {
         MenuHandler.connector = connector;
+    }
+
+    public static Popup getSupporterPopup() {
+        return supporterPopup;
+    }
+
+    public static void setSupporterPopup(Popup supporterPopup) {
+        MenuHandler.supporterPopup = supporterPopup;
+    }
+
+    public static Object getLock() {
+        return lock;
+    }
+
+    public static Object getNewMessageLock() {
+        return newMessageLock;
+    }
+
+    public static void addMessage(String sender, String receiver, String content) {
+        if (receiver.equalsIgnoreCase(MenuHandler.getUsername()) | sender.equalsIgnoreCase(MenuHandler.getUsername())) {
+            Chat.processMessage(sender, receiver, content, myChats);
+        }
+    }
+
+    public static ArrayList<Chat> getMyChats() {
+        return myChats;
     }
 
     public static String getRole() {
