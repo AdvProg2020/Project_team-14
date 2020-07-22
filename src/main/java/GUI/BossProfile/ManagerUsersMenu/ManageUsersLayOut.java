@@ -126,4 +126,20 @@ public class ManageUsersLayOut {
             }
         });
     }
+
+    public void checkOnline(ActionEvent actionEvent) throws IOException {
+        Audio.playClick4();
+        Parent root = FXMLLoader.load(getClass().getResource("/GUI/BossProfile/ManagerUsersMenu/OnlineUsers/OnlineUser.fxml"));
+        Popup popup = new Popup();
+        popup.getContent().add(root);
+        popup.show(((Button) actionEvent.getSource()).getScene().getWindow());
+        popup.setOnHiding(e -> {
+            try {
+                update();
+            } catch (ParseException | IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+
+    }
 }
