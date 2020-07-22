@@ -1,6 +1,8 @@
 package Controller;
 
-import java.io.IOException;
+import java.io.*;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -27,6 +29,7 @@ import Model.Storage;
 import static Controller.Security.Methods.*;
 
 public class Server {
+    private final int PORT_NUMBER = 8080;
     static private boolean hasBoss;
     private AccountManager accountManager;
     private ProductManager productManager;
@@ -34,6 +37,8 @@ public class Server {
     private SalesmanManager salesmanManager;
     private CustomerManager customerManager;
     private SQL sql = new SQL();
+    private ServerSocket serverSocket;
+    private ArrayList<Socket> allClientSockets;
 
     //first is username, second is a cart
     //private HashMap<String, Cart> abstractCarts;
@@ -46,12 +51,67 @@ public class Server {
         this.customerManager = new CustomerManager();
         this.salesmanManager = new SalesmanManager();
         this.productManager = new ProductManager();
+        this.allClientSockets = new ArrayList<>();
         try {
             sql.startProgramme();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         hasBoss = (Storage.getAllBosses().size() != 0);
+    }
+
+    public static void main(String[] args) throws SQLException, IOException, ClassNotFoundException, ParseException {
+        (new Server()).run();
+    }
+
+    public void run() throws IOException, ParseException {
+        serverSocket = new ServerSocket(PORT_NUMBER);
+        System.out.println("**** ServerSocket created successfully ****");
+        Socket clientSocket;
+        while(true) {
+            System.out.println("----------------------------------\nServer listening ....");
+            clientSocket = serverSocket.accept();
+            System.out.println("client accepted");
+            allClientSockets.add(clientSocket);
+            DataInputStream dataInputStream = new DataInputStream(new BufferedInputStream(clientSocket.getInputStream()));
+            DataOutputStream dataOutputStream = new DataOutputStream(new BufferedOutputStream(clientSocket.getOutputStream()));
+
+            (new ClientHandler(this, clientSocket, dataInputStream, dataOutputStream)).start();
+        }
+    }
+
+    static class ClientHandler extends Thread {
+        final Server server;
+        Socket clientSocket;
+        DataInputStream dataInputStream;
+        DataOutputStream dataOutputStream;
+
+        public ClientHandler(Server server, Socket clientSocket, DataInputStream dataInputStream, DataOutputStream dataOutputStream) {
+            this.server = server;
+            this.clientSocket = clientSocket;
+            this.dataInputStream = dataInputStream;
+            this.dataOutputStream = dataOutputStream;
+        }
+
+        @Override
+        public void run() {
+            while (true) {
+                try {
+                    String command = dataInputStream.readUTF();
+                    String respond = "";
+                    synchronized (server) {
+                        server.clientToServer(command);
+                        respond = server.serverToClient();
+                    }
+                    dataOutputStream.writeUTF(respond);
+                    dataOutputStream.flush();
+                } catch (IOException e) {
+                    System.out.println(e.getMessage());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     public static void setAnswer(String answer) {

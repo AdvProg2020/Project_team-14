@@ -2,15 +2,24 @@ package GUI;
 
 import Controller.Server;
 import GUI.CategoryMenu.Category;
+import GUI.Media.Audio;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import org.javatuples.Triplet;
 
-import java.io.IOException;
+import java.io.*;
+import java.net.Socket;
 import java.text.ParseException;
 import java.util.ArrayList;
 
-public class MenuHandler {
+public class MenuHandler extends Application {
+    static private final int PORT_NUMBER = 8080;
     static private String username = null;
     static private String userAvatar = null;
     static private Server server;
@@ -28,6 +37,44 @@ public class MenuHandler {
     static private String cartBack = null;
     static private ArrayList<Triplet<String, String, Integer>> cart = new ArrayList<>();
     public static String selectedCategory;
+    static private Connector connector;
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        Audio.playBackGroundMusic();
+        Connector connector = new Connector("localhost", PORT_NUMBER);
+        MenuHandler.setConnector(connector);
+        try {
+            connector.run();
+            connector.clientToServer("is server has boss");
+            String response = connector.serverToClient();
+            Parent root;
+            if (response.equalsIgnoreCase("yes")) {
+                root = FXMLLoader.load(getClass().getResource("GUI/ProductScene/ProductScene.fxml"));
+            } else {
+                root = FXMLLoader.load(getClass().getResource("GUI/RegisterBoss/RegisterBoss.fxml"));
+            }
+            primaryStage.setScene(new Scene(root));
+            MenuHandler.setStage(primaryStage);
+            primaryStage.show();
+
+        } catch (IOException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "your connection to server failed ):, try again later", ButtonType.OK);
+            alert.showAndWait();
+        }
+    }
+
+    /*public static Connector getConnector() {
+        return connector;
+    }*/
+
+    public static void setConnector(Connector connector) {
+        MenuHandler.connector = connector;
+    }
 
     public static String getRole() {
         try {
@@ -57,6 +104,10 @@ public class MenuHandler {
     public static Server getServer() {
         return server;
     }
+
+    /*public static Connector getServer() {
+        return connector;
+    }*/
 
     public static void setServer(Server server) {
         MenuHandler.server = server;
@@ -187,5 +238,37 @@ public class MenuHandler {
     public static long getMinCredit() throws ParseException, IOException {
         MenuHandler.getServer().clientToServer("get min credit+");
         return Long.parseLong(MenuHandler.getServer().serverToClient());
+    }
+
+    static class Connector {
+        private Socket mySocket;
+        private String host;
+        private int port;
+        private DataInputStream dataInputStream;
+        private DataOutputStream dataOutputStream;
+        private String response;
+
+        public Connector(String host, int port) {
+            this.host = host;
+            this.port = port;
+        }
+
+        public void run() throws IOException {
+            mySocket = new Socket(host, port);
+            dataInputStream = new DataInputStream(new BufferedInputStream(mySocket.getInputStream()));
+            dataOutputStream = new DataOutputStream(new BufferedOutputStream(mySocket.getOutputStream()));
+        }
+
+        public void clientToServer(String command) throws IOException {
+            dataOutputStream.writeUTF(command);
+            dataOutputStream.flush();
+
+            this.response = dataInputStream.readUTF();
+        }
+
+        public String serverToClient() {
+            return response;
+        }
+
     }
 }
