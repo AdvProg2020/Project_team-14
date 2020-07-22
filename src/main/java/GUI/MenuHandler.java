@@ -37,13 +37,14 @@ public class MenuHandler extends Application {
     static private ArrayList<Triplet<String, String, Integer>> cart = new ArrayList<>();
     public static String selectedCategory;
     static private Connector connector;
+    static private String token = "no token";
 
     public static void main(String[] args) {
         launch(args);
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
         Audio.playBackGroundMusic();
         Connector connector = new Connector("localhost", PORT_NUMBER);
         MenuHandler.setConnector(connector);
@@ -220,49 +221,26 @@ public class MenuHandler extends Application {
         MenuHandler.userAvatar = userAvatar;
     }
 
-    public static long getCredit() throws ParseException, IOException {
+    public static long getCredit() throws IOException {
         MenuHandler.getConnector().clientToServer("show balance+" + username);
         return Long.parseLong(MenuHandler.getConnector().serverToClient().substring("Your Balance is : ".length()));
     }
 
-    public static int getWagePercentage() throws ParseException, IOException {
+    public static int getWagePercentage() throws IOException {
         MenuHandler.getConnector().clientToServer("get wage+");
         return Integer.parseInt(MenuHandler.getConnector().serverToClient());
     }
 
-    public static long getMinCredit() throws ParseException, IOException {
+    public static long getMinCredit() throws IOException {
         MenuHandler.getConnector().clientToServer("get min credit+");
         return Long.parseLong(MenuHandler.getConnector().serverToClient());
     }
 
-    /*static class Connector {
-        private Socket mySocket;
-        private String host;
-        private int port;
-        private DataInputStream dataInputStream;
-        private DataOutputStream dataOutputStream;
-        private String response;
+    public static void setToken(String s) {
+        token = s;
+    }
 
-        public Connector(String host, int port) {
-            this.host = host;
-            this.port = port;
-        }
-
-        public void run() throws IOException {
-            mySocket = new Socket(host, port);
-            dataInputStream = new DataInputStream(new BufferedInputStream(mySocket.getInputStream()));
-            dataOutputStream = new DataOutputStream(new BufferedOutputStream(mySocket.getOutputStream()));
-        }
-
-        public void clientToServer(String command) throws IOException {
-            dataOutputStream.writeUTF(command);
-            dataOutputStream.flush();
-
-            this.response = dataInputStream.readUTF();
-        }
-
-        public String serverToClient() {
-            return response;
-        }
-    }*/
+    public static String getToken() {
+        return token;
+    }
 }

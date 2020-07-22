@@ -23,6 +23,7 @@ public class Connector {
     }
 
     public void clientToServer(String command) throws IOException {
+        command = addTheSecurity(command);
         dataOutputStream.writeUTF(command);
         dataOutputStream.flush();
 
@@ -31,5 +32,10 @@ public class Connector {
 
     public String serverToClient() {
         return response;
+    }
+
+    public String addTheSecurity(String command) {
+        String result = "this is a client" + "--1989--" + MenuHandler.getToken() + "--1989--" + command + "--1989--" + System.currentTimeMillis();
+        return result;
     }
 }

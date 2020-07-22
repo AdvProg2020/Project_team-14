@@ -9,8 +9,7 @@ import java.util.Base64;
 import java.util.HashMap;
 
 public class Token {
-    private ArrayList<String> token = new ArrayList<>();
-    private ArrayList<String> usedTimes = new ArrayList<>();
+    private static ArrayList<String> token = new ArrayList<>();
     private static final int ONLINE_TIME_DURATION = 1000000;
 
     // the first one is username and the other is time sent
@@ -27,24 +26,24 @@ public class Token {
         return System.currentTimeMillis() + base64Encoder.encodeToString(randomBytes);
     }
 
-    public boolean isTokenValid(String token) {
-        return this.token.contains(token);
+    public static boolean isTokenValid(String token) {
+        return Token.token.contains(token);
     }
 
-    public boolean hasTokenExpired(String token) {
+    public static boolean hasTokenExpired(String token) {
         long past = Long.parseLong(token.substring(0, 13));
         return System.currentTimeMillis() - past > 1000000;
     }
 
-    public void createNewToken(String username) {
+    public static void createNewToken(String username) {
         token.add(generateNewToken());
     }
 
-    public void deleteToken(String username) {
+    public static void deleteToken(String username) {
         token.remove(username);
     }
 
-    public void addOnlineUsers(String username, Long time) {
+    public static void addOnlineUsers(String username, Long time) {
         onlineUsers.put(username, time);
     }
 

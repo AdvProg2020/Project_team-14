@@ -3,7 +3,6 @@ package Controller;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -13,6 +12,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import Controller.SQL.SQL;
+import Controller.Security.Security;
 import Model.Account.Account;
 import Model.Account.Customer;
 import Model.Account.Role;
@@ -28,8 +28,6 @@ import Model.Request.Request;
 import Model.Storage;
 import Model.Token.Token;
 
-import static Controller.Security.Methods.*;
-
 public class Server {
     private final int PORT_NUMBER = 8080;
     static private boolean hasBoss;
@@ -41,9 +39,7 @@ public class Server {
     private SQL sql = new SQL();
     private ServerSocket serverSocket;
     private ArrayList<Socket> allClientSockets;
-
-    //first is username, second is a cart
-    //private HashMap<String, Cart> abstractCarts;
+    public static Server server;
     static private String answer;
 
     public Server() {
@@ -60,24 +56,24 @@ public class Server {
             System.out.println(e.getMessage());
         }
         hasBoss = (Storage.getAllBosses().size() != 0);
+        server = this;
     }
 
-    public static void main(String[] args) throws SQLException, IOException, ClassNotFoundException, ParseException {
+    public static void main(String[] args) throws IOException {
         (new Server()).run();
     }
 
-    public void run() throws IOException, ParseException {
+    public void run() throws IOException {
         serverSocket = new ServerSocket(PORT_NUMBER);
         System.out.println("**** ServerSocket created successfully ****");
         Socket clientSocket;
-        while(true) {
+        while (true) {
             System.out.println("----------------------------------\nServer listening ....");
             clientSocket = serverSocket.accept();
             System.out.println("client accepted");
             allClientSockets.add(clientSocket);
             DataInputStream dataInputStream = new DataInputStream(new BufferedInputStream(clientSocket.getInputStream()));
             DataOutputStream dataOutputStream = new DataOutputStream(new BufferedOutputStream(clientSocket.getOutputStream()));
-
             (new ClientHandler(this, clientSocket, dataInputStream, dataOutputStream)).start();
         }
     }
@@ -113,8 +109,6 @@ public class Server {
                     System.out.println("something went wrong, connection to client lost :(");
                     server.allClientSockets.remove(clientSocket);
                     Thread.currentThread().interrupt();
-                } catch (ParseException e) {
-                    e.printStackTrace();
                 }
             }
         }
@@ -133,25 +127,13 @@ public class Server {
         return pattern.matcher(command);
     }
 
-    public void clientToServer(String command) throws ParseException {
+    public void clientToServer(String command) {
         try {
-
-            //running security checks
-
-            if (checkStringLength(command) || mayContainScript(command)) {
-                return;
-            }
-
-            //checking IP
-            //checking token ...
-            // if it doesn't ask for secret stuff
-            //takeNormalAction(command);
-            //if it's secret
-
-            takeAction(command);
-        } catch (Exception ignored) {
+            Security.securityCheck(command);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
+        System.out.println("this is the answer: " + answer);
     }
 
     public void takeAction(String command) throws ParseException {
@@ -448,34 +430,7 @@ public class Server {
     }
 
     private void addToCart(String command) {
-        /*for (Cart cart : Storage.allCarts) {
-            if (cart.getUsername().equals(command.split("\\+")[1])) {
-                for (Triplet<String, String, Integer> item : cart.getAllItems()) {
-                    if (item.getValue0().equals(command.split("\\+")[2])) {
-                        if (item.getValue1().equals(command.split("\\+")[3])) {
-                            int counter = item.getValue2();
-                            if (counter + (Integer) count.getValue() > (Integer.parseInt(remainder.getText()))) {
-                                Alert alert = new Alert(Alert.AlertType.ERROR, "The Current Number Of Items + The Items You Already Added To Your Cart Is More Than Remainder", ButtonType.OK);
-                                alert.showAndWait();
-                            } else {
-                                MenuHandler.getServer().clientToServer("Add To Cart+" + MenuHandler.getUsername() + "+" + (String) chooseSeller.getValue() + "+" + MenuHandler.getProductID() + "+" + (Integer) count.getValue());
-                                Triplet addedItem = new Triplet<>((String) chooseSeller.getValue(), MenuHandler.getProductID(), (Integer) count.getValue() + counter);
-                                MenuHandler.getCart().remove(item);
-                                MenuHandler.getCart().add(addedItem);
-                                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Added To The Cart", ButtonType.OK);
-                                alert.showAndWait();
-                            }
-                            return;
-                        }
-                    }
-                }
-                Triplet addedItem = new Triplet<>((String) chooseSeller.getValue(), MenuHandler.getProductID(), (Integer) count.getValue());
-                MenuHandler.getCart().add(addedItem);
-                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Added To The Cart", ButtonType.OK);
-                alert.showAndWait();
-                return;
-            }
-        }*/
+
     }
 
     private void getProductSale(String command) {
@@ -571,18 +526,6 @@ public class Server {
     }
 
     private void getProductOnSale(String command) {
-        //complete needed
-        /*setAnswer("none");
-        for (Product product : Storage.getAllProducts()) {
-            if (product.getProductID().equals(command.split("\\+")[2])) {
-                if (product.getIsOnSale().get(command.split("\\+")[1])) {
-                    for (Sale sale : Storage.allSales) {
-                        if (sale.getSalesmanID().equals(command.split("\\+")[1])) {
-                        }
-                    }
-                }
-            }
-        }*/
         setAnswer("none");
     }
 
