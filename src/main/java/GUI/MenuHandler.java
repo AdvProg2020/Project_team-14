@@ -15,6 +15,8 @@ import javafx.stage.Stage;
 import org.javatuples.Triplet;
 
 import java.io.*;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.text.ParseException;
 import java.util.ArrayList;
 
@@ -41,16 +43,19 @@ public class MenuHandler extends Application {
     static private Popup supporterPopup;
     static private Object lock = new Object();
     static private Object newMessageLock = new Object();
+    static private Object P2PLock = new Object();
     static private ArrayList<Chat> myChats = new ArrayList<>();
     static private String token = "no token";
+    static private ServerSocket serverSocket;
 
     public static void main(String[] args) {
         launch(args);
     }
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws IOException {
         Audio.playBackGroundMusic();
+        serverSocket = new ServerSocket(0);
         Connector connector = new Connector("localhost", PORT_NUMBER);
         MenuHandler.setConnector(connector);
         try {
@@ -273,5 +278,21 @@ public class MenuHandler extends Application {
 
     public static String getToken() {
         return token;
+    }
+
+    public static Object getP2PLock() {
+        return P2PLock;
+    }
+
+    public static void sendFile(String seller, String fileName, String host, String port) {
+        if (seller.equalsIgnoreCase(MenuHandler.getUsername())) {
+            try {
+                Socket sendSocket = new Socket(host, Integer.parseInt(port));
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
