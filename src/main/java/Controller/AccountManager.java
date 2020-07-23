@@ -35,6 +35,7 @@ public class AccountManager {
                         return;
                     }
                 }
+                account.setOnline(true);
                 Server.setAnswer("login successful as " + account.getRole() + " " + username);
                 Token.addOnlineUsers(username, System.currentTimeMillis());
             } else {

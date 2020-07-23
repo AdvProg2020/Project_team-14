@@ -10,7 +10,7 @@ import java.util.HashMap;
 
 public class Token {
     private static ArrayList<String> token = new ArrayList<>();
-    private static final int ONLINE_TIME_DURATION = 1000000;
+    private static final long ONLINE_TIME_DURATION = 50000;
 
     // the first one is username and the other is time sent
 
@@ -59,12 +59,17 @@ public class Token {
     }
 
     public static void addOnlineUsers(String username, Long time) {
+        onlineUsers.remove(username);
         onlineUsers.put(username, time);
     }
 
     public static boolean isOnline(String username) {
+        if (!Storage.getAccountWithUsername(username).isOnline()) {
+            return false;
+        }
         Long time = onlineUsers.getOrDefault(username, (long) -1);
-        return (System.currentTimeMillis() - time) < ONLINE_TIME_DURATION;
+        System.out.println(onlineUsers.getOrDefault("kos", (long) -1));
+        return ((System.currentTimeMillis() - time) < ONLINE_TIME_DURATION && time != -1);
     }
 
     public static ArrayList<String> getOnlineUsers() {

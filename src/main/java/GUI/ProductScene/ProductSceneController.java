@@ -72,6 +72,7 @@ public class ProductSceneController {
                 alert.showAndWait();
                 if (alert.getResult().equals(ButtonType.YES)) {
                     try {
+                        System.out.println("here we areeeeeeeeee");
                         MenuHandler.getConnector().clientToServer("logout+" + MenuHandler.getUsername());
                         String serverAnswer = MenuHandler.getConnector().serverToClient();
                         if (serverAnswer.equalsIgnoreCase("logout successful")) {

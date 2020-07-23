@@ -18,6 +18,7 @@ public abstract class Account implements Serializable {
     private Role role;
     private String imgPath;
     private String avatar;
+    private String ip = null;
 
     public Account(String username, String password, String firstName, String secondName, String Email, String telephone, String role) {
         this.username = username;
@@ -130,5 +131,11 @@ public abstract class Account implements Serializable {
         return result;
     }
 
+    public String getIp() {
+        return ip;
+    }
 
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
 }

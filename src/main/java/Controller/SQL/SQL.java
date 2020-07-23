@@ -23,16 +23,16 @@ public class SQL {
             connection.createStatement();
             Statement stmt;
             stmt = connection.createStatement();
-            String sql = "CREATE DATABASE hossein";
+            String sql = "CREATE DATABASE matin";
             stmt.executeUpdate(sql);
         } catch (Exception s) {
             System.out.println(s.getMessage());
         }
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost/hossein?" + "user=root&password=");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost/matin?" + "user=root&password=");
             Statement stmt = connection.createStatement();
             String sql;
-            sql = "CREATE TABLE Neuer " + "(id INTEGER not NULL, " + "name blob, " + " PRIMARY KEY ( id ))";
+            sql = "CREATE TABLE javad " + "(id INTEGER not NULL, " + "name blob, " + " PRIMARY KEY ( id ))";
             stmt.executeUpdate(sql);
         } catch (Exception s) {
             System.out.println(s.getMessage());
@@ -50,8 +50,8 @@ public class SQL {
     public void insert(String data) {
         try {
             data = encode(data);
-            PreparedStatement statement = connection.prepareStatement("INSERT  INTO Neuer  (id,name) values (?,?)");
-            statement.executeUpdate("DELETE FROM Neuer");
+            PreparedStatement statement = connection.prepareStatement("INSERT  INTO javad  (id,name) values (?,?)");
+            statement.executeUpdate("DELETE FROM javad");
             statement.setInt(1, 1);
             statement.setString(2, data);
             statement.executeUpdate();
@@ -63,7 +63,7 @@ public class SQL {
 
     public byte[] show() throws SQLException {
         String string = "";
-        String sql = "SELECT id, name FROM Neuer";
+        String sql = "SELECT id, name FROM javad";
         Statement stmt = connection.createStatement();
         ResultSet rs = stmt.executeQuery(sql);
         while (rs.next()) {

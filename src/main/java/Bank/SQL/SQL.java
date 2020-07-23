@@ -27,7 +27,7 @@ public class SQL {
             connection = DriverManager.getConnection("jdbc:mysql://localhost/bank?" + "user=root&password=");
             Statement stmt = connection.createStatement();
             String sql;
-            sql = "CREATE TABLE Neuer " + "(id INTEGER not NULL, " + "name blob, " + " PRIMARY KEY ( id ))";
+            sql = "CREATE TABLE taylor " + "(id INTEGER not NULL, " + "name blob, " + " PRIMARY KEY ( id ))";
             stmt.executeUpdate(sql);
         } catch (Exception s) {
             System.out.println(s.getMessage());
@@ -45,8 +45,8 @@ public class SQL {
     public void insert(String data) {
         try {
             data = encode(data);
-            PreparedStatement statement = connection.prepareStatement("INSERT  INTO Neuer  (id,name) values (?,?)");
-            statement.executeUpdate("DELETE FROM Neuer");
+            PreparedStatement statement = connection.prepareStatement("INSERT  INTO taylor  (id,name) values (?,?)");
+            statement.executeUpdate("DELETE FROM taylor");
             statement.setInt(1, 1);
             statement.setString(2, data);
             statement.executeUpdate();
@@ -58,7 +58,7 @@ public class SQL {
 
     public byte[] show() throws SQLException {
         String string = "";
-        String sql = "SELECT id, name FROM Neuer";
+        String sql = "SELECT id, name FROM taylor";
         Statement stmt = connection.createStatement();
         ResultSet rs = stmt.executeQuery(sql);
         while (rs.next()) {

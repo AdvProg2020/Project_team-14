@@ -100,7 +100,7 @@ public class Security {
 
         if (token.equals("no token")) {
             if (username.equals("no username")) {
-                Server.server.takeAction(message);
+                Server.server.takeAction(command);
                 return;
             } else {
                 blackListOfIPs.add(getIP(socket));
@@ -129,15 +129,13 @@ public class Security {
             //checking that it's still authentic
 
             if (!Token.hasTokenExpired(token)) {
-                Server.server.takeAction(message);
                 Token.addOnlineUsers(Token.getUsernameFromToken(token), System.currentTimeMillis());
+                Server.server.takeAction(message);
             } else {
                 Server.server.takeAction("token has expired");
                 Token.addOnlineUsers(Token.getUsernameFromToken(token), (long) -1);
             }
         }
-
-
     }
 
     public static String getIP(Socket socket) {
@@ -158,6 +156,5 @@ public class Security {
     public static boolean isInBlackList(Socket socket) {
         return blackListOfIPs.contains(getIP(socket));
     }
-
 
 }
