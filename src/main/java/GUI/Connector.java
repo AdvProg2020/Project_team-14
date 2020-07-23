@@ -39,6 +39,7 @@ public class Connector {
     public void clientToServer(String command) throws IOException {
         try {
             synchronized (MenuHandler.getLock()) {
+                command = addTheSecurity(command);
                 dataOutputStream.writeUTF(command);
                 dataOutputStream.flush();
                 MenuHandler.getLock().wait();
@@ -99,6 +100,7 @@ public class Connector {
     }
 
     public String addTheSecurity(String command) {
+
         String result = "this is a client" + "--1989--" + MenuHandler.getToken() + "--1989--" +
                 command + "--1989--" + System.currentTimeMillis() + "--1989--" +
                 ((MenuHandler.getUsername() == null) ? "no username" : MenuHandler.getUsername());
