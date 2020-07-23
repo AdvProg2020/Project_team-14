@@ -66,6 +66,8 @@ public class Connector {
                     String response = connector.getDataInputStream().readUTF();
                     if (response.startsWith("this is a chat message")) {
                         connector.handleChatMessage(response);
+                    } else if (response.startsWith("download file")) {
+                        connector.handleDownloadFile(response);
                     } else {
                         connector.setResponse(response);
                     }
@@ -77,6 +79,15 @@ public class Connector {
                 }
             }
         }
+    }
+
+    public void handleDownloadFile(String response) {
+        String[] info = response.split("\\+");
+        String fileName = info[1];
+        String seller = info[2];
+        String destinationHost = info[3];
+        String destinationPort = info[4];
+        MenuHandler.sendFile(seller, fileName, destinationHost, destinationPort);
     }
 
     public void handleChatMessage(String response) {

@@ -164,7 +164,7 @@ public class ProductSceneController {
         }
         Platform.runLater(() -> {
             try {
-                Stage stage = (Stage) accountMenuButton.getScene().getWindow();
+                Stage stage = MenuHandler.getStage();
                 Popup popup = new Popup();
                 HBox root = FXMLLoader.load(getClass().getResource("/GUI/Supporter/SupporterPopUp.fxml"));
                 popup.getContent().add(root);
