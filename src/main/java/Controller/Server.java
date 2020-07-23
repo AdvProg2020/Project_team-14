@@ -25,6 +25,7 @@ import Model.Product.Point;
 import Model.Product.Product;
 import Model.Request.Request;
 import Model.Storage;
+import Model.Supporter.Supporter;
 import Model.Token.Token;
 
 public class Server {
@@ -35,6 +36,7 @@ public class Server {
     private BossManager bossManager;
     private SalesmanManager salesmanManager;
     private CustomerManager customerManager;
+    private SupporterManager supporterManager;
     private SQL sql = new SQL();
     private ServerSocket serverSocket;
     private ArrayList<Socket> allClientSockets;
@@ -48,6 +50,7 @@ public class Server {
         this.customerManager = new CustomerManager();
         this.salesmanManager = new SalesmanManager();
         this.productManager = new ProductManager();
+        this.supporterManager = new SupporterManager();
         this.allClientSockets = new ArrayList<>();
         try {
             sql.startProgramme();
@@ -113,16 +116,22 @@ public class Server {
                         System.out.println(Security.getIP(clientSocket));
                         respond = server.serverToClient();
                         System.out.println(respond);
+                        dataOutputStream.writeUTF(respond);
+                        dataOutputStream.flush();
                     }
-                    dataOutputStream.writeUTF(respond);
-                    dataOutputStream.flush();
+                    //dataOutputStream.writeUTF(respond);    -->   this is better to be in synchronized block
+                    //dataOutputStream.flush();              -->    ...
                 } catch (Exception e) {
                     System.out.println("something went wrong, connection to client lost :(");
-                    server.allClientSockets.remove(clientSocket);
+                    server.getAllClientSockets().remove(clientSocket);
                     Thread.currentThread().interrupt();
                 }
             }
         }
+    }
+
+    public ArrayList<Socket> getAllClientSockets() {
+        return allClientSockets;
     }
 
     public static void setAnswer(String answer) {
@@ -348,6 +357,12 @@ public class Server {
         } else if (command.startsWith("set min credit+")) {
             setMinCredit(command);
         }
+        //supporter parts
+        else if (command.startsWith("get all online supporters")) {
+            getAllOnlineSupporters();
+        } else if (command.startsWith("send message to supporter")) {
+            sendMessage(command);
+        }
         //end parts
         else if (command.startsWith("show balance")) {
             this.showBalance(command);
@@ -369,6 +384,25 @@ public class Server {
             getOnlineUsers();
         }
 
+    }
+
+    private void getAllOnlineSupporters() {
+        setAnswer("Javad" + "\n" + "Matin" + "\n" + "hossein");
+    }
+
+    private void sendMessage(String command) {
+        String[] info = command.split("\n");
+        String toBroadcastMessage = "this is a chat message" + "\n" + info[1] + "\n" + info[2] + "\n" + info[3];
+        for (Socket socket : allClientSockets) {
+            try {
+                DataOutputStream dataOutputStream = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
+                dataOutputStream.writeUTF(toBroadcastMessage);
+                dataOutputStream.flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
     }
 
     private void getOnlineUsers() {
@@ -401,11 +435,11 @@ public class Server {
 
 
     private void makeNewSupporter(String command) {
-        SupporterController.makeNewSupporter(command.split("\\+")[1], command.split("\\+")[2]);
+        SupporterManager.makeNewSupporter(command.split("\\+")[1], command.split("\\+")[2]);
     }
 
     private void deleteSupporter(String command) {
-        SupporterController.deleteSupporter(command.split("\\+")[1]);
+        SupporterManager.deleteSupporter(command.split("\\+")[1]);
     }
 
     private void canUserOffCode(String command) {

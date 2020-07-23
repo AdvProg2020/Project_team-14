@@ -4,10 +4,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.MenuItem;
-import javafx.stage.Stage;
 
 import java.io.*;
 import java.net.Socket;
@@ -25,24 +22,69 @@ public class Connector {
         this.port = port;
     }
 
+    public DataInputStream getDataInputStream() {
+        return dataInputStream;
+    }
+
     public void run() throws IOException {
         mySocket = new Socket(host, port);
         dataInputStream = new DataInputStream(new BufferedInputStream(mySocket.getInputStream()));
         dataOutputStream = new DataOutputStream(new BufferedOutputStream(mySocket.getOutputStream()));
+
+        Thread listener = new ListenerForServer(this);
+        listener.setDaemon(true);
+        listener.start();
     }
 
-    public void clientToServer(String command) {
+    public void clientToServer(String command) throws IOException {
         try {
-            command = addTheSecurity(command);
-            dataOutputStream.writeUTF(command);
-            dataOutputStream.flush();
-
-            this.response = dataInputStream.readUTF();
-        } catch (Exception e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "your connection to server failed ): try again later", ButtonType.OK);
+            synchronized (MenuHandler.getLock()) {
+                dataOutputStream.writeUTF(command);
+                dataOutputStream.flush();
+                MenuHandler.getLock().wait();
+            }
+        } catch (IOException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Connection to Server failed :(", ButtonType.OK);
             alert.showAndWait();
-            System.exit(1989);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
+    }
+
+    static class ListenerForServer extends Thread {
+        Connector connector;
+
+        public ListenerForServer(Connector connector) {
+            this.connector = connector;
+        }
+
+        @Override
+        public void run() {
+            while (true) {
+                try {
+                    String response = connector.getDataInputStream().readUTF();
+                    if (response.startsWith("this is a chat message")) {
+                        connector.handleChatMessage(response);
+                    } else {
+                        connector.setResponse(response);
+                    }
+                    synchronized (MenuHandler.getLock()) {
+                        MenuHandler.getLock().notifyAll();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public void handleChatMessage(String response) {
+        String[] info = response.split("\n");
+        MenuHandler.addMessage(info[1], info[2], info[3]);
+    }
+
+    private void setResponse(String response) {
+        this.response = response;
     }
 
     public String serverToClient() {
@@ -50,6 +92,10 @@ public class Connector {
             logout();
         }
         return response;
+    }
+
+    public void closeSocket() throws IOException {
+        mySocket.close();
     }
 
     public String addTheSecurity(String command) {

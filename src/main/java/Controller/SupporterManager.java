@@ -2,9 +2,10 @@ package Controller;
 
 import Model.Supporter.Supporter;
 
+import java.net.Socket;
 import java.util.ArrayList;
 
-public class SupporterController {
+public class SupporterManager {
 
     public static ArrayList<Supporter> getAllSupporters() {
         return Supporter.getAllSupporters();
@@ -18,4 +19,11 @@ public class SupporterController {
         Supporter.getAllSupporters().remove(Supporter.getSupporterWithUsername(username));
     }
 
+    public void getAllOnlineSupporters() {
+        //....
+    }
+
+    public void sendMessage(String sender, String receiver, String content) {
+
+    }
 }
