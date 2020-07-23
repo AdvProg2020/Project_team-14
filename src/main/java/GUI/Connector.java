@@ -1,5 +1,14 @@
 package GUI;
 
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.MenuItem;
+import javafx.stage.Stage;
+
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 
@@ -85,10 +94,36 @@ public class Connector {
     }
 
     public String serverToClient() {
+        if (response.equals("token has expired")) {
+            logout();
+        }
         return response;
     }
 
     public void closeSocket() throws IOException {
         mySocket.close();
     }
+
+    public String addTheSecurity(String command) {
+        String result = "this is a client" + "--1989--" + MenuHandler.getToken() + "--1989--" +
+                command + "--1989--" + System.currentTimeMillis();
+        return result;
+    }
+
+    public void logout() {
+        Alert alert = new Alert(Alert.AlertType.ERROR, "you token has expired, login again!", ButtonType.OK);
+        alert.showAndWait();
+        MenuHandler.setToken("no token");
+        MenuHandler.setUsername(null);
+        MenuHandler.setUserType(null);
+        MenuHandler.setIsUserLogin(false);
+        Parent root = null;
+        try {
+            root = FXMLLoader.load(getClass().getResource("/GUI/ProductScene/ProductScene.fxml"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        MenuHandler.getStage().setScene(new Scene(root));
+    }
+
 }
