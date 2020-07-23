@@ -2,6 +2,7 @@ package Controller.Security;
 
 import Controller.Server;
 import Model.Account.Account;
+import Model.IP;
 import Model.Storage;
 import Model.Token.Token;
 
@@ -21,8 +22,6 @@ public class Security {
             return false;
         }
     }
-
-    public static HashMap<String, Integer> IP_Counter = new HashMap<>();
 
     private static ArrayList<String> blackListOfIPs = new ArrayList<>();
 
@@ -52,6 +51,13 @@ public class Security {
         System.out.println(blackListOfIPs);
 
         if (blackListOfIPs.contains(getIP(socket))) {
+            return;
+        }
+
+        //making sure it doesn't send more than 10 requests in 100 milliseconds
+
+        if (IP.addIp(getIP(socket))) {
+            blackListOfIPs.add(getIP(socket));
             return;
         }
 
@@ -129,8 +135,9 @@ public class Security {
                 Server.server.takeAction("token has expired");
                 Token.addOnlineUsers(Token.getUsernameFromToken(token), (long) -1);
             }
-
         }
+
+
     }
 
     public static String getIP(Socket socket) {
@@ -151,5 +158,6 @@ public class Security {
     public static boolean isInBlackList(Socket socket) {
         return blackListOfIPs.contains(getIP(socket));
     }
+
 
 }
