@@ -29,7 +29,6 @@ public class ProfileLayoutController {
     public void initialize() throws IOException, ParseException {
         MenuHandler.setBackProduct("GUI/ProfileLayout/ProfileLayout.fxml");
         pane.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/ProfileLayout/PersonalInfoLayout.fxml")));
-        //setProfileImage();
     }
 
     public void setProfileImage() throws ParseException, IOException {
@@ -60,6 +59,7 @@ public class ProfileLayoutController {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are You Sure You Want To Logout?", ButtonType.YES, ButtonType.NO);
         alert.showAndWait();
         if (alert.getResult().equals(ButtonType.YES)) {
+            MenuHandler.getConnector().clientToServer("logout+" + MenuHandler.getUsername());
             MenuHandler.setToken("no token");
             MenuHandler.setUsername(null);
             MenuHandler.setUserType(null);
