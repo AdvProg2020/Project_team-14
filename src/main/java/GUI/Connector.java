@@ -54,7 +54,8 @@ public class Connector {
 
     public String addTheSecurity(String command) {
         String result = "this is a client" + "--1989--" + MenuHandler.getToken() + "--1989--" +
-                command + "--1989--" + System.currentTimeMillis();
+                command + "--1989--" + System.currentTimeMillis() + "--1989--" +
+                ((MenuHandler.getUsername() == null) ? "no username" : MenuHandler.getUsername());
         return result;
     }
 

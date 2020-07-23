@@ -12,6 +12,7 @@ import Model.Product.Point;
 import Model.Product.Product;
 import Model.Request.Request;
 import Model.Storage;
+import Model.Token.Token;
 
 import java.net.ServerSocket;
 
@@ -35,7 +36,7 @@ public class AccountManager {
                     }
                 }
                 Server.setAnswer("login successful as " + account.getRole() + " " + username);
-                account.setOnline(true);
+                Token.addOnlineUsers(username, System.currentTimeMillis());
             } else {
                 Server.setAnswer("Your Password Is Incorrect");
             }
@@ -48,6 +49,7 @@ public class AccountManager {
         Account account = Storage.getAccountWithUsername(username);
         assert account != null;
         account.setOnline(false);
+        Token.addOnlineUsers(username, (long) -1);
         Server.setAnswer("logout successful");
     }
 
@@ -171,7 +173,7 @@ public class AccountManager {
     }
 
     public void deleteAccount(String bossUsername, String username) {
-        if(bossUsername.equals(username)){
+        if (bossUsername.equals(username)) {
             Server.setAnswer("you're not allowed to delete yourself :)");
             return;
         }

@@ -80,7 +80,7 @@ public class ProductSceneController {
                             MenuHandler.setUsername(null);
                             MenuHandler.setUserType(null);
                         }
-                    } catch (IOException e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }

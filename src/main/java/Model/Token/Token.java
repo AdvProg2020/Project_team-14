@@ -63,11 +63,8 @@ public class Token {
     }
 
     public static boolean isOnline(String username) {
-        if (onlineUsers.containsKey(username)) {
-            Long time = onlineUsers.get(username);
-            return (System.currentTimeMillis() - time) < ONLINE_TIME_DURATION;
-        }
-        return false;
+        Long time = onlineUsers.getOrDefault(username, (long) -1);
+        return (System.currentTimeMillis() - time) < ONLINE_TIME_DURATION;
     }
 
     public static ArrayList<String> getOnlineUsers() {
@@ -78,6 +75,11 @@ public class Token {
             }
         }
         return arrayList;
+    }
+
+    public static String getUsernameFromToken(String token) {
+        token = decode(token);
+        return token.split("--caption neuer--")[1];
     }
 
 }

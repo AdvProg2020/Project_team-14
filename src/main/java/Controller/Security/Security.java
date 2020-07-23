@@ -66,13 +66,14 @@ public class Security {
             return;
         }
 
-        String token, message;
+        String token, message, username;
         long time_sent;
 
         try {
             token = command.split("--1989--")[1];
             message = command.split("--1989--")[2];
             time_sent = Long.parseLong(command.split("--1989--")[3]);
+            username = command.split("--1989--")[4];
         } catch (Exception e) {
             System.out.println("we're under attackkkkkkk");
             blackListOfIPs.add(getIP(socket));
@@ -89,11 +90,17 @@ public class Security {
         //asking for not important information
 
         if (token.equals("no token")) {
-            Server.server.takeAction(message);
-            return;
+            if (username.equals("no username")) {
+                Server.server.takeAction(message);
+                return;
+            } else {
+                blackListOfIPs.add(getIP(socket));
+                return;
+            }
         }
 
         //asking for important information
+
 
         if (Token.isTokenValid(token)) {
 
@@ -101,18 +108,23 @@ public class Security {
                 String decodedToken = Token.decode(token);
                 long time = Long.parseLong(decodedToken.split("--caption neuer--")[0]);
                 Account account = Storage.getAccountWithUsername(decodedToken.split("--caption neuer--")[1]);
-                account.getUsername();
+                if (!Token.getUsernameFromToken(token).equals(account.getUsername())) {
+                    throw new Exception("piss off");
+                }
             } catch (Exception e) {
                 System.out.println("we're under attack by trying wring tokens");
                 blackListOfIPs.add(getIP(socket));
+                return;
             }
 
             //checking that it's still authentic
 
             if (!Token.hasTokenExpired(token)) {
                 Server.server.takeAction(message);
+                Token.addOnlineUsers(Token.getUsernameFromToken(token), System.currentTimeMillis());
             } else {
                 Server.server.takeAction("token has expired");
+                Token.addOnlineUsers(Token.getUsernameFromToken(token), (long) -1);
             }
 
         }
