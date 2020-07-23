@@ -116,9 +116,11 @@ public class Server {
                         System.out.println(Security.getIP(clientSocket));
                         respond = server.serverToClient();
                         System.out.println(respond);
+                        dataOutputStream.writeUTF(respond);
+                        dataOutputStream.flush();
                     }
-                    dataOutputStream.writeUTF(respond);
-                    dataOutputStream.flush();
+                    //dataOutputStream.writeUTF(respond);    -->   this is better to be in synchronized block
+                    //dataOutputStream.flush();              -->    ...
                 } catch (Exception e) {
                     System.out.println("something went wrong, connection to client lost :(");
                     server.getAllClientSockets().remove(clientSocket);

@@ -175,37 +175,4 @@ public class ChatController {
         listener.interrupt();
         MenuHandler.getSupporterPopup().show(MenuHandler.getSupporterPopup().getOwnerWindow());
     }
-
-    /*static class HandelIncomingMessages extends Thread {
-        ChatController controller;
-        Connector connector;
-
-        public HandelIncomingMessages(ChatController controller, Connector connector) {
-            this.controller = controller;
-            this.connector = connector;
-        }
-
-        @Override
-        public void run() {
-            while(!Thread.interrupted()) {
-                try {
-                    System.out.println("client listen for respond...");
-                    String message = connector.serverToClient();
-                    System.out.println(message);
-
-                    Platform.runLater(() -> {
-                        try {
-                            controller.showMessageOnChatBox(message, "from other");
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    });
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    System.out.println("client closed its socket to listen incoming messages");
-                    Thread.currentThread().interrupt();
-                }
-            }
-        }
-    }*/
 }

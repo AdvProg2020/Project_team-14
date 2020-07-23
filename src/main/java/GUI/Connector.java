@@ -4,12 +4,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.MenuItem;
-import javafx.stage.Stage;
-
-import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 
 import java.io.*;
@@ -70,7 +64,7 @@ public class Connector {
                 try {
                     String response = connector.getDataInputStream().readUTF();
                     if (response.startsWith("this is a chat message")) {
-                        connector.handelChatMessage(response);
+                        connector.handleChatMessage(response);
                     } else {
                         connector.setResponse(response);
                     }
@@ -84,7 +78,7 @@ public class Connector {
         }
     }
 
-    public void handelChatMessage(String response) {
+    public void handleChatMessage(String response) {
         String[] info = response.split("\n");
         MenuHandler.addMessage(info[1], info[2], info[3]);
     }
