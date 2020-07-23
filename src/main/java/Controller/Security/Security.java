@@ -100,7 +100,7 @@ public class Security {
 
         if (token.equals("no token")) {
             if (username.equals("no username")) {
-                Server.server.takeAction(command);
+                Server.server.takeActionNotSecure(message);
                 return;
             } else {
                 blackListOfIPs.add(getIP(socket));

@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="564.0" prefWidth="721.0" style="-fx-background-color: DodgerBlue;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.BossProfile.ManagerUsersMenu.OnlineUsers.OnlineUser">
+<AnchorPane prefHeight="564.0" prefWidth="721.0" style="-fx-background-color: DodgerBlue;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.BossProfile.ManagerUsersMenu.OnlineUsers.OnlineUser">
    <children>
       <ScrollPane layoutX="29.0" layoutY="107.0" opacity="0.83" prefHeight="417.0" prefWidth="661.0">
          <content>
@@ -31,6 +28,9 @@
       <ImageView fitHeight="47.0" fitWidth="60.0" layoutX="600.0" layoutY="8.0" onMouseClicked="#refresh" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@blue-refresh-icon-29.jpg" />
-         </image></ImageView>
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></ImageView>
    </children>
 </AnchorPane>
