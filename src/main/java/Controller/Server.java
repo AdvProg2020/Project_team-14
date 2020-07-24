@@ -88,6 +88,7 @@ public class Server {
 
             takeAction(command);
         } catch (Exception ignored) {
+
         }
 
     }

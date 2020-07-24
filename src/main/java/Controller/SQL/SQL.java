@@ -45,7 +45,7 @@ public class SQL {
     public void insert(String data) {
         try {
             data = encode(data);
-            PreparedStatement statement = connection.prepareStatement("INSERT  INTO Neuer  (id,name) values (?,?)");
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO Neuer  (id,name) values (?,?)");
             statement.executeUpdate("DELETE FROM Neuer");
             statement.setInt(1, 1);
             statement.setString(2, data);
