@@ -312,9 +312,7 @@ public class MenuHandler extends Application {
         MenuHandler.currentAuction = currentAuction;
     }
 
-    public static int getPortNumber() {
-        return PORT_NUMBER;
-    }
+    //public static int getPortNumber() {return PORT_NUMBER;}
 
     public static Server getServer() {
         return server;
@@ -324,7 +322,7 @@ public class MenuHandler extends Application {
         MenuHandler.lock = lock;
     }
 
-    public static void setNewMessageLock(Object newMessageLock) {
+    /*public static void setNewMessageLock(Object newMessageLock) {
         MenuHandler.newMessageLock = newMessageLock;
     }
 
@@ -342,5 +340,6 @@ public class MenuHandler extends Application {
 
     public static void setServerSocket(ServerSocket serverSocket) {
         MenuHandler.serverSocket = serverSocket;
-    }
+    }*/
+
 }

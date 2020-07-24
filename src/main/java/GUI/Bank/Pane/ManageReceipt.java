@@ -27,7 +27,7 @@ public class ManageReceipt {
         updateBoxTwo();
     }
 
-    private void updateBoxOne() throws ParseException, IOException {
+    private void updateBoxOne() throws IOException {
         box1.getChildren().clear();
         MenuHandler.getConnector().clientToServer("bank " + "get all receipts by me+" + Bank.getToken() + "+" + username);
         String answer = MenuHandler.getConnector().serverToClient();
@@ -52,7 +52,7 @@ public class ManageReceipt {
         }
     }
 
-    private void updateBoxTwo() throws ParseException, IOException {
+    private void updateBoxTwo() throws IOException {
         box2.getChildren().clear();
         MenuHandler.getConnector().clientToServer("bank " + "get all receipts involving me+" + Bank.getToken() + "+" + username);
         String answer = MenuHandler.getConnector().serverToClient();
@@ -78,8 +78,29 @@ public class ManageReceipt {
     }
 
     public void done(ActionEvent actionEvent) throws ParseException, IOException {
-        MenuHandler.getConnector().clientToServer("bank " + "pay transaction with id+" + Bank.getToken() + "+" + receiptID.getText() + "+" + username);
+
+        try {
+            MenuHandler.getConnector().clientToServer("bank " + "get amount of transaction+" + Bank.getToken() + "+" + receiptID.getText());
+            long ID = Long.parseLong(receiptID.getText());
+            long amount = Long.parseLong(MenuHandler.getConnector().serverToClient());
+            if (200000 > ID && ID >= 100000) {
+                if (MenuHandler.getRole().equalsIgnoreCase("salesman")) {
+                    long credit = MenuHandler.getCredit();
+                    if (credit - amount <= MenuHandler.getMinCredit()) {
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION, "you should keep the min credit", ButtonType.OK);
+                        alert.showAndWait();
+                        return;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        MenuHandler.getConnector().clientToServer("bank " + "pay transaction with id+" + Bank.getToken() + "+" + receiptID.getText() + "+" + username + "+" + MenuHandler.getRole());
+
         String answer = MenuHandler.getConnector().serverToClient();
+
         if (receiptID.getText().equals("") || receiptID.getText() == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "the receipt ID cannot be empty", ButtonType.OK);
             alert.showAndWait();
@@ -106,18 +127,6 @@ public class ManageReceipt {
             Alert alert = new Alert(Alert.AlertType.ERROR, answer, ButtonType.OK);
             alert.showAndWait();
             return;
-        }
-
-        try {
-            MenuHandler.getConnector().clientToServer("bank " + "get amount of transaction+" + Bank.getToken() + "+" + receiptID.getText());
-            long ID = Long.parseLong(receiptID.getText());
-            long amount = Long.parseLong(MenuHandler.getConnector().serverToClient());
-            if (200000 > ID && ID >= 100000 && !Bank.isPossibleToDepositForSalesman(amount)) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION, "you should keep the min credit", ButtonType.OK);
-                alert.showAndWait();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
 
         if (answer.equals("successful")) {

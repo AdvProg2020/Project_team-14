@@ -49,9 +49,6 @@ public class Security {
 
     public static void securityCheck(String command, Socket socket) throws ParseException {
 
-//        System.out.println(command);
-        System.out.println(blackListOfIPs);
-
         if (blackListOfIPs.contains(getIP(socket))) {
             return;
         }

@@ -302,6 +302,7 @@ public class Controller {
             String token = command.split("\\+")[1];
             int id = Integer.parseInt(command.split("\\+")[2]);
             String username = command.split("\\+")[3];
+            String role = command.split("\\+")[4];
             if (tokenIsWrong(token)) {
                 serverAnswer = "token isn't authentic";
                 return;
@@ -323,7 +324,7 @@ public class Controller {
                 serverAnswer = "it's already done";
                 return;
             }
-            serverAnswer = transaction.Do();
+            serverAnswer = transaction.Do(role);
         } catch (Exception e) {
             serverAnswer = "something went wrong";
         }

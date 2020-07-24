@@ -75,13 +75,14 @@ public class Transaction implements Serializable {
         return arrayList;
     }
 
-    public String withdraw(String username, long amount) {
+    public String withdraw(String username, long amount, String role) {
         Account account = Account.getAccountWithUsername(username);
         if (account == null) {
             return "invalid username";
         }
         if (account.getBalance() > amount) {
             account.setBalance(account.getBalance() - amount);
+            Account.bossAccount.setBalance(Account.bossAccount.getBalance() + amount);
             this.isDone = true;
             Account.sumOfCredits += amount;
             return "successful";
@@ -89,15 +90,22 @@ public class Transaction implements Serializable {
         return "not enough credit";
     }
 
-    public String deposit(String username, long amount) {
+    public String deposit(String username, long amount, String role) {
         Account account = Account.getAccountWithUsername(username);
         if (account == null) {
             return "invalid username";
         }
-        account.setBalance(account.getBalance() + amount);
-        this.isDone = true;
-        return "successful";
-
+        if (role.equalsIgnoreCase("customer")) {
+            account.setBalance(account.getBalance() + amount);
+            this.isDone = true;
+            return "successful";
+        } else if (role.equalsIgnoreCase("salesman")) {
+            account.setBalance(account.getBalance() + amount);
+            Account.bossAccount.setBalance(Account.bossAccount.getBalance() - amount);
+            this.isDone = true;
+            return "successful";
+        }
+        return null;
     }
 
     public String transfer(String fromUsername, String toUsername, long amount) {
@@ -119,13 +127,13 @@ public class Transaction implements Serializable {
         return isDone;
     }
 
-    public String Do() {
+    public String Do(String role) {
         if (transactionType.equals(TransactionType.TRANSFER)) {
             return transfer(fromUsername, toUsername, amount);
         } else if (transactionType.equals(TransactionType.WITHDRAW)) {
-            return withdraw(fromUsername, amount);
+            return withdraw(fromUsername, amount, role);
         } else if (transactionType.equals(TransactionType.DEPOSIT)) {
-            return deposit(fromUsername, amount);
+            return deposit(fromUsername, amount, role);
         }
         return "unsuccessful";
     }
@@ -146,4 +154,5 @@ public class Transaction implements Serializable {
     public static ArrayList<Transaction> getAllTransaction() {
         return allTransaction;
     }
+
 }

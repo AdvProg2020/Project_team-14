@@ -35,7 +35,7 @@ public class LogOrRegister {
             MenuHandler.getConnector().clientToServer("bank " + "get token+" + "BOSS" + "+" + loginPassword.getText());
             String token = MenuHandler.getConnector().serverToClient();
             System.out.println("this is the token " + token);
-            if (!token.equals("fuck off, identification was wrong") && !token.equals("something went wrong") ) {
+            if (!token.equals("fuck off, identification was wrong") && !token.equals("something went wrong")) {
                 Bank.setToken(token);
                 alert.setContentText("login successful");
                 alert.showAndWait();
@@ -114,9 +114,12 @@ public class LogOrRegister {
 
         if (MenuHandler.getConnector().serverToClient().equals("created successfully")) {
             alert.setContentText("created successfully");
+            alert.showAndWait();
             createAccountConfirmation.setText("");
             createAccountPassword.setText("");
+            return;
         }
+
         alert.setContentText("something went wrong, try again");
         alert.showAndWait();
     }
