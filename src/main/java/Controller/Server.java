@@ -119,8 +119,8 @@ public class Server {
                         dataOutputStream.writeUTF(respond);
                         dataOutputStream.flush();
                     }
-                    //dataOutputStream.writeUTF(respond);    /*-->   this is better to be in synchronized block*/
-                    //dataOutputStream.flush();              /*-->    ...*/
+                    //dataOutputStream.writeUTF(respond);    -->   this is better to be in synchronized block
+                    //dataOutputStream.flush();              -->    ...
                 } catch (Exception e) {
                     System.out.println("something went wrong, connection to client lost :(");
                     server.getAllClientSockets().remove(clientSocket);
@@ -386,6 +386,184 @@ public class Server {
             this.deleteSupporter(command);
         } else if (command.startsWith("get online users+")) {
             getOnlineUsers();
+        }
+
+    }
+
+    public void takeActionNotSecure(String command) throws ParseException {
+        Matcher matcher;
+        if ((matcher = getMatcher("login\\+(\\w+)\\+(\\w+)", command)).find()) {
+            this.login(matcher);
+        } else if (command.startsWith("register+")) {
+            this.register(command);
+        } else if (command.startsWith("what is account role+")) {
+            this.getAccountRole(command);
+        } else if (command.startsWith("show accounts+")) {
+            this.showAccounts(command);
+        } else if (command.startsWith("view account info+")) {
+            this.viewAccountInfo(command);
+        } else if (command.startsWith("see authorization+")) {
+            this.seeAuthorization(command);
+        } else if (command.startsWith("delete account+")) {
+            this.deleteAccount(command);
+        } else if (command.startsWith("search account+")) {
+            this.searchAccount(command);
+        } else if (command.startsWith("make new boss+")) {
+            this.makeNewBoss(command);
+        } else if (command.startsWith("show requests+")) {
+            this.showRequests(command);
+        } else if (command.startsWith("request username show+")) {
+            this.requestUsername(command);
+        } else if (command.startsWith("view request+")) {
+            this.viewRequest(command);
+        } else if (command.startsWith("is request state checking+")) {
+            this.isRequestStateChecking(command);
+        } else if (command.startsWith("is account requestable+")) {
+            this.isAccountRequestable(command);
+        } else if (command.startsWith("search request+")) {
+            this.searchRequest(command);
+        } else if (command.startsWith("accept request+")) {
+            this.acceptRequest(command);
+        } else if (command.startsWith("decline request+")) {
+            this.declineRequest(command);
+        } else if (command.startsWith("delete request+")) {
+            this.deleteRequest(command);
+        } else if (command.startsWith("what is request username+")) {
+            this.getRequestAccountUsername(command);
+        } else if (command.startsWith("what is request object ID+")) {
+            this.getRequestObjectID(command);
+        } else if (command.startsWith("show categories+")) {
+            this.showCategories(command);
+        } else if (command.startsWith("view category+")) {
+            this.viewCategory(command);
+        } else if (command.startsWith("search category+")) {
+            this.searchCategory(command);
+        } else if (command.startsWith("is category exists+")) {
+            this.isCategoryExists(command);
+        } else if (command.startsWith("what is category attribute+")) {
+            this.whatIsCategoryAttribute(command);
+        } else if (command.startsWith("add category attribute+")) {
+            this.addCategoryAttribute(command);
+        } else if (command.startsWith("product picture path+")) {
+            this.addProductPicturePath(command);
+        } else if (command.startsWith("get product picture path+")) {
+            this.getProfilePicturePath(command);
+        }else if (command.startsWith("show products+")) {
+            this.showProducts(command);
+        } else if (command.startsWith("show my products+")) {
+            this.showMyProducts(command);
+        } else if (command.startsWith("view product+")) {
+            this.viewProduct(command);
+        } else if (command.startsWith("add product+")) {
+            this.addProduct(command);
+        } else if (command.startsWith("delete product+")) {
+            this.deleteProduct(command);
+        } else if (command.startsWith("search product+")) {
+            this.searchProduct(command);
+        } else if (command.startsWith("edit product price+")) {
+            this.editProductPrice(command);
+        } else if (command.startsWith("add product remainder+")) {
+            this.addProductRemainder(command);
+        } else if (command.startsWith("decrease product remainder")) {
+            this.decreaseProductRemainder(command);
+        } else if (command.startsWith("edit product+")) {
+            this.editProduct(command);
+        } else if (command.startsWith("what is product category+")) {
+            this.whatIsProductCategory(command);
+        } else if (command.startsWith("add product view+")) {
+            this.addProductView(command);
+        } else if (command.startsWith("add product category+")) {
+            this.addProductCategory(command);
+        } else if (command.startsWith("delete product salesman+")) {
+            this.deleteProductSalesman(command);
+        } else if (command.startsWith("search offCod")) {
+            this.searchOffCode(command);
+        } else if (command.startsWith("can add to offCode")) {
+            this.canAddUserToOffCode(command);
+        } else if (command.startsWith("get all offCodeAble user")) {
+            this.getAllOffCodeAbleUser(command);
+        } else if (command.startsWith("view offCode")) {
+            this.viewOffCode(command);
+        } else if (command.startsWith("show offCodes")) {
+            this.showOffCodes(command);
+        } else if (command.startsWith("create new sale")) {
+            this.createSale(command);
+        } else if (command.startsWith("can add product to sale")) {
+            this.canAddProductToSale(command);
+        } else if (command.startsWith("search sale")) {
+            this.searchSale(command);
+        } else if (command.startsWith("view sale")) {
+            this.viewSale(command);
+        } else if (command.startsWith("show sales")) {
+            this.showSales(command);
+        }  else if (command.startsWith("what is comment product ID+")) {
+            this.getCommentProductID(command);
+        } else if (command.startsWith("comment product+")) {
+            this.commentProduct(command);
+        } else if (command.startsWith("point product+")) {
+            this.pointProduct(command);
+        } else if (command.startsWith("what is point product+")) {
+            this.getProductPoint(command);
+        } else if (command.startsWith("is server has boss")) {
+            this.isServerHasBoss();
+        } else if (command.startsWith("get product min price+")) {
+            this.getMinPrice(command);
+        } else if (command.startsWith("get product sellers+")) {
+            this.getProductSellers(command);
+        } else if (command.startsWith("show the salesman+")) {
+            this.showSalesman(command);
+        } else if (command.startsWith("get product video+")) {
+            this.getProductVideo(command);
+        } else if (command.startsWith("set product video+")) {
+            this.setProductVideo(command);
+        } else if (command.startsWith("set person image+")) {
+            this.setPersonImage(command);
+        } else if (command.startsWith("get person image+")) {
+            this.getPersonImage(command);
+        } else if (command.startsWith("delete person image")) {
+            this.deletePersonImage(command);
+        } else if (command.startsWith("what is product name+")) {
+            this.getProductName(command);
+        } else if (command.startsWith("is product on sale by+")) {
+            this.getProductOnSale(command);
+        } else if (command.startsWith("get product price by salesman+")) {
+            this.getProductPrice(command);
+        } else if (command.startsWith("is product finished+")) {
+            isFinished(command);
+        } else if (command.startsWith("is product on sale+")) {
+            isOnSale(command);
+        } else if (command.startsWith("product min price with name+")) {
+            getMinPriceWithName(command);
+        } else if (command.startsWith("is there product name+")) {
+            isThereProductName(command);
+        } else if (command.startsWith("similar product+")) {
+            similarProduct(command);
+        } else if (command.startsWith("commercial+")) {
+            commercial(command);
+        } else if (command.startsWith("get all commercial")) {
+            getAllCommercials();
+        } else if (command.startsWith("get product sale")) {
+            getProductSale(command);
+        }
+        //supporter parts
+        else if (command.startsWith("get all online supporters")) {
+            getAllOnlineSupporters();
+        } else if (command.startsWith("send message to supporter")) {
+            sendMessage(command);
+        }
+        //end parts
+        else if (command.startsWith("show balance")) {
+            this.showBalance(command);
+        } else if (command.startsWith("add balance+")) {
+            this.addBalance(command);
+        } else if (command.startsWith("Add To Cart+")) {
+            this.addToCart(command);
+        } else if (command.startsWith("get money+")) {
+            this.getMoney(command);
+        } else if (command.startsWith("buy+")) {
+            this.buy(command);
+        } else if (command.startsWith("can use offCode+")) {
+            this.canUserOffCode(command);
         }
 
     }

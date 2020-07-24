@@ -37,6 +37,7 @@ public class OnlineUser {
     }
 
     public void refresh(MouseEvent mouseEvent) throws IOException, ParseException {
+        Audio.playClick5();
         box.getChildren().clear();
         initialize();
     }

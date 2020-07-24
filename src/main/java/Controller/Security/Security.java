@@ -100,12 +100,11 @@ public class Security {
 
         if (token.equals("no token")) {
             if (username.equals("no username")) {
-                Server.server.takeAction(command);
-                return;
+                Server.server.takeActionNotSecure(message);
             } else {
                 blackListOfIPs.add(getIP(socket));
-                return;
             }
+            return;
         }
 
         //asking for important information
@@ -121,9 +120,23 @@ public class Security {
                     throw new Exception("piss off");
                 }
             } catch (Exception e) {
-                System.out.println("we're under attack by trying wring tokens");
+                System.out.println("we're under attack by trying wrong tokens");
                 blackListOfIPs.add(getIP(socket));
                 return;
+            }
+
+            // making sure it's got one ip
+            
+            Account account = Storage.getAccountWithUsername(username);
+            assert account != null;
+            if (account.getIp() == null) {
+                account.setIp(getIP(socket));
+            } else {
+                if (!account.getIp().equals(getIP(socket))) {
+                    System.out.println("we're under attack by wrong ip");
+                    blackListOfIPs.add(getIP(socket));
+                    return;
+                }
             }
 
             //checking that it's still authentic
