@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="566.0" prefWidth="869.0" xmlns="http://javafx.com/javafx/10.0.2-internal"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Auction.AuctionBetController">
+    <children>
+        <ScrollPane layoutX="14.0" layoutY="12.0">
+            <content>
+                <VBox fx:id="vBox" alignment="TOP_CENTER" prefHeight="542.0" prefWidth="422.0"/>
+            </content>
+        </ScrollPane>
+        <TextField fx:id="maxBet" editable="false" layoutX="638.0" layoutY="81.0"/>
+        <Label layoutX="502.0" layoutY="85.0" text="Maximum Wage:"/>
+        <Label layoutX="502.0" layoutY="182.0" text="Enter Your Bet: "/>
+        <TextField fx:id="myBet" layoutX="638.0" layoutY="178.0"/>
+        <Button layoutX="547.0" layoutY="246.0" mnemonicParsing="false" onAction="#apply" text="Apply"/>
+        <Button layoutX="616.0" layoutY="246.0" mnemonicParsing="false" onAction="#back" text="Back"/>
+        <AnchorPane layoutX="451.0" layoutY="296.0" prefHeight="163.0" prefWidth="412.0">
+            <children>
+                <GridPane layoutX="39.0" layoutY="55.0" prefHeight="163.2" prefWidth="412.0"
+                          AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                          AnchorPane.topAnchor="0.0">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="201.0" minWidth="10.0" prefWidth="144.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="330.0" minWidth="10.0" prefWidth="268.0"/>
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                    </rowConstraints>
+                    <children>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #244949;">
+                            <children>
+                                <ImageView fitHeight="125.0" fitWidth="144.0" layoutX="17.0" layoutY="19.0"
+                                           pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@resources/Timer.jpg"/>
+                                    </image>
+                                </ImageView>
+                            </children>
+                        </AnchorPane>
+                        <StackPane prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: #9AABAB;"
+                                   GridPane.columnIndex="1">
+                            <children>
+                                <GridPane prefHeight="146.0" prefWidth="268.0">
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                                    </columnConstraints>
+                                    <rowConstraints>
+                                        <RowConstraints maxHeight="128.4" minHeight="10.0" prefHeight="121.4"
+                                                        vgrow="SOMETIMES"/>
+                                        <RowConstraints maxHeight="76.4" minHeight="10.0"
+                                                        prefHeight="41.400000000000006" vgrow="SOMETIMES"/>
+                                    </rowConstraints>
+                                    <children>
+                                        <GridPane prefHeight="165.0" prefWidth="268.0">
+                                            <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="129.0" minWidth="10.0"
+                                                                   prefWidth="111.0"/>
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="157.0" minWidth="10.0"
+                                                                   prefWidth="157.0"/>
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                            </rowConstraints>
+                                            <children>
+                                                <Label text="Hours" textFill="#244949" GridPane.halignment="CENTER">
+                                                    <font>
+                                                        <Font name="System Bold" size="12.0"/>
+                                                    </font>
+                                                </Label>
+                                                <Label layoutX="51.0" layoutY="21.0" text="Minutes" textFill="#244949"
+                                                       GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                                                    <font>
+                                                        <Font name="System Bold" size="12.0"/>
+                                                    </font>
+                                                </Label>
+                                                <Label layoutX="51.0" layoutY="62.0" text="Seconds" textFill="#244949"
+                                                       GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                                                    <font>
+                                                        <Font name="System Bold" size="12.0"/>
+                                                    </font>
+                                                </Label>
+                                                <Label fx:id="hour" prefWidth="28.0" text="Label"
+                                                       GridPane.columnIndex="1" GridPane.halignment="CENTER"/>
+                                                <Label fx:id="minute" layoutX="186.0" layoutY="21.0" text="Label"
+                                                       GridPane.columnIndex="1" GridPane.halignment="CENTER"
+                                                       GridPane.rowIndex="1"/>
+                                                <Label fx:id="second" layoutX="186.0" layoutY="21.0" text="Label"
+                                                       GridPane.columnIndex="1" GridPane.halignment="CENTER"
+                                                       GridPane.rowIndex="2"/>
+                                            </children>
+                                        </GridPane>
+                                    </children>
+                                </GridPane>
+                            </children>
+                        </StackPane>
+                    </children>
+                </GridPane>
+            </children>
+        </AnchorPane>
+    </children>
+</AnchorPane>

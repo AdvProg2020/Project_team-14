@@ -4,8 +4,10 @@ import java.io.*;
 import java.net.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -16,8 +18,10 @@ import Model.Account.Account;
 import Model.Account.Customer;
 import Model.Account.Role;
 import Model.Account.Salesman;
+import Model.Auction.Auction;
 import Model.Category.Category;
 import Model.Confirmation;
+import Model.Log.Log;
 import Model.Off.OffCode;
 import Model.Off.Sale;
 import Model.Product.Comment;
@@ -25,7 +29,6 @@ import Model.Product.Point;
 import Model.Product.Product;
 import Model.Request.Request;
 import Model.Storage;
-import Model.Supporter.Supporter;
 import Model.Token.Token;
 
 public class Server {
@@ -114,13 +117,12 @@ public class Server {
                         throw new Exception("piss off");
                     }
                     String command = dataInputStream.readUTF();
-                    System.out.println(command);
+                    System.out.println("[CLIENT]:" + command);
                     String respond = "";
                     synchronized (server) {
                         server.clientToServer(command, clientSocket);
                         System.out.println(Security.getIP(clientSocket));
                         respond = server.serverToClient();
-                        System.out.println(respond);
                         dataOutputStream.writeUTF(respond);
                         dataOutputStream.flush();
                     }
@@ -158,7 +160,7 @@ public class Server {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("this is the answer: " + answer);
+        System.out.println("[SERVER]: " + answer);
     }
 
     public void takeAction(String command) throws ParseException {
@@ -368,6 +370,12 @@ public class Server {
         } else if (command.startsWith("send message to supporter")) {
             sendMessage(command);
         }
+        //file part
+        else if (command.startsWith("download file")) {
+            downloadFile(command);
+        } else if (command.startsWith("has I bought")) {
+            hasUserBought(command);
+        }
         //end parts
         else if (command.startsWith("show balance")) {
             this.showBalance(command);
@@ -387,8 +395,66 @@ public class Server {
             this.deleteSupporter(command);
         } else if (command.startsWith("get online users+")) {
             getOnlineUsers();
+        } else if (command.startsWith("getting all products")) {
+            this.getAllProducts(command);
+        } else if (command.startsWith("show auctions")) {
+            this.showAuction();
+        } else if (command.startsWith("create new auction+")) {
+            this.newAuction(command);
+        } else if (command.startsWith("get certain auction+")) {
+            this.getAuction(command);
+        } else if (command.startsWith("get auction time+")) {
+            this.getTime(command);
+        } else if (command.startsWith("put bet+")) {
+            this.putBet(command);
         }
 
+    }
+
+    private void putBet(String command) {
+        for (Auction auction : Auction.getAllAuctions()) {
+            if ((auction.getSalesmanID() + "," + auction.getProductID()).equals(command.split("\\+")[1])) {
+                auction.setCustomerID(command.split("\\+")[2]);
+                auction.setHighestPrice(Integer.parseInt(command.split("\\+")[3]));
+                setAnswer("23Bet.com");
+                return;
+            }
+        }
+    }
+
+    private void getTime(String command) {
+        for (Auction auction : Auction.getAllAuctions()) {
+            if ((auction.getSalesmanID() + "," + auction.getProductID()).equals(command.split("\\+")[1])) {
+                setAnswer(String.valueOf(auction.getEndingDate()));
+            }
+        }
+    }
+
+    private void showAuction() {
+        String s = "";
+        for (Auction auction : Auction.getAllAuctions()) {
+            long millis = System.currentTimeMillis();
+            Date date = new Date(millis);
+            if (auction.getEndingDate().after(date) && auction.getStartingDate().before(date)) {
+                s += auction.getSalesmanID() + "," + auction.getProductID() + "+" + auction.getProductID() + "\n";
+            }
+        }
+        if (s.equals("")) {
+            s = "nothing found";
+        }
+        setAnswer(s);
+    }
+
+    private void getAllProducts(String command) {
+        String answer = "";
+        for (Product product : Storage.getAllProducts()) {
+            if (product.getSalesmanIDs().contains(command.split("\\+")[1])) {
+                if (product.getRemainderForSalesman(command.split("\\+")[1]) > 0) {
+                    answer += product.getProductID() + "\n";
+                }
+            }
+        }
+        setAnswer(answer);
     }
 
     public void takeActionNotSecure(String command) throws ParseException {
@@ -552,6 +618,12 @@ public class Server {
         } else if (command.startsWith("send message to supporter")) {
             sendMessage(command);
         }
+        //file parts
+        else if (command.startsWith("download file")) {
+            downloadFile(command);
+        } else if (command.startsWith("has I bought")) {
+            hasUserBought(command);
+        }
         //end parts
         else if (command.startsWith("show balance")) {
             this.showBalance(command);
@@ -565,10 +637,63 @@ public class Server {
             this.buy(command);
         } else if (command.startsWith("can use offCode+")) {
             this.canUserOffCode(command);
+        } else if (command.startsWith("create new auction+")) {
+            this.newAuction(command);
+        } else if (command.startsWith("get certain auction+")) {
+            this.getAuction(command);
+        } else if (command.startsWith("getting all products")) {
+            this.getAllProducts(command);
+        } else if (command.startsWith("show auctions")) {
+            this.showAuction();
+        } else if (command.startsWith("get auction time+")) {
+            this.getTime(command);
         }
-
     }
 
+    private void getAuction(String command) {
+        for (Auction auction : Auction.getAllAuctions()) {
+            if ((auction.getSalesmanID() + "," + auction.getProductID()).equals(command.split("\\+")[1])) {
+                if (auction.getSalesmanID() != null) {
+                    setAnswer(auction.getSalesmanID() + "+" + auction.getHighestPrice());
+                } else {
+                    setAnswer("No Bet");
+                }
+            }
+        }
+    }
+
+    private void newAuction(String command) {
+        Date date = new Date(command.split("\\+")[4]);
+        Date date2 = new Date(command.split("\\+")[3]);
+        new Auction(command.split("\\+")[1], command.split("\\+")[2], date, date2);
+        Server.setAnswer("successful");
+    }
+
+    private void hasUserBought(String command) {
+        String[] info = command.split("\\+");
+        String username = info[1];
+        String productID = info[2];
+
+        if (Log.hasCustomerBoughtProduct(username, productID)) {
+            setAnswer("yes");
+        } else {
+            setAnswer("no");
+        }
+    }
+
+    private void downloadFile(String command) {
+        for (Socket socket : allClientSockets) {
+            DataOutputStream dataOutputStream = null;
+            try {
+                dataOutputStream = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
+                dataOutputStream.writeUTF(command);
+                dataOutputStream.flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        setAnswer("downloading message broadcast");
+    }
 
     private void getAllOnlineSupporters() {
         setAnswer("Javad" + "\n" + "Matin" + "\n" + "hossein");
@@ -577,9 +702,10 @@ public class Server {
     private void sendMessage(String command) {
         String[] info = command.split("\n");
         String toBroadcastMessage = "this is a chat message" + "\n" + info[1] + "\n" + info[2] + "\n" + info[3];
+        DataOutputStream dataOutputStream = null;
         for (Socket socket : allClientSockets) {
             try {
-                DataOutputStream dataOutputStream = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
+                dataOutputStream = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
                 dataOutputStream.writeUTF(toBroadcastMessage);
                 dataOutputStream.flush();
             } catch (IOException e) {
@@ -1254,6 +1380,7 @@ public class Server {
     }
 
     private void showProducts(String command) {
+        System.out.println(command);
         ArrayList<Object> filters;
         filters = getFilters(command);
         String[] input = command.split("\\+");
@@ -1276,9 +1403,9 @@ public class Server {
         if (!checkNameFormat(command.split("\\+")[3])) {
             Server.answer += "brand format is invalid";
         }
-        if (!checkDescriptionFormat(command.split("\\+")[4])) {
+        /*if (!checkDescriptionFormat(command.split("\\+")[4])) {
             Server.answer += "description format is invalid";
-        }
+        }*/
         if (!checkMoneyFormat(command.split("\\+")[5])) {
             Server.answer += "money format is invalid";
         }

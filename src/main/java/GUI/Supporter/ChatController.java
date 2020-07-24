@@ -173,6 +173,6 @@ public class ChatController {
         Popup chatPopup = (Popup) ((ImageView) mouseEvent.getSource()).getScene().getWindow();
         chatPopup.hide();
         listener.interrupt();
-        MenuHandler.getSupporterPopup().show(MenuHandler.getSupporterPopup().getOwnerWindow());
+        MenuHandler.showSupporterPopup();
     }
 }

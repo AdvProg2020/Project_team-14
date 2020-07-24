@@ -19,10 +19,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 import org.javatuples.Triplet;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -191,7 +193,7 @@ public class Controller {
                 }
             }
         }
-        productName.setText("Product Name: " + serverAnswer.split("\n")[1].split("\\s")[1]);
+        productName.setText(serverAnswer.split("\n")[1].split("\\s")[1]);
         infoText.setText(ans.toString());
         infoText.setEditable(false);
         if (!MenuHandler.isIsUserLogin()) {
@@ -225,8 +227,26 @@ public class Controller {
             sellers.add(seller);
         }
         chooseSeller.getItems().addAll(sellers);
-        addButton.setText("Add To Cart");
+        checkFileProduct();
+        //addButton.setText("Add To Cart");
         updateSeller();
+    }
+
+    private void checkFileProduct() throws IOException {
+        String productInfo = infoText.getText();
+        Matcher matcher = getMatcher("Brand:\\s*[Ff]ile", productInfo);
+        if (!matcher.find() | !haveIBoughtThisProduct()) {
+            addButton.setText("Add To Cart");
+            return;
+        }
+        addButton.setText("Download File");
+    }
+
+    private boolean haveIBoughtThisProduct() throws IOException {
+        String toServer = "has I bought" + "+" + MenuHandler.getUsername() + "+" + MenuHandler.getProductID();
+        MenuHandler.getConnector().clientToServer(toServer);
+        String response = MenuHandler.getConnector().serverToClient();
+        return response.equalsIgnoreCase("yes");
     }
 
     private void bossLoad(String serverAnswer) throws ParseException, IOException {
@@ -393,8 +413,32 @@ public class Controller {
             Parent addProductPopup = FXMLLoader.load(getClass().getResource("/GUI/ProductView/JoinSellerLayout.fxml"));
             popup.getContent().addAll(addProductPopup);
             popup.show(stage);
+        } else if (addButton.getText().startsWith("Download")) {
+            if (chooseSeller.getValue() == null) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "You Should Choose A Seller Product First", ButtonType.OK);
+                alert.showAndWait();
+                return;
+            }
+            String fileName = productName.getText();
+            Matcher matcher = getMatcher("format:\\s*(.\\w+)", infoText.getText());
+            if (matcher.find()) {
+                String fileFormat = matcher.group(1);
+                FileChooser fileChooser = new FileChooser();
+                fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Format", fileFormat));
+                fileChooser.setInitialFileName(fileName);
+                File file = fileChooser.showSaveDialog(MenuHandler.getStage());
+                if (file != null) {
+                    MenuHandler.getP2PHandler().setSavePath(file.getPath());
+
+                    String toServer = "download file" + "+" + fileName + fileFormat + "+" + chooseSeller.getValue() + "+" + MenuHandler.getP2PHandler().getHost()
+                            + "+" + MenuHandler.getP2PHandler().getPortNumber();
+                    MenuHandler.getConnector().clientToServer(toServer);
+                }
+            }
         } else {
-            //delete product
+            MenuHandler.getConnector().clientToServer("delete product+" + MenuHandler.getUsername() + "+" + MenuHandler.getProductID());
+            String serverAnswer = MenuHandler.getConnector().serverToClient();
+            MenuHandler.getStage().setScene(new Scene(FXMLLoader.load(getClass().getResource("/GUI/ProfileLayout/ProfileLayout.fxml"))));
         }
     }
 

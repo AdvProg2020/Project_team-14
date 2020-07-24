@@ -3,6 +3,7 @@ package Controller;
 import Controller.SortFactorEnum.ViewBuyersOfProductSortFactor;
 import Controller.SortFactorEnum.ProductSortFactor;
 import Model.Account.Account;
+import Model.Account.Boss;
 import Model.Account.Role;
 import Model.Log.Log;
 import Model.Product.Comment;
@@ -67,6 +68,7 @@ public class ProductManager {
 
     private boolean isProductInFilter(Product product, ArrayList<Object> filters) {
         System.out.println(filters);
+        System.out.println(filters);
         for (int i = 0; i < filters.size(); i += 2) {
             if (((String) filters.get(i)).equalsIgnoreCase("salesmanIDs")) {
                 if (!checkSalesmanFilter(product, (String) filters.get(i + 1))) {
@@ -88,8 +90,18 @@ public class ProductManager {
                     return false;
                 }
             }
+            if (((String) filters.get(i)).equalsIgnoreCase("isOnSale")) {
+                if (!checkOnSale(product, (String) filters.get(i + 1))) {
+                    return false;
+                }
+            }
         }
         return true;
+    }
+
+    private boolean checkOnSale(Product product, String s) {
+        if (product.is_on_sale()) return true;
+        return false;
     }
 
     //type = 0--> return all Products, type = 1--> return [username] products
@@ -152,6 +164,11 @@ public class ProductManager {
     }
 
     public void deleteProduct(String salesmanUser, String productID) {
+        Account account = Storage.getAccountWithUsername(salesmanUser);
+        if (account instanceof Boss) {
+            Storage.getAllProducts().remove(Storage.getProductById(productID));
+            return;
+        }
         Product product = Storage.getProductById(productID);
         assert product != null;
         new Request(salesmanUser, product, "DELETE_PRODUCT");
