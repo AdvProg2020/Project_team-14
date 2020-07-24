@@ -59,6 +59,7 @@ public class CustomerProfileController {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are You Sure You Want To Logout?", ButtonType.YES, ButtonType.NO);
         alert.showAndWait();
         if (alert.getResult().equals(ButtonType.YES)) {
+            MenuHandler.getConnector().clientToServer("logout+" + MenuHandler.getUsername());
             MenuHandler.setUsername(null);
             MenuHandler.setUserType(null);
             MenuHandler.setIsUserLogin(false);

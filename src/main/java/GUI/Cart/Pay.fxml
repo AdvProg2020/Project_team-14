@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="514.0" prefWidth="705.0" style="-fx-background-color: royalblue;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Cart.Pay">
+   <children>
+      <Separator layoutX="337.0" layoutY="25.0" orientation="VERTICAL" prefHeight="357.0" prefWidth="31.0" />
+      <Label layoutX="107.0" layoutY="46.0" text="Buy From Credit" textFill="#a21010">
+         <font>
+            <Font name="Arial Bold Italic" size="21.0" />
+         </font>
+      </Label>
+      <Label layoutX="458.0" layoutY="46.0" text="Buy From Bank" textFill="#a21010">
+         <font>
+            <Font name="Arial Bold Italic" size="21.0" />
+         </font>
+      </Label>
+      <Button fx:id="buyFromCreditButton" layoutX="156.0" layoutY="334.0" mnemonicParsing="false" onAction="#buyFromCredit" style="-fx-background-color: yellow;" text="Buy">
+         <font>
+            <Font size="22.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="buyFromBank" layoutX="503.0" layoutY="334.0" mnemonicParsing="false" onAction="#ByFromBankButton" style="-fx-background-color: yellow;" text="Buy">
+         <font>
+            <Font size="22.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Label fx:id="creditLabel" alignment="CENTER" contentDisplay="BOTTOM" layoutX="47.0" layoutY="146.0" prefHeight="17.0" prefWidth="284.0" text="your credit:" textFill="#1ae0ff">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <Button layoutX="397.0" layoutY="437.0" mnemonicParsing="false" onAction="#goToBankPage" prefHeight="48.0" prefWidth="245.0" style="-fx-background-color: pink;" text="Go To Bank">
+         <font>
+            <Font size="22.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Label fx:id="creditEnoughLabel" alignment="CENTER" layoutX="47.0" layoutY="232.0" prefHeight="17.0" prefWidth="284.0" text="you're credit is enough" textFill="#1ae0ff">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <PasswordField fx:id="password" layoutX="520.0" layoutY="151.0" />
+      <Label fx:id="passwordField" layoutX="402.0" layoutY="142.0" text="Password:" textFill="#05ffd5">
+         <font>
+            <Font name="Arabic Typesetting" size="32.0" />
+         </font>
+      </Label>
+      <Separator layoutX="19.0" layoutY="405.0" prefHeight="25.0" prefWidth="668.0" />
+      <Button layoutX="63.0" layoutY="437.0" mnemonicParsing="false" onAction="#back" prefHeight="48.0" prefWidth="252.0" style="-fx-background-color: pink;" text="Back">
+         <font>
+            <Font size="22.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Label fx:id="haveBankAccount" alignment="CENTER" layoutX="366.0" layoutY="186.0" prefHeight="36.0" prefWidth="322.0" text="a bank account" textFill="#ff1c2b">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <Label fx:id="haveBankAccount1" alignment="CENTER" layoutX="366.0" layoutY="146.0" prefHeight="36.0" prefWidth="322.0" text="you don't have" textFill="#ff1c28">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

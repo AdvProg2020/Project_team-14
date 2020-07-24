@@ -16,7 +16,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.shape.Line;
 import javafx.stage.Popup;
 
-import javax.sound.sampled.AudioInputStream;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -44,8 +43,8 @@ public class RatingController {
 
     private void updateLines() throws ParseException, IOException {
 
-        MenuHandler.getServer().clientToServer("what is point product+" + MenuHandler.getProductID());
-        String rate = MenuHandler.getServer().serverToClient();
+        MenuHandler.getConnector().clientToServer("what is point product+" + MenuHandler.getProductID());
+        String rate = MenuHandler.getConnector().serverToClient();
 
 
         ArrayList<Integer> points = new ArrayList<>();
@@ -100,7 +99,7 @@ public class RatingController {
         String starId = ((ImageView) mouseEvent.getSource()).getId();
         int number = Integer.parseInt(starId.substring(4));
 
-        MenuHandler.getServer().clientToServer("point product+" + MenuHandler.getUsername() + "+" + MenuHandler.getProductID() + "+" + number);
+        MenuHandler.getConnector().clientToServer("point product+" + MenuHandler.getUsername() + "+" + MenuHandler.getProductID() + "+" + number);
         updateLines();
     }
 

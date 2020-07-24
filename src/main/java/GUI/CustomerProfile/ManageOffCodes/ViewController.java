@@ -21,8 +21,8 @@ public class ViewController {
     @FXML
     public void initialize() throws ParseException, IOException {
         String toServer = "view offCode+" + MenuHandler.getUsername() + "+" + MenuHandler.getSeeingOffCode();
-        MenuHandler.getServer().clientToServer(toServer);
-        String respond = MenuHandler.getServer().serverToClient();
+        MenuHandler.getConnector().clientToServer(toServer);
+        String respond = MenuHandler.getConnector().serverToClient();
 
         offCodeId.setText(MenuHandler.getSeeingOffCode());
 

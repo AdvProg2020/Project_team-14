@@ -19,7 +19,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 
-import javax.sound.sampled.AudioInputStream;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -54,8 +53,8 @@ public class ManageOffCodesController {
         setFilterFactor(toServer);
         setSortFactor(toServer);
 
-        MenuHandler.getServer().clientToServer(toServer.toString());
-        String respond = MenuHandler.getServer().serverToClient();
+        MenuHandler.getConnector().clientToServer(toServer.toString());
+        String respond = MenuHandler.getConnector().serverToClient();
 
         offCodeList.getChildren().clear();
         makeOffCodeList(respond);

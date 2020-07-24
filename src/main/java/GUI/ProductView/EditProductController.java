@@ -31,24 +31,24 @@ public class EditProductController {
     public void editProduct(ActionEvent actionEvent) throws ParseException, IOException {
         Audio.playClick1();
         if (checkProductNameFormat(name.getText())) {
-            MenuHandler.getServer().clientToServer("edit product+name+" + MenuHandler.getUsername() + "+"
+            MenuHandler.getConnector().clientToServer("edit product+name+" + MenuHandler.getUsername() + "+"
                     + MenuHandler.getProductID() + "+" + name.getText());
         } else {
 
         } if (checkDescriptionFormat(description.getText())) {
-            MenuHandler.getServer().clientToServer("edit product+description+" + MenuHandler.getUsername() + "+"
+            MenuHandler.getConnector().clientToServer("edit product+description+" + MenuHandler.getUsername() + "+"
                     + MenuHandler.getProductID() + "+" + description.getText());
         } else {
 
         }
         if (price.getText().matches("\\d+") && price.getText().length() <= 8) {
-            MenuHandler.getServer().clientToServer("edit product price+" + MenuHandler.getUsername() + "+" +
+            MenuHandler.getConnector().clientToServer("edit product price+" + MenuHandler.getUsername() + "+" +
                     MenuHandler.getProductID() + "+" + price.getText());
         } else {
 
         }
         if (count.getText().matches("\\d+") && count.getText().length() <= 5) {
-            MenuHandler.getServer().clientToServer("add product remainder+" + MenuHandler.getUsername() + "+"
+            MenuHandler.getConnector().clientToServer("add product remainder+" + MenuHandler.getUsername() + "+"
                     + MenuHandler.getProductID() + "+" + count.getText());
         } else {
 

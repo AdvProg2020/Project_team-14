@@ -8,7 +8,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -37,8 +36,8 @@ public class ManageRequestsController {
 
 
     public void initialize() throws IOException, ParseException {
-        MenuHandler.getServer().clientToServer("request username show+" + MenuHandler.getUsername());
-        requestUsername = MenuHandler.getServer().serverToClient();
+        MenuHandler.getConnector().clientToServer("request username show+" + MenuHandler.getUsername());
+        requestUsername = MenuHandler.getConnector().serverToClient();
         filter.setItems(list);
         for (String s : requestUsername.split("\\+")) {
             filter.getItems().add("Username:" + s);
@@ -98,8 +97,8 @@ public class ManageRequestsController {
         for (int i = 1; i <= requestList.getChildren().size(); ) {
             Object object = requestList.getChildren().remove(0);
         }
-        MenuHandler.getServer().clientToServer(command);
-        String serverAnswer = MenuHandler.getServer().serverToClient();
+        MenuHandler.getConnector().clientToServer(command);
+        String serverAnswer = MenuHandler.getConnector().serverToClient();
         if (serverAnswer.equals("nothing found")) {
             return;
         }
@@ -111,8 +110,8 @@ public class ManageRequestsController {
             label.setText("Request Type: " + s.split("\\s")[2] + " Username: " + s.split("\\s")[7]);
             label.setFont(Font.font(15));
             hBox.getChildren().add(label);
-            MenuHandler.getServer().clientToServer("is request state checking+" + s.split("\\s")[5]);
-            String respond = MenuHandler.getServer().serverToClient();
+            MenuHandler.getConnector().clientToServer("is request state checking+" + s.split("\\s")[5]);
+            String respond = MenuHandler.getConnector().serverToClient();
             if (respond.equalsIgnoreCase("yes")) {
                 hBox.setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;"
                         + "-fx-border-width: 2;" + "-fx-border-insets: 5;"

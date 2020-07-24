@@ -1,9 +1,9 @@
 package GUI.ProductScene;
 
 import GUI.MenuHandler;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
@@ -23,7 +23,6 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
@@ -73,8 +72,9 @@ public class ProductSceneController {
                 alert.showAndWait();
                 if (alert.getResult().equals(ButtonType.YES)) {
                     try {
-                        MenuHandler.getServer().clientToServer("logout+" + MenuHandler.getUsername());
-                        String serverAnswer = MenuHandler.getServer().serverToClient();
+                        System.out.println("here we areeeeeeeeee");
+                        MenuHandler.getConnector().clientToServer("logout+" + MenuHandler.getUsername());
+                        String serverAnswer = MenuHandler.getConnector().serverToClient();
                         if (serverAnswer.equalsIgnoreCase("logout successful")) {
                             Alert alert1 = new Alert(Alert.AlertType.INFORMATION, "Logout Successful", ButtonType.OK);
                             alert1.showAndWait();
@@ -82,7 +82,7 @@ public class ProductSceneController {
                             MenuHandler.setUsername(null);
                             MenuHandler.setUserType(null);
                         }
-                    } catch (ParseException | IOException e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
@@ -146,8 +146,8 @@ public class ProductSceneController {
         film.setMediaPlayer(mediaPlayer);
         mediaPlayer.setAutoPlay(true);
         mediaPlayer.setOnEndOfMedia(() -> mediaPlayer.seek(Duration.ZERO));
-        MenuHandler.getServer().clientToServer("show the salesman+" + MenuHandler.getUsername());
-        String salesman = MenuHandler.getServer().serverToClient();
+        MenuHandler.getConnector().clientToServer("show the salesman+" + MenuHandler.getUsername());
+        String salesman = MenuHandler.getConnector().serverToClient();
         filter.setItems(list);
         for (String s : salesman.split("\n")) {
             if (s.equalsIgnoreCase("here are")) {
@@ -155,13 +155,30 @@ public class ProductSceneController {
             }
             filter.getItems().add("Salesman:" + s);
         }
-        MenuHandler.getServer().clientToServer("show categories+" + MenuHandler.getUsername());
-        String categories = MenuHandler.getServer().serverToClient();
+        MenuHandler.getConnector().clientToServer("show categories+" + MenuHandler.getUsername());
+        String categories = MenuHandler.getConnector().serverToClient();
         for (String s : categories.split("\n")) {
             if (s.startsWith("Category")) {
                 filter.getItems().add("Category:" + s.split("\\s")[2]);
             }
         }
+        Platform.runLater(() -> {
+            try {
+                Stage stage = (Stage) accountMenuButton.getScene().getWindow();
+                Popup popup = new Popup();
+                HBox root = FXMLLoader.load(getClass().getResource("/GUI/Supporter/SupporterPopUp.fxml"));
+                popup.getContent().add(root);
+                double x = stage.getX() + stage.getWidth() - root.getPrefWidth() - 15;
+                double y = stage.getY() + stage.getHeight() - root.getPrefHeight() - 15;
+                popup.setAnchorX(x);
+                popup.setAnchorY(y);
+                MenuHandler.setSupporterPopup(popup);
+                popup.show(stage);
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.out.println("something is wrong with supporter popup");
+            }
+        });
         update();
     }
 
@@ -227,8 +244,8 @@ public class ProductSceneController {
             }
         }
 
-        MenuHandler.getServer().clientToServer(command);
-        String serverAnswer = MenuHandler.getServer().serverToClient();
+        MenuHandler.getConnector().clientToServer(command);
+        String serverAnswer = MenuHandler.getConnector().serverToClient();
 
         for (int i = 1; i <= products.getChildren().size(); ) {
             Object object = products.getChildren().remove(0);
@@ -264,8 +281,8 @@ public class ProductSceneController {
                 stage.setScene(new Scene(root));
             });
             String productId = s.split("\\s")[2];
-            MenuHandler.getServer().clientToServer("get product picture path+" + productId);
-            String path = MenuHandler.getServer().serverToClient();
+            MenuHandler.getConnector().clientToServer("get product picture path+" + productId);
+            String path = MenuHandler.getConnector().serverToClient();
             if (path == null) {
                 path = "file:\\F:\\AP\\AP\\Project_team-23\\src\\main\\resources\\Pictures\\default.png";
             }
@@ -280,7 +297,6 @@ public class ProductSceneController {
                     + "-fx-border-radius: 2;" + "-fx-border-color: black;");
         }
     }
-
 
     public void chooseFilter() throws IOException, ParseException {
         String s = (String) filter.getValue();

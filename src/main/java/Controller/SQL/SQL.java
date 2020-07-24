@@ -2,12 +2,17 @@ package Controller.SQL;
 
 import Model.RandomString;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.*;
+import java.util.Arrays;
 import java.util.Base64;
 
 public class SQL {
     private Connection connection;
     private static final Base64.Encoder base64Encoder = Base64.getUrlEncoder();
+    private FileManager fileManager = new FileManager();
 
     public SQL() {
         try {
@@ -18,16 +23,16 @@ public class SQL {
             connection.createStatement();
             Statement stmt;
             stmt = connection.createStatement();
-            String sql = "CREATE DATABASE ktb";
+            String sql = "CREATE DATABASE matin";
             stmt.executeUpdate(sql);
         } catch (Exception s) {
             System.out.println(s.getMessage());
         }
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost/ktb?" + "user=root&password=");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost/matin?" + "user=root&password=");
             Statement stmt = connection.createStatement();
             String sql;
-            sql = "CREATE TABLE Neuer " + "(id INTEGER not NULL, " + "name blob, " + " PRIMARY KEY ( id ))";
+            sql = "CREATE TABLE javad " + "(id INTEGER not NULL, " + "name blob, " + " PRIMARY KEY ( id ))";
             stmt.executeUpdate(sql);
         } catch (Exception s) {
             System.out.println(s.getMessage());
@@ -45,8 +50,8 @@ public class SQL {
     public void insert(String data) {
         try {
             data = encode(data);
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO Neuer  (id,name) values (?,?)");
-            statement.executeUpdate("DELETE FROM Neuer");
+            PreparedStatement statement = connection.prepareStatement("INSERT  INTO javad  (id,name) values (?,?)");
+            statement.executeUpdate("DELETE FROM javad");
             statement.setInt(1, 1);
             statement.setString(2, data);
             statement.executeUpdate();
@@ -58,7 +63,7 @@ public class SQL {
 
     public byte[] show() throws SQLException {
         String string = "";
-        String sql = "SELECT id, name FROM Neuer";
+        String sql = "SELECT id, name FROM javad";
         Statement stmt = connection.createStatement();
         ResultSet rs = stmt.executeQuery(sql);
         while (rs.next()) {
@@ -72,21 +77,28 @@ public class SQL {
 
     public void updateProgramme() {
         try {
+            fileManager.updateFile(Object.object.serialise(new Object()));
             insert(Object.object.serialise(new Object()));
         } catch (Exception exception) {
-            exception.printStackTrace();
+            System.out.println(exception.getMessage());
         }
     }
 
     public void startProgramme() {
         try {
             Object.deserialize(show());
+            return;
         } catch (Exception exception) {
-            System.out.println(exception.getMessage());
+            System.out.println("sql is bullshit");
+        }
+        try {
+            Object.deserialize(fileManager.readFromFile());
+        } catch (Exception e) {
+            System.out.println("file is also bullshit");
         }
     }
 
-    private String encode(String string) {
+    static String encode(String string) {
         String result = RandomString.getRandomString(100) + string;
         result = base64Encoder.encodeToString(result.getBytes());
         result = ".xs,dsghjkdf,a3uih238ewajnksdhjf hsjkd jdzjfhgs " + result;
@@ -95,7 +107,7 @@ public class SQL {
         return result;
     }
 
-    private String decode(String string) {
+    static String decode(String string) {
         string = new StringBuilder(string).reverse().toString();
         String result = new String(Base64.getDecoder().decode(string));
         result = result.substring(".xs,dsghjkdf,a3uih238ewajnksdhjf hsjkd jdzjfhgs ".length());

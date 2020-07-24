@@ -7,39 +7,41 @@ import Model.Account.Salesman;
 import Model.Storage;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.sql.SQLException;
 
-public class CreditController {
-    private int wagePercentage = 5;
-    private int minimumCredit = 1000;
-    private static CreditController creditController = new CreditController();
+public class CreditController implements Serializable {
+    private int wagePercentage;
+    private int minimumCredit;
+    public static CreditController creditController = new CreditController(5, 1000);
 
-    public void setWagePercentage(int wagePercentage) {
+    public CreditController(int wagePercentage, int minimumCredit) {
         this.wagePercentage = wagePercentage;
-    }
-
-    public int getMinimumCredit() {
-        return minimumCredit;
-    }
-
-    public int getWagePercentage() {
-        return wagePercentage;
-    }
-
-    public void setMinimumCredit(int minimumCredit) {
         this.minimumCredit = minimumCredit;
     }
 
-    public void addCredit(String username, int amount) {
-        Account account = Storage.getAccountWithUsername(username);
-        if (account == null || account instanceof Salesman || account instanceof Boss) {
-            return;
-        }
+    public void setWagePercentage(int wagePercentage) {
+        creditController.wagePercentage = wagePercentage;
+    }
+
+    public int getMinimumCredit() {
+        return creditController.minimumCredit;
+    }
+
+    public int getWagePercentage() {
+        return creditController.wagePercentage;
+    }
+
+    public void setMinimumCredit(int minimumCredit) {
+        creditController.minimumCredit = minimumCredit;
     }
 
     public static CreditController getCreditController() {
         return creditController;
     }
 
+    public static void setCreditController(CreditController creditController) {
+        CreditController.creditController = creditController;
+    }
 
 }

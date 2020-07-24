@@ -28,7 +28,7 @@ public class AddProductController {
         Audio.playClick4();
         if (price.getText().matches("\\d+") && price.getText().length() <= 8) {
             if (count.getText().matches("\\d+") && count.getText().length() <= 5) {
-                MenuHandler.getServer().clientToServer("add product+" + MenuHandler.getUsername() + "+" +
+                MenuHandler.getConnector().clientToServer("add product+" + MenuHandler.getUsername() + "+" +
                         MenuHandler.getProductID() + "+" + count.getText() + "+" + price.getText());
                 Popup popup = (Popup) ((Button) actionEvent.getSource()).getScene().getWindow();
                 popup.hide();

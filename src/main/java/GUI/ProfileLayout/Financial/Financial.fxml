@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="686.0" prefWidth="779.0" style="-fx-background-color: darkblue;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ProfileLayout.Financial.Financial">
+<AnchorPane prefHeight="661.0" prefWidth="779.0" style="-fx-background-color: darkblue;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ProfileLayout.Financial.Financial">
    <children>
       <Label alignment="CENTER" layoutX="11.0" layoutY="30.0" prefHeight="82.0" prefWidth="758.0" style="-fx-background-color: yellow;" text="you may wanna change the default values of some the policies of store" textFill="#a42d2d">
          <font>
@@ -38,20 +38,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </TextField>
-      <Label layoutX="191.0" layoutY="371.0" text="Bank balance:" textFill="#f00606">
-         <font>
-            <Font name="Blackadder ITC" size="27.0" />
-         </font>
-      </Label>
-      <TextField fx:id="balance" disable="true" layoutX="376.0" layoutY="379.0" prefHeight="37.0" prefWidth="172.0">
-         <font>
-            <Font size="15.0" />
-         </font>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </TextField>
-      <Button layoutX="564.0" layoutY="590.0" mnemonicParsing="false" onAction="#save" prefHeight="45.0" prefWidth="151.0" style="-fx-background-color: pink;" text="save" textFill="#1c23ff">
+      <Button layoutX="470.0" layoutY="567.0" mnemonicParsing="false" onAction="#save" prefHeight="45.0" prefWidth="259.0" style="-fx-background-color: pink;" text="save" textFill="#1c23ff">
          <font>
             <Font name="System Bold Italic" size="21.0" />
          </font>
@@ -59,15 +46,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button layoutX="314.0" layoutY="590.0" mnemonicParsing="false" onAction="#reset" prefHeight="45.0" prefWidth="151.0" style="-fx-background-color: pink;" text="reset" textFill="#1c23ff">
-         <font>
-            <Font name="System Bold Italic" size="21.0" />
-         </font>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Button>
-      <Button layoutX="71.0" layoutY="590.0" mnemonicParsing="false" onAction="#refresh" prefHeight="45.0" prefWidth="151.0" style="-fx-background-color: pink;" text="refresh" textFill="#1c23ff">
+      <Button layoutX="47.0" layoutY="567.0" mnemonicParsing="false" onAction="#reset" prefHeight="45.0" prefWidth="259.0" style="-fx-background-color: pink;" text="reset" textFill="#1c23ff">
          <font>
             <Font name="System Bold Italic" size="21.0" />
          </font>

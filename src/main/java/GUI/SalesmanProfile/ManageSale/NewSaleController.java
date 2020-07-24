@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -32,8 +31,8 @@ public class NewSaleController {
 
     private void updateProductList() throws ParseException, IOException {
         String toServer = "show my products" + "+" + MenuHandler.getUsername() + "+" + "filters:" + "+" +  "Confirmation" + "+" + "ACCEPTED";//..
-        MenuHandler.getServer().clientToServer(toServer);
-        String respond = MenuHandler.getServer().serverToClient();
+        MenuHandler.getConnector().clientToServer(toServer);
+        String respond = MenuHandler.getConnector().serverToClient();
 
         if (respond.equals("nothing found")) {
             errors.setText("You don't have any Confirmed product yet!!");
@@ -74,8 +73,8 @@ public class NewSaleController {
         toServer.append("+").append(percentage.getText());
         toServer.append("+Products:").append(chosenProductId());
 
-        MenuHandler.getServer().clientToServer(toServer.toString());
-        String respond = MenuHandler.getServer().serverToClient();
+        MenuHandler.getConnector().clientToServer(toServer.toString());
+        String respond = MenuHandler.getConnector().serverToClient();
 
         if (respond.startsWith("ERRORS:")) {
             Alert alert = new Alert(Alert.AlertType.ERROR, respond, ButtonType.OK);

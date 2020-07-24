@@ -7,13 +7,10 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Popup;
-import javafx.stage.Stage;
 
-import javax.sound.sampled.AudioInputStream;
 import java.io.IOException;
 import java.text.ParseException;
 
@@ -78,8 +75,8 @@ public class ManageUsersLayOut {
         firstName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
         lastName.setCellValueFactory(new PropertyValueFactory<>("lastName"));
         this.role.setCellValueFactory(new PropertyValueFactory<>("role"));
-        MenuHandler.getServer().clientToServer(command);
-        String serverAnswer = MenuHandler.getServer().serverToClient();
+        MenuHandler.getConnector().clientToServer(command);
+        String serverAnswer = MenuHandler.getConnector().serverToClient();
         observableList = FXCollections.observableArrayList();
         for (String s : serverAnswer.split("\n")) {
             if (s.startsWith("here") || s.startsWith("All") || s.startsWith("nothing")) continue;
@@ -128,5 +125,21 @@ public class ManageUsersLayOut {
                 ex.printStackTrace();
             }
         });
+    }
+
+    public void checkOnline(ActionEvent actionEvent) throws IOException {
+        Audio.playClick4();
+        Parent root = FXMLLoader.load(getClass().getResource("/GUI/BossProfile/ManagerUsersMenu/OnlineUsers/OnlineUser.fxml"));
+        Popup popup = new Popup();
+        popup.getContent().add(root);
+        popup.show(((Button) actionEvent.getSource()).getScene().getWindow());
+        popup.setOnHiding(e -> {
+            try {
+                update();
+            } catch (ParseException | IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+
     }
 }

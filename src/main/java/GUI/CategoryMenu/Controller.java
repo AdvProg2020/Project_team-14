@@ -34,8 +34,8 @@ public class Controller {
 
     public void initialize() throws ParseException, IOException {
         update();
-        MenuHandler.getServer().clientToServer("show categories+" + MenuHandler.getUsername());
-        String serverAnswer = MenuHandler.getServer().serverToClient();
+        MenuHandler.getConnector().clientToServer("show categories+" + MenuHandler.getUsername());
+        String serverAnswer = MenuHandler.getConnector().serverToClient();
         for (String s : serverAnswer.split("\n")) {
             if (s.startsWith("Category")) {
                 filter.getItems().add(s.split("\\s")[2]);
@@ -58,11 +58,11 @@ public class Controller {
             }
         }
         if (fatherCategory.equals("")) {
-            MenuHandler.getServer().clientToServer("show categories+" + MenuHandler.getUsername());
+            MenuHandler.getConnector().clientToServer("show categories+" + MenuHandler.getUsername());
         } else {
-            MenuHandler.getServer().clientToServer("show categories+" + MenuHandler.getUsername() + "+filters:" + "+fatherCategory+" + fatherCategory);
+            MenuHandler.getConnector().clientToServer("show categories+" + MenuHandler.getUsername() + "+filters:" + "+fatherCategory+" + fatherCategory);
         }
-        String serverAnswer = MenuHandler.getServer().serverToClient();
+        String serverAnswer = MenuHandler.getConnector().serverToClient();
         categoryName.setCellValueFactory(new PropertyValueFactory<>("categoryName"));
         this.fatherCategory.setCellValueFactory(new PropertyValueFactory<>("parentCategory"));
         categoryAttribute.setCellValueFactory(new PropertyValueFactory<>("attribute"));

@@ -8,7 +8,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 
-import javax.sound.sampled.AudioInputStream;
 import java.io.IOException;
 import java.text.ParseException;
 import java.time.LocalDate;
@@ -37,8 +36,8 @@ public class NewOffCodeController {
 
     private void updateAllUsers() throws ParseException, IOException {
         String toServer = "get all offCodeAble user";
-        MenuHandler.getServer().clientToServer(toServer);
-        String respond = MenuHandler.getServer().serverToClient();
+        MenuHandler.getConnector().clientToServer(toServer);
+        String respond = MenuHandler.getConnector().serverToClient();
         String[] usernames = respond.split("\\+");
         for (int i = 1; i < usernames.length; i++) {
             allUsers.getItems().add(usernames[i]);
@@ -62,8 +61,8 @@ public class NewOffCodeController {
         toServer.append("+").append(endDate.getValue().toString());
         toServer.append("+Users:").append(usernameCanUserIt());
 
-        MenuHandler.getServer().clientToServer(toServer.toString());
-        String respond = MenuHandler.getServer().serverToClient();
+        MenuHandler.getConnector().clientToServer(toServer.toString());
+        String respond = MenuHandler.getConnector().serverToClient();
 
         if (respond.startsWith("ERROR")) {
             Alert alert = new Alert(Alert.AlertType.ERROR, respond, ButtonType.OK);

@@ -26,10 +26,6 @@ public class Salesman extends Account implements Serializable {
         return commercials;
     }
 
-    public void addCommercial(String productID) {
-        commercials.add(productID);
-    }
-
     public boolean isProductOnCommercial(String productID) {
         return commercials.contains(productID);
     }

@@ -2,7 +2,6 @@ package GUI.SalesmanProfile.ManageProduct;
 
 import GUI.Media.Audio;
 import GUI.MenuHandler;
-import Menus.Menu;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -11,7 +10,6 @@ import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -54,8 +52,8 @@ public class ManageProductsController {
         if (MenuHandler.getUserType().equalsIgnoreCase("Boss")) {
             addButton.setDisable(true);
         }
-        MenuHandler.getServer().clientToServer("show the salesman+" + MenuHandler.getUsername());
-        String salesman = MenuHandler.getServer().serverToClient();
+        MenuHandler.getConnector().clientToServer("show the salesman+" + MenuHandler.getUsername());
+        String salesman = MenuHandler.getConnector().serverToClient();
         filter.setItems(list);
         for (String s : salesman.split("\n")) {
             if (s.equalsIgnoreCase("here are")) {
@@ -63,8 +61,8 @@ public class ManageProductsController {
             }
             filter.getItems().add("Salesman:" + s);
         }
-        MenuHandler.getServer().clientToServer("show categories+" + MenuHandler.getUsername());
-        String categories = MenuHandler.getServer().serverToClient();
+        MenuHandler.getConnector().clientToServer("show categories+" + MenuHandler.getUsername());
+        String categories = MenuHandler.getConnector().serverToClient();
         for (String s : categories.split("\n")) {
             if (s.startsWith("Category")) {
                 filter.getItems().add("Category:" + s.split("\\s")[2]);
@@ -129,8 +127,8 @@ public class ManageProductsController {
             }
         }
 
-        MenuHandler.getServer().clientToServer(command);
-        String serverAnswer = MenuHandler.getServer().serverToClient();
+        MenuHandler.getConnector().clientToServer(command);
+        String serverAnswer = MenuHandler.getConnector().serverToClient();
         for (int i = 1; i <= products.getChildren().size(); ) {
             Object object = products.getChildren().remove(0);
         }
@@ -169,8 +167,8 @@ public class ManageProductsController {
                 stage.setScene(new Scene(root));
             });
             String productId = s.split("\\s")[2];
-            MenuHandler.getServer().clientToServer("get product picture path+" + productId);
-            String path = MenuHandler.getServer().serverToClient();
+            MenuHandler.getConnector().clientToServer("get product picture path+" + productId);
+            String path = MenuHandler.getConnector().serverToClient();
             if (path == null) {
                 path = "file:\\F:\\AP\\AP\\Project_team-23\\src\\main\\resources\\Pictures\\default.png";
             }

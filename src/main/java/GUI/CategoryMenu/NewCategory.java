@@ -8,9 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
@@ -30,8 +28,8 @@ public class NewCategory {
     ObservableList<String> category = FXCollections.observableArrayList();
 
     public void initialize() throws ParseException, IOException {
-        MenuHandler.getServer().clientToServer("show categories+" + MenuHandler.getUsername());
-        String serverAnswer = MenuHandler.getServer().serverToClient();
+        MenuHandler.getConnector().clientToServer("show categories+" + MenuHandler.getUsername());
+        String serverAnswer = MenuHandler.getConnector().serverToClient();
         for (String s : serverAnswer.split("\n")) {
             if (s.startsWith("Category")) {
                 String category = s.split("\\s")[2];
@@ -78,8 +76,8 @@ public class NewCategory {
         if (!checkNameFormat(category_name)) {
             alert.setContentText("Invalid Category Name");
         } else {
-            MenuHandler.getServer().clientToServer("create category+" + category_name + "+" + parent_category + "+" + category_attribute);
-            String answer = MenuHandler.getServer().serverToClient();
+            MenuHandler.getConnector().clientToServer("create category+" + category_name + "+" + parent_category + "+" + category_attribute);
+            String answer = MenuHandler.getConnector().serverToClient();
             if (answer.equals("a category with this name has already exists")) {
                 alert.setContentText("A Category With This Name Has Already Exists");
             } else {

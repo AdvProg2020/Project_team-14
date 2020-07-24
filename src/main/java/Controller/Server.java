@@ -1,7 +1,7 @@
 package Controller;
 
-import java.io.IOException;
-import java.sql.SQLException;
+import java.io.*;
+import java.net.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -10,9 +10,8 @@ import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import Controller.DataBase.EndOfProgramme;
-import Controller.DataBase.startOfProgramme;
 import Controller.SQL.SQL;
+import Controller.Security.Security;
 import Model.Account.Account;
 import Model.Account.Customer;
 import Model.Account.Role;
@@ -26,36 +25,113 @@ import Model.Product.Point;
 import Model.Product.Product;
 import Model.Request.Request;
 import Model.Storage;
-
-import static Controller.Security.Methods.*;
+import Model.Supporter.Supporter;
+import Model.Token.Token;
 
 public class Server {
+    private final int PORT_NUMBER = 8080;
     static private boolean hasBoss;
     private AccountManager accountManager;
     private ProductManager productManager;
     private BossManager bossManager;
     private SalesmanManager salesmanManager;
     private CustomerManager customerManager;
-    private EndOfProgramme endOfProgramme = new EndOfProgramme();
+    private SupporterManager supporterManager;
     private SQL sql = new SQL();
-
-    //first is username, second is a cart
-    //private HashMap<String, Cart> abstractCarts;
+    private ServerSocket serverSocket;
+    private ArrayList<Socket> allClientSockets;
+    public static Server server;
     static private String answer;
 
-    public Server() throws IOException, ClassNotFoundException, SQLException {
+    public Server() {
         answer = "";
         this.accountManager = new AccountManager();
         this.bossManager = new BossManager();
         this.customerManager = new CustomerManager();
         this.salesmanManager = new SalesmanManager();
         this.productManager = new ProductManager();
+        this.supporterManager = new SupporterManager();
+        this.allClientSockets = new ArrayList<>();
         try {
             sql.startProgramme();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         hasBoss = (Storage.getAllBosses().size() != 0);
+        server = this;
+    }
+
+    public static void main(String[] args) throws IOException {
+        (new Server()).run();
+    }
+
+    public void run() throws IOException {
+        serverSocket = new ServerSocket(PORT_NUMBER);
+        System.out.println("**** ServerSocket created successfully ****");
+        Socket clientSocket;
+        while (true) {
+
+            System.out.println("-------------------------------------------------\n" + "Server listening ....");
+            clientSocket = serverSocket.accept();
+
+            //if the socket is in the black list we would just return
+
+            if (Security.isInBlackList(clientSocket)) {
+                continue;
+            }
+
+            System.out.println("client accepted");
+            allClientSockets.add(clientSocket);
+            DataInputStream dataInputStream = new DataInputStream(new BufferedInputStream(clientSocket.getInputStream()));
+            DataOutputStream dataOutputStream = new DataOutputStream(new BufferedOutputStream(clientSocket.getOutputStream()));
+            (new ClientHandler(this, clientSocket, dataInputStream, dataOutputStream)).start();
+        }
+    }
+
+    static class ClientHandler extends Thread {
+        final Server server;
+        Socket clientSocket;
+        DataInputStream dataInputStream;
+        DataOutputStream dataOutputStream;
+
+        public ClientHandler(Server server, Socket clientSocket, DataInputStream dataInputStream, DataOutputStream dataOutputStream) {
+            this.server = server;
+            this.clientSocket = clientSocket;
+            this.dataInputStream = dataInputStream;
+            this.dataOutputStream = dataOutputStream;
+        }
+
+        @Override
+        public void run() {
+            while (!Thread.interrupted()) {
+                try {
+                    if (Security.isInBlackList(clientSocket)) {
+                        throw new Exception("piss off");
+                    }
+                    String command = dataInputStream.readUTF();
+                    System.out.println(command);
+                    String respond = "";
+                    synchronized (server) {
+                        server.clientToServer(command, clientSocket);
+                        System.out.println(Security.getIP(clientSocket));
+                        respond = server.serverToClient();
+                        System.out.println(respond);
+                        dataOutputStream.writeUTF(respond);
+                        dataOutputStream.flush();
+                    }
+                    //dataOutputStream.writeUTF(respond);    -->   this is better to be in synchronized block
+                    //dataOutputStream.flush();              -->    ...
+                } catch (Exception e) {
+                    System.out.println("something went wrong, connection to client lost :(");
+                    server.getAllClientSockets().remove(clientSocket);
+                    Thread.currentThread().interrupt();
+                }
+            }
+        }
+    }
+
+    public ArrayList<Socket> getAllClientSockets() {
+        return allClientSockets;
     }
 
     public static void setAnswer(String answer) {
@@ -71,26 +147,13 @@ public class Server {
         return pattern.matcher(command);
     }
 
-    public void clientToServer(String command) throws ParseException {
+    public void clientToServer(String command, Socket socket) {
         try {
-
-            //running security checks
-
-            if (checkStringLength(command) || mayContainScript(command)) {
-                return;
-            }
-
-            //checking IP
-            //checking token ...
-            // if it doesn't ask for secret stuff
-            //takeNormalAction(command);
-            //if it's secret
-
-            takeAction(command);
-        } catch (Exception ignored) {
-
+            Security.securityCheck(command, socket);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
+        System.out.println("this is the answer: " + answer);
     }
 
     public void takeAction(String command) throws ParseException {
@@ -294,6 +357,12 @@ public class Server {
         } else if (command.startsWith("set min credit+")) {
             setMinCredit(command);
         }
+        //supporter parts
+        else if (command.startsWith("get all online supporters")) {
+            getAllOnlineSupporters();
+        } else if (command.startsWith("send message to supporter")) {
+            sendMessage(command);
+        }
         //end parts
         else if (command.startsWith("show balance")) {
             this.showBalance(command);
@@ -311,8 +380,216 @@ public class Server {
             this.makeNewSupporter(command);
         } else if (command.startsWith("delete supporter+")) {
             this.deleteSupporter(command);
+        } else if (command.startsWith("get online users+")) {
+            getOnlineUsers();
         }
 
+    }
+
+    public void takeActionNotSecure(String command) throws ParseException {
+        Matcher matcher;
+        if ((matcher = getMatcher("login\\+(\\w+)\\+(\\w+)", command)).find()) {
+            this.login(matcher);
+        } else if (command.startsWith("register+")) {
+            this.register(command);
+        } else if (command.startsWith("what is account role+")) {
+            this.getAccountRole(command);
+        } else if (command.startsWith("show accounts+")) {
+            this.showAccounts(command);
+        } else if (command.startsWith("view account info+")) {
+            this.viewAccountInfo(command);
+        } else if (command.startsWith("see authorization+")) {
+            this.seeAuthorization(command);
+        } else if (command.startsWith("delete account+")) {
+            this.deleteAccount(command);
+        } else if (command.startsWith("search account+")) {
+            this.searchAccount(command);
+        } else if (command.startsWith("make new boss+")) {
+            this.makeNewBoss(command);
+        } else if (command.startsWith("show requests+")) {
+            this.showRequests(command);
+        } else if (command.startsWith("request username show+")) {
+            this.requestUsername(command);
+        } else if (command.startsWith("view request+")) {
+            this.viewRequest(command);
+        } else if (command.startsWith("is request state checking+")) {
+            this.isRequestStateChecking(command);
+        } else if (command.startsWith("is account requestable+")) {
+            this.isAccountRequestable(command);
+        } else if (command.startsWith("search request+")) {
+            this.searchRequest(command);
+        } else if (command.startsWith("accept request+")) {
+            this.acceptRequest(command);
+        } else if (command.startsWith("decline request+")) {
+            this.declineRequest(command);
+        } else if (command.startsWith("delete request+")) {
+            this.deleteRequest(command);
+        } else if (command.startsWith("what is request username+")) {
+            this.getRequestAccountUsername(command);
+        } else if (command.startsWith("what is request object ID+")) {
+            this.getRequestObjectID(command);
+        } else if (command.startsWith("show categories+")) {
+            this.showCategories(command);
+        } else if (command.startsWith("view category+")) {
+            this.viewCategory(command);
+        } else if (command.startsWith("search category+")) {
+            this.searchCategory(command);
+        } else if (command.startsWith("is category exists+")) {
+            this.isCategoryExists(command);
+        } else if (command.startsWith("what is category attribute+")) {
+            this.whatIsCategoryAttribute(command);
+        } else if (command.startsWith("add category attribute+")) {
+            this.addCategoryAttribute(command);
+        } else if (command.startsWith("product picture path+")) {
+            this.addProductPicturePath(command);
+        } else if (command.startsWith("get product picture path+")) {
+            this.getProfilePicturePath(command);
+        }else if (command.startsWith("show products+")) {
+            this.showProducts(command);
+        } else if (command.startsWith("show my products+")) {
+            this.showMyProducts(command);
+        } else if (command.startsWith("view product+")) {
+            this.viewProduct(command);
+        } else if (command.startsWith("add product+")) {
+            this.addProduct(command);
+        } else if (command.startsWith("delete product+")) {
+            this.deleteProduct(command);
+        } else if (command.startsWith("search product+")) {
+            this.searchProduct(command);
+        } else if (command.startsWith("edit product price+")) {
+            this.editProductPrice(command);
+        } else if (command.startsWith("add product remainder+")) {
+            this.addProductRemainder(command);
+        } else if (command.startsWith("decrease product remainder")) {
+            this.decreaseProductRemainder(command);
+        } else if (command.startsWith("edit product+")) {
+            this.editProduct(command);
+        } else if (command.startsWith("what is product category+")) {
+            this.whatIsProductCategory(command);
+        } else if (command.startsWith("add product view+")) {
+            this.addProductView(command);
+        } else if (command.startsWith("add product category+")) {
+            this.addProductCategory(command);
+        } else if (command.startsWith("delete product salesman+")) {
+            this.deleteProductSalesman(command);
+        } else if (command.startsWith("search offCod")) {
+            this.searchOffCode(command);
+        } else if (command.startsWith("can add to offCode")) {
+            this.canAddUserToOffCode(command);
+        } else if (command.startsWith("get all offCodeAble user")) {
+            this.getAllOffCodeAbleUser(command);
+        } else if (command.startsWith("view offCode")) {
+            this.viewOffCode(command);
+        } else if (command.startsWith("show offCodes")) {
+            this.showOffCodes(command);
+        } else if (command.startsWith("create new sale")) {
+            this.createSale(command);
+        } else if (command.startsWith("can add product to sale")) {
+            this.canAddProductToSale(command);
+        } else if (command.startsWith("search sale")) {
+            this.searchSale(command);
+        } else if (command.startsWith("view sale")) {
+            this.viewSale(command);
+        } else if (command.startsWith("show sales")) {
+            this.showSales(command);
+        }  else if (command.startsWith("what is comment product ID+")) {
+            this.getCommentProductID(command);
+        } else if (command.startsWith("comment product+")) {
+            this.commentProduct(command);
+        } else if (command.startsWith("point product+")) {
+            this.pointProduct(command);
+        } else if (command.startsWith("what is point product+")) {
+            this.getProductPoint(command);
+        } else if (command.startsWith("is server has boss")) {
+            this.isServerHasBoss();
+        } else if (command.startsWith("get product min price+")) {
+            this.getMinPrice(command);
+        } else if (command.startsWith("get product sellers+")) {
+            this.getProductSellers(command);
+        } else if (command.startsWith("show the salesman+")) {
+            this.showSalesman(command);
+        } else if (command.startsWith("get product video+")) {
+            this.getProductVideo(command);
+        } else if (command.startsWith("set product video+")) {
+            this.setProductVideo(command);
+        } else if (command.startsWith("set person image+")) {
+            this.setPersonImage(command);
+        } else if (command.startsWith("get person image+")) {
+            this.getPersonImage(command);
+        } else if (command.startsWith("delete person image")) {
+            this.deletePersonImage(command);
+        } else if (command.startsWith("what is product name+")) {
+            this.getProductName(command);
+        } else if (command.startsWith("is product on sale by+")) {
+            this.getProductOnSale(command);
+        } else if (command.startsWith("get product price by salesman+")) {
+            this.getProductPrice(command);
+        } else if (command.startsWith("is product finished+")) {
+            isFinished(command);
+        } else if (command.startsWith("is product on sale+")) {
+            isOnSale(command);
+        } else if (command.startsWith("product min price with name+")) {
+            getMinPriceWithName(command);
+        } else if (command.startsWith("is there product name+")) {
+            isThereProductName(command);
+        } else if (command.startsWith("similar product+")) {
+            similarProduct(command);
+        } else if (command.startsWith("commercial+")) {
+            commercial(command);
+        } else if (command.startsWith("get all commercial")) {
+            getAllCommercials();
+        } else if (command.startsWith("get product sale")) {
+            getProductSale(command);
+        }
+        //supporter parts
+        else if (command.startsWith("get all online supporters")) {
+            getAllOnlineSupporters();
+        } else if (command.startsWith("send message to supporter")) {
+            sendMessage(command);
+        }
+        //end parts
+        else if (command.startsWith("show balance")) {
+            this.showBalance(command);
+        } else if (command.startsWith("add balance+")) {
+            this.addBalance(command);
+        } else if (command.startsWith("Add To Cart+")) {
+            this.addToCart(command);
+        } else if (command.startsWith("get money+")) {
+            this.getMoney(command);
+        } else if (command.startsWith("buy+")) {
+            this.buy(command);
+        } else if (command.startsWith("can use offCode+")) {
+            this.canUserOffCode(command);
+        }
+
+    }
+
+
+    private void getAllOnlineSupporters() {
+        setAnswer("Javad" + "\n" + "Matin" + "\n" + "hossein");
+    }
+
+    private void sendMessage(String command) {
+        String[] info = command.split("\n");
+        String toBroadcastMessage = "this is a chat message" + "\n" + info[1] + "\n" + info[2] + "\n" + info[3];
+        for (Socket socket : allClientSockets) {
+            try {
+                DataOutputStream dataOutputStream = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
+                dataOutputStream.writeUTF(toBroadcastMessage);
+                dataOutputStream.flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+
+    private void getOnlineUsers() {
+        StringBuilder result = new StringBuilder();
+        for (String username : Token.getOnlineUsers()) {
+            result.append(username).append("\n");
+        }
+        setAnswer(result.toString());
     }
 
     private void getWage() {
@@ -331,17 +608,17 @@ public class Server {
 
     private void setMinCredit(String command) {
         int wage = Integer.parseInt(command.split("\\+")[1]);
-        CreditController.getCreditController().setWagePercentage(wage);
+        CreditController.getCreditController().setMinimumCredit(wage);
         setAnswer("successful");
     }
 
 
     private void makeNewSupporter(String command) {
-        SupporterController.makeNewSupporter(command.split("\\+")[1], command.split("\\+")[2]);
+        SupporterManager.makeNewSupporter(command.split("\\+")[1], command.split("\\+")[2]);
     }
 
     private void deleteSupporter(String command) {
-        SupporterController.deleteSupporter(command.split("\\+")[1]);
+        SupporterManager.deleteSupporter(command.split("\\+")[1]);
     }
 
     private void canUserOffCode(String command) {
@@ -377,34 +654,7 @@ public class Server {
     }
 
     private void addToCart(String command) {
-        /*for (Cart cart : Storage.allCarts) {
-            if (cart.getUsername().equals(command.split("\\+")[1])) {
-                for (Triplet<String, String, Integer> item : cart.getAllItems()) {
-                    if (item.getValue0().equals(command.split("\\+")[2])) {
-                        if (item.getValue1().equals(command.split("\\+")[3])) {
-                            int counter = item.getValue2();
-                            if (counter + (Integer) count.getValue() > (Integer.parseInt(remainder.getText()))) {
-                                Alert alert = new Alert(Alert.AlertType.ERROR, "The Current Number Of Items + The Items You Already Added To Your Cart Is More Than Remainder", ButtonType.OK);
-                                alert.showAndWait();
-                            } else {
-                                MenuHandler.getServer().clientToServer("Add To Cart+" + MenuHandler.getUsername() + "+" + (String) chooseSeller.getValue() + "+" + MenuHandler.getProductID() + "+" + (Integer) count.getValue());
-                                Triplet addedItem = new Triplet<>((String) chooseSeller.getValue(), MenuHandler.getProductID(), (Integer) count.getValue() + counter);
-                                MenuHandler.getCart().remove(item);
-                                MenuHandler.getCart().add(addedItem);
-                                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Added To The Cart", ButtonType.OK);
-                                alert.showAndWait();
-                            }
-                            return;
-                        }
-                    }
-                }
-                Triplet addedItem = new Triplet<>((String) chooseSeller.getValue(), MenuHandler.getProductID(), (Integer) count.getValue());
-                MenuHandler.getCart().add(addedItem);
-                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Added To The Cart", ButtonType.OK);
-                alert.showAndWait();
-                return;
-            }
-        }*/
+
     }
 
     private void getProductSale(String command) {
@@ -500,18 +750,6 @@ public class Server {
     }
 
     private void getProductOnSale(String command) {
-        //complete needed
-        /*setAnswer("none");
-        for (Product product : Storage.getAllProducts()) {
-            if (product.getProductID().equals(command.split("\\+")[2])) {
-                if (product.getIsOnSale().get(command.split("\\+")[1])) {
-                    for (Sale sale : Storage.allSales) {
-                        if (sale.getSalesmanID().equals(command.split("\\+")[1])) {
-                        }
-                    }
-                }
-            }
-        }*/
         setAnswer("none");
     }
 
@@ -1369,6 +1607,8 @@ public class Server {
 
     private void login(Matcher matcher) {
         accountManager.login(matcher.group(1), matcher.group(2));
+        if (answer.startsWith("login successful as"))
+            answer = answer + "\n" + Token.generateNewToken(matcher.group(1));
     }
 
     private boolean checkMoneyFormat(String money) {
@@ -1444,7 +1684,6 @@ public class Server {
     }
 
     public String serverToClient() throws IOException {
-        endOfProgramme.updateFiles();
         sql.updateProgramme();
         return Server.answer;
     }

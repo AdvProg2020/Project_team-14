@@ -3,10 +3,8 @@ package GUI.SalesmanProfile.ManageSale;
 import GUI.Media.Audio;
 import GUI.MenuHandler;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -30,8 +28,8 @@ public class ViewSaleController {
     @FXML
     public void initialize() throws IOException, ParseException {
         String toServer = "view sale" + "+" + MenuHandler.getUsername() + "+" + MenuHandler.getSeeingSale();
-        MenuHandler.getServer().clientToServer(toServer);
-        String respond = MenuHandler.getServer().serverToClient();
+        MenuHandler.getConnector().clientToServer(toServer);
+        String respond = MenuHandler.getConnector().serverToClient();
 
         String[] lines = respond.split("\n");
         startDate.setValue(LocalDate.parse(lines[1].substring(11)));
@@ -76,18 +74,18 @@ public class ViewSaleController {
         StringBuilder respond = new StringBuilder();
         if (!startDate.getValue().toString().equals(initStartDate)) {
             String toServer = "edit sale" + "+" + MenuHandler.getSeeingSale() + "+" + "Start Date" + "+" + startDate.getValue().toString();
-            MenuHandler.getServer().clientToServer(toServer);
-            respond.append(MenuHandler.getServer().serverToClient()).append("\n");
+            MenuHandler.getConnector().clientToServer(toServer);
+            respond.append(MenuHandler.getConnector().serverToClient()).append("\n");
         }
         if (!endDate.getValue().toString().equals(initEndDate)) {
             String toServer = "edit sale" + "+" + MenuHandler.getSeeingSale() + "+" + "End Date" + "+" + endDate.getValue().toString();
-            MenuHandler.getServer().clientToServer(toServer);
-            respond.append(MenuHandler.getServer().serverToClient()).append("\n");
+            MenuHandler.getConnector().clientToServer(toServer);
+            respond.append(MenuHandler.getConnector().serverToClient()).append("\n");
         }
         if (!percentage.getText().equals(initPercentage)) {
             String toServer = "edit sale" + "+" + MenuHandler.getSeeingSale() + "+" + "percentage" + "+" + percentage.getText();
-            MenuHandler.getServer().clientToServer(toServer);
-            respond.append(MenuHandler.getServer().serverToClient()).append("\n");
+            MenuHandler.getConnector().clientToServer(toServer);
+            respond.append(MenuHandler.getConnector().serverToClient()).append("\n");
         }
 
         if (respond.toString().startsWith("ERRORS")) {

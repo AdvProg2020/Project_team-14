@@ -1,14 +1,27 @@
 package GUI;
 
 import Controller.Server;
-import GUI.CategoryMenu.Category;
+import GUI.Media.Audio;
+import Model.Supporter.Chat;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.Pane;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
 import org.javatuples.Triplet;
 
+import java.io.*;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.text.ParseException;
 import java.util.ArrayList;
 
-public class MenuHandler {
+public class MenuHandler extends Application {
+    static private final int PORT_NUMBER = 8080;
     static private String username = null;
     static private String userAvatar = null;
     static private Server server;
@@ -26,11 +39,83 @@ public class MenuHandler {
     static private String cartBack = null;
     static private ArrayList<Triplet<String, String, Integer>> cart = new ArrayList<>();
     public static String selectedCategory;
+    static private Connector connector;
+    static private Popup supporterPopup;
+    static private Object lock = new Object();
+    static private Object newMessageLock = new Object();
+    static private Object P2PLock = new Object();
+    static private ArrayList<Chat> myChats = new ArrayList<>();
+    static private String token = "no token";
+    static private ServerSocket serverSocket;
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+
+    @Override
+    public void start(Stage primaryStage) throws IOException {
+        Audio.playBackGroundMusic();
+        serverSocket = new ServerSocket(0);
+        Connector connector = new Connector("localhost", PORT_NUMBER);
+        MenuHandler.setConnector(connector);
+        try {
+            connector.run();
+            connector.clientToServer("is server has boss");
+            String response = connector.serverToClient();
+            Parent root;
+            if (response.equalsIgnoreCase("yes")) {
+                root = FXMLLoader.load(getClass().getResource("/GUI/ProductScene/ProductScene.fxml"));
+            } else {
+                root = FXMLLoader.load(getClass().getResource("/GUI/RegisterBoss/RegisterBoss.fxml"));
+            }
+            primaryStage.setScene(new Scene(root));
+            MenuHandler.setStage(primaryStage);
+            primaryStage.show();
+
+        } catch (IOException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "your connection to server failed ): try again later", ButtonType.OK);
+            alert.showAndWait();
+        }
+    }
+
+    public static Connector getConnector() {
+        return connector;
+    }
+
+    public static void setConnector(Connector connector) {
+        MenuHandler.connector = connector;
+    }
+
+    public static Popup getSupporterPopup() {
+        return supporterPopup;
+    }
+
+    public static void setSupporterPopup(Popup supporterPopup) {
+        MenuHandler.supporterPopup = supporterPopup;
+    }
+
+    public static Object getLock() {
+        return lock;
+    }
+
+    public static Object getNewMessageLock() {
+        return newMessageLock;
+    }
+
+    public static void addMessage(String sender, String receiver, String content) {
+        if (receiver.equalsIgnoreCase(MenuHandler.getUsername()) | sender.equalsIgnoreCase(MenuHandler.getUsername())) {
+            Chat.processMessage(sender, receiver, content, myChats);
+        }
+    }
+
+    public static ArrayList<Chat> getMyChats() {
+        return myChats;
+    }
 
     public static String getRole() {
         try {
-            getServer().clientToServer("what is account role+" + username);
-            return getServer().serverToClient();
+            getConnector().clientToServer("what is account role+" + username);
+            return getConnector().serverToClient();
         } catch (Exception e) {
             return "none";
         }
@@ -52,9 +137,9 @@ public class MenuHandler {
         MenuHandler.username = username;
     }
 
-    public static Server getServer() {
+    /*public static Server getServer() {
         return server;
-    }
+    }*/
 
     public static void setServer(Server server) {
         MenuHandler.server = server;
@@ -170,5 +255,44 @@ public class MenuHandler {
 
     public static void setUserAvatar(String userAvatar) {
         MenuHandler.userAvatar = userAvatar;
+    }
+
+    public static long getCredit() throws IOException {
+        MenuHandler.getConnector().clientToServer("show balance+" + username);
+        return Long.parseLong(MenuHandler.getConnector().serverToClient().substring("Your Balance is : ".length()));
+    }
+
+    public static int getWagePercentage() throws IOException {
+        MenuHandler.getConnector().clientToServer("get wage+");
+        return Integer.parseInt(MenuHandler.getConnector().serverToClient());
+    }
+
+    public static long getMinCredit() throws IOException {
+        MenuHandler.getConnector().clientToServer("get min credit+");
+        return Long.parseLong(MenuHandler.getConnector().serverToClient());
+    }
+
+    public static void setToken(String s) {
+        token = s;
+    }
+
+    public static String getToken() {
+        return token;
+    }
+
+    public static Object getP2PLock() {
+        return P2PLock;
+    }
+
+    public static void sendFile(String seller, String fileName, String host, String port) {
+        if (seller.equalsIgnoreCase(MenuHandler.getUsername())) {
+            try {
+                Socket sendSocket = new Socket(host, Integer.parseInt(port));
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

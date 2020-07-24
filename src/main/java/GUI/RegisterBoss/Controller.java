@@ -9,7 +9,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -89,8 +88,8 @@ public class Controller {
                 String message = "register+" + firstName.getText() + "+" + lastName.getText() + "+" + username.getText()
                         + "+" + password.getText() + "+" + ((String) role.getValue()) + "+" + Email.getText()
                         + "+" + telephone.getText();
-                (MenuHandler.getServer()).clientToServer(message);
-                (MenuHandler.getServer()).serverToClient();
+                (MenuHandler.getConnector()).clientToServer(message);
+                (MenuHandler.getConnector()).serverToClient();
                 alert.setAlertType(Alert.AlertType.CONFIRMATION);
                 alert.setContentText("Your Register Was Successful");
                 alert.showAndWait();
@@ -102,10 +101,10 @@ public class Controller {
         }
     }
 
-    private void setAvatarInServer(String username) throws ParseException {
+    private void setAvatarInServer(String username) throws ParseException, IOException {
         String avatar = ((Label) (((AnchorPane) avatarPane.getChildren().get(0)).getChildren().get(12))).getText();
         String toServer = "set person image+" + username + "+" + avatar;
-        MenuHandler.getServer().clientToServer(toServer);
+        MenuHandler.getConnector().clientToServer(toServer);
     }
 
     private Matcher getMatcher(String regex, String command) {

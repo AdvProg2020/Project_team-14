@@ -23,14 +23,14 @@ public class SimilarProduct {
     public ImageView imageView;
 
     public void initialize() throws ParseException, IOException {
-        MenuHandler.getServer().clientToServer("similar product+" + MenuHandler.getProductID());
-        productID = MenuHandler.getServer().serverToClient();
-        MenuHandler.getServer().clientToServer("get product min price+" + productID);
-        price.setText(MenuHandler.getServer().serverToClient());
-        MenuHandler.getServer().clientToServer("what is product name+" + productID);
-        name.setText(MenuHandler.getServer().serverToClient());
-        MenuHandler.getServer().clientToServer("get product picture path+" + productID);
-        String path = MenuHandler.getServer().serverToClient();
+        MenuHandler.getConnector().clientToServer("similar product+" + MenuHandler.getProductID());
+        productID = MenuHandler.getConnector().serverToClient();
+        MenuHandler.getConnector().clientToServer("get product min price+" + productID);
+        price.setText(MenuHandler.getConnector().serverToClient());
+        MenuHandler.getConnector().clientToServer("what is product name+" + productID);
+        name.setText(MenuHandler.getConnector().serverToClient());
+        MenuHandler.getConnector().clientToServer("get product picture path+" + productID);
+        String path = MenuHandler.getConnector().serverToClient();
         if (path != null) {
             if (!path.equalsIgnoreCase("none")) {
                 imageView.setImage(new Image(path));

@@ -63,8 +63,29 @@ public class Controller {
             getAllReceiptsInvolvingMe(command);
         } else if (command.startsWith("get amount of transaction+")) {
             getTransactionAmount(command);
+        } else if (command.startsWith("get money from+")) {
+            getMoneyFrom(command);
         } else {
             serverAnswer = "invalid input";
+        }
+
+    }
+
+    private void getMoneyFrom(String command) {
+        try {
+            String username = command.split("\\+")[2];
+            long amount = Long.parseLong(command.split("\\+")[3]);
+            Account account = Account.getAccountWithUsername(username);
+            assert account != null;
+            if (account.getBalance() > amount) {
+                account.setBalance(account.getBalance() - amount);
+                serverAnswer = "successful";
+                return;
+            }
+            serverAnswer = "not enough credit";
+        } catch (Exception e) {
+            serverAnswer = "something went wrong";
+            e.printStackTrace();
         }
     }
 
@@ -73,24 +94,19 @@ public class Controller {
             String token = command.split("\\+")[1];
             int ID = Integer.parseInt(command.split("\\+")[2]);
             Transaction transaction = Transaction.getTransactionBasedOnID(ID);
-
             if (tokenIsWrong(token)) {
                 serverAnswer = "token isn't authentic";
                 return;
             }
-
             if (tokenIsExpired(token)) {
                 serverAnswer = "token has expired";
                 return;
             }
-
             if (transaction == null) {
                 serverAnswer = "wrong transaction id";
                 return;
             }
-
             serverAnswer = Long.toString(transaction.getAmount());
-
         } catch (Exception e) {
             serverAnswer = "something went wrong";
         }
@@ -121,21 +137,17 @@ public class Controller {
         try {
             StringBuilder result = new StringBuilder("");
             String token = command.split("\\+")[1];
-
             if (tokenIsWrong(token)) {
                 serverAnswer = "token isn't authentic";
                 return;
             }
-
             if (tokenIsExpired(token)) {
                 serverAnswer = "token has expired";
                 return;
             }
-
             for (String string : Transaction.getAllTransactionsWithSource(command.split("\\+")[2])) {
                 result.append(string).append("\n");
             }
-
             serverAnswer = result.toString();
         } catch (Exception e) {
             serverAnswer = "something went wrong";
@@ -333,3 +345,4 @@ public class Controller {
 // pay transaction with id+token+id+username
 // get all receipts by me+token+username
 // get all receipts involving me+token+username
+// get money from+token+username+amount

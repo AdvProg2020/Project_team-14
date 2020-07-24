@@ -7,7 +7,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -82,9 +81,9 @@ public class NewManagerPopOut {
                 String message = "make new boss+" + firstName.getText() + "+" + lastName.getText() + "+" +
                         username.getText() + "+" + password.getText() + "+" + Email.getText() + "+" +
                         telephone.getText() + "+" + MenuHandler.getUsername();
-                (MenuHandler.getServer()).clientToServer(message);
+                (MenuHandler.getConnector()).clientToServer(message);
                 String serverAnswer;
-                serverAnswer = (MenuHandler.getServer()).serverToClient();
+                serverAnswer = (MenuHandler.getConnector()).serverToClient();
                 if (serverAnswer.equalsIgnoreCase("the username is already taken, try something else")) {
                     alert.setContentText("This Username Has Been Taken Please Try Something Else");
                 } else {
