@@ -21,6 +21,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 
 public class MenuHandler extends Application {
+    static private String currentAuction;
     static private final int PORT_NUMBER = 8080;
     static private String username = null;
     static private String userAvatar = null;
@@ -294,5 +295,45 @@ public class MenuHandler extends Application {
                 e.printStackTrace();
             }
         }
+    }
+
+    public static String getCurrentAuction() {
+        return currentAuction;
+    }
+
+    public static void setCurrentAuction(String currentAuction) {
+        MenuHandler.currentAuction = currentAuction;
+    }
+
+    public static int getPortNumber() {
+        return PORT_NUMBER;
+    }
+
+    public static Server getServer() {
+        return server;
+    }
+
+    public static void setLock(Object lock) {
+        MenuHandler.lock = lock;
+    }
+
+    public static void setNewMessageLock(Object newMessageLock) {
+        MenuHandler.newMessageLock = newMessageLock;
+    }
+
+    public static void setP2PLock(Object p2PLock) {
+        P2PLock = p2PLock;
+    }
+
+    public static void setMyChats(ArrayList<Chat> myChats) {
+        MenuHandler.myChats = myChats;
+    }
+
+    public static ServerSocket getServerSocket() {
+        return serverSocket;
+    }
+
+    public static void setServerSocket(ServerSocket serverSocket) {
+        MenuHandler.serverSocket = serverSocket;
     }
 }
