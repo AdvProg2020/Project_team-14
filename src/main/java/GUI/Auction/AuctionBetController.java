@@ -42,7 +42,7 @@ public class AuctionBetController {
         }
         MenuHandler.getConnector().clientToServer("get auction time+" + MenuHandler.getCurrentAuction());
         String time = MenuHandler.getConnector().serverToClient();
-        Date date = System.currentTimeMillis();
+        //Date date = System.currentTimeMillis();
     }
 
     public void initialize() {
