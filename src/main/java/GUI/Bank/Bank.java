@@ -21,6 +21,7 @@ public class Bank {
     private static String password;
     public Label creditLabel;
     public static Bank bank;
+    private String username = MenuHandler.getRole().equalsIgnoreCase("boss") ? "BOSS" : MenuHandler.getUsername();
 
     public void back(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/GUI/Bank/LogOrRegister.fxml"));
@@ -28,9 +29,9 @@ public class Bank {
         stage.setScene(new Scene(root));
     }
 
-    private void checkExpired(ActionEvent actionEvent) throws IOException, ParseException {
+    private void checkExpired(ActionEvent actionEvent) throws IOException {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, "", ButtonType.OK);
-        MenuHandler.getConnector().clientToServer("bank " + "get all receipts by me+" + Bank.getToken() + "+" + MenuHandler.getUsername());
+        MenuHandler.getConnector().clientToServer("bank " + "get all receipts by me+" + Bank.getToken() + "+" + username);
         String answer = MenuHandler.getConnector().serverToClient();
         if (answer.equals("token isn't authentic") || answer.equals("something went wrong") || answer.contains("expired")) {
             alert.setContentText("you token is expired, you may wanna login again");
@@ -85,7 +86,7 @@ public class Bank {
         if (MenuHandler.getRole().equalsIgnoreCase("boss")) {
             MenuHandler.getConnector().clientToServer("bank " + "get balance+" + Bank.getToken() + "+" + "BOSS");
         } else {
-            MenuHandler.getConnector().clientToServer("bank " + "get balance+" + Bank.getToken() + "+" + MenuHandler.getUsername());
+            MenuHandler.getConnector().clientToServer("bank " + "get balance+" + Bank.getToken() + "+" + username);
         }
         String credit = MenuHandler.getConnector().serverToClient();
         if (credit.equals("token has expired")) {
@@ -98,9 +99,9 @@ public class Bank {
         creditLabel.setText("oops .... ");
     }
 
-    public static boolean isPossibleToDepositForSalesman(long amount) throws IOException, ParseException {
+    public static boolean isPossibleToDepositForSalesman(long amount) throws IOException {
         if (!MenuHandler.getRole().equalsIgnoreCase("salesman")) {
-            return false;
+            return true;
         }
         long credit = MenuHandler.getCredit();
         return credit - amount >= MenuHandler.getMinCredit();

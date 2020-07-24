@@ -80,6 +80,10 @@ public class Server {
                 continue;
             }
 
+            if (Security.weReachedTheMax()) {
+                continue;
+            }
+
             System.out.println("client accepted");
             allClientSockets.add(clientSocket);
             DataInputStream dataInputStream = new DataInputStream(new BufferedInputStream(clientSocket.getInputStream()));
@@ -99,6 +103,7 @@ public class Server {
             this.clientSocket = clientSocket;
             this.dataInputStream = dataInputStream;
             this.dataOutputStream = dataOutputStream;
+            Security.addToSetOfIps(Security.getIP(clientSocket));
         }
 
         @Override
@@ -444,7 +449,7 @@ public class Server {
             this.addProductPicturePath(command);
         } else if (command.startsWith("get product picture path+")) {
             this.getProfilePicturePath(command);
-        }else if (command.startsWith("show products+")) {
+        } else if (command.startsWith("show products+")) {
             this.showProducts(command);
         } else if (command.startsWith("show my products+")) {
             this.showMyProducts(command);
@@ -492,7 +497,7 @@ public class Server {
             this.viewSale(command);
         } else if (command.startsWith("show sales")) {
             this.showSales(command);
-        }  else if (command.startsWith("what is comment product ID+")) {
+        } else if (command.startsWith("what is comment product ID+")) {
             this.getCommentProductID(command);
         } else if (command.startsWith("comment product+")) {
             this.commentProduct(command);

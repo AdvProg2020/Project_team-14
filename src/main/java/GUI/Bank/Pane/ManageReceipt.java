@@ -22,13 +22,14 @@ public class ManageReceipt {
 
     public void initialize() throws IOException, ParseException {
         username = MenuHandler.getRole().equalsIgnoreCase("boss") ? "BOSS" : MenuHandler.getUsername();
+        System.out.println("here it issssssssssssssssss: " + username);
         updateBoxOne();
         updateBoxTwo();
     }
 
     private void updateBoxOne() throws ParseException, IOException {
         box1.getChildren().clear();
-        MenuHandler.getConnector().clientToServer("bank " + "get all receipts by me+" + Bank.getToken() + "+" + MenuHandler.getUsername());
+        MenuHandler.getConnector().clientToServer("bank " + "get all receipts by me+" + Bank.getToken() + "+" + username);
         String answer = MenuHandler.getConnector().serverToClient();
         if (answer.equals("token isn't authentic") || answer.equals("something went wrong")) {
             //logout
@@ -53,7 +54,7 @@ public class ManageReceipt {
 
     private void updateBoxTwo() throws ParseException, IOException {
         box2.getChildren().clear();
-        MenuHandler.getConnector().clientToServer("bank " + "get all receipts involving me+" + Bank.getToken() + "+" + MenuHandler.getUsername());
+        MenuHandler.getConnector().clientToServer("bank " + "get all receipts involving me+" + Bank.getToken() + "+" + username);
         String answer = MenuHandler.getConnector().serverToClient();
         if (answer.equals("token isn't authentic") || answer.equals("something went wrong")) {
             //logout

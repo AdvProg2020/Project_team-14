@@ -18,7 +18,7 @@ public class LogOrRegister {
     public PasswordField createAccountConfirmation;
     private String username;
 
-    public void login(ActionEvent actionEvent) throws ParseException, IOException {
+    public void login(ActionEvent actionEvent) throws IOException {
         Alert alert = new Alert(Alert.AlertType.WARNING, "", ButtonType.OK);
 
         //there's no user logged
@@ -75,19 +75,13 @@ public class LogOrRegister {
 
     }
 
-    public void createAccount(ActionEvent actionEvent) throws ParseException, IOException {
+    public void createAccount(ActionEvent actionEvent) throws IOException {
         Alert alert = new Alert(Alert.AlertType.WARNING, "", ButtonType.OK);
 
         //there's no user logged
 
         if (username == null) {
             alert.setContentText("you should login first in the store, go back and login!");
-            alert.showAndWait();
-            return;
-        }
-
-        if (!createAccountPassword.getText().equals(createAccountConfirmation.getText())) {
-            alert.setContentText("the password and confirmation aren't the same");
             alert.showAndWait();
             return;
         }
@@ -108,6 +102,13 @@ public class LogOrRegister {
             alert.showAndWait();
             return;
         }
+
+        if (!createAccountPassword.getText().equals(createAccountConfirmation.getText())) {
+            alert.setContentText("the password and confirmation aren't the same");
+            alert.showAndWait();
+            return;
+        }
+
 
         MenuHandler.getConnector().clientToServer("bank " + "create account+" + username + "+" + createAccountPassword.getText() + "+first name+second name");
 

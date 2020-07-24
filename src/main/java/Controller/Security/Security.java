@@ -11,6 +11,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.HashMap;
+import java.util.HashSet;
 
 public class Security {
 
@@ -24,6 +25,7 @@ public class Security {
     }
 
     private static ArrayList<String> blackListOfIPs = new ArrayList<>();
+    private static HashSet<String> ips = new HashSet<>();
 
     public static boolean mayContainScript(String command) {
         return command.contains("<") || command.contains(">") || command.contains("\\") || command.contains("/");
@@ -126,19 +128,22 @@ public class Security {
             }
 
             // making sure it's got one ip
-            
-            Account account = Storage.getAccountWithUsername(username);
-            assert account != null;
-            if (account.getIp() == null) {
-                account.setIp(getIP(socket));
-            } else {
-                if (!account.getIp().equals(getIP(socket))) {
-                    System.out.println("we're under attack by wrong ip");
-                    blackListOfIPs.add(getIP(socket));
-                    return;
-                }
-            }
 
+            try {
+                Account account = Storage.getAccountWithUsername(username);
+                assert account != null;
+                if (account.getIp() == null) {
+                    account.setIp(getIP(socket));
+                } else {
+                    if (!account.getIp().equals(getIP(socket))) {
+                        System.out.println("we're under attack by wrong ip");
+                        blackListOfIPs.add(getIP(socket));
+                        return;
+                    }
+                }
+            } catch (Exception e) {
+                System.out.println("the error: " + e.getMessage());
+            }
             //checking that it's still authentic
 
             if (!Token.hasTokenExpired(token)) {
@@ -168,6 +173,15 @@ public class Security {
 
     public static boolean isInBlackList(Socket socket) {
         return blackListOfIPs.contains(getIP(socket));
+    }
+
+    public static void addToSetOfIps(String ip) {
+        ips.add(ip);
+    }
+
+    public static boolean weReachedTheMax() {
+        ips.removeAll(blackListOfIPs);
+        return ips.size() > (1989 / 23) / 7;
     }
 
 }
