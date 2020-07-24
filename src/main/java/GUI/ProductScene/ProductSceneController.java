@@ -162,23 +162,7 @@ public class ProductSceneController {
                 filter.getItems().add("Category:" + s.split("\\s")[2]);
             }
         }
-        Platform.runLater(() -> {
-            try {
-                Stage stage = (Stage) accountMenuButton.getScene().getWindow();
-                Popup popup = new Popup();
-                HBox root = FXMLLoader.load(getClass().getResource("/GUI/Supporter/SupporterPopUp.fxml"));
-                popup.getContent().add(root);
-                double x = stage.getX() + stage.getWidth() - root.getPrefWidth() - 15;
-                double y = stage.getY() + stage.getHeight() - root.getPrefHeight() - 15;
-                popup.setAnchorX(x);
-                popup.setAnchorY(y);
-                MenuHandler.setSupporterPopup(popup);
-                popup.show(stage);
-            } catch (IOException e) {
-                e.printStackTrace();
-                System.out.println("something is wrong with supporter popup");
-            }
-        });
+        Platform.runLater(MenuHandler::showSupporterPopup);
         update();
     }
 

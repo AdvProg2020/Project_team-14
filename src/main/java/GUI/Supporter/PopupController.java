@@ -12,9 +12,9 @@ import java.io.IOException;
 public class PopupController {
 
     public void showChat(MouseEvent mouseEvent) throws IOException {
-        Stage stage = (Stage) MenuHandler.getSupporterPopup().getOwnerWindow();
+        Stage stage = MenuHandler.getStage();
         VBox chat = FXMLLoader.load(getClass().getResource("/GUI/Supporter/SupporterChatLayout.fxml"));
-        MenuHandler.getSupporterPopup().hide();
+        MenuHandler.hideSupporterPopup();
 
         Popup popup = new Popup();
         popup.getContent().add(chat);

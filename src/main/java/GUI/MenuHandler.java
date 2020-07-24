@@ -9,6 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
@@ -44,10 +45,9 @@ public class MenuHandler extends Application {
     static private Popup supporterPopup;
     static private Object lock = new Object();
     static private Object newMessageLock = new Object();
-    static private Object P2PLock = new Object();
     static private ArrayList<Chat> myChats = new ArrayList<>();
     static private String token = "no token";
-    static private ServerSocket serverSocket;
+    static private P2PHandler p2PHandler;
 
     public static void main(String[] args) {
         launch(args);
@@ -56,8 +56,9 @@ public class MenuHandler extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         Audio.playBackGroundMusic();
-        serverSocket = new ServerSocket(0);
         Connector connector = new Connector("localhost", PORT_NUMBER);
+        p2PHandler = new P2PHandler();
+        p2PHandler.run();
         MenuHandler.setConnector(connector);
         try {
             connector.run();
@@ -71,6 +72,7 @@ public class MenuHandler extends Application {
             }
             primaryStage.setScene(new Scene(root));
             MenuHandler.setStage(primaryStage);
+            createSupporterPopup();
             primaryStage.show();
 
         } catch (IOException e) {
@@ -87,12 +89,23 @@ public class MenuHandler extends Application {
         MenuHandler.connector = connector;
     }
 
-    public static Popup getSupporterPopup() {
-        return supporterPopup;
+    private static void createSupporterPopup() throws IOException {
+        Popup popup = new Popup();
+        HBox root = FXMLLoader.load(MenuHandler.class.getResource("/GUI/Supporter/SupporterPopUp.fxml"));
+        popup.getContent().add(root);
+        supporterPopup = popup;
     }
 
-    public static void setSupporterPopup(Popup supporterPopup) {
-        MenuHandler.supporterPopup = supporterPopup;
+    public static void showSupporterPopup() {
+        double x = stage.getX() + stage.getWidth() - 150 - 15;
+        double y = stage.getY() + stage.getHeight() - 50 - 15;
+        supporterPopup.setAnchorX(x);
+        supporterPopup.setAnchorY(y);
+        supporterPopup.show(stage);
+    }
+
+    public static void hideSupporterPopup() {
+        supporterPopup.hide();
     }
 
     public static Object getLock() {
@@ -281,19 +294,13 @@ public class MenuHandler extends Application {
         return token;
     }
 
-    public static Object getP2PLock() {
-        return P2PLock;
+    public static P2PHandler getP2PHandler() {
+        return p2PHandler;
     }
 
     public static void sendFile(String seller, String fileName, String host, String port) {
         if (seller.equalsIgnoreCase(MenuHandler.getUsername())) {
-            try {
-                Socket sendSocket = new Socket(host, Integer.parseInt(port));
-
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            p2PHandler.send(fileName, host, Integer.parseInt(port));
         }
     }
 

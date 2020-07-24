@@ -109,13 +109,12 @@ public class Server {
                         throw new Exception("piss off");
                     }
                     String command = dataInputStream.readUTF();
-                    System.out.println(command);
+                    System.out.println("[CLIENT]:" + command);
                     String respond = "";
                     synchronized (server) {
                         server.clientToServer(command, clientSocket);
                         System.out.println(Security.getIP(clientSocket));
                         respond = server.serverToClient();
-                        System.out.println(respond);
                         dataOutputStream.writeUTF(respond);
                         dataOutputStream.flush();
                     }
@@ -153,7 +152,7 @@ public class Server {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("this is the answer: " + answer);
+        System.out.println("[SERVER]: " + answer);
     }
 
     public void takeAction(String command) throws ParseException {
@@ -362,6 +361,10 @@ public class Server {
             getAllOnlineSupporters();
         } else if (command.startsWith("send message to supporter")) {
             sendMessage(command);
+        }
+        //file part
+        else if (command.startsWith("download file")) {
+            downloadFile(command);
         }
         //end parts
         else if (command.startsWith("show balance")) {
@@ -578,6 +581,19 @@ public class Server {
 
     }
 
+    private void downloadFile(String command) {
+        for (Socket socket : allClientSockets) {
+            DataOutputStream dataOutputStream = null;
+            try {
+                dataOutputStream = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
+                dataOutputStream.writeUTF(command);
+                dataOutputStream.flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        setAnswer("downloading message broadcast");
+    }
 
     private void getAllOnlineSupporters() {
         setAnswer("Javad" + "\n" + "Matin" + "\n" + "hossein");
@@ -586,9 +602,10 @@ public class Server {
     private void sendMessage(String command) {
         String[] info = command.split("\n");
         String toBroadcastMessage = "this is a chat message" + "\n" + info[1] + "\n" + info[2] + "\n" + info[3];
+        DataOutputStream dataOutputStream = null;
         for (Socket socket : allClientSockets) {
             try {
-                DataOutputStream dataOutputStream = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
+                dataOutputStream = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
                 dataOutputStream.writeUTF(toBroadcastMessage);
                 dataOutputStream.flush();
             } catch (IOException e) {
@@ -1286,9 +1303,9 @@ public class Server {
         if (!checkNameFormat(command.split("\\+")[3])) {
             Server.answer += "brand format is invalid";
         }
-        if (!checkDescriptionFormat(command.split("\\+")[4])) {
+        /*if (!checkDescriptionFormat(command.split("\\+")[4])) {
             Server.answer += "description format is invalid";
-        }
+        }*/
         if (!checkMoneyFormat(command.split("\\+")[5])) {
             Server.answer += "money format is invalid";
         }

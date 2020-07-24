@@ -1,5 +1,6 @@
 package GUI;
 
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -61,7 +62,7 @@ public class Connector {
 
         @Override
         public void run() {
-            while (true) {
+            while (!Thread.interrupted()) {
                 try {
                     String response = connector.getDataInputStream().readUTF();
                     if (response.startsWith("this is a chat message")) {
@@ -75,7 +76,12 @@ public class Connector {
                         MenuHandler.getLock().notifyAll();
                     }
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    System.out.println("connection lost");
+                    Platform.runLater(() -> {
+                        Alert alert = new Alert(Alert.AlertType.ERROR, "Connection to server lost :(", ButtonType.OK);
+                        alert.showAndWait();
+                    });
+                    Thread.currentThread().interrupt();
                 }
             }
         }
