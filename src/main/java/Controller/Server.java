@@ -18,6 +18,7 @@ import Model.Account.Role;
 import Model.Account.Salesman;
 import Model.Category.Category;
 import Model.Confirmation;
+import Model.Log.Log;
 import Model.Off.OffCode;
 import Model.Off.Sale;
 import Model.Product.Comment;
@@ -25,7 +26,6 @@ import Model.Product.Point;
 import Model.Product.Product;
 import Model.Request.Request;
 import Model.Storage;
-import Model.Supporter.Supporter;
 import Model.Token.Token;
 
 public class Server {
@@ -365,6 +365,8 @@ public class Server {
         //file part
         else if (command.startsWith("download file")) {
             downloadFile(command);
+        } else if (command.startsWith("has I bought")) {
+            hasUserBought(command);
         }
         //end parts
         else if (command.startsWith("show balance")) {
@@ -564,6 +566,12 @@ public class Server {
         } else if (command.startsWith("send message to supporter")) {
             sendMessage(command);
         }
+        //file parts
+        else if (command.startsWith("download file")) {
+            downloadFile(command);
+        } else if (command.startsWith("has I bought")) {
+            hasUserBought(command);
+        }
         //end parts
         else if (command.startsWith("show balance")) {
             this.showBalance(command);
@@ -579,6 +587,18 @@ public class Server {
             this.canUserOffCode(command);
         }
 
+    }
+
+    private void hasUserBought(String command) {
+        String[] info = command.split("\\+");
+        String username = info[1];
+        String productID = info[2];
+
+        if (Log.hasCustomerBoughtProduct(username, productID)) {
+            setAnswer("yes");
+        } else {
+            setAnswer("no");
+        }
     }
 
     private void downloadFile(String command) {
