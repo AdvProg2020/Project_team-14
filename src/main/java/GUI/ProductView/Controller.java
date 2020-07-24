@@ -232,23 +232,21 @@ public class Controller {
         updateSeller();
     }
 
-    private void checkFileProduct() {
+    private void checkFileProduct() throws IOException {
         String productInfo = infoText.getText();
         Matcher matcher = getMatcher("Brand:\\s*[Ff]ile", productInfo);
-        if (!matcher.find()) {
-            addButton.setText("Add To Cart");
-            return;
-        }
-        if (!haveIBoughtThisProduct()) {
+        if (!matcher.find() | !haveIBoughtThisProduct()) {
             addButton.setText("Add To Cart");
             return;
         }
         addButton.setText("Download File");
     }
 
-    private boolean haveIBoughtThisProduct() {
-        //should ask server
-        return true;
+    private boolean haveIBoughtThisProduct() throws IOException {
+        String toServer = "has I bought" + "+" + MenuHandler.getUsername() + "+" + MenuHandler.getProductID();
+        MenuHandler.getConnector().clientToServer(toServer);
+        String response = MenuHandler.getConnector().serverToClient();
+        return response.equalsIgnoreCase("yes");
     }
 
     private void bossLoad(String serverAnswer) throws ParseException, IOException {
@@ -432,7 +430,7 @@ public class Controller {
                 if (file != null) {
                     MenuHandler.getP2PHandler().setSavePath(file.getPath());
 
-                    String toServer = "download file" + "+" + fileName + fileFormat + "+" + chooseSeller.getValue() + "+" + "127.0.0.1"
+                    String toServer = "download file" + "+" + fileName + fileFormat + "+" + chooseSeller.getValue() + "+" + MenuHandler.getP2PHandler().getHost()
                             + "+" + MenuHandler.getP2PHandler().getPortNumber();
                     MenuHandler.getConnector().clientToServer(toServer);
                 }
