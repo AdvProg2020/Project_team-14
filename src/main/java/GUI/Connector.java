@@ -76,6 +76,7 @@ public class Connector {
                         MenuHandler.getLock().notifyAll();
                     }
                 } catch (IOException e) {
+                    System.out.println("connection lost");
                     Platform.runLater(() -> {
                         Alert alert = new Alert(Alert.AlertType.ERROR, "Connection to server lost :(", ButtonType.OK);
                         alert.showAndWait();
@@ -92,8 +93,7 @@ public class Connector {
         String seller = info[2];
         String destinationHost = info[3];
         String destinationPort = info[4];
-        String fileAddr = info[5];
-        MenuHandler.sendFile(seller, fileName, destinationHost, destinationPort, fileAddr);
+        MenuHandler.sendFile(seller, fileName, destinationHost, destinationPort);
     }
 
     public void handleChatMessage(String response) {

@@ -114,12 +114,12 @@ public class AddProductController {
                 reset(actionEvent);
                 return;
             }
-            if (!checkDescriptionFormat(description.getText())) {
+            /*if (!checkDescriptionFormat(description.getText())) {
                 alert.setContentText("Description Format Is Invalid");
                 alert.showAndWait();
                 reset(actionEvent);
                 return;
-            }
+            }*/
             MenuHandler.getConnector().clientToServer("create product+" + MenuHandler.getUsername() + "+" +
                     productName.getText() + "+" + brand.getText() + "+" + description.getText() + "+" + price.getText()
                     + "+" + count.getValue());

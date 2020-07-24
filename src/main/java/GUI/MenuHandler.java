@@ -297,9 +297,9 @@ public class MenuHandler extends Application {
         return p2PHandler;
     }
 
-    public static void sendFile(String seller, String fileName, String host, String port, String fileAddr) {
+    public static void sendFile(String seller, String fileName, String host, String port) {
         if (seller.equalsIgnoreCase(MenuHandler.getUsername())) {
-            p2PHandler.send(fileName, host, Integer.parseInt(port), fileAddr);
+            p2PHandler.send(fileName, host, Integer.parseInt(port));
         }
     }
 }
