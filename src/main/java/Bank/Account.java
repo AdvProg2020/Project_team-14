@@ -7,8 +7,8 @@ public class Account implements Serializable {
     public static long sumOfCredits = 0;
     private static ArrayList<Account> allAccounts = new ArrayList<>();
     private static String bossUsername = "BOSS";
-    private static String bossPassword = "manuel neuer is the best";
-    private static Account bossAccount = new Account(bossUsername, bossPassword, "first name", "second name");
+    private static String bossPassword = "manuel";
+    public static Account bossAccount = new Account(bossUsername, bossPassword, "first name", "second name");
     private String firstName;
     private String secondName;
     private String username;
@@ -24,7 +24,7 @@ public class Account implements Serializable {
     }
 
     public long getBalance() {
-        return this == bossAccount ? sumOfCredits + balance : this.balance;
+        return this == bossAccount ? this.balance : this.balance;
     }
 
     public String getUsername() {

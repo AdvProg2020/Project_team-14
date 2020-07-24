@@ -158,6 +158,9 @@ public class NewReceipt {
         if (result.equals("successful")) {
             alert.setContentText("created successfully");
             alert.showAndWait();
+            transferUsername.setText("");
+            transferAmount.setText("");
+            transferDescription.setText("");
             return;
         }
 

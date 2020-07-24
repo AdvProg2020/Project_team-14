@@ -84,6 +84,10 @@ public class Server {
                 continue;
             }
 
+            if (Security.weReachedTheMax()) {
+                continue;
+            }
+
             System.out.println("client accepted");
             allClientSockets.add(clientSocket);
             DataInputStream dataInputStream = new DataInputStream(new BufferedInputStream(clientSocket.getInputStream()));
@@ -103,6 +107,7 @@ public class Server {
             this.clientSocket = clientSocket;
             this.dataInputStream = dataInputStream;
             this.dataOutputStream = dataOutputStream;
+            Security.addToSetOfIps(Security.getIP(clientSocket));
         }
 
         @Override
