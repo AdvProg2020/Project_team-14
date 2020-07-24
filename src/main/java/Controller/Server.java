@@ -109,7 +109,7 @@ public class Server {
                         throw new Exception("piss off");
                     }
                     String command = dataInputStream.readUTF();
-                    System.out.println(command);
+                    System.out.println("[CLIENT]:" + command);
                     String respond = "";
                     synchronized (server) {
                         server.clientToServer(command, clientSocket);
@@ -119,8 +119,8 @@ public class Server {
                         dataOutputStream.writeUTF(respond);
                         dataOutputStream.flush();
                     }
-                    //dataOutputStream.writeUTF(respond);    -->   this is better to be in synchronized block
-                    //dataOutputStream.flush();              -->    ...
+                    //dataOutputStream.writeUTF(respond);    /*-->   this is better to be in synchronized block*/
+                    //dataOutputStream.flush();              /*-->    ...*/
                 } catch (Exception e) {
                     System.out.println("something went wrong, connection to client lost :(");
                     server.getAllClientSockets().remove(clientSocket);
@@ -153,7 +153,7 @@ public class Server {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("this is the answer: " + answer);
+        System.out.println("[SERVER]: " + answer);
     }
 
     public void takeAction(String command) throws ParseException {
@@ -363,6 +363,10 @@ public class Server {
         } else if (command.startsWith("send message to supporter")) {
             sendMessage(command);
         }
+        //file part
+        else if (command.startsWith("download file")) {
+            downloadFile(command);
+        }
         //end parts
         else if (command.startsWith("show balance")) {
             this.showBalance(command);
@@ -384,6 +388,20 @@ public class Server {
             getOnlineUsers();
         }
 
+    }
+
+    private void downloadFile(String command) {
+        for (Socket socket : allClientSockets) {
+            try {
+                DataOutputStream dataOutputStream = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
+                dataOutputStream.writeUTF(command);
+                dataOutputStream.flush();
+                dataOutputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
     }
 
     private void getAllOnlineSupporters() {

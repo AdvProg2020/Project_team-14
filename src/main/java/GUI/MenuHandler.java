@@ -43,10 +43,9 @@ public class MenuHandler extends Application {
     static private Popup supporterPopup;
     static private Object lock = new Object();
     static private Object newMessageLock = new Object();
-    static private Object P2PLock = new Object();
     static private ArrayList<Chat> myChats = new ArrayList<>();
     static private String token = "no token";
-    static private ServerSocket serverSocket;
+    static private P2PHandler p2PHandler;
 
     public static void main(String[] args) {
         launch(args);
@@ -55,8 +54,9 @@ public class MenuHandler extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         Audio.playBackGroundMusic();
-        serverSocket = new ServerSocket(0);
         Connector connector = new Connector("localhost", PORT_NUMBER);
+        p2PHandler = new P2PHandler();
+        p2PHandler.run();
         MenuHandler.setConnector(connector);
         try {
             connector.run();
@@ -280,19 +280,13 @@ public class MenuHandler extends Application {
         return token;
     }
 
-    public static Object getP2PLock() {
-        return P2PLock;
+    public static P2PHandler getP2PHandler() {
+        return p2PHandler;
     }
 
-    public static void sendFile(String seller, String fileName, String host, String port) {
+    public static void sendFile(String seller, String fileName, String host, String port, String fileAddr) {
         if (seller.equalsIgnoreCase(MenuHandler.getUsername())) {
-            try {
-                Socket sendSocket = new Socket(host, Integer.parseInt(port));
-
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            p2PHandler.send(fileName, host, Integer.parseInt(port), fileAddr);
         }
     }
 }

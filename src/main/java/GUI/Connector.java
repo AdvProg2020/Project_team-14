@@ -61,7 +61,7 @@ public class Connector {
 
         @Override
         public void run() {
-            while (true) {
+            while (!Thread.interrupted()) {
                 try {
                     String response = connector.getDataInputStream().readUTF();
                     if (response.startsWith("this is a chat message")) {
@@ -75,7 +75,7 @@ public class Connector {
                         MenuHandler.getLock().notifyAll();
                     }
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    Thread.currentThread().interrupt();
                 }
             }
         }
@@ -87,7 +87,8 @@ public class Connector {
         String seller = info[2];
         String destinationHost = info[3];
         String destinationPort = info[4];
-        MenuHandler.sendFile(seller, fileName, destinationHost, destinationPort);
+        String fileAddr = info[5];
+        MenuHandler.sendFile(seller, fileName, destinationHost, destinationPort, fileAddr);
     }
 
     public void handleChatMessage(String response) {
