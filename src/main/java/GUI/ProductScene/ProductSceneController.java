@@ -1,9 +1,12 @@
 package GUI.ProductScene;
 
+import GUI.Media.Audio;
 import GUI.MenuHandler;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
@@ -42,6 +45,7 @@ public class ProductSceneController {
 
     public void openPopUp(MouseEvent mouseEvent) throws IOException {
         Popup popup = new Popup();
+        popup.setAutoHide(true);
         Stage stage = (Stage) ((ImageView) mouseEvent.getSource()).getScene().getWindow();
         MenuHandler.setStage(stage);
         if (MenuHandler.isIsUserLogin()) {
@@ -324,5 +328,10 @@ public class ProductSceneController {
 
     public void cartShow(MouseEvent mouseEvent) throws IOException {
         MenuHandler.getStage().setScene(new Scene(FXMLLoader.load(getClass().getResource("/GUI/Cart/Cart.fxml"))));
+    }
+
+    public void goHome(MouseEvent mouseEvent) throws IOException {
+        Audio.playClick6();
+        MenuHandler.goHome();
     }
 }

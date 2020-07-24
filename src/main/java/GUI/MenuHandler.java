@@ -328,6 +328,11 @@ public class MenuHandler extends Application {
         MenuHandler.newMessageLock = newMessageLock;
     }
 
+    public static void goHome() throws IOException {
+        Parent root = FXMLLoader.load(MenuHandler.class.getResource("/GUI/ProductScene/ProductScene.fxml"));
+        MenuHandler.getStage().setScene(new Scene(root));
+    }
+
     /*public static void setP2PLock(Object p2PLock) {
         P2PLock = p2PLock;
     }

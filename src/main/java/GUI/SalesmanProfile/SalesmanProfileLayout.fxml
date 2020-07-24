@@ -19,7 +19,7 @@
                         <Insets left="8.0" />
                     </HBox.margin>
                 </ImageView>
-                <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fitWidth="30.0" onMouseClicked="#goHome" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../ProductScene/resources/home.png" />
                     </image>

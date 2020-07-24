@@ -86,4 +86,9 @@ public class CustomerProfileController {
         stage.setScene(new Scene(root));
     }
 
+    public void goHome(MouseEvent mouseEvent) throws IOException {
+        Audio.playClick4();
+        MenuHandler.goHome();
+    }
+
 }

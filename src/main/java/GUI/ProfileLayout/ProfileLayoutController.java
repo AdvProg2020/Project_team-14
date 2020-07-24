@@ -135,4 +135,9 @@ public class ProfileLayoutController {
         pane.getChildren().remove(pane.getChildren().get(0));
         pane.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/ProfileLayout/Financial/Financial.fxml")));
     }
+
+    public void goHome(MouseEvent mouseEvent) throws IOException {
+        Audio.playClick5();
+        MenuHandler.goHome();
+    }
 }
