@@ -436,7 +436,9 @@ public class Controller {
                 }
             }
         } else {
-            //delete product
+            MenuHandler.getConnector().clientToServer("delete product+" + MenuHandler.getUsername() + "+" + MenuHandler.getProductID());
+            String serverAnswer = MenuHandler.getConnector().serverToClient();
+            MenuHandler.getStage().setScene(new Scene(FXMLLoader.load(getClass().getResource("/GUI/ProfileLayout/ProfileLayout.fxml"))));
         }
     }
 

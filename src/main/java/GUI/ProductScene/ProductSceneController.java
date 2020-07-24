@@ -38,7 +38,7 @@ public class ProductSceneController {
     protected ImageView accountMenuButton;
 
     ObservableList<String> list = FXCollections.observableArrayList("Confirmation:ACCEPTED", "Confirmation:DENIED",
-            "Confirmation:CHECKING", "Available", "Not Available");
+            "Confirmation:CHECKING", "Available", "Not Available", "Is On Sale");
 
     public void openPopUp(MouseEvent mouseEvent) throws IOException {
         Popup popup = new Popup();
@@ -171,6 +171,7 @@ public class ProductSceneController {
         StringBuilder salesman = new StringBuilder();
         StringBuilder available = new StringBuilder();
         StringBuilder confirmationState = new StringBuilder();
+        String isOnSale = "";
         for (Object object : filterList.getChildren()) {
             if (object instanceof HBox) {
                 Object object1 = ((HBox) object).getChildren().get(0);
@@ -193,12 +194,14 @@ public class ProductSceneController {
                         } else {
                             salesman.append(",").append(((Label) object1).getText().substring(9));
                         }
-                    } else {
+                    } else if (((Label) object1).getText().contains("vailable")) {
                         if (available.toString().equals("")) {
                             available = new StringBuilder(((Label) object1).getText());
                         } else {
                             available.append(",").append(((Label) object1).getText());
                         }
+                    } else {
+                        isOnSale = "isOnSale";
                     }
                 }
             }
@@ -219,6 +222,9 @@ public class ProductSceneController {
             }
             if (!confirmationState.toString().equals("")) {
                 command += "+Confirmation+" + confirmationState;
+            }
+            if (!isOnSale.equals("")) {
+                command += "+isOnSale+" + isOnSale;
             }
         }
 

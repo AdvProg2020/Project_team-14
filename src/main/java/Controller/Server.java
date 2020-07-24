@@ -387,8 +387,22 @@ public class Server {
             this.deleteSupporter(command);
         } else if (command.startsWith("get online users+")) {
             getOnlineUsers();
+        } else if (command.startsWith("getting all products")) {
+            this.getAllProducts(command);
         }
 
+    }
+
+    private void getAllProducts(String command) {
+        String answer = "";
+        for (Product product : Storage.getAllProducts()) {
+            if (product.getSalesmanIDs().contains(command.split("\\+")[1])) {
+                if (product.getRemainderForSalesman(command.split("\\+")[1]) > 0) {
+                    answer += product.getProductID() + "\n";
+                }
+            }
+        }
+        setAnswer(answer);
     }
 
     public void takeActionNotSecure(String command) throws ParseException {
@@ -449,7 +463,7 @@ public class Server {
             this.addProductPicturePath(command);
         } else if (command.startsWith("get product picture path+")) {
             this.getProfilePicturePath(command);
-        }else if (command.startsWith("show products+")) {
+        } else if (command.startsWith("show products+")) {
             this.showProducts(command);
         } else if (command.startsWith("show my products+")) {
             this.showMyProducts(command);
@@ -497,7 +511,7 @@ public class Server {
             this.viewSale(command);
         } else if (command.startsWith("show sales")) {
             this.showSales(command);
-        }  else if (command.startsWith("what is comment product ID+")) {
+        } else if (command.startsWith("what is comment product ID+")) {
             this.getCommentProductID(command);
         } else if (command.startsWith("comment product+")) {
             this.commentProduct(command);
@@ -1286,6 +1300,7 @@ public class Server {
     }
 
     private void showProducts(String command) {
+        System.out.println(command);
         ArrayList<Object> filters;
         filters = getFilters(command);
         String[] input = command.split("\\+");
