@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="800.0" prefWidth="1200.0" styleClass="backgrounds" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Supporter.SupporterLayoutController">
+   <children>
+      <HBox alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="1200.0" spacing="5.0" styleClass="tool-bar">
+         <children>
+            <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../ProductScene/resources/back.png" />
+               </image>
+               <HBox.margin>
+                  <Insets left="8.0" />
+               </HBox.margin>
+            </ImageView>
+            <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../ProductScene/resources/home.png" />
+               </image>
+            </ImageView>
+            <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../ProductScene/resources/send.png" />
+               </image>
+            </ImageView>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="1060.0" styleClass="labels" text="Wellcome to Store" textFill="WHITE" />
+            <ImageView fitHeight="45.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../ProductScene/resources/supermarket.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="45.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../ProductScene/resources/user.png" />
+               </image>
+               <HBox.margin>
+                  <Insets right="8.0" />
+               </HBox.margin>
+            </ImageView>
+         </children>
+      </HBox>
+      <ImageView fitHeight="268.0" fitWidth="279.0" layoutX="61.0" layoutY="86.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@resources/customer-support.png" />
+         </image>
+      </ImageView>
+      <VBox alignment="CENTER" layoutX="45.0" layoutY="383.0" prefHeight="300.0" prefWidth="300.0" spacing="10.0">
+         <children>
+            <Button layoutX="10.0" layoutY="250.0" mnemonicParsing="false" onMouseClicked="#logOut" prefHeight="40.0" prefWidth="300.0" styleClass="my-button" text="logOut" />
+         </children>
+      </VBox>
+      <Pane fx:id="pane" layoutX="413.0" layoutY="82.0" prefHeight="735.0" prefWidth="780.0" styleClass="info-part" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="55.0" />
+   </children>
+   <stylesheets>
+      <URL value="@../StyleSheets/ProfileStyle.css" />
+      <URL value="@../StyleSheets/MainThemStyle.css" />
+   </stylesheets>
+</AnchorPane>

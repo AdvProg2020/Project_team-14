@@ -29,6 +29,7 @@ import Model.Product.Point;
 import Model.Product.Product;
 import Model.Request.Request;
 import Model.Storage;
+import Model.Supporter.Supporter;
 import Model.Token.Token;
 
 public class Server {
@@ -150,10 +151,20 @@ public class Server {
     }
 
     public void clientToServer(String command, Socket socket) {
-        try {
-            Security.securityCheck(command, socket);
-        } catch (Exception e) {
-            e.printStackTrace();
+        //
+        if (command.startsWith("this is supporter")) {
+            try {
+                takeAction(command.substring("this is supporter+".length()));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        } else {
+            //
+            try {
+                Security.securityCheck(command, socket);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         System.out.println("[SERVER]: " + answer);
     }
@@ -364,6 +375,8 @@ public class Server {
             getAllOnlineSupporters();
         } else if (command.startsWith("send message to supporter")) {
             sendMessage(command);
+        } else if (command.startsWith("logout supporter")) {
+            logOutSupporter(command);
         }
         //file part
         else if (command.startsWith("download file")) {
@@ -612,6 +625,8 @@ public class Server {
             getAllOnlineSupporters();
         } else if (command.startsWith("send message to supporter")) {
             sendMessage(command);
+        } else if (command.startsWith("logout supporter")) {
+            logOutSupporter(command);
         }
         //file parts
         else if (command.startsWith("download file")) {
@@ -691,7 +706,20 @@ public class Server {
     }
 
     private void getAllOnlineSupporters() {
-        setAnswer("Javad" + "\n" + "Matin" + "\n" + "hossein");
+        StringBuilder result = new StringBuilder("online supporters name:");
+        for (String onlineSupporter : Supporter.getOnlineSupporters()) {
+            result.append(onlineSupporter).append("\n");
+        }
+        if (result.toString().equals("online supporters name:")) {
+            setAnswer("no supporter is online");
+        } else {
+            setAnswer(result.toString());
+        }
+    }
+
+    private void logOutSupporter(String command) {
+        String[] info = command.split("\\+");
+        Supporter.makeSupporterOffline(info[1]);
     }
 
     private void sendMessage(String command) {

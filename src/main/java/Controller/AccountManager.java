@@ -12,6 +12,7 @@ import Model.Product.Point;
 import Model.Product.Product;
 import Model.Request.Request;
 import Model.Storage;
+import Model.Supporter.Supporter;
 import Model.Token.Token;
 
 import java.net.ServerSocket;
@@ -19,6 +20,21 @@ import java.net.ServerSocket;
 public class AccountManager {
 
     public void login(String username, String password) {
+        //just to solve problem
+        if (username.startsWith("SUPP")) {
+            Supporter supporter = Supporter.getSupporterWithUsername(username);
+            if (supporter == null) {
+                Server.setAnswer("The Username Doesn't Exists");
+            } else if (!supporter.getPassword().equals(password)){
+                Server.setAnswer("Your Password Is Incorrect");
+            } else {
+                Server.setAnswer("login successful as SUPPORTER" + " " + username);
+                Supporter.makeSupporterOnline(username);
+            }
+
+            return;
+        }
+        //end of solving problem
         if (Storage.isThereAccountWithUsername(username)) {
             Account account = Storage.getAccountWithUsername(username);
             assert account != null;

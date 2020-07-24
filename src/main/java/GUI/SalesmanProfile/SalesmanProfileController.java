@@ -63,6 +63,7 @@ public class SalesmanProfileController {
         alert.showAndWait();
         if (alert.getResult().equals(ButtonType.YES)) {
             MenuHandler.getConnector().clientToServer("logout+" + MenuHandler.getUsername());
+            MenuHandler.setToken("no token");
             MenuHandler.setUsername(null);
             MenuHandler.setUserType(null);
             MenuHandler.setIsUserLogin(false);

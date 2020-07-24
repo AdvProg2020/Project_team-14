@@ -60,6 +60,8 @@ public class LoginController {
                     MenuHandler.setUserType("BOSS");
                 } else if (serverAnswer.contains("CUSTOMER")) {
                     MenuHandler.setUserType("CUSTOMER");
+                } else if (serverAnswer.contains("SUPPORTER")) {
+                    MenuHandler.setUserType("SUPPORTER");
                 } else {
                     MenuHandler.setUserType("SALESMAN");
                 }

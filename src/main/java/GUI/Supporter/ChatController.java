@@ -7,6 +7,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -30,25 +31,47 @@ public class ChatController {
     public ScrollPane scrollPane;
     private String selectedSupporter = "";
     private Listener listener;
+    private boolean firstTime = true;
 
     @FXML
     public void initialize() throws IOException {
-        MenuHandler.getConnector().clientToServer("get all online supporters");
-        String response = MenuHandler.getConnector().serverToClient();
-        if (response.equals("no supporter is online")) {
-            showMessageOnChatBox("none of our supporters are online now :(\nHey dont worry they check very soon ;)\ntry again later.",
-                    "serverMessage");
-            return;
+        scrollPane.vvalueProperty().bind(chatPane.heightProperty());
+        updateOnlineMans();
+        this.listener = new Listener(this);
+        listener.setDaemon(true);
+        listener.start();
+    }
+
+    public void updateOnlineMans() throws IOException {
+        if (MenuHandler.getUserType() == null) {
+            MenuHandler.setUserType("");
+        }
+        if (MenuHandler.getUserType().equalsIgnoreCase("supporter")) {
+            ArrayList<String> users = Chat.getSupporterChats(MenuHandler.getUsername());
+            if (users.size() == 0) {
+                showMessageOnChatBox("no one is on your chat list :(", "serverMessage");
+            } else {
+                String[] names = new String[users.size()];
+                names = users.toArray(names);
+                showSupportersAvatar(names);
+            }
+        } else {
+            MenuHandler.getConnector().clientToServer("get all online supporters");
+            String response = MenuHandler.getConnector().serverToClient();
+            if (response.equals("no supporter is online")) {
+                showMessageOnChatBox("none of our supporters are online now :(\nHey dont worry they check very soon ;)\ntry again later.",
+                        "serverMessage");
+            } else {
+                showMessageOnChatBox("chose one of our supporter and we solve your problem immediately", "serverMessage");
+                String supporterNames = response.substring("online supporters name:".length());
+                showSupportersAvatar(supporterNames.split("\\n"));
+            }
         }
         messageBox.setDisable(true);
-        showMessageOnChatBox("chose one of our supporter and we solve your problem immediately", "serverMessage");
-        //String supporterNames = response.substring("online supporters name+".length());
-        showSupportersAvatar(/*supporterNames*/response.split("\\n"));
-
-        this.listener = new Listener(this);
-        listener.start();
-
-        scrollPane.vvalueProperty().bind(chatPane.heightProperty());
+        if (!selectedSupporter.equals("")) {
+            updateChatBoxForSupporter(selectedSupporter);
+            messageBox.setDisable(false);
+        }
     }
 
     static class Listener extends Thread {
@@ -69,7 +92,6 @@ public class ChatController {
                             if (chat.hasUnreadMessage()) {
                                 String sender = chat.getSender().get(chat.getSender().size() - 1);
                                 String message = chat.getMessage().get(chat.getMessage().size() - 1);
-
                                 Platform.runLater(() -> {
                                     try {
                                         chatController.showMessageOnChatBox(message, sender);
@@ -80,6 +102,15 @@ public class ChatController {
                                 chat.setMessagesRead();
                             }
                         }
+
+                        Platform.runLater(() -> {
+                            try {
+                                chatController.updateOnlineMans();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        });
+
                     } catch (InterruptedException e) {
                         Thread.currentThread().interrupt();
                     }
@@ -89,6 +120,7 @@ public class ChatController {
     }
 
     private void showSupportersAvatar(String[] supporterNames) {
+        onlineSupporterBox.getChildren().clear();
         for (String name : supporterNames) {
             Image img = new Image("file:src/main/java/GUI/Supporter/resources/customer-support.png");
             ImageView imageView = new ImageView(img);
@@ -96,6 +128,7 @@ public class ChatController {
             imageView.setFitHeight(65);
             if (name.equalsIgnoreCase(MenuHandler.getUsername())) continue;
             imageView.setId(name);
+            imageView.setCursor(Cursor.HAND);
             onlineSupporterBox.getChildren().add(imageView);
 
             imageView.setOnMouseClicked(this::selectSupporter);

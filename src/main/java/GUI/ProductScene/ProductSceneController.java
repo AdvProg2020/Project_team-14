@@ -56,6 +56,8 @@ public class ProductSceneController {
                         root = FXMLLoader.load(getClass().getResource("/GUI/ProfileLayout/ProfileLayout.fxml"));
                     } else if (MenuHandler.getUserType().equalsIgnoreCase("salesman")) {
                         root = FXMLLoader.load(getClass().getResource("/GUI/SalesmanProfile/SalesmanProfileLayout.fxml"));
+                    } else if (MenuHandler.getUserType().equalsIgnoreCase("supporter")) {
+                        root = FXMLLoader.load(getClass().getResource("/GUI/Supporter/SupporterProfileLayout.fxml"));
                     } else {
                         root = FXMLLoader.load(getClass().getResource("/GUI/CustomerProfile/CustomerProfileLayout.fxml"));
                     }

@@ -43,6 +43,7 @@ public class Chat {
             this.sender.add(sender);
             this.message.add(message);
             this.hasUnreadMessage = true;
+            System.out.println("a message received  ---> " + sender + ":" + message);
             MenuHandler.getNewMessageLock().notifyAll();
         }
     }
@@ -82,6 +83,18 @@ public class Chat {
             }
         }
         return null;
+    }
+
+    public static ArrayList<String> getSupporterChats(String name) {
+        ArrayList<String> ans = new ArrayList<>();
+        for (Chat chat : MenuHandler.getMyChats()) {
+            if (chat.getFirstPerson().equalsIgnoreCase(name)) {
+                ans.add(chat.getSecondPerson());
+            } else if (chat.getSecondPerson().equalsIgnoreCase(name)) {
+                ans.add(chat.getFirstPerson());
+            }
+        }
+        return ans;
     }
 
     public ArrayList<Chat> getChatsOfSupporterWithUsername(String supporterUsername) {

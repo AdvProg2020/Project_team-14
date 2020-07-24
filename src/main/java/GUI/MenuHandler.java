@@ -328,7 +328,7 @@ public class MenuHandler extends Application {
         MenuHandler.newMessageLock = newMessageLock;
     }
 
-    public static void setP2PLock(Object p2PLock) {
+    /*public static void setP2PLock(Object p2PLock) {
         P2PLock = p2PLock;
     }
 
@@ -342,5 +342,5 @@ public class MenuHandler extends Application {
 
     public static void setServerSocket(ServerSocket serverSocket) {
         MenuHandler.serverSocket = serverSocket;
-    }
+    }*/
 }

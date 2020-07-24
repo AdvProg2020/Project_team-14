@@ -117,10 +117,18 @@ public class Connector {
     }
 
     public String addTheSecurity(String command) {
-        String result = "this is a client" + "--1989--" + MenuHandler.getToken() + "--1989--" +
+        String username = (MenuHandler.getUsername() == null) ? "no username" : MenuHandler.getUsername();
+        if (username.startsWith("SUPP")) {
+            return "this is supporter" + "+" + command;
+        } else {
+            return "this is a client" + "--1989--" + MenuHandler.getToken() + "--1989--" +
+                    command + "--1989--" + System.currentTimeMillis() + "--1989--" +
+                    ((MenuHandler.getUsername() == null) ? "no username" : MenuHandler.getUsername());
+        }
+        /*String result = "this is a client" + "--1989--" + MenuHandler.getToken() + "--1989--" +
                 command + "--1989--" + System.currentTimeMillis() + "--1989--" +
                 ((MenuHandler.getUsername() == null) ? "no username" : MenuHandler.getUsername());
-        return result;
+        return result;*/
     }
 
     public void logout() {
