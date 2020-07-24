@@ -9,6 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
@@ -70,6 +71,7 @@ public class MenuHandler extends Application {
             }
             primaryStage.setScene(new Scene(root));
             MenuHandler.setStage(primaryStage);
+            createSupporterPopup();
             primaryStage.show();
 
         } catch (IOException e) {
@@ -86,12 +88,23 @@ public class MenuHandler extends Application {
         MenuHandler.connector = connector;
     }
 
-    public static Popup getSupporterPopup() {
-        return supporterPopup;
+    private static void createSupporterPopup() throws IOException {
+        Popup popup = new Popup();
+        HBox root = FXMLLoader.load(MenuHandler.class.getResource("/GUI/Supporter/SupporterPopUp.fxml"));
+        popup.getContent().add(root);
+        supporterPopup = popup;
     }
 
-    public static void setSupporterPopup(Popup supporterPopup) {
-        MenuHandler.supporterPopup = supporterPopup;
+    public static void showSupporterPopup() {
+        double x = stage.getX() + stage.getWidth() - 150 - 15;
+        double y = stage.getY() + stage.getHeight() - 50 - 15;
+        supporterPopup.setAnchorX(x);
+        supporterPopup.setAnchorY(y);
+        supporterPopup.show(stage);
+    }
+
+    public static void hideSupporterPopup() {
+        supporterPopup.hide();
     }
 
     public static Object getLock() {

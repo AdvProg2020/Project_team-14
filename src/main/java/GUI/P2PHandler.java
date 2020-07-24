@@ -28,7 +28,7 @@ public class P2PHandler {
     }
 
     public void listenForReceive() {
-        (new Thread(new Runnable() {
+        Thread listener = new Thread(new Runnable() {
             @Override
             public void run() {
                 while (!Thread.interrupted()) {
@@ -72,7 +72,10 @@ public class P2PHandler {
             private byte[] decodeData(String data) {
                 return Base64.getDecoder().decode(data);
             }
-        })).start();
+        });
+
+        listener.setDaemon(true);
+        listener.start();
     }
 
     public void send(String fileName, String host, int portNumber, String fileAddr) {

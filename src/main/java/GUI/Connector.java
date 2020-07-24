@@ -1,5 +1,6 @@
 package GUI;
 
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -75,6 +76,10 @@ public class Connector {
                         MenuHandler.getLock().notifyAll();
                     }
                 } catch (IOException e) {
+                    Platform.runLater(() -> {
+                        Alert alert = new Alert(Alert.AlertType.ERROR, "Connection to server lost :(", ButtonType.OK);
+                        alert.showAndWait();
+                    });
                     Thread.currentThread().interrupt();
                 }
             }
