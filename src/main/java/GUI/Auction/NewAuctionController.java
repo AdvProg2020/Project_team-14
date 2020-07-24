@@ -25,7 +25,7 @@ public class NewAuctionController {
     }
 
     public void back(ActionEvent actionEvent) throws IOException {
-        MenuHandler.getStage().setScene(new Scene(FXMLLoader.load(getClass().getResource("/GUI/SalesmanProfile/SalesmanProfileLayout.fxml"))));
+        MenuHandler.getStage().setScene(new Scene(FXMLLoader.load(getClass().getResource("/GUI/Auction/AllAuctions.fxml"))));
     }
 
     public void done(ActionEvent actionEvent) throws IOException {

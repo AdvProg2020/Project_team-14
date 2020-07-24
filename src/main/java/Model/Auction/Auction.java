@@ -17,6 +17,7 @@ public class Auction {
         this.salesmanID = salesmanID;
         this.productID = productID;
         this.startingDate = startingDate;
+        this.salesmanID = null;
         this.endingDate = endingDate;
         allAuctions.add(this);
         auctionChat = new AuctionChat(this);
@@ -57,6 +58,62 @@ public class Auction {
     public boolean isAuctionStillValid() {
         //not complete
         return false;
+    }
+
+    public static void setAllAuctions(ArrayList<Auction> allAuctions) {
+        Auction.allAuctions = allAuctions;
+    }
+
+    public String getSalesmanID() {
+        return salesmanID;
+    }
+
+    public void setSalesmanID(String salesmanID) {
+        this.salesmanID = salesmanID;
+    }
+
+    public String getProductID() {
+        return productID;
+    }
+
+    public void setProductID(String productID) {
+        this.productID = productID;
+    }
+
+    public int getHighestPrice() {
+        return highestPrice;
+    }
+
+    public void setHighestPrice(int highestPrice) {
+        this.highestPrice = highestPrice;
+    }
+
+    public String getCustomerID() {
+        return customerID;
+    }
+
+    public void setCustomerID(String customerID) {
+        this.customerID = customerID;
+    }
+
+    public Date getStartingDate() {
+        return startingDate;
+    }
+
+    public void setStartingDate(Date startingDate) {
+        this.startingDate = startingDate;
+    }
+
+    public Date getEndingDate() {
+        return endingDate;
+    }
+
+    public void setEndingDate(Date endingDate) {
+        this.endingDate = endingDate;
+    }
+
+    public void setAuctionChat(AuctionChat auctionChat) {
+        this.auctionChat = auctionChat;
     }
 
     public String getChatStringFormatted() {

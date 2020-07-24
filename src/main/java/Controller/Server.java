@@ -4,8 +4,10 @@ import java.io.*;
 import java.net.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -16,6 +18,7 @@ import Model.Account.Account;
 import Model.Account.Customer;
 import Model.Account.Role;
 import Model.Account.Salesman;
+import Model.Auction.Auction;
 import Model.Category.Category;
 import Model.Confirmation;
 import Model.Log.Log;
@@ -389,8 +392,52 @@ public class Server {
             getOnlineUsers();
         } else if (command.startsWith("getting all products")) {
             this.getAllProducts(command);
+        } else if (command.startsWith("show auctions")) {
+            this.showAuction();
+        } else if (command.startsWith("create new auction+")) {
+            this.newAuction(command);
+        } else if (command.startsWith("get certain auction+")) {
+            this.getAuction(command);
+        } else if (command.startsWith("get auction time+")) {
+            this.getTime(command);
+        } else if (command.startsWith("put bet+")) {
+            this.putBet(command);
         }
 
+    }
+
+    private void putBet(String command) {
+        for (Auction auction : Auction.getAllAuctions()) {
+            if ((auction.getSalesmanID() + "," + auction.getProductID()).equals(command.split("\\+")[1])) {
+                auction.setCustomerID(command.split("\\+")[2]);
+                auction.setHighestPrice(Integer.parseInt(command.split("\\+")[3]));
+                setAnswer("23Bet.com");
+                return;
+            }
+        }
+    }
+
+    private void getTime(String command) {
+        for (Auction auction : Auction.getAllAuctions()) {
+            if ((auction.getSalesmanID() + "," + auction.getProductID()).equals(command.split("\\+")[1])) {
+                setAnswer(String.valueOf(auction.getEndingDate()));
+            }
+        }
+    }
+
+    private void showAuction() {
+        String s = "";
+        for (Auction auction : Auction.getAllAuctions()) {
+            long millis = System.currentTimeMillis();
+            Date date = new Date(millis);
+            if (auction.getEndingDate().after(date) && auction.getStartingDate().before(date)) {
+                s += auction.getSalesmanID() + "," + auction.getProductID() + "+" + auction.getProductID() + "\n";
+            }
+        }
+        if (s.equals("")) {
+            s = "nothing found";
+        }
+        setAnswer(s);
     }
 
     private void getAllProducts(String command) {
@@ -585,8 +632,36 @@ public class Server {
             this.buy(command);
         } else if (command.startsWith("can use offCode+")) {
             this.canUserOffCode(command);
+        } else if (command.startsWith("create new auction+")) {
+            this.newAuction(command);
+        } else if (command.startsWith("get certain auction+")) {
+            this.getAuction(command);
+        } else if (command.startsWith("getting all products")) {
+            this.getAllProducts(command);
+        } else if (command.startsWith("show auctions")) {
+            this.showAuction();
+        } else if (command.startsWith("get auction time+")) {
+            this.getTime(command);
         }
+    }
 
+    private void getAuction(String command) {
+        for (Auction auction : Auction.getAllAuctions()) {
+            if ((auction.getSalesmanID() + "," + auction.getProductID()).equals(command.split("\\+")[1])) {
+                if (auction.getSalesmanID() != null) {
+                    setAnswer(auction.getSalesmanID() + "+" + auction.getHighestPrice());
+                } else {
+                    setAnswer("No Bet");
+                }
+            }
+        }
+    }
+
+    private void newAuction(String command) {
+        Date date = new Date(command.split("\\+")[4]);
+        Date date2 = new Date(command.split("\\+")[3]);
+        new Auction(command.split("\\+")[1], command.split("\\+")[2], date, date2);
+        Server.setAnswer("successful");
     }
 
     private void hasUserBought(String command) {

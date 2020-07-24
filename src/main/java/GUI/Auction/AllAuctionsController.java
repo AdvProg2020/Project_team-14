@@ -35,13 +35,18 @@ public class AllAuctionsController {
         } else {
             for (String s : serverAnswer.split("\n")) {
                 HBox hBox = new HBox();
-                Label productLabel = new Label(s.split("\\+")[0]);
-                Label timeLabel = new Label(s.split("\\+")[1]);
-                hBox.getChildren().add(productLabel);
-                hBox.getChildren().add(timeLabel);
+                Label auctionId = new Label(s.split("\\+")[0]);
+                Label productName = new Label(s.split("\\+")[1]);
+                hBox.getChildren().add(auctionId);
+                hBox.getChildren().add(productName);
                 vBox.getChildren().add(hBox);
                 hBox.setOnMouseClicked(mouseEvent -> {
-
+                    MenuHandler.setCurrentAuction(((Label) hBox.getChildren().get(0)).getText());
+                    try {
+                        MenuHandler.getStage().setScene(new Scene(FXMLLoader.load(getClass().getResource("/GUI/Auction/AuctionBet"))));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 });
             }
         }
