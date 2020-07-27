@@ -1,6 +1,8 @@
 package Model.Cart;
 
+import Controller.CreditController;
 import Model.Account.Customer;
+import Model.Account.Salesman;
 import Model.Log.BuyLog;
 import Model.Off.OffCode;
 import Model.Off.Sale;
@@ -23,6 +25,8 @@ public class Cart implements Serializable {
 
     public Cart(String username) {
         this.username = username;
+        Customer customer = (Customer) Storage.getAccountWithUsername(username);
+        customer.setCart(this);
         cartID = RandomString.createID("cartID");
         Storage.allCarts.add(this);
     }
@@ -41,11 +45,29 @@ public class Cart implements Serializable {
             new BuyLog(this, offCode);
             customer.setCredit(customer.getCredit() - getTotalPrice(offCode));
             customer.useOffCode(offCode);
+            doBuyProductThings();
+            sendMoneyToStore(offCode);
             clearCart();
             return true;
         } else {
             return false;
         }
+    }
+
+    private void doBuyProductThings() {
+        int wagePercentage = CreditController.creditController.getWagePercentage();
+        for (Triplet<String, String, Integer> item : allItems) {
+            Product product = Storage.getProductById(item.getValue0());
+            product.decreaseProductRemaining(item.getValue1(), item.getValue2());
+            int productCost = Sale.getPriceAfterSale(item.getValue0(), item.getValue1());
+            Salesman salesman = (Salesman) Storage.getAccountWithUsername(item.getValue1());
+            salesman.setCredit(salesman.getCredit() + productCost * wagePercentage / 100);
+        }
+    }
+
+    private void sendMoneyToStore(String offCodeID) {
+        int totalPrice = getTotalPrice(offCodeID);
+        //...
     }
 
     //updated with Triplet
@@ -75,19 +97,17 @@ public class Cart implements Serializable {
 
 
     //updated with Triplet
-    public boolean addProductToCart(String productID, String salesmanID, String cartID) {
-        Cart cart = getCartWithID(cartID);
-        assert cart != null;
+    public boolean addProductToCart(String productID, String salesmanID, int count) {
         Triplet<String, String, Integer> item = getItem(productID, salesmanID);
         if (item != null) {
-            if (!Storage.getProductById(productID).isAvailableBySalesmanWithUsername(salesmanID, getItemCount(productID, salesmanID) + 1)) {
+            if (!Storage.getProductById(productID).isAvailableBySalesmanWithUsername(salesmanID, getItemCount(productID, salesmanID) + count)) {
                 return false;
             }
             allItems.remove(item);
             allItems.add(item.setAt2(item.getValue2() + 1));//Triplet is immutable :|
             return true;
         }
-        if (Storage.getProductById(productID).isAvailableBySalesmanWithUsername(salesmanID, 1)) {
+        if (Storage.getProductById(productID).isAvailableBySalesmanWithUsername(salesmanID, count)) {
             allItems.add(new Triplet<>(productID, salesmanID, 1));
             return true;
         }
@@ -188,11 +208,11 @@ public class Cart implements Serializable {
     private String toStringSingleItem(Triplet<String, String, Integer> item) {
         Product product = Storage.getProductById(item.getValue0());
         assert product != null;
-        String result = "Product: " + product.getName() + "\n";
-        result += "Salesman: " + item.getValue1() + "\n";
-        result += "Count: " + item.getValue2() + "\n";
-        result += "Price Per Unit: " + product.getPriceBySalesmanID(item.getValue1()) + "\n";
-        result += "Price after sale Per Unit: " + Sale.getPriceAfterSale(item.getValue0(), item.getValue1()) + "\n";
+        String result = "| Product: " + product.getName() + " |---| ";
+        result += "Salesman: " + item.getValue1() + " |---| ";
+        result += "Count: " + item.getValue2() + " |---| ";
+        result += "Price Per Unit: " + product.getPriceBySalesmanID(item.getValue1()) + " |---| ";
+        result += "Price after sale Per Unit: " + Sale.getPriceAfterSale(item.getValue0(), item.getValue1()) + " |";
         return result;
     }
 
@@ -200,7 +220,7 @@ public class Cart implements Serializable {
     public String toString() {
         StringBuilder result = new StringBuilder("Here are all of your products in cart:");
         for (Triplet<String, String, Integer> item : allItems) {
-            result.append("\n").append(toStringSingleItem(item)).append("\n---------------------------------");
+            result.append("\n").append(toStringSingleItem(item)).append("\n-----------------------------------------");
         }
         result.append("Total price WithOut Using OffCode: ").append(this.getTotalPrice());
         return result.toString();

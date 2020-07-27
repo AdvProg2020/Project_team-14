@@ -1,5 +1,6 @@
 package Model.Account;
 
+import Controller.CreditController;
 import Model.Cart.Cart;
 import Model.Off.Off;
 import Model.Off.OffCode;
@@ -19,7 +20,6 @@ public class Customer extends Account implements Serializable {
     public Customer(String username, String password, String firstName, String secondName, String Email, String telephone,
                     String role, int credit) {
         super(username, password, firstName, secondName, Email, telephone, role);
-        this.credit = credit;
         this.credit = credit;
         customerOffCodes = new HashMap<>();
     }
@@ -45,11 +45,16 @@ public class Customer extends Account implements Serializable {
     }
 
     public boolean isCreditEnoughAccordingToCartWithOffCode(String offCode) {
-        return (credit > cart.getTotalPrice(offCode));
+        int minimumCredit = CreditController.creditController.getMinimumCredit();
+        return (credit - minimumCredit > cart.getTotalPrice(offCode));
     }
 
     public Cart getCart() {
         return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
     }
 
     // public static boolean isCreditEnoughAccordingToCart() {return false;}

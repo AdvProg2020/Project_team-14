@@ -25,13 +25,17 @@ public class Pay {
     private String token;
 
     public void buyFromCredit() throws ParseException, IOException {
-        StringBuilder products = new StringBuilder("buy+" + MenuHandler.getUsername() + "\n");
+        StringBuilder products = new StringBuilder("buy+" + MenuHandler.getUsername() + "+" + Controller.controller.usedOffCode + "\n");
         for (Cart cart : Controller.controller.list) {
             products.append(cart.getSalesman()).append("+").append(cart.getProductId()).append("+").append(cart.getCount()).append("\n");
         }
         MenuHandler.getConnector().clientToServer(products.toString());
-        if (MenuHandler.getConnector().serverToClient().equals("Buy Successful")) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Buy Successful", ButtonType.OK);
+        String response = MenuHandler.getConnector().serverToClient();
+        if (response.startsWith("successful")) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, response, ButtonType.OK);
+            alert.showAndWait();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR, response, ButtonType.OK);
             alert.showAndWait();
         }
     }

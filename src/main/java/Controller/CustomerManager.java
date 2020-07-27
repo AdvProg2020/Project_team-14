@@ -1,6 +1,8 @@
 package Controller;
 
+import Model.Account.Account;
 import Model.Account.Customer;
+import Model.Account.Salesman;
 import Model.Cart.Cart;
 import Model.Log.BuyLog;
 import Model.Off.OffCode;
@@ -153,13 +155,26 @@ public class CustomerManager {
         Server.setAnswer("Final Price:" + "\n" + customer.getCart().getTotalPrice(offCodeID));
     }
 
-    public void buy(String username, String offCodeID) {
-        Customer customer = (Customer) Storage.getAccountWithUsername(username);
-        assert customer != null;
-        if (customer.getCart().buy(offCodeID)) {
-            Server.setAnswer("successful, your purchase completed");
+    public void buy(Customer customer, String offCodeID, String[] infoLine) {
+        StringBuilder result = new StringBuilder("ERRORS:");
+        Cart cart = new Cart(customer.getUsername());
+        for (String s : infoLine) {
+            if (s.startsWith("buy")) continue;
+            String salesmanID = s.split("\\+")[0];
+            String productID = s.split("\\+")[1];
+            int count = Integer.parseInt(s.split("\\+")[2]);
+            if (!cart.addProductToCart(productID, salesmanID, count)) {
+                result.append("\n").append("there isn't enough number of product [" + productID + "] in [" + salesmanID + "]'s stock!");
+            }
+        }
+        if (result.toString().startsWith("ERRORS:\nthere")) {
+            Server.setAnswer(result.toString());
+            return;
+        }
+        if (cart.buy(offCodeID)) {
+            Server.setAnswer("successful, your purchase completed\n" + cart.toString());
         } else {
-            Server.setAnswer("error, you don't have enough credit to purchase");
+            Server.setAnswer("ERROR, you don't have enough credit to purchase");
         }
     }
 }

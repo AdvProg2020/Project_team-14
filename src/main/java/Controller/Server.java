@@ -19,6 +19,7 @@ import Model.Account.Customer;
 import Model.Account.Role;
 import Model.Account.Salesman;
 import Model.Auction.Auction;
+import Model.Cart.Cart;
 import Model.Category.Category;
 import Model.Confirmation;
 import Model.Log.Log;
@@ -688,7 +689,7 @@ public class Server {
         String[] info = command.split("\\+");
         String username = info[1];
         String productID = info[2];
-
+        //setAnswer("yes");
         if (Log.hasCustomerBoughtProduct(username, productID)) {
             setAnswer("yes");
         } else {
@@ -796,7 +797,11 @@ public class Server {
     }
 
     private void buy(String command) {
-        for (String s : command.split("\n")) {
+        String[] infoLine = command.split("\n");
+        Customer customer = (Customer) (Storage.getAccountWithUsername(infoLine[0].split("\\+")[1]));
+        String offCodeID = infoLine[0].split("\\+")[2];
+        customerManager.buy(customer, offCodeID, infoLine);
+        /*for (String s : infoLine) {
             if (s.startsWith("buy")) continue;
             Product product = Storage.getProductById(s.split("\\+")[1]);
             product.setRemainderForSalesman(product.getRemainderForSalesman(s.split("\\+")[0]) - Integer.parseInt(s.split("\\+")[2]), s.split("\\+")[0]);
@@ -804,7 +809,7 @@ public class Server {
             Account account1 = Storage.getAccountWithUsername(s.split("\\+")[0]);
             ((Salesman) account1).setCredit(account.getCredit() + product.getPriceBySalesmanID(s.split("\\+")[0]) * Integer.parseInt(s.split("\\+")[2]));
             ((Customer) account).setCredit(account.getCredit() - product.getPriceBySalesmanID(s.split("\\+")[0]) * Integer.parseInt(s.split("\\+")[2]));
-        }
+        }*/
     }
 
     private void getMoney(String command) {
