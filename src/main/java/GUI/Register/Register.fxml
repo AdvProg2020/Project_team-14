@@ -1,24 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxWidth="1182.0" minWidth="1182.0" prefHeight="775.0" prefWidth="1182.0" styleClass="background" stylesheets="@../StyleSheets/RegisterationStyle.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Register.RegisterController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" styleClass="background" stylesheets="@../StyleSheets/RegisterationStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Register.RegisterController">
     <children>
-      <Pane fx:id="avatarBoard" layoutX="16.0" layoutY="113.0" prefHeight="593.0" prefWidth="1151.0" styleClass="back-register-background">
+      <Pane fx:id="avatarBoard" layoutX="16.0" layoutY="113.0" prefHeight="593.0" prefWidth="1172.0" styleClass="back-register-background">
          <children>
-            <Pane fx:id="avatarPane" layoutX="14.0" layoutY="14.0" prefHeight="567.0" prefWidth="595.0" style="-fx-background-color: #182952; -fx-background-radius: 30;" />
+            <Pane fx:id="avatarPane" layoutX="14.0" layoutY="14.0" prefHeight="567.0" prefWidth="595.0" styleClass="avatar-pane" />
          </children>
          <effect>
             <DropShadow />
          </effect>
       </Pane>
-        <AnchorPane fx:id="registerBoard" layoutX="636.0" layoutY="39.0" minWidth="520.0" onKeyPressed="#checkSalesmanRole" onMouseClicked="#checkSalesmanRole" onMouseMoved="#checkSalesmanRole" onMouseReleased="#checkSalesmanRole" prefHeight="713.0" prefWidth="520.0" styleClass="registerBackground">
+        <AnchorPane fx:id="registerBoard" layoutX="640.0" layoutY="39.0" minWidth="520.0" onKeyPressed="#checkSalesmanRole" onMouseClicked="#checkSalesmanRole" onMouseMoved="#checkSalesmanRole" onMouseReleased="#checkSalesmanRole" prefHeight="742.0" prefWidth="527.0" styleClass="registerBackground">
             <children>
                 <Label layoutX="141.0" layoutY="59.0" styleClass="header" text="Register" textFill="#ea0303">
                     <font>
@@ -27,7 +34,7 @@
                 </Label>
             <VBox alignment="TOP_CENTER" layoutX="57.0" layoutY="194.0">
                <children>
-                      <Label prefHeight="19.0" prefWidth="62.0" text="First Name">
+                      <Label prefHeight="19.0" prefWidth="62.0" text="First Name" textFill="WHITE">
                           <font>
                               <Font name="System Italic" size="13.0" />
                           </font>
@@ -37,7 +44,7 @@
                               <Font size="15.0" />
                           </font>
                       </TextField>
-                      <Label prefHeight="19.0" prefWidth="62.0" text="Last Name">
+                      <Label prefHeight="19.0" prefWidth="62.0" text="Last Name" textFill="WHITE">
                           <font>
                               <Font name="System Italic" size="13.0" />
                           </font>
@@ -50,7 +57,7 @@
                               <Font size="15.0" />
                           </font>
                       </TextField>
-                      <Label prefHeight="19.0" prefWidth="39.0" text="Email">
+                      <Label prefHeight="19.0" prefWidth="39.0" text="Email" textFill="WHITE">
                           <font>
                               <Font name="System Italic" size="13.0" />
                           </font>
@@ -63,7 +70,7 @@
                               <Font size="15.0" />
                           </font>
                       </TextField>
-                      <Label prefHeight="19.0" prefWidth="115.0" text="Telephone Number">
+                      <Label prefHeight="19.0" prefWidth="115.0" text="Telephone Number" textFill="WHITE">
                           <font>
                               <Font name="System Italic" size="13.0" />
                           </font>
@@ -80,7 +87,7 @@
             </VBox>
             <VBox alignment="TOP_CENTER" layoutX="298.0" layoutY="194.0">
                <children>
-                      <Label prefHeight="19.0" prefWidth="62.0" text="Username">
+                      <Label prefHeight="19.0" prefWidth="62.0" text="Username" textFill="WHITE">
                           <font>
                               <Font name="System Italic" size="13.0" />
                           </font>
@@ -90,7 +97,7 @@
                               <Font size="15.0" />
                           </font>
                       </TextField>
-                      <Label prefHeight="19.0" prefWidth="55.0" text="Password">
+                      <Label prefHeight="19.0" prefWidth="55.0" text="Password" textFill="WHITE">
                           <font>
                               <Font name="System Italic" size="13.0" />
                           </font>
@@ -103,7 +110,7 @@
                               <Font size="15.0" />
                           </font>
                       </PasswordField>
-                      <Label prefHeight="0.0" prefWidth="32.0" text="Role">
+                      <Label prefHeight="0.0" prefWidth="32.0" text="Role" textFill="WHITE">
                           <font>
                               <Font name="System Italic" size="13.0" />
                           </font>
@@ -127,13 +134,19 @@
                       </TextField>
                </children>
             </VBox>
+            <Label fx:id="identificationLabel" layoutX="160.0" layoutY="514.0" text="2134" textFill="#f93636">
+               <font>
+                  <Font name="Matura MT Script Capitals" size="26.0" />
+               </font>
+            </Label>
+            <TextField fx:id="indegtification" layoutX="252.0" layoutY="524.0" prefHeight="39.0" prefWidth="149.0" promptText="are you human?!" />
                 <Button contentDisplay="CENTER" layoutX="176.0" layoutY="596.0" mnemonicParsing="false" onAction="#register" prefHeight="45.0" prefWidth="187.0" styleClass="buttone" text="Register">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
                 </Button>
-                <Label layoutX="147.0" layoutY="671.0" text="Already Have An Account?" />
-                <Button contentDisplay="CENTER" layoutX="317.0" layoutY="667.0" mnemonicParsing="false" onAction="#openLoginMenu" text="log in" textFill="#f51414">
+                <Label layoutX="122.0" layoutY="672.0" text="Already Have An Account?" textFill="WHITE" />
+                <Button contentDisplay="CENTER" layoutX="306.0" layoutY="667.0" mnemonicParsing="false" onAction="#openLoginMenu" text="log in" textFill="#f51414">
                     <font>
                         <Font name="System Italic" size="12.0" />
                     </font>
@@ -141,12 +154,6 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
                 </Button>
-            <Label fx:id="identificationLabel" layoutX="160.0" layoutY="514.0" text="2134" textFill="#f93636">
-               <font>
-                  <Font name="Matura MT Script Capitals" size="26.0" />
-               </font>
-            </Label>
-            <TextField fx:id="indegtification" layoutX="252.0" layoutY="524.0" prefHeight="39.0" prefWidth="149.0" promptText="are you human?!" />
             <Button contentDisplay="CENTER" layoutX="378.0" layoutY="667.0" mnemonicParsing="false" onAction="#reset" text="reset code" textFill="#f51414">
                <font>
                   <Font name="System Italic" size="12.0" />
@@ -160,15 +167,21 @@
             <Cursor fx:constant="DEFAULT" />
          </cursor>
         </AnchorPane>
-          <ImageView fitHeight="25.0" fitWidth="32.0" layoutX="1131.0" layoutY="14.0" onMouseClicked="#exit" pickOnBounds="true" preserveRatio="true">
+          <ImageView fitHeight="25.0" fitWidth="32.0" layoutX="1161.0" layoutY="14.0" onMouseClicked="#exit" pickOnBounds="true" preserveRatio="true">
               <image>
                   <Image url="@resources/close.png" />
               </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
           </ImageView>
-          <ImageView fitHeight="25.0" fitWidth="32.0" layoutX="1099.0" layoutY="14.0" onMouseClicked="#back" pickOnBounds="true" preserveRatio="true">
+          <ImageView fitHeight="25.0" fitWidth="32.0" layoutX="1129.0" layoutY="14.0" onMouseClicked="#back" pickOnBounds="true" preserveRatio="true">
               <image>
                   <Image url="@resources/arrows.png" />
               </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
           </ImageView>
     </children>
 </AnchorPane>

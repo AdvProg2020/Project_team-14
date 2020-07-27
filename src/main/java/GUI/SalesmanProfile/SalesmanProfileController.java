@@ -99,4 +99,8 @@ public class SalesmanProfileController {
         MenuHandler.goHome();
     }
 
+    public void exit(MouseEvent mouseEvent) throws InterruptedException {
+        MenuHandler.exit();
+    }
+
 }

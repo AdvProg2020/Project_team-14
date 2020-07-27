@@ -5,6 +5,8 @@
 
 .backgrounds {
 	-fx-background-color:  #8d6262;
+	-fx-background-color:  #282d4f;
+	-fx-background-color:  #121212;
 }
 
 .labels {
@@ -13,17 +15,68 @@
 }
 
 .chosen-items {
-	-fx-background-color : gray;
+	-fx-background-color : derive(#121212, 35%);
 	-fx-background-radius : 8;
+}
+
+.chosen-items .label {
+	-fx-text-fill: white;
 	-fx-font-family: "georgia";
 }
 
-.chosen-item-button {
-	-fx-background-color : gray;
+.chosen-items .button {
+	-fx-background-color : derive(#121212, 35%);
 	-fx-background-radius : 0 8 8 0;
 	-fx-border-width: 0;
+	-fx-cursor: hand;
 }
 
-.chosen-item-button:hover {
-	-fx-background-color: white;
+.chosen-items .button:hover {
+	-fx-background-color: red;
+}
+
+.chosen-item-img {
+	-fx-cursor: hand;
+	-fx-background-radius: 8;
+}
+
+.chosen-item-img:hover {
+	-fx-background-color: #626567;
+	-fx-effect: dropshadow(gaussian, #ff0266, 4, 0.0, 0, 4);
+}
+
+.search-box {
+	-fx-background-color: derive(#121212, 65%);
+	-fx-background-radius: 10;
+}
+
+.search-box .selected-filters {
+	-fx-background-color: derive(#121212, 85%);
+	-fx-background-radius: 10;
+}
+
+.show-product {
+	-fx-background-color: derive(#121212, 65%);
+	-fx-background-radius: 10;
+}
+
+.scroll-pane > .viewport {
+	-fx-background-color: transparent;
+}
+
+.combo-box {
+	-fx-background-color: derive(#121212, 95%);
+	-fx-background-radius: 10;
+	-fx-cursor: hand;
+}
+
+.combo-box:hover {
+	-fx-background-color: derive(#121212, 75%);
+}
+
+.combo-box .list-view .virtual-flow .clipped-container .sheet {
+	-fx-background-color: derive(#121212, 50%);
+	-fx-background-radius: 10;
+	-fx-text-fill: white;
+	-fx-font-family: Georgia;
 }

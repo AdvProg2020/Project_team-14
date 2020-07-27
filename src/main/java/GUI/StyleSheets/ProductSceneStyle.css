@@ -1,18 +1,54 @@
 .tab-Vbox-background {
-	-fx-background-color:  #4d4545;
+	-fx-background-color:  #454545;
 	-fx-background-radius: 0 0 10 10;
 }
 
 .tab-pane .tab-header-area .tab-header-background {
-	-fx-background-color: #4d4545;
+	-fx-background-color:  #454545;
 	-fx-background-radius: 10 10 0 0;
 }
 
 .tab-pane .tab-header-area .headers-region .tab {
-	-fx-background-color: #8d6262;
+	-fx-background-color:  #9a0f98;
+	-fx-background-radius: 10 10 0 0;
+	-fx-cursor: hand;
+}
+
+.tab-pane .tab-header-area .headers-region .tab:hover {
+	-fx-background-color:  derive(#9a0f98, -25%);
+}
+
+.tab-pane .tab-header-area .headers-region .tab:selected {
+	-fx-background-color: #670065;
 }
 
 .tab-pane .tab-header-area .headers-region .tab .tab-container .tab-label .text {
-	-fx-fill: #17223b;
+	-fx-fill: white;
 	-fx-font-family: "georgia";
+}
+
+.product-cart {
+	-fx-background-color: derive(#121212, 55%);
+	-fx-background-radius: 8;
+	-fx-cursor: hand;
+}
+
+.product-cart:hover {
+	-fx-background-color: derive(#121212, 35%);
+}
+
+.product-cart .label {
+	-fx-text-fill: white;
+	-fx-font-family: Georgia;
+}
+
+.product-cart .button {
+	-fx-background-color: #9a0f98;
+	-fx-background-radius: 8;
+	-fx-text-fill: white;
+	-fx-font-family: Georgia;
+}
+
+.product-cart .button:hover {
+	-fx-background-color: derive(#9a0f98, 25%);
 }

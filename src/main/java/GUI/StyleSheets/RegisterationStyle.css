@@ -1,40 +1,42 @@
 .header {
 	-fx-text-fill: #0c2233;
+	-fx-text-fill:  white;
 	-fx-font-family: "georgia";
 	-fx-font-size: 65;
 }
 
 .background {
-	/*-fx-background-image: url(../Register/resources/storeFront2blured.jpg);*/
 	-fx-background-color:  #dbd8e3;
+	-fx-background-color: derive(#121212, 50%);
 }
 
-.buttone {
-	-fx-background-color:  #182952;
+.button {
 	-fx-background-color: #1f024c;
+	-fx-background-color: #ff0266;
 	-fx-background-radius: 10;
 	-fx-font-family: "georgia";
-	-fx-font-size: 20;
+	-fx-cursor: hand;
+	-fx-font-size: 16;
 	-fx-text-fill: #ffffff;
 }
 
-.buttone:hover {
-	-fx-background-color: #45056e;
-	-fx-cursor: hand;
+.button:hover {
+	-fx-background-color: derive(#ff0266, 25%);
 }
 
-.buttone:pressed {
-	-fx-background-insets: 2 0 0 0,2 0 3 0, 2 0 4 0, 2 0 5 0;
+.button:pressed {
 	-fx-background-insets: 2 2 2 2,2 0 3 0, 2 0 4 0, 2 0 5 0;
 }
 
 .registerBackground {
 	-fx-background-color:  #0a91ab;
+	-fx-background-color:  #121212;
 	-fx-background-radius: 60;
 }
 
 .back-register-background {
 	-fx-background-color:  #182952;
+	-fx-background-color: derive(#121212, 80%);
 	-fx-background-radius: 30;
 }
 
@@ -42,4 +44,26 @@
 	-fx-text-fill: #ff5722;
 	-fx-font-family: "georgia";
 	-fx-font-size: 65;
+}
+
+.avatar-pane {
+	-fx-background-color: derive(#121212, 80%);
+	-fx-background-radius: 30;
+}
+
+.text-field {
+	-fx-background-color: derive(#121212, 50%);
+	-fx-text-fill: #ff5722;
+	-fx-font-family: Georgia;
+	-fx-font-size: 16px;
+	-fx-background-radius: 10;
+}
+
+.text-field:focused {
+	-fx-background-color: derive(#121212, 25%);
+	-fx-effect: dropshadow(gaussian, #ff5722, 4, 0.0, 0, 4);
+}
+
+.choice-box {
+	-fx-background-color: derive(#121212, 50%);
 }

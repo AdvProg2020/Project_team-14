@@ -1,0 +1,14 @@
+.popup {
+    -fx-background-radius: 20;
+    -fx-background-color: #B5B5B5;
+    -fx-cursor: hand;
+}
+
+.popup:hover {
+    -fx-background-color: derive(#B5B5B5, -20%);
+}
+
+.popup-text {
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+}

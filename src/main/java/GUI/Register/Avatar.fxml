@@ -1,34 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="567.0" prefWidth="595.0" style="-fx-background-color: #182952; -fx-background-radius: 30;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Register.AvatarController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="567.0" prefWidth="595.0" styleClass="avatar-pane" stylesheets="@../StyleSheets/RegisterationStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Register.AvatarController">
    <children>
-      <ImageView fx:id="image4" fitHeight="150.0" fitWidth="200.0" layoutX="74.0" layoutY="177.0" onMouseClicked="#changePolicy" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="image4" fitHeight="150.0" fitWidth="200.0" layoutX="74.0" layoutY="191.0" onMouseClicked="#changePolicy" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@resources/avatar4.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="image1" fitHeight="150.0" fitWidth="200.0" layoutX="443.0" layoutY="336.0" onMouseClicked="#changePolicy" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="image1" fitHeight="150.0" fitWidth="200.0" layoutX="443.0" layoutY="350.0" onMouseClicked="#changePolicy" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@resources/avatar1.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="image2" fitHeight="150.0" fitWidth="200.0" layoutX="402.0" layoutY="177.0" onMouseClicked="#changePolicy" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="image2" fitHeight="150.0" fitWidth="200.0" layoutX="402.0" layoutY="191.0" onMouseClicked="#changePolicy" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@resources/avatar2.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="image3" fitHeight="150.0" fitWidth="200.0" layoutX="228.0" layoutY="91.0" onMouseClicked="#changePolicy" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="image3" fitHeight="150.0" fitWidth="200.0" layoutX="228.0" layoutY="105.0" onMouseClicked="#changePolicy" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@resources/avatar3.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="image5" fitHeight="150.0" fitWidth="200.0" layoutX="21.0" layoutY="327.0" onMouseClicked="#changePolicy" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="image5" fitHeight="150.0" fitWidth="200.0" layoutX="21.0" layoutY="341.0" onMouseClicked="#changePolicy" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@resources/avatar5.png" />
          </image>

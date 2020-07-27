@@ -140,4 +140,8 @@ public class ProfileLayoutController {
         Audio.playClick5();
         MenuHandler.goHome();
     }
+
+    public void exit(MouseEvent mouseEvent) throws InterruptedException {
+        MenuHandler.exit();
+    }
 }

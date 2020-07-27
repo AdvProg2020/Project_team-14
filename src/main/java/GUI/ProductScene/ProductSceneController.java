@@ -282,9 +282,9 @@ public class ProductSceneController {
             ImageView imageView = (ImageView) ((AnchorPane) object).getChildren().get(0);
             Image image = new Image(path);
             imageView.setImage(image);
-            ((AnchorPane) object).setStyle("-fx-padding: 0;" + "-fx-border-style: solid inside;"
+            /*((AnchorPane) object).setStyle("-fx-padding: 0;" + "-fx-border-style: solid inside;"
                     + "-fx-border-width: 1;" + "-fx-border-insets: 2;"
-                    + "-fx-border-radius: 2;" + "-fx-border-color: black;");
+                    + "-fx-border-radius: 2;" + "-fx-border-color: black;");*/
         }
     }
 
@@ -333,5 +333,9 @@ public class ProductSceneController {
     public void goHome(MouseEvent mouseEvent) throws IOException {
         Audio.playClick6();
         MenuHandler.goHome();
+    }
+
+    public void exit(MouseEvent mouseEvent) throws InterruptedException {
+        MenuHandler.exit();
     }
 }

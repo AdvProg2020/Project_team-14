@@ -4,15 +4,18 @@ import Controller.Server;
 import GUI.Media.Audio;
 import Model.Supporter.Chat;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import org.javatuples.Triplet;
 
 import java.io.*;
@@ -73,6 +76,7 @@ public class MenuHandler extends Application {
             primaryStage.setScene(new Scene(root));
             MenuHandler.setStage(primaryStage);
             createSupporterPopup();
+            primaryStage.initStyle(StageStyle.UNDECORATED);
             primaryStage.show();
 
         } catch (IOException e) {
@@ -331,6 +335,17 @@ public class MenuHandler extends Application {
     public static void goHome() throws IOException {
         Parent root = FXMLLoader.load(MenuHandler.class.getResource("/GUI/ProductScene/ProductScene.fxml"));
         MenuHandler.getStage().setScene(new Scene(root));
+    }
+
+    public static void exit() throws InterruptedException {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure? :(", ButtonType.YES, ButtonType.NO);
+        alert.showAndWait();
+        if (alert.getResult().equals(ButtonType.YES)) {
+            Alert alert1 = new Alert(Alert.AlertType.NONE, "thanks for using our app ;)");
+            alert1.show();
+            Thread.sleep(800);
+            Platform.exit();
+        }
     }
 
     /*public static void setP2PLock(Object p2PLock) {
