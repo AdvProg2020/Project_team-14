@@ -13,6 +13,7 @@ public class Salesman extends Account implements Serializable {
     private int credit;
     private ArrayList<String> requestIDs;
     private ArrayList<String> commercials = new ArrayList<>();
+    private static final long serialVersionUID = 6529685098267757690L;
 
     public Salesman(String username, String password, String firstName, String secondName, String Email, String telephone, String role, String company, int credit) {
         super(username, password, firstName, secondName, Email, telephone, role);

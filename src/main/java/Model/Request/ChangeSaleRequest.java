@@ -9,6 +9,7 @@ import java.text.ParseException;
 public class ChangeSaleRequest extends Request implements Serializable {
     SaleAttributes attribute;
     String updatedInfo;
+    private static final long serialVersionUID = 6529685098267757690L;
 
     public ChangeSaleRequest(String salesmanID, Sale sale, String attribute, String updatedInfo) {
         super(salesmanID, sale, RequestType.CHANGE_SALE.name());

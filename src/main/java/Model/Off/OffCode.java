@@ -16,6 +16,7 @@ public class OffCode extends Off implements Serializable {
     private String offCodeID;
     private int numberOfTimesCanBeUsed;
     private ArrayList<String> userNamesCanUseIt = new ArrayList<>();
+    private static final long serialVersionUID = 6529685098267757690L;
 
     public OffCode(String start, String end, int percentage, int ceiling, int numberOfTimesCanBeUsed, ArrayList<String> userNamesCanUseIt) {
         super(start, end, percentage);

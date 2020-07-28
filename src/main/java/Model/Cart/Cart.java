@@ -1,5 +1,6 @@
 package Model.Cart;
 
+import Controller.BankConnector;
 import Controller.CreditController;
 import Model.Account.Customer;
 import Model.Account.Salesman;
@@ -20,6 +21,7 @@ public class Cart implements Serializable {
     //    private HashMap<String, String> productIDs = new HashMap<>();//when logs updated with Triplet, we delete this
     private String username;
     private String cartID;
+    private static final long serialVersionUID = 6529685098267757690L;
 
     private ArrayList<Triplet<String, String, Integer>> allItems = new ArrayList<>();
 
@@ -67,7 +69,8 @@ public class Cart implements Serializable {
 
     private void sendMoneyToStore(String offCodeID) {
         int totalPrice = getTotalPrice(offCodeID);
-        //...
+        int price = totalPrice * CreditController.getCreditController().getWagePercentage() / 100;
+        BankConnector.sendToBank("add money to bank+" + price);
     }
 
     //updated with Triplet
@@ -148,10 +151,6 @@ public class Cart implements Serializable {
         return allItems.isEmpty();
     }
 
-//    public HashMap<String, String> getProductIDs() {
-//        return productIDs;
-//    }
-
     public String getUsername() {
         return username;
     }
@@ -165,6 +164,7 @@ public class Cart implements Serializable {
     }
 
     //----[ new ]---updated with Triplet
+
     public HashMap<String, Integer> getPrices() {
         HashMap<String, Integer> prices = new HashMap<>();
         for (Triplet<String, String, Integer> item : allItems) {
@@ -187,8 +187,10 @@ public class Cart implements Serializable {
     }
 
     //updated with Triplet(nothing to do)
+
     public int getTotalPrice(String offCodeID) {
-        if (offCodeID == null) {
+        OffCode offCode = Storage.getOffCodeById(offCodeID);
+        if (offCode == null) {
             return getTotalPrice();
         } else {
             return OffCode.getFinalPrice(getTotalPrice(), offCodeID);

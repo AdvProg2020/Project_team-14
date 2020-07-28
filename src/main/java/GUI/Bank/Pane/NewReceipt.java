@@ -48,7 +48,7 @@ public class NewReceipt {
             return;
         }
 
-        description = (depositDescription.getText() == null || depositDescription.getText().equals("")) ? "" : depositDescription.getText();
+        description = (depositDescription.getText() == null || depositDescription.getText().equals("")) ? "empty" : depositDescription.getText();
 
         MenuHandler.getConnector().clientToServer("bank " + "create deposit receipt+" + Bank.getToken() + "+" + username + "+" + amount + "+" + description);
 
@@ -92,7 +92,7 @@ public class NewReceipt {
             return;
         }
 
-        description = (withdrawDescription.getText() == null || withdrawDescription.getText().equals("")) ? " " : withdrawDescription.getText();
+        description = (withdrawDescription.getText() == null || withdrawDescription.getText().equals("")) ? "empty" : withdrawDescription.getText();
 
         MenuHandler.getConnector().clientToServer("bank " + "create withdraw receipt+" + Bank.getToken() + "+" + username + "+" + amount + "+" + description);
 
@@ -149,7 +149,7 @@ public class NewReceipt {
             return;
         }
 
-        description = (transferDescription.getText() == null || transferDescription.getText().equals("")) ? "" : transferDescription.getText();
+        description = (transferDescription.getText() == null || transferDescription.getText().equals("")) ? "empty" : transferDescription.getText();
 
         MenuHandler.getConnector().clientToServer("bank " + "create transfer receipt+" + Bank.getToken() + "+" + username + "+" + otherUser + "+" + amount + "+" + description);
 

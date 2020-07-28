@@ -18,6 +18,7 @@ public class Product implements Serializable {
     private String picPath;
     private String categoryName;
     private String videoPath;
+    private static final long serialVersionUID = 6529685098267757690L;
 
     public String getPicPath() {
         return picPath;

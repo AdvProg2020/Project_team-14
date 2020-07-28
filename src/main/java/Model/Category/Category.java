@@ -16,10 +16,12 @@ public class Category implements Serializable {
     //OK
     //let's delete sub category and all products because
     //we have parent category and for products we can have category
+
     private String categoryName;
     private ArrayList<String> allProductIDs = new ArrayList<>();
     private String parentCategoryName;
     private String attribute;
+    private static final long serialVersionUID = 6529685098267757690L;
 
     public Category(String categoryName, String parentCategoryName, String attribute) {
         System.out.println(attribute + " " + parentCategoryName + " " + categoryName);

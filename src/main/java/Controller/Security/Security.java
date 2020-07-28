@@ -169,7 +169,8 @@ public class Security {
     }
 
     public static boolean isInBlackList(Socket socket) {
-        return blackListOfIPs.contains(getIP(socket));
+        return false;
+        //return blackListOfIPs.contains(getIP(socket));
     }
 
     public static void addToSetOfIps(String ip) {

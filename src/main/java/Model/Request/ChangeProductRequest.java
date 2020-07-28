@@ -11,6 +11,7 @@ import java.text.ParseException;
 public class ChangeProductRequest extends Request implements Serializable {
     ProductAttributes attribute;
     String updatedInfo;
+    private static final long serialVersionUID = 6529685098267757690L;
 
     //update info for "is on sale" must be "true / false"
 

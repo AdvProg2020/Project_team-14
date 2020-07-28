@@ -26,6 +26,7 @@ public class SpecialOffCode extends RandomString implements Runnable, Serializab
     private boolean activeness = false;
     private int percentage = 20;
     private int numberOfTimesItCanBeUsed = 1;
+    private static final long serialVersionUID = 6529685098267757690L;
 
     //----[ updated newly ]----- constructor has parameter, change class parameter
     public SpecialOffCode(int period, int percentage, int ceiling, int numberOfTimesItCanBeUsed) {

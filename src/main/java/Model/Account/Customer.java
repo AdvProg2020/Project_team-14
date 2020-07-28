@@ -16,6 +16,8 @@ public class Customer extends Account implements Serializable {
     private int credit;
     private Cart cart;
     private HashMap<String, Integer> customerOffCodes = new HashMap<>();
+    private static final long serialVersionUID = 6529685098267757690L;
+
 
     public Customer(String username, String password, String firstName, String secondName, String Email, String telephone,
                     String role, int credit) {
@@ -28,12 +30,6 @@ public class Customer extends Account implements Serializable {
                     String role, int credit, HashMap<String, String> productsAlreadyInCart) {
         super(username, password, firstName, secondName, Email, telephone, role);
         this.credit = credit;
-        /*cart = new Cart(username);
-        if (productsAlreadyInCart != null) {
-            for (String productID : productsAlreadyInCart.keySet()) {
-                cart.addProductToCart(productID, productsAlreadyInCart.get(productID), cart.getCartID());
-            }
-        }*/
     }
 
     public int getCredit() {
@@ -85,7 +81,8 @@ public class Customer extends Account implements Serializable {
     }
 
     public void useOffCode(String offCodeID) {
-        if (offCodeID != null) {
+        OffCode offCode = Storage.getOffCodeById(offCodeID);
+        if (offCode != null) {
             int count = customerOffCodes.get(offCodeID);
             customerOffCodes.replace(offCodeID, count, count - 1);
             if (customerOffCodes.get(offCodeID) == 0) {

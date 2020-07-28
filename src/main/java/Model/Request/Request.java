@@ -22,6 +22,7 @@ public class Request implements Serializable {
     protected Object object;
     protected RequestType requestType;
     protected Confirmation confirmation;
+    private static final long serialVersionUID = 6529685098267757690L;
 
     //request for making/adding a product, note for changing a sale we shall use ChangeProductRequest class instead
 

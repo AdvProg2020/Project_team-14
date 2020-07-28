@@ -21,6 +21,7 @@ public class Comment implements Serializable {
     private String productID;
     private Confirmation confirmationState;
     private Date date;
+    private static final long serialVersionUID = 6529685098267757690L;
 
 
     public Comment(String title, String text, String senderUsername, String productID) {

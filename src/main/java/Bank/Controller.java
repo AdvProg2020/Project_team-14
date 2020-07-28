@@ -65,10 +65,17 @@ public class Controller {
             getTransactionAmount(command);
         } else if (command.startsWith("get money from+")) {
             getMoneyFrom(command);
+        } else if (command.startsWith("add money to bank+")) {
+            addMoneyToBank(command);
         } else {
             serverAnswer = "invalid input";
         }
 
+    }
+
+    private void addMoneyToBank(String command) {
+        long money = Long.parseLong(command.split("\\+")[1]);
+        Account.bossAccount.setBalance(Account.bossAccount.getBalance() + money);
     }
 
     private void getMoneyFrom(String command) {

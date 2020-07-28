@@ -11,6 +11,7 @@ public class Point implements Serializable {
     private String username;
     private String productID;
     private int point;
+    private static final long serialVersionUID = 6529685098267757690L;
 
     public Point(String username, String productID, int point) {
         this.username = username;

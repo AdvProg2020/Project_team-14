@@ -12,6 +12,7 @@ public class Auction {
     private Date startingDate;
     private Date endingDate;
     private AuctionChat auctionChat;
+    private static final long serialVersionUID = 6529685098267757690L;
 
     public Auction(String salesmanID, String productID, Date startingDate, Date endingDate) {
         this.salesmanID = salesmanID;

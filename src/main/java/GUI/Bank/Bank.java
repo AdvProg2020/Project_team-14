@@ -47,8 +47,7 @@ public class Bank {
         try {
             pane.getChildren().remove(pane.getChildren().get(0));
             pane.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/Bank/Pane/ManageReceipt.fxml")));
-        } catch (Exception ignored) {
-        }
+        } catch (Exception ignored) { }
     }
 
     public void newReceipt(ActionEvent actionEvent) throws IOException, ParseException {
