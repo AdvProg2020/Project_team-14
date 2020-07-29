@@ -12,3 +12,29 @@
     -fx-text-fill: white;
     -fx-font-size: 16px;
 }
+
+.persons-icons {
+    -fx-background-color: derive(#383838, 50%);
+    -fx-background-radius: 30;
+    -fx-cursor: hand;
+}
+
+.persons-icons:hover {
+    -fx-background-color: derive(#383838, 25%);
+}
+
+.persons-icons:pressed {
+    -fx-background-color: derive(#383838, 10%);
+    -fx-effect: dropshadow(gaussian, ghostwhite, 4, 0.0, 0, 2);;
+}
+
+.selected-icon {
+    -fx-background-color: derive(#383838, 10%);
+    -fx-background-radius: 30;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, ghostwhite, 4, 0.0, 0, 3);;
+}
+
+.selected-icon:hover {
+    -fx-background-color: derive(#383838, 25%);
+}

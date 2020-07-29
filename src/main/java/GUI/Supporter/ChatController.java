@@ -1,6 +1,7 @@
 package GUI.Supporter;
 
 import GUI.Connector;
+import GUI.Media.Audio;
 import GUI.MenuHandler;
 import Model.Supporter.Chat;
 import javafx.application.Platform;
@@ -8,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -15,10 +17,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
+import javafx.scene.layout.*;
 import javafx.stage.Popup;
 
 import java.io.IOException;
@@ -69,6 +68,7 @@ public class ChatController {
         }
         messageBox.setDisable(true);
         if (!selectedSupporter.equals("")) {
+            updateStyles(selectedSupporter);
             updateChatBoxForSupporter(selectedSupporter);
             messageBox.setDisable(false);
         }
@@ -128,28 +128,47 @@ public class ChatController {
             imageView.setFitHeight(65);
             if (name.equalsIgnoreCase(MenuHandler.getUsername())) continue;
             imageView.setId(name);
-            imageView.setCursor(Cursor.HAND);
-            onlineSupporterBox.getChildren().add(imageView);
+            StackPane stackPane = new StackPane();
+            stackPane.setId(name);
+            stackPane.getChildren().add(imageView);
+            stackPane.getStyleClass().add("persons-icons");
+            onlineSupporterBox.getChildren().add(stackPane);
 
-            imageView.setOnMouseClicked(this::selectSupporter);
+            stackPane.setOnMouseClicked(this::selectSupporter);
         }
     }
 
     public void send(MouseEvent mouseEvent) throws IOException {
         String message = messageBox.getText();
         if (!message.trim().equals("")) {
+            Audio.playClick2();
             String toServer = "send message to supporter" + "\n" + MenuHandler.getUsername() + "\n" + selectedSupporter + "\n" + message;
             MenuHandler.getConnector().clientToServer(toServer);
         }
     }
 
     public void selectSupporter(MouseEvent mouseEvent) {
-        ImageView imageView = (ImageView) mouseEvent.getSource();
-        if (!selectedSupporter.equals(imageView.getId())) {
-            selectedSupporter = imageView.getId();
+        Audio.playClick2();
+        StackPane stackPane = (StackPane) mouseEvent.getSource();
+        if (!selectedSupporter.equals(stackPane.getId())) {
+            selectedSupporter = stackPane.getId();
             messageBox.setDisable(false);
-            System.out.println(selectedSupporter);
+            System.out.println("chosen person: " + selectedSupporter);
+            updateStyles(stackPane.getId());
             updateChatBoxForSupporter(selectedSupporter);
+        }
+    }
+
+    private void updateStyles(String name) {
+        for (Node child : onlineSupporterBox.getChildren()) {
+            if (child.getId().equalsIgnoreCase(name)) {
+                System.out.println("change style");
+                child.getStyleClass().clear();
+                child.getStyleClass().add("selected-icon");
+            } else {
+                child.getStyleClass().clear();
+                child.getStyleClass().add("persons-icons");
+            }
         }
     }
 
