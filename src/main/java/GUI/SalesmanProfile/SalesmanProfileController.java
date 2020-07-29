@@ -103,4 +103,7 @@ public class SalesmanProfileController {
         MenuHandler.exit();
     }
 
+    public void makeAuction(ActionEvent actionEvent) throws IOException {
+        MenuHandler.getStage().setScene(new Scene(FXMLLoader.load(getClass().getResource("/GUI/Auction/AllAuctions.fxml"))));
+    }
 }

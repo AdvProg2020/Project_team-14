@@ -4,7 +4,10 @@ import java.io.*;
 import java.net.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -436,10 +439,18 @@ public class Server {
         }
     }
 
+    private String dateToLocalDate(Date date) {
+        ZoneId zoneId = ZoneId.systemDefault();
+        Instant instant = date.toInstant();
+        LocalDate localDate = instant.atZone(zoneId).toLocalDate();
+        return localDate.toString();
+    }
+
     private void getTime(String command) {
         for (Auction auction : Auction.getAllAuctions()) {
             if ((auction.getSalesmanID() + "," + auction.getProductID()).equals(command.split("\\+")[1])) {
-                setAnswer(String.valueOf(auction.getEndingDate()));
+                setAnswer(dateToLocalDate(auction.getEndingDate()));
+                return;
             }
         }
     }
@@ -669,8 +680,8 @@ public class Server {
     private void getAuction(String command) {
         for (Auction auction : Auction.getAllAuctions()) {
             if ((auction.getSalesmanID() + "," + auction.getProductID()).equals(command.split("\\+")[1])) {
-                if (auction.getSalesmanID() != null) {
-                    setAnswer(auction.getSalesmanID() + "+" + auction.getHighestPrice());
+                if (auction.getCustomerID() != null) {
+                    setAnswer(auction.getCustomerID() + "+" + auction.getHighestPrice());
                 } else {
                     setAnswer("No Bet");
                 }
@@ -679,9 +690,11 @@ public class Server {
     }
 
     private void newAuction(String command) {
-        Date date = new Date(command.split("\\+")[4]);
-        Date date2 = new Date(command.split("\\+")[3]);
-        new Auction(command.split("\\+")[1], command.split("\\+")[2], date, date2);
+        Auction auction;
+        auction = new Auction(command.split("\\+")[1], command.split("\\+")[2], command.split("\\+")[3], command.split("\\+")[4]);
+        System.out.println(auction);
+        Product product = Storage.getProductById(command.split("\\+")[2]);
+        product.setRemainderForSalesman(product.getRemainderForSalesman(command.split("\\+")[1]) - 1, command.split("\\+")[1]);
         Server.setAnswer("successful");
     }
 

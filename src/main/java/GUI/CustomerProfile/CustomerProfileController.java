@@ -71,7 +71,6 @@ public class CustomerProfileController {
     }
 
 
-
     public void logging(ActionEvent actionEvent) throws IOException {
         Audio.playClick3();
         pane.getChildren().clear();
@@ -96,4 +95,7 @@ public class CustomerProfileController {
         MenuHandler.exit();
     }
 
+    public void auction(ActionEvent actionEvent) throws IOException {
+        MenuHandler.getStage().setScene(new Scene(FXMLLoader.load(getClass().getResource("/GUI/Auction/AllAuctions.fxml"))));
+    }
 }

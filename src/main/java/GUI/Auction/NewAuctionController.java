@@ -29,7 +29,7 @@ public class NewAuctionController {
     }
 
     public void done(ActionEvent actionEvent) throws IOException {
-        MenuHandler.getConnector().clientToServer("create new auction+" + MenuHandler.getUsername() + "+" + allProducts.getSelectionModel().getSelectedItem() + "+" + startDate.toString() + "+" + endDate.toString());
+        MenuHandler.getConnector().clientToServer("create new auction+" + MenuHandler.getUsername() + "+" + allProducts.getSelectionModel().getSelectedItem() + "+" + startDate.getValue().toString() + "+" + endDate.getValue().toString());
         String serverAnswer = MenuHandler.getConnector().serverToClient();
         if (serverAnswer.equals("successful")) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "New Auction Created Successfully", ButtonType.OK);

@@ -1,5 +1,7 @@
 package Model.Auction;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -14,12 +16,17 @@ public class Auction {
     private AuctionChat auctionChat;
     private static final long serialVersionUID = 6529685098267757690L;
 
-    public Auction(String salesmanID, String productID, Date startingDate, Date endingDate) {
+    public Auction(String salesmanID, String productID, String startingDate, String endingDate) {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            this.startingDate = formatter.parse(startingDate);
+            this.endingDate = formatter.parse(endingDate);
+        } catch (ParseException e) {
+            //e.printStackTrace();
+        }
         this.salesmanID = salesmanID;
         this.productID = productID;
-        this.startingDate = startingDate;
-        this.salesmanID = null;
-        this.endingDate = endingDate;
+        this.customerID = null;
         allAuctions.add(this);
         auctionChat = new AuctionChat(this);
     }

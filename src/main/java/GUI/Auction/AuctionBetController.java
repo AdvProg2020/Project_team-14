@@ -1,10 +1,12 @@
 package GUI.Auction;
 
 import GUI.MenuHandler;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -13,6 +15,8 @@ import javafx.scene.layout.VBox;
 
 import java.awt.*;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class AuctionBetController {
@@ -20,6 +24,8 @@ public class AuctionBetController {
     public TextField myBet;
     public Label hour;
     public Label minute;
+    public Button applyButton;
+    Thread thread;
     public Label second;
     public VBox vBox;
 
@@ -40,6 +46,24 @@ public class AuctionBetController {
     }
 
     private void load() throws IOException {
+        MenuHandler.getConnector().clientToServer("get auction time+" + MenuHandler.getCurrentAuction());
+        String time = MenuHandler.getConnector().serverToClient();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = null;
+        try {
+            date = formatter.parse(time);
+        } catch (ParseException e) {
+            //e.printStackTrace();
+        }
+        System.out.println(date);
+        long x = date.getTime();
+        Date date1 = new Date();
+        long diff = date.getTime() - date1.getTime();
+        Platform.runLater(() -> {
+            hour.setText(String.valueOf(((int) (diff / (60 * 60 * 1000)))));
+            minute.setText(String.valueOf(((int) (diff / (60 * 1000))) % 60));
+            second.setText(String.valueOf((((int) (diff / (1000)))) % 60));
+        });
         MenuHandler.getConnector().clientToServer("get certain auction+" + MenuHandler.getCurrentAuction() + "+" + MenuHandler.getUsername());
         String serverAnswer = MenuHandler.getConnector().serverToClient();
         if (serverAnswer.equalsIgnoreCase("no bet")) {
@@ -49,22 +73,26 @@ public class AuctionBetController {
         for (String s : serverAnswer.split("\n")) {
             String username = s.split("\\+")[0];
             String money = s.split("\\+")[1];
+            maxBet.setText(money);
             HBox hBox = new HBox();
+            hBox.setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;"
+                    + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
+                    + "-fx-border-radius: 5;" + "-fx-border-color: blue;");
+            hBox.setPrefWidth(422);
             Label userLabel = new Label(username);
             Label moneyLabel = new Label(money);
             hBox.getChildren().add(userLabel);
             hBox.getChildren().add(moneyLabel);
             vBox.setSpacing(5);
-            vBox.getChildren().add(hBox);
+            //vBox.getChildren().add(hBox);
         }
         maxBet.setText(serverAnswer.split("\\+")[1]);
-        MenuHandler.getConnector().clientToServer("get auction time+" + MenuHandler.getCurrentAuction());
-        String time = MenuHandler.getConnector().serverToClient();
-        Date date = new Date(time);
-        //update time
     }
 
     public void initialize() {
+        if (MenuHandler.getUserType().equalsIgnoreCase("Salesman")) {
+            applyButton.setDisable(true);
+        }
         Thread thread;
         thread = new Thread(new Runnable() {
             @Override
@@ -72,13 +100,13 @@ public class AuctionBetController {
                 while (true) {
                     try {
                         load();
-                        wait(900);
+                        Thread.sleep(1000);
                     } catch (IOException | InterruptedException e) {
                         e.printStackTrace();
                     }
                 }
             }
         });
-        thread.run();
+        thread.start();
     }
 }
