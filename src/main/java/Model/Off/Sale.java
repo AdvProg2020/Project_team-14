@@ -145,6 +145,26 @@ public class Sale extends Off implements Serializable {
         return sales;
     }
 
+    public ArrayList<String> getProductIDs() {
+        return productIDs;
+    }
+
+    public void setProductIDs(ArrayList<String> productIDs) {
+        this.productIDs = productIDs;
+    }
+
+    public void setSaleID(String saleID) {
+        this.saleID = saleID;
+    }
+
+    public Confirmation getConfirmationState() {
+        return confirmationState;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
     public String toStringForTable() {
 //        StringBuilder result = new StringBuilder(super.toString());
         StringBuilder result = new StringBuilder("");

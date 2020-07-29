@@ -82,6 +82,30 @@ public class Token {
         return arrayList;
     }
 
+    public static ArrayList<String> getToken() {
+        return token;
+    }
+
+    public static void setToken(ArrayList<String> token) {
+        Token.token = token;
+    }
+
+    public static long getOnlineTimeDuration() {
+        return ONLINE_TIME_DURATION;
+    }
+
+    public static void setOnlineUsers(HashMap<String, Long> onlineUsers) {
+        Token.onlineUsers = onlineUsers;
+    }
+
+    public static SecureRandom getSecureRandom() {
+        return secureRandom;
+    }
+
+    public static Base64.Encoder getBase64Encoder() {
+        return base64Encoder;
+    }
+
     public static String getUsernameFromToken(String token) {
         token = decode(token);
         return token.split("--caption neuer--")[1];

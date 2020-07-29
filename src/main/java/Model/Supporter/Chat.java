@@ -107,6 +107,38 @@ public class Chat {
         return buffer;
     }
 
+    public void setFirstPerson(String firstPerson) {
+        this.firstPerson = firstPerson;
+    }
+
+    public void setSecondPerson(String secondPerson) {
+        this.secondPerson = secondPerson;
+    }
+
+    public void setSender(ArrayList<String> sender) {
+        this.sender = sender;
+    }
+
+    public void setMessage(ArrayList<String> message) {
+        this.message = message;
+    }
+
+    public static ArrayList<Chat> getAllChats() {
+        return allChats;
+    }
+
+    public static void setAllChats(ArrayList<Chat> allChats) {
+        Chat.allChats = allChats;
+    }
+
+    public boolean isHasUnreadMessage() {
+        return hasUnreadMessage;
+    }
+
+    public void setHasUnreadMessage(boolean hasUnreadMessage) {
+        this.hasUnreadMessage = hasUnreadMessage;
+    }
+
     public ArrayList<Chat> getChatsOfAccountWithUsername(String userUsername) {
         ArrayList<Chat> buffer = new ArrayList<>();
         for (Chat chat : allChats) {

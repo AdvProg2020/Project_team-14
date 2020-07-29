@@ -73,6 +73,10 @@ public class Point implements Serializable {
         return productID;
     }
 
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
     public void setProductID(String productID) {
         this.productID = productID;
     }

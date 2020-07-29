@@ -46,6 +46,26 @@ public class ChangeProductRequest extends Request implements Serializable {
         }
     }
 
+    public ProductAttributes getAttribute() {
+        return attribute;
+    }
+
+    public void setAttribute(ProductAttributes attribute) {
+        this.attribute = attribute;
+    }
+
+    public String getUpdatedInfo() {
+        return updatedInfo;
+    }
+
+    public void setUpdatedInfo(String updatedInfo) {
+        this.updatedInfo = updatedInfo;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
     public String toStringChangeProduct() {
         Product product = (Product) object;
         Salesman salesman = (Salesman) Storage.getAccountWithUsername(accountUsername);

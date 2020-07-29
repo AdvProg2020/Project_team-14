@@ -72,6 +72,22 @@ public class Salesman extends Account implements Serializable {
                 " Username: " + this.getUsername() + " Company: " + this.getCompany();
     }
 
+    public ArrayList<String> getRequestIDs() {
+        return requestIDs;
+    }
+
+    public void setRequestIDs(ArrayList<String> requestIDs) {
+        this.requestIDs = requestIDs;
+    }
+
+    public void setCommercials(ArrayList<String> commercials) {
+        this.commercials = commercials;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
     public String toString() {
         String result = super.toString();
         result += "Company: " + this.getCompany() + "\n";

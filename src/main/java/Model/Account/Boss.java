@@ -13,6 +13,10 @@ public class Boss extends Account implements Serializable {
         super(username, password, firstName, secondName, Email, telephone, role);
     }
 
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
     public String getFatherBoss() {
         return fatherBoss;
     }

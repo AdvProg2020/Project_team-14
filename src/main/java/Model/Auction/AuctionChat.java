@@ -26,6 +26,30 @@ public class AuctionChat {
         return null;
     }
 
+    public Auction getAuction() {
+        return auction;
+    }
+
+    public void setAuction(Auction auction) {
+        this.auction = auction;
+    }
+
+    public ArrayList<String> getSender() {
+        return sender;
+    }
+
+    public void setSender(ArrayList<String> sender) {
+        this.sender = sender;
+    }
+
+    public ArrayList<String> getMessage() {
+        return message;
+    }
+
+    public void setMessage(ArrayList<String> message) {
+        this.message = message;
+    }
+
     public String getChatStringFormatted() {
         return sender.toString() + " - " + message.toString();
     }

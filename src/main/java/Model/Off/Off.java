@@ -75,6 +75,19 @@ public abstract class Off implements Serializable {
         return result;
     }
 
+
+    public void setStart(Date start) {
+        this.start = start;
+    }
+
+    public void setEnd(Date end) {
+        this.end = end;
+    }
+
+    public void setPercentage(int percentage) {
+        this.percentage = percentage;
+    }
+
     protected String dateToLocalDate(Date date) {
         ZoneId zoneId = ZoneId.systemDefault();
         Instant instant = date.toInstant();

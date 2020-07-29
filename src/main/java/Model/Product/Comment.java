@@ -24,6 +24,7 @@ public class Comment implements Serializable {
     private static final long serialVersionUID = 6529685098267757690L;
 
 
+
     public Comment(String title, String text, String senderUsername, String productID) {
         this.title = title;
         this.text = text;
@@ -126,6 +127,46 @@ public class Comment implements Serializable {
             }
         }
         return false;
+    }
+
+    public void setCommentID(String commentID) {
+        this.commentID = commentID;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public void setProductID(String productID) {
+        this.productID = productID;
+    }
+
+    public Confirmation getConfirmationState() {
+        return confirmationState;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
     }
 
     public String getCommentID() {

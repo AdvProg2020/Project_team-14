@@ -125,6 +125,14 @@ public class Category implements Serializable {
         return result;
     }
 
+    public void setAllProductIDs(ArrayList<String> allProductIDs) {
+        this.allProductIDs = allProductIDs;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
     public String toStringForBoss() {
         String father = this.getParentCategoryName();
         if (father == null) {

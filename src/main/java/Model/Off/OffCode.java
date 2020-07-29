@@ -141,6 +141,23 @@ public class OffCode extends Off implements Serializable {
 
     //return string formatted off code for boss menu
 
+
+    public void setOffCodeID(String offCodeID) {
+        this.offCodeID = offCodeID;
+    }
+
+    public ArrayList<String> getUserNamesCanUseIt() {
+        return userNamesCanUseIt;
+    }
+
+    public void setUserNamesCanUseIt(ArrayList<String> userNamesCanUseIt) {
+        this.userNamesCanUseIt = userNamesCanUseIt;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
     public String toStringForBoss() {
         StringBuilder result = new StringBuilder(super.toString());
         result.append("Max:").append(ceiling).append("\n");

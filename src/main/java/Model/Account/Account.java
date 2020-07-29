@@ -17,6 +17,11 @@ public abstract class Account implements Serializable {
     private String telephone;
     private Role role;
     private String imgPath;
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
     private String avatar;
     private String ip = null;
 

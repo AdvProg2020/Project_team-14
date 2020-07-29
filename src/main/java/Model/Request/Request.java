@@ -296,6 +296,26 @@ public class Request implements Serializable {
         return null;
     }
 
+    public void setRequestID(String requestID) {
+        this.requestID = requestID;
+    }
+
+    public void setObject(Object object) {
+        this.object = object;
+    }
+
+    public void setRequestType(RequestType requestType) {
+        this.requestType = requestType;
+    }
+
+    public void setConfirmation(Confirmation confirmation) {
+        this.confirmation = confirmation;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
     public String getObjectID() {
         if (object instanceof Product) {
             return ((Product) object).getProductID();

@@ -86,7 +86,7 @@ public class Storage {
         return getOffCodeById(offCodeID) != null;
     }
 
-    public static OffCode getOffCodeById (String offCodeID) {
+    public static OffCode getOffCodeById(String offCodeID) {
         for (OffCode offCode : allOffCodes) {
             if (offCode.getOffCodeID().equals(offCodeID)) return offCode;
         }
@@ -165,4 +165,83 @@ public class Storage {
         }
     }
 
+    public static ArrayList<Comment> getAllComments() {
+        return allComments;
+    }
+
+    public static void setAllComments(ArrayList<Comment> allComments) {
+        Storage.allComments = allComments;
+    }
+
+    public static ArrayList<Point> getAllPoints() {
+        return allPoints;
+    }
+
+    public static void setAllPoints(ArrayList<Point> allPoints) {
+        Storage.allPoints = allPoints;
+    }
+
+    public static void setAllProducts(ArrayList<Product> allProducts) {
+        Storage.allProducts = allProducts;
+    }
+
+    public static ArrayList<OffCode> getAllOffCodes() {
+        return allOffCodes;
+    }
+
+    public static void setAllOffCodes(ArrayList<OffCode> allOffCodes) {
+        Storage.allOffCodes = allOffCodes;
+    }
+
+    public static ArrayList<Sale> getAllSales() {
+        return allSales;
+    }
+
+    public static void setAllSales(ArrayList<Sale> allSales) {
+        Storage.allSales = allSales;
+    }
+
+    public static ArrayList<BuyLog> getAllBuyLogs() {
+        return allBuyLogs;
+    }
+
+    public static void setAllBuyLogs(ArrayList<BuyLog> allBuyLogs) {
+        Storage.allBuyLogs = allBuyLogs;
+    }
+
+    public static void setAllCategories(ArrayList<Category> allCategories) {
+        Storage.allCategories = allCategories;
+    }
+
+    public static void setAllAccounts(ArrayList<Account> allAccounts) {
+        Storage.allAccounts = allAccounts;
+    }
+
+    public static ArrayList<SpecialOffCode> getAllSpecialOffCodes() {
+        return allSpecialOffCodes;
+    }
+
+    public static void setAllSpecialOffCodes(ArrayList<SpecialOffCode> allSpecialOffCodes) {
+        Storage.allSpecialOffCodes = allSpecialOffCodes;
+    }
+
+    public static ArrayList<Cart> getAllCarts() {
+        return allCarts;
+    }
+
+    public static void setAllCarts(ArrayList<Cart> allCarts) {
+        Storage.allCarts = allCarts;
+    }
+
+    public static void setAllRequests(ArrayList<Request> allRequests) {
+        Storage.allRequests = allRequests;
+    }
+
+    public static ArrayList<SellLog> getAllSellLogs() {
+        return allSellLogs;
+    }
+
+    public static void setAllSellLogs(ArrayList<SellLog> allSellLogs) {
+        Storage.allSellLogs = allSellLogs;
+    }
 }

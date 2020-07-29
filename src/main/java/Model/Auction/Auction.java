@@ -112,6 +112,10 @@ public class Auction {
         this.startingDate = startingDate;
     }
 
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
     public Date getEndingDate() {
         return endingDate;
     }

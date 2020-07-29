@@ -78,6 +78,46 @@ public class SpecialOffCode extends RandomString implements Runnable, Serializab
         this.percentage = percentage;
     }
 
+    public int getTimeInSeconds() {
+        return timeInSeconds;
+    }
+
+    public void setSpecialOffCodeID(String specialOffCodeID) {
+        this.specialOffCodeID = specialOffCodeID;
+    }
+
+    public int getDurationInHour() {
+        return durationInHour;
+    }
+
+    public void setDurationInHour(int durationInHour) {
+        this.durationInHour = durationInHour;
+    }
+
+    public int getCeiling() {
+        return ceiling;
+    }
+
+    public boolean isActiveness() {
+        return activeness;
+    }
+
+    public void setActiveness(boolean activeness) {
+        this.activeness = activeness;
+    }
+
+    public int getPercentage() {
+        return percentage;
+    }
+
+    public int getNumberOfTimesItCanBeUsed() {
+        return numberOfTimesItCanBeUsed;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
     @Override
     public void run() {
         if (!activeness) {

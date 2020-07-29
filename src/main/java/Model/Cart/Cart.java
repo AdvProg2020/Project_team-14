@@ -218,6 +218,18 @@ public class Cart implements Serializable {
         return result;
     }
 
+    public void setCartID(String cartID) {
+        this.cartID = cartID;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public void setAllItems(ArrayList<Triplet<String, String, Integer>> allItems) {
+        this.allItems = allItems;
+    }
+
     //updated with Triplet
     public String toString() {
         StringBuilder result = new StringBuilder("Here are all of your products in cart:");

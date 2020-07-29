@@ -165,6 +165,66 @@ public class BuyLog extends Log implements Serializable {
         }
     }
 
+    public ArrayList<Triplet<String, String, Integer>> getAllItems() {
+        return allItems;
+    }
+
+    public void setAllItems(ArrayList<Triplet<String, String, Integer>> allItems) {
+        this.allItems = allItems;
+    }
+
+    public void setPrices(HashMap<String, Integer> prices) {
+        this.prices = prices;
+    }
+
+    public void setPricesAfterSale(HashMap<String, Integer> pricesAfterSale) {
+        this.pricesAfterSale = pricesAfterSale;
+    }
+
+    public void setCustomerUsername(String customerUsername) {
+        this.customerUsername = customerUsername;
+    }
+
+    public void setBuyLogID(String buyLogID) {
+        this.buyLogID = buyLogID;
+    }
+
+    public String getOffCodeID() {
+        return offCodeID;
+    }
+
+    public void setOffCodeID(String offCodeID) {
+        this.offCodeID = offCodeID;
+    }
+
+    public int getTotalAmountWithOutOffCode() {
+        return totalAmountWithOutOffCode;
+    }
+
+    public void setTotalAmountWithOutOffCode(int totalAmountWithOutOffCode) {
+        this.totalAmountWithOutOffCode = totalAmountWithOutOffCode;
+    }
+
+    public int getTotalAmountWithOffCode() {
+        return totalAmountWithOffCode;
+    }
+
+    public void setTotalAmountWithOffCode(int totalAmountWithOffCode) {
+        this.totalAmountWithOffCode = totalAmountWithOffCode;
+    }
+
+    public void setDeliveryState(Delivery deliveryState) {
+        this.deliveryState = deliveryState;
+    }
+
+    public boolean isWasOffCodeUsed() {
+        return wasOffCodeUsed;
+    }
+
+    public void setWasOffCodeUsed(boolean wasOffCodeUsed) {
+        this.wasOffCodeUsed = wasOffCodeUsed;
+    }
+
     @Override
     public String toString() {
         return "Customer: " + customerUsername + "\n" +

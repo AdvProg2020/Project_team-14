@@ -105,6 +105,58 @@ public class SellLog implements Serializable {
         return result;
     }
 
+    public void setSellLogID(String sellLogID) {
+        this.sellLogID = sellLogID;
+    }
+
+    public BuyLog getBuyLog() {
+        return buyLog;
+    }
+
+    public void setBuyLog(BuyLog buyLog) {
+        this.buyLog = buyLog;
+    }
+
+    public String getProductID() {
+        return productID;
+    }
+
+    public void setProductID(String productID) {
+        this.productID = productID;
+    }
+
+    public int getProductCount() {
+        return productCount;
+    }
+
+    public void setProductCount(int productCount) {
+        this.productCount = productCount;
+    }
+
+    public boolean isWasOnSale() {
+        return wasOnSale;
+    }
+
+    public void setWasOnSale(boolean wasOnSale) {
+        this.wasOnSale = wasOnSale;
+    }
+
+    public int getPriceBeforeSale() {
+        return priceBeforeSale;
+    }
+
+    public void setPriceBeforeSale(int priceBeforeSale) {
+        this.priceBeforeSale = priceBeforeSale;
+    }
+
+    public int getPriceAfterSale() {
+        return priceAfterSale;
+    }
+
+    public void setPriceAfterSale(int priceAfterSale) {
+        this.priceAfterSale = priceAfterSale;
+    }
+
     public static String getSalesmanSellLogs_StringFormatted(String salesmanID) {
         if (!hasSalesmanAnySellLog(salesmanID)) {
             return "no sell log yet!";

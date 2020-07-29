@@ -370,6 +370,58 @@ public class Product implements Serializable {
         return result.toString();
     }
 
+    public void setSalesmanIDs(ArrayList<String> salesmanIDs) {
+        this.salesmanIDs = salesmanIDs;
+    }
+
+    public void setProductID(String productID) {
+        this.productID = productID;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public HashMap<String, Boolean> getIsOnSale() {
+        return isOnSale;
+    }
+
+    public void setIsOnSale(HashMap<String, Boolean> isOnSale) {
+        this.isOnSale = isOnSale;
+    }
+
+    public HashMap<String, Boolean> getHasBeenDeleted() {
+        return hasBeenDeleted;
+    }
+
+    public void setHasBeenDeleted(HashMap<String, Boolean> hasBeenDeleted) {
+        this.hasBeenDeleted = hasBeenDeleted;
+    }
+
+    public HashMap<String, Confirmation> getConfirmationState() {
+        return confirmationState;
+    }
+
+    public void setConfirmationState(HashMap<String, Confirmation> confirmationState) {
+        this.confirmationState = confirmationState;
+    }
+
+    public HashMap<String, Integer> getRemainder() {
+        return remainder;
+    }
+
+    public void setRemainder(HashMap<String, Integer> remainder) {
+        this.remainder = remainder;
+    }
+
+    public HashMap<String, Integer> getPrice() {
+        return price;
+    }
+
+    public void setPrice(HashMap<String, Integer> price) {
+        this.price = price;
+    }
+
     public String createID() {
         return RandomString.createID("Product");
     }

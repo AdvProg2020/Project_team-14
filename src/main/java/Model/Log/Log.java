@@ -36,6 +36,10 @@ public abstract class Log implements Serializable {
         return false;
     }
 
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
     public static ArrayList<String> getBuyerOfProduct(String productID) {
         Set<String> customerUserNames = new HashSet<>();
         for (BuyLog buyLog : Storage.allBuyLogs) {

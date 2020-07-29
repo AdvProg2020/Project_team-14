@@ -19,6 +19,14 @@ public class Customer extends Account implements Serializable {
     private static final long serialVersionUID = 6529685098267757690L;
 
 
+    public void setCustomerOffCodes(HashMap<String, Integer> customerOffCodes) {
+        this.customerOffCodes = customerOffCodes;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
     public Customer(String username, String password, String firstName, String secondName, String Email, String telephone,
                     String role, int credit) {
         super(username, password, firstName, secondName, Email, telephone, role);

@@ -35,6 +35,26 @@ public class ChangeSaleRequest extends Request implements Serializable {
         }
     }
 
+    public SaleAttributes getAttribute() {
+        return attribute;
+    }
+
+    public void setAttribute(SaleAttributes attribute) {
+        this.attribute = attribute;
+    }
+
+    public String getUpdatedInfo() {
+        return updatedInfo;
+    }
+
+    public void setUpdatedInfo(String updatedInfo) {
+        this.updatedInfo = updatedInfo;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
     public String toStringChangeSale() {
         return "Salesman username: " + accountUsername + "\n" +
                 "Attribute to change: " + attribute.name().toLowerCase() + "\n"
