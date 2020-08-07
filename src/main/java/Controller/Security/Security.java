@@ -50,32 +50,32 @@ public class Security {
     public static void securityCheck(String command, Socket socket) throws ParseException {
 
         if (blackListOfIPs.contains(getIP(socket))) {
-            return;
+            //return;
         }
 
         //making sure it doesn't send more than 10 requests in 100 milliseconds
 
         if (IP.addIp(getIP(socket))) {
             blackListOfIPs.add(getIP(socket));
-            return;
+            //return;
         }
 
         //running basic security checks
 
         if (checkStringLength(command) || mayContainScript(command)) {
             blackListOfIPs.add(getIP(socket));
-            return;
+            //return;
         }
 
         // if it doesn't start with the specified string
 
         if (!command.startsWith("this is a client")) {
             blackListOfIPs.add(getIP(socket));
-            return;
+            //return;
         }
 
-        String token, message, username;
-        long time_sent;
+        String token = "", message = "", username = "";
+        long time_sent = 0;
 
         try {
             token = command.split("--1989--")[1];
@@ -85,14 +85,14 @@ public class Security {
         } catch (Exception e) {
             System.out.println("we're under attackkkkkkk");
             blackListOfIPs.add(getIP(socket));
-            return;
+            //return;
         }
 
         //the time is old
 
         if (System.currentTimeMillis() - time_sent > 100) {
             blackListOfIPs.add(getIP(socket));
-            return;
+            //return;
         }
 
         //asking for not important information
@@ -103,7 +103,7 @@ public class Security {
             } else {
                 blackListOfIPs.add(getIP(socket));
             }
-            return;
+            //return;
         }
 
         //asking for important information
@@ -121,7 +121,7 @@ public class Security {
             } catch (Exception e) {
                 System.out.println("we're under attack by trying wrong tokens");
                 blackListOfIPs.add(getIP(socket));
-                return;
+                //return;
             }
 
             // making sure it's got one ip
@@ -135,7 +135,7 @@ public class Security {
                     if (!account.getIp().equals(getIP(socket))) {
                         System.out.println("we're under attack by wrong ip");
                         blackListOfIPs.add(getIP(socket));
-                        return;
+                        //return;
                     }
                 }
             } catch (Exception e) {

@@ -85,11 +85,11 @@ public class Server {
             //if the socket is in the black list we would just return
 
             if (Security.isInBlackList(clientSocket)) {
-                continue;
+                //continue;
             }
 
             if (Security.weReachedTheMax()) {
-                continue;
+                //continue;
             }
 
             System.out.println("client accepted");
@@ -119,7 +119,7 @@ public class Server {
             while (!Thread.interrupted()) {
                 try {
                     if (Security.isInBlackList(clientSocket)) {
-                        throw new Exception("piss off");
+                        //throw new Exception("piss off");
                     }
                     String command = dataInputStream.readUTF();
                     System.out.println("[CLIENT]:" + command);
