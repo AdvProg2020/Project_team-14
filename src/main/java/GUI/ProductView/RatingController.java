@@ -102,12 +102,4 @@ public class RatingController {
         MenuHandler.getConnector().clientToServer("point product+" + MenuHandler.getUsername() + "+" + MenuHandler.getProductID() + "+" + number);
         updateLines();
     }
-
-    public void exit(ActionEvent actionEvent) throws IOException {
-        Audio.playClick6();
-        Popup popup = (Popup) ((Button) actionEvent.getSource()).getScene().getWindow();
-        popup.hide();
-        Parent root = FXMLLoader.load(getClass().getResource("/GUI/ProductView/ProductViewLayout.fxml"));
-        MenuHandler.getStage().setScene(new Scene(root));
-    }
 }

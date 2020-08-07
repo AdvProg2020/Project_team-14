@@ -96,9 +96,9 @@
             <Insets left="5.0" right="5.0" top="5.0" />
          </VBox.margin>
         </HBox>
-        <TabPane prefHeight="745.0" prefWidth="1200.0" tabClosingPolicy="UNAVAILABLE">
+        <TabPane fx:id="tabPane" prefHeight="745.0" prefWidth="1200.0" tabClosingPolicy="ALL_TABS">
             <tabs>
-                <Tab text="Home">
+                <Tab fx:id="homeTab" text="Home">
                     <content>
                         <VBox alignment="TOP_CENTER" prefHeight="600.0" prefWidth="500.0" spacing="10.0" styleClass="tab-Vbox-background">
                             <children>
@@ -121,7 +121,7 @@
                         </VBox>
                     </content>
                 </Tab>
-                <Tab text="Products">
+                <Tab fx:id="productsTab" text="Products">
                     <content>
                         <VBox spacing="10.0" styleClass="tab-Vbox-background">
                             <children>

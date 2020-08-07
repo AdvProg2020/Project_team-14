@@ -47,11 +47,8 @@ public class SimilarProduct {
         stage.setScene(new Scene(root));
     }
 
-    public void backClicked(ActionEvent actionEvent) throws IOException {
+    public void backClicked(ActionEvent actionEvent) {
         Audio.playClick4();
-        Parent root = FXMLLoader.load(getClass().getResource("/GUI/ProductView/ProductViewLayout.fxml"));
-        Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root));
+        ((Button) actionEvent.getSource()).getScene().getWindow().hide();
     }
-
 }

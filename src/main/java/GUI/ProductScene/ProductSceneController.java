@@ -37,6 +37,9 @@ public class ProductSceneController {
     public ComboBox sortFactor;
     public ComboBox filter;
     public FlowPane filterList;
+    public TabPane tabPane;
+    public Tab homeTab;
+    public Tab productsTab;
     @FXML
     protected ImageView accountMenuButton;
 
@@ -134,18 +137,18 @@ public class ProductSceneController {
 
     private void setProfileImageInProfilePopup(Parent root) throws FileNotFoundException {
         if (!MenuHandler.getUserAvatar().equals("no image found")) {
-            /*String path = "src/main/java/GUI/Register/resources/";
+            String path = "file:src/main/java/GUI/Register/resources/";
             String avatar = MenuHandler.getUserAvatar() + ".png";
-            FileInputStream imageStream = new FileInputStream(path + avatar);
-            Image image = new Image(imageStream);
+            Image image = new Image(path + avatar);
             ImageView profileImage = (ImageView) ((VBox) root).getChildren().get(0);
             profileImage.setImage(image);
-
-             */
+            profileImage.setFitHeight(400);
         }
     }
 
     public void initialize() throws ParseException, IOException {
+        homeTab.setClosable(false);
+        productsTab.setClosable(false);
         String path = "src/main/java/GUI/ProductView/resources/mp4.mp4";
         Media media = new Media(new File(path).toURI().toString());
         MediaPlayer mediaPlayer = new MediaPlayer(media);
@@ -250,14 +253,6 @@ public class ProductSceneController {
             products.getChildren().add((Node) object);
             Label label = (Label) ((AnchorPane) object).getChildren().get(1);
             label.setText(s.split("\\s")[4]);
-            ((AnchorPane) object).setOnMouseEntered(event -> {
-                Stage stage = (Stage) ((AnchorPane) event.getSource()).getScene().getWindow();
-                stage.getScene().setCursor(Cursor.HAND);
-            });
-            ((AnchorPane) object).setOnMouseExited(event -> {
-                Stage stage = (Stage) ((AnchorPane) event.getSource()).getScene().getWindow();
-                stage.getScene().setCursor(Cursor.DEFAULT);
-            });
             ((AnchorPane) object).setOnMouseClicked(event -> {
                 MenuHandler.setBackProduct("/GUI/ProductScene/ProductScene.fxml");
                 MenuHandler.setProductID(s.split("\\s")[2]);
@@ -268,23 +263,26 @@ public class ProductSceneController {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                stage.setScene(new Scene(root));
+                Tab newTab = new Tab();
+                newTab.setContent(root);
+                newTab.setClosable(true);
+                newTab.setText(s.split("\\s")[4]);
+
+                tabPane.getTabs().add(newTab);
+                tabPane.getSelectionModel().select(newTab);
             });
             String productId = s.split("\\s")[2];
             MenuHandler.getConnector().clientToServer("get product picture path+" + productId);
             String path = MenuHandler.getConnector().serverToClient();
             if (path == null) {
-                path = "file:\\F:\\AP\\AP\\Project_team-23\\src\\main\\resources\\Pictures\\default.png";
+                path = "file:src/main/java/GUI/SalesmanProfile/ManageProduct/resources/billboard.png";
             }
             if (path.equalsIgnoreCase("none")) {
-                path = "file:\\F:\\AP\\AP\\Project_team-23\\src\\main\\resources\\Pictures\\default.png";
+                path = "file:src/main/java/GUI/SalesmanProfile/ManageProduct/resources/billboard.png";
             }
             ImageView imageView = (ImageView) ((AnchorPane) object).getChildren().get(0);
             Image image = new Image(path);
             imageView.setImage(image);
-            /*((AnchorPane) object).setStyle("-fx-padding: 0;" + "-fx-border-style: solid inside;"
-                    + "-fx-border-width: 1;" + "-fx-border-insets: 2;"
-                    + "-fx-border-radius: 2;" + "-fx-border-color: black;");*/
         }
     }
 

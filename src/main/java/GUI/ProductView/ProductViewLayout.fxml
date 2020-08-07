@@ -1,18 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DialogPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.SepiaTone?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="740.0" prefWidth="1180.0" style="-fx-background-color: yellow;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ProductView.Controller">
+<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="696.0" prefWidth="1180.0" styleClass="background" stylesheets="@../StyleSheets/ProductView.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ProductView.Controller">
     <children>
-        <HBox layoutX="10.0" layoutY="10.0" prefHeight="360.0" prefWidth="850.0" spacing="10.0" style="-fx-background-color: yellow;" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+        <HBox layoutX="10.0" layoutY="10.0" prefHeight="360.0" prefWidth="850.0" spacing="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
             <children>
-                <VBox prefHeight="360.0" prefWidth="590.0" style="-fx-background-color: royalblue;">
+                <VBox prefHeight="360.0" prefWidth="590.0" styleClass="carts">
                     <children>
                         <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                             <children>
@@ -24,55 +37,49 @@
                                         <Font size="20.0" />
                                     </font>
                                 </Label>
-                                <Button fx:id="starButton" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#starPopup" prefHeight="55.0" prefWidth="58.0" text="Button">
-                                    <graphic>
-                                        <ImageView fitHeight="42.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
+                        <StackPane fx:id="starPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#starPopup" prefHeight="45.0" prefWidth="45.0" styleClass="image-buttons">
+                           <children>
+                                        <ImageView fitHeight="40.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
                                                 <Image url="@resources/star.png" />
                                             </image>
                                         </ImageView>
-                                    </graphic>
-                                    <cursor>
-                                        <Cursor fx:constant="HAND" />
-                                    </cursor>
-                                </Button>
-                                <Button contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#compare" prefHeight="55.0" prefWidth="72.0" text="Button">
-                                    <graphic>
-                                        <ImageView fitHeight="37.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
+                           </children>
+                        </StackPane>
+                        <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#compare" prefHeight="45.0" prefWidth="45.0" styleClass="image-buttons">
+                           <children>
+                                        <ImageView fitHeight="40.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
                                                 <Image url="@resources/compare.png" />
                                             </image>
                                         </ImageView>
-                                    </graphic>
-                                    <cursor>
-                                        <Cursor fx:constant="HAND" />
-                                    </cursor>
-                                </Button>
-                                <Button contentDisplay="GRAPHIC_ONLY" layoutX="309.0" layoutY="43.0" mnemonicParsing="false" onAction="#showVideo" prefHeight="57.0" prefWidth="65.0" text="Button">
-                                    <graphic>
-                                        <ImageView fitHeight="40.0" fitWidth="82.0" pickOnBounds="true" preserveRatio="true">
+                           </children>
+                        </StackPane>
+                        <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#showVideo" prefHeight="45.0" prefWidth="45.0" styleClass="image-buttons">
+                           <children>
+                                        <ImageView fitHeight="40.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
-                                                <Image url="@resources/download.jpg" />
+                                                <Image url="@resources/youtube.png" />
                                             </image>
                                         </ImageView>
-                                    </graphic>
-                                    <cursor>
-                                        <Cursor fx:constant="HAND" />
-                                    </cursor>
-                                </Button>
-                                <Button fx:id="similarIcon" contentDisplay="GRAPHIC_ONLY" layoutX="263.0" layoutY="29.0" mnemonicParsing="false" onAction="#similarProducts" prefHeight="55.0" prefWidth="46.0" text="Button">
-                                    <graphic>
-                                        <ImageView fitHeight="42.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
+                           </children>
+                        </StackPane>
+                        <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#similarProducts" prefHeight="45.0" prefWidth="45.0" styleClass="image-buttons">
+                           <children>
+                                        <ImageView fitHeight="45.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
-                                                <Image url="@resources/886755_products_512x512.png" />
+                                                <Image url="@resources/product.png" />
                                             </image>
                                         </ImageView>
-                                    </graphic>
-                                    <cursor>
-                                        <Cursor fx:constant="HAND" />
-                                    </cursor>
-                                </Button>
+                           </children>
+                        </StackPane>
                             </children>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <padding>
+                        <Insets right="10.0" />
+                     </padding>
                         </HBox>
                         <Label text="Info :">
                             <VBox.margin>
@@ -97,7 +104,7 @@
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="320.0" />
                             </expandableContent>
                         </DialogPane>
-                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="15.0" style="-fx-background-color: royalblue;">
+                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="15.0">
                             <children>
                                 <Label fx:id="chooseSellerField" text="Seller :">
                                     <HBox.margin>
@@ -124,7 +131,7 @@
                         <DropShadow />
                     </effect>
                 </VBox>
-                <VBox alignment="TOP_CENTER" prefHeight="360.0" prefWidth="250.0" spacing="25.0" style="-fx-background-color: royalblue;">
+                <VBox alignment="TOP_CENTER" prefHeight="360.0" prefWidth="250.0" spacing="25.0" styleClass="carts">
                     <children>
                         <HBox prefHeight="263.0" prefWidth="250.0" spacing="10.0">
                             <children>
@@ -202,7 +209,7 @@
                                 </VBox>
                             </children>
                         </HBox>
-                        <Button fx:id="addButton" graphicTextGap="15.0" mnemonicParsing="false" onAction="#addToCart" prefHeight="47.0" prefWidth="219.0" style="-fx-background-color: green;" text="Add to Cart">
+                        <Button fx:id="addButton" graphicTextGap="15.0" mnemonicParsing="false" onAction="#addToCart" prefHeight="47.0" prefWidth="219.0" text="Add to Cart">
                             <graphic>
                                 <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
@@ -224,7 +231,7 @@
                 </VBox>
             </children>
         </HBox>
-        <VBox alignment="TOP_CENTER" layoutX="879.0" layoutY="67.0" prefHeight="360.0" prefWidth="300.0" spacing="10.0" style="-fx-background-color: royalblue;" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+        <VBox alignment="TOP_CENTER" layoutX="879.0" layoutY="67.0" prefHeight="360.0" prefWidth="300.0" spacing="10.0" styleClass="carts" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
             <children>
                 <ImageView fx:id="imageView" fitHeight="276.0" fitWidth="291.0" pickOnBounds="true" preserveRatio="true">
                     <image>
@@ -253,7 +260,7 @@
                 <DropShadow />
             </effect>
         </VBox>
-        <HBox layoutX="120.0" layoutY="320.0" prefHeight="341.0" prefWidth="1160.0" spacing="20.0" style="-fx-background-color: royalblue;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+        <HBox layoutX="120.0" layoutY="320.0" prefHeight="303.0" prefWidth="1160.0" spacing="20.0" styleClass="carts" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
             <children>
                 <VBox alignment="TOP_CENTER" prefHeight="342.0" prefWidth="646.0">
                     <children>
@@ -272,7 +279,7 @@
                 </VBox>
                 <VBox alignment="TOP_CENTER" layoutX="10.0" layoutY="10.0" prefHeight="341.0" prefWidth="494.0" spacing="10.0">
                     <children>
-                        <TextField fx:id="commentTitle" promptText="title">
+                        <TextField fx:id="commentTitle" promptText="title" styleClass="my-text-field">
                             <VBox.margin>
                                 <Insets right="8.0" top="25.0" />
                             </VBox.margin>
@@ -280,7 +287,7 @@
                                 <Font size="18.0" />
                             </font>
                         </TextField>
-                        <TextArea fx:id="comment" prefHeight="200.0" prefWidth="200.0" promptText="Write your comment here">
+                        <TextArea fx:id="comment" prefHeight="167.0" prefWidth="486.0" promptText="Write your comment here">
                             <VBox.margin>
                                 <Insets right="8.0" />
                             </VBox.margin>
@@ -288,9 +295,9 @@
                                 <Font size="18.0" />
                             </font>
                         </TextArea>
-                  <HBox alignment="CENTER" spacing="20.0">
+                  <HBox fx:id="buttonBox" alignment="CENTER" spacing="20.0">
                      <children>
-                              <Button fx:id="commentButton" mnemonicParsing="false" onAction="#doComment" style="-fx-background-color: green;" text="Comment">
+                              <Button fx:id="commentButton" mnemonicParsing="false" onAction="#doComment" text="Comment">
                                   <font>
                                       <Font size="18.0" />
                                   </font>
@@ -298,11 +305,7 @@
                                       <Cursor fx:constant="HAND" />
                                   </cursor>
                               </Button>
-                                <Button mnemonicParsing="false" onAction="#back" prefHeight="40.0" prefWidth="100.0" text="Back">
-                                    <font>
-                                        <Font name="Book Antiqua Bold" size="20.0" />
-                                    </font>
-                                </Button>
+                                <Button mnemonicParsing="false" onAction="#back" prefHeight="40.0" prefWidth="100.0" text="Back" />
                      </children>
                   </HBox>
                     </children>
@@ -312,7 +315,7 @@
                 <DropShadow />
             </effect>
         </HBox>
-        <Label alignment="CENTER" layoutX="36.0" layoutY="374.0" prefHeight="30.0" prefWidth="105.0" style="-fx-background-color: #ffffff; -fx-background-radius: 15;" text="Comments">
+        <Label alignment="CENTER" layoutX="20.0" layoutY="368.0" prefHeight="22.0" prefWidth="105.0" style="-fx-background-color: #ffffff; -fx-background-radius: 15;" text="Comments">
             <font>
                 <Font size="20.0" />
             </font>

@@ -7,6 +7,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
@@ -16,9 +17,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
@@ -51,16 +51,16 @@ public class Controller {
     public ComboBox chooseSeller;
     public Label chooseSellerField;
     public AnchorPane info;
-    public Button starButton;
     public Label confirmationStateField;
     public Label confirmationState;
     public Button addButton;
     public Button commentButton;
     public TextArea infoText;
-    public Button similarIcon;
     public ImageView status;
     public Label productName;
-
+    public AnchorPane mainPane;
+    public HBox buttonBox;
+    public StackPane starPane;
 
     private void reset(ImageView imageView, double width, double height) {
         imageView.setViewport(new Rectangle2D(0, 0, width, height));
@@ -142,8 +142,10 @@ public class Controller {
         });
     }
 
-
     public void initialize() throws ParseException, IOException {
+        if (MenuHandler.getBackProduct().equals("/GUI/ProductScene/ProductScene.fxml")) {
+            buttonBox.getChildren().remove(1);
+        }
         String productId = MenuHandler.getProductID();
         MenuHandler.getConnector().clientToServer("what is comment product ID+" + productId);
         String allComments = MenuHandler.getConnector().serverToClient();
@@ -251,7 +253,7 @@ public class Controller {
 
     private void bossLoad(String serverAnswer) throws ParseException, IOException {
         comment.setEditable(false);
-        starButton.setDisable(true);
+        starPane.setDisable(true);
         commentTitle.setEditable(false);
         MenuHandler.getConnector().clientToServer("get product min price+" + MenuHandler.getProductID());
         minPrice.setText(MenuHandler.getConnector().serverToClient() + "$");
@@ -281,7 +283,7 @@ public class Controller {
 
     private void salesmanLoad(String serverAnswer) throws ParseException, IOException {
         comment.setEditable(false);
-        starButton.setDisable(true);
+        starPane.setDisable(true);
         commentTitle.setEditable(false);
         MenuHandler.getConnector().clientToServer("get product min price+" + MenuHandler.getProductID());
         minPrice.setText(MenuHandler.getConnector().serverToClient() + "$");
@@ -442,14 +444,15 @@ public class Controller {
         }
     }
 
-    public void showVideo(ActionEvent mouseEvent) throws IOException {
+    public void showVideo(MouseEvent mouseEvent) throws IOException {
         Audio.playClick4();
         Parent root = FXMLLoader.load(getClass().getResource("/GUI/ProductView/Film/Film.fxml"));
-        Stage stage = (Stage) ((Button) mouseEvent.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root));
+        Popup popup = new Popup();
+        popup.getContent().add(root);
+        popup.show(MenuHandler.getStage());
     }
 
-    public void starPopup(ActionEvent mouseEvent) throws IOException {
+    public void starPopup(MouseEvent mouseEvent) throws IOException {
         Audio.playClick5();
         if (!MenuHandler.isIsUserLogin()) {
             return;
@@ -457,6 +460,7 @@ public class Controller {
         Popup popup = new Popup();
         Parent starPop = FXMLLoader.load(getClass().getResource("/GUI/ProductView/RatingLayout.fxml"));
         popup.getContent().addAll(starPop);
+        popup.setAutoHide(true);
         Stage stage = MenuHandler.getStage();
         popup.show(stage);
     }
@@ -468,29 +472,31 @@ public class Controller {
 
     public void back(ActionEvent actionEvent) throws IOException {
         Audio.playClick7();
-        Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+        Stage stage = MenuHandler.getStage();
         Parent root = FXMLLoader.load(getClass().getResource(MenuHandler.getBackProduct()));
         stage.setScene(new Scene(root));
     }
 
-    public void similarProducts(ActionEvent actionEvent) throws IOException, ParseException {
+    public void similarProducts(MouseEvent actionEvent) throws IOException, ParseException {
         MenuHandler.getConnector().clientToServer("similar product+" + MenuHandler.getProductID());
         if (!MenuHandler.getConnector().serverToClient().equals("nothing")) {
             Audio.playClick4();
             Parent root = FXMLLoader.load(getClass().getResource("/GUI/ProductView/SimilarProduct/SimilarProduct.fxml"));
-            Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(root));
+            Popup popup = new Popup();
+            popup.getContent().add(root);
+            popup.show(MenuHandler.getStage());
         } else {
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "no similar product found!", ButtonType.OK);
             alert.showAndWait();
         }
     }
 
-    public void compare(ActionEvent actionEvent) throws IOException {
+    public void compare(MouseEvent actionEvent) throws IOException {
         Audio.playClick5();
         Parent root = FXMLLoader.load(getClass().getResource("/GUI/ProductView/Compare.fxml"));
-        Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root));
+        Popup popup = new Popup();
+        popup.getContent().add(root);
+        popup.show(MenuHandler.getStage());
     }
 
     private boolean checkProductNameFormat(String input) {

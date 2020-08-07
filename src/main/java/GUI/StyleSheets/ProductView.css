@@ -1,0 +1,54 @@
+.background {
+    -fx-background-color: #454545;
+    -fx-background-radius: 0 0 10 10;
+}
+
+.carts {
+    -fx-background-color: derive(#121212, 65%);
+    -fx-background-radius: 5;
+}
+
+.label {
+    -fx-font-family: Georgia;
+    -fx-font-size: 20px;
+}
+
+.image-buttons {
+    -fx-cursor: hand;
+}
+
+.image-buttons:hover {
+    -fx-effect: dropshadow(gaussian, #9a0f98, 4, 0.0, 0, 3);
+}
+
+.button {
+    -fx-background-color: #ef6817;
+    -fx-background-radius: 15;
+    -fx-font-size: 18;
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: derive(#ef6817, -25%);
+}
+
+.button:pressed {
+    -fx-effect: dropshadow(gaussian, #ff0266, 4, 0.0, 0, 3);
+}
+
+.my-text-field {
+    -fx-background-color: derive(#121212, 50%);
+    -fx-background-radius: 20;
+    -fx-border-color: derive(#121212, 50%);
+    -fx-border-radius: 20;
+    -fx-text-fill: #ef6817;
+}
+
+.my-text-field:hover {
+    -fx-background-color: derive(#121212, 60%);
+}
+
+.my-text-field:focused {
+    -fx-background-color: derive(#121212, 60%);
+    -fx-border-color: #ff6143;
+}

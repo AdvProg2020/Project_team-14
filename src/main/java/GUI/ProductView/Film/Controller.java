@@ -25,9 +25,7 @@ public class Controller {
     public void exitButtonClicked(MouseEvent mouseEvent) throws IOException {
         Audio.unMute();
         Audio.playClick4();
-        Parent root = FXMLLoader.load(getClass().getResource("/GUI/ProductView/ProductViewLayout.fxml"));
-        Stage stage = (Stage) ((Button) mouseEvent.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root));
+        ((Button) mouseEvent.getSource()).getScene().getWindow().hide();
         if (MediaView.getMediaPlayer() != null) {
             MediaView.getMediaPlayer().stop();
         }

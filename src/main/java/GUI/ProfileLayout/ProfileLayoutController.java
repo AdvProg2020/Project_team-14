@@ -29,15 +29,14 @@ public class ProfileLayoutController {
     public void initialize() throws IOException, ParseException {
         MenuHandler.setBackProduct("GUI/ProfileLayout/ProfileLayout.fxml");
         pane.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/ProfileLayout/PersonalInfoLayout.fxml")));
+        setProfileImage();
     }
 
     public void setProfileImage() throws ParseException, IOException {
         if (!MenuHandler.getUserAvatar().equals("no image found")) {
-            String path = "src/main/java/GUI/Register/resources/";
+            String path = "file:src/main/java/GUI/Register/resources/";
             String avatar = MenuHandler.getUserAvatar() + ".png";
-            System.out.println(avatar);
-            FileInputStream imageStream = new FileInputStream(path + avatar);
-            Image image = new Image(imageStream);
+            Image image = new Image(path + avatar);
             profileImage.setImage(image);
         }
     }

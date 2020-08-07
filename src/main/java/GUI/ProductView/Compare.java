@@ -40,11 +40,8 @@ public class Compare {
         }
     }
 
-    public void back(ActionEvent actionEvent) throws IOException {
+    public void back(ActionEvent actionEvent) {
         Audio.playClick4();
-        Parent root = FXMLLoader.load(getClass().getResource("/GUI/ProductView/ProductViewLayout.fxml"));
-        Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root));
-
+        ((Button) actionEvent.getSource()).getScene().getWindow().hide();
     }
 }
