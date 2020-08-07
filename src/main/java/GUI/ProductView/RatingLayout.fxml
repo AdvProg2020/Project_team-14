@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="413.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ProductView.RatingController">
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="413.0" prefWidth="640.0" styleClass="background" stylesheets="@../StyleSheets/starStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ProductView.RatingController">
     <children>
-        <HBox fx:id="starList" alignment="CENTER" prefHeight="138.0" prefWidth="640.0" style="-fx-background-color: #cccccc;">
+        <HBox fx:id="starList" alignment="CENTER" prefHeight="138.0" prefWidth="640.0" styleClass="star-box">
             <children>
                 <ImageView fx:id="star1" fitHeight="93.0" fitWidth="124.0" onMouseClicked="#setRate" onMouseEntered="#changeStars" onMouseExited="#backToNormal" pickOnBounds="true" preserveRatio="true">
                     <image>
@@ -53,63 +56,59 @@
                 </ImageView>
             </children>
         </HBox>
-        <HBox prefHeight="315.0" prefWidth="640.0">
+        <HBox prefHeight="315.0" prefWidth="640.0" styleClass="rates-box">
             <children>
-                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="640.0" spacing="5.0">
-                    <children>
-                        <VBox alignment="CENTER" prefHeight="295.0" prefWidth="135.0" spacing="15.0" style="-fx-background-color: #aaaacc;">
-                            <children>
-                                <Label text="5">
-                                    <font>
-                                        <Font size="20.0" />
-                                    </font>
-                                </Label>
-                                <Label layoutX="10.0" layoutY="10.0" text="4">
-                                    <font>
-                                        <Font size="20.0" />
-                                    </font>
-                                </Label>
-                                <Label layoutX="10.0" layoutY="31.0" text="3">
-                                    <font>
-                                        <Font size="20.0" />
-                                    </font>
-                                </Label>
-                                <Label layoutX="10.0" layoutY="52.0" text="2">
-                                    <font>
-                                        <Font size="20.0" />
-                                    </font>
-                                </Label>
-                                <Label layoutX="10.0" layoutY="73.0" text="1">
-                                    <font>
-                                        <Font size="20.0" />
-                                    </font>
-                                </Label>
-                            </children>
-                        </VBox>
-                        <AnchorPane prefHeight="295.0" prefWidth="361.0" style="-fx-background-color: #dddddd;">
-                            <children>
-                                <Line endX="100.0" layoutX="145.0" layoutY="58.0" startX="-100.0" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="10.0" />
-                                <Line endX="100.0" layoutX="145.0" layoutY="103.0" startX="-100.0" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="10.0" />
-                                <Line endX="100.0" layoutX="145.0" layoutY="148.0" startX="-100.0" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="10.0" />
-                                <Line endX="100.0" layoutX="145.0" layoutY="193.0" startX="-100.0" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="10.0" />
-                                <Line endX="100.0" layoutX="145.0" layoutY="238.0" startX="-100.0" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="10.0" />
-                                <Line fx:id="line5" endX="-100.0" layoutX="145.0" layoutY="58.0" startX="-100.0" strokeLineCap="ROUND" strokeWidth="10.0" />
-                                <Line fx:id="line4" endX="-100.0" layoutX="145.0" layoutY="103.0" startX="-100.0" strokeLineCap="ROUND" strokeWidth="10.0" />
-                                <Line fx:id="line3" endX="-100.0" layoutX="145.0" layoutY="148.0" startX="-100.0" strokeLineCap="ROUND" strokeWidth="10.0" />
-                                <Line fx:id="line2" endX="-100.0" layoutX="145.0" layoutY="193.0" startX="-100.0" strokeLineCap="ROUND" strokeWidth="10.0" />
-                                <Line fx:id="line1" endX="-100.0" layoutX="145.0" layoutY="238.0" startX="-100.0" strokeLineCap="ROUND" strokeWidth="10.0" />
-                            </children>
-                        </AnchorPane>
-                        <VBox alignment="CENTER" prefHeight="295.0" prefWidth="236.0" spacing="15.0" style="-fx-background-color: #aaaaaa;">
-                            <children>
-                                <Label text="Total number of rate" />
-                                <Label fx:id="total" text="19200" />
-                                <Label text="Average" />
-                                <Label fx:id="average" text="3.5" />
-                            </children>
-                        </VBox>
-                    </children>
-                </HBox>
+                  <VBox alignment="CENTER" prefHeight="295.0" prefWidth="135.0" spacing="15.0">
+                      <children>
+                          <Label text="5">
+                              <font>
+                                  <Font size="20.0" />
+                              </font>
+                          </Label>
+                          <Label layoutX="10.0" layoutY="10.0" text="4">
+                              <font>
+                                  <Font size="20.0" />
+                              </font>
+                          </Label>
+                          <Label layoutX="10.0" layoutY="31.0" text="3">
+                              <font>
+                                  <Font size="20.0" />
+                              </font>
+                          </Label>
+                          <Label layoutX="10.0" layoutY="52.0" text="2">
+                              <font>
+                                  <Font size="20.0" />
+                              </font>
+                          </Label>
+                          <Label layoutX="10.0" layoutY="73.0" text="1">
+                              <font>
+                                  <Font size="20.0" />
+                              </font>
+                          </Label>
+                      </children>
+                  </VBox>
+                  <AnchorPane prefHeight="295.0" prefWidth="361.0">
+                      <children>
+                          <Line endX="100.0" layoutX="145.0" layoutY="58.0" startX="-100.0" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="10.0" />
+                          <Line endX="100.0" layoutX="145.0" layoutY="103.0" startX="-100.0" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="10.0" />
+                          <Line endX="100.0" layoutX="145.0" layoutY="148.0" startX="-100.0" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="10.0" />
+                          <Line endX="100.0" layoutX="145.0" layoutY="193.0" startX="-100.0" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="10.0" />
+                          <Line endX="100.0" layoutX="145.0" layoutY="238.0" startX="-100.0" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="10.0" />
+                          <Line fx:id="line5" endX="-100.0" layoutX="145.0" layoutY="58.0" startX="-100.0" stroke="#ffee00" strokeLineCap="ROUND" strokeWidth="10.0" />
+                          <Line fx:id="line4" endX="-100.0" layoutX="145.0" layoutY="103.0" startX="-100.0" stroke="#ffee00" strokeLineCap="ROUND" strokeWidth="10.0" />
+                          <Line fx:id="line3" endX="-100.0" layoutX="145.0" layoutY="148.0" startX="-100.0" stroke="#ffee00" strokeLineCap="ROUND" strokeWidth="10.0" />
+                          <Line fx:id="line2" endX="-100.0" layoutX="145.0" layoutY="193.0" startX="-100.0" stroke="#ffee00" strokeLineCap="ROUND" strokeWidth="10.0" />
+                          <Line fx:id="line1" endX="-100.0" layoutX="145.0" layoutY="238.0" startX="-100.0" stroke="#ffee00" strokeLineCap="ROUND" strokeWidth="10.0" />
+                      </children>
+                  </AnchorPane>
+                  <VBox alignment="CENTER" prefHeight="295.0" prefWidth="236.0" spacing="15.0">
+                      <children>
+                          <Label text="Total number of rate" />
+                          <Label fx:id="total" text="0" />
+                          <Label text="Average" />
+                          <Label fx:id="average" text="0" />
+                      </children>
+                  </VBox>
             </children>
         </HBox>
     </children>

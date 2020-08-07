@@ -1,0 +1,19 @@
+.background  {
+    -fx-background-radius: 10;
+}
+
+.star-box {
+    -fx-background-color: derive(#121212, 40%);
+    -fx-background-radius: 10 10 0 0;
+}
+
+.rates-box {
+    -fx-background-color: derive(#121212, 50%);
+    -fx-background-radius: 0 0 10 10;
+}
+
+.label {
+    -fx-font-family: Georgia;
+    -fx-font-size: 20px;
+    -fx-text-fill: #00e0c7;
+}

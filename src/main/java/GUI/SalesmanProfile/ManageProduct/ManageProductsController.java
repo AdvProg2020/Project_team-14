@@ -142,14 +142,6 @@ public class ManageProductsController {
             products.getChildren().add((Node) object);
             Label label = (Label) ((AnchorPane) object).getChildren().get(1);
             label.setText(s.split("\\s")[4]);
-            ((AnchorPane) object).setOnMouseEntered(event -> {
-                Stage stage = (Stage) ((AnchorPane) event.getSource()).getScene().getWindow();
-                stage.getScene().setCursor(Cursor.HAND);
-            });
-            ((AnchorPane) object).setOnMouseExited(event -> {
-                Stage stage = (Stage) ((AnchorPane) event.getSource()).getScene().getWindow();
-                stage.getScene().setCursor(Cursor.DEFAULT);
-            });
             ((AnchorPane) object).setOnMouseClicked(event -> {
                 if (MenuHandler.getUserType().equalsIgnoreCase("Salesman")) {
                     MenuHandler.setBackProduct("/GUI/SalesmanProfile/SalesmanProfileLayout.fxml");
@@ -157,30 +149,29 @@ public class ManageProductsController {
                     MenuHandler.setBackProduct("/GUI/ProfileLayout/ProfileLayout.fxml");
                 }
                 MenuHandler.setProductID(s.split("\\s")[2]);
-                Stage stage = (Stage) ((AnchorPane) event.getSource()).getScene().getWindow();
                 Parent root = null;
                 try {
                     root = FXMLLoader.load(getClass().getResource("/GUI/ProductView/ProductViewLayout.fxml"));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                stage.setScene(new Scene(root));
+                //stage.setScene(new Scene(root));
+                Popup popup = new Popup();
+                popup.getContent().add(root);
+                popup.show(MenuHandler.getStage());
             });
             String productId = s.split("\\s")[2];
             MenuHandler.getConnector().clientToServer("get product picture path+" + productId);
             String path = MenuHandler.getConnector().serverToClient();
             if (path == null) {
-                path = "file:\\F:\\AP\\AP\\Project_team-23\\src\\main\\resources\\Pictures\\default.png";
+                path = "file:src/main/java/GUI/SalesmanProfile/ManageProduct/resources/billboard.png";
             }
             if (path.equalsIgnoreCase("none")) {
-                path = "file:\\F:\\AP\\AP\\Project_team-23\\src\\main\\resources\\Pictures\\default.png";
+                path = "file:src/main/java/GUI/SalesmanProfile/ManageProduct/resources/billboard.png";
             }
             ImageView imageView = (ImageView) ((AnchorPane) object).getChildren().get(0);
             Image image = new Image(path);
             imageView.setImage(image);
-            ((AnchorPane) object).setStyle("-fx-padding: 0;" + "-fx-border-style: solid inside;"
-                    + "-fx-border-width: 1;" + "-fx-border-insets: 2;"
-                    + "-fx-border-radius: 2;" + "-fx-border-color: black;");
         }
     }
 

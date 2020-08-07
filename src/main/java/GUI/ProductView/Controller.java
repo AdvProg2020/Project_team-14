@@ -470,11 +470,9 @@ public class Controller {
         updateSeller();
     }
 
-    public void back(ActionEvent actionEvent) throws IOException {
+    public void back(ActionEvent actionEvent) {
         Audio.playClick7();
-        Stage stage = MenuHandler.getStage();
-        Parent root = FXMLLoader.load(getClass().getResource(MenuHandler.getBackProduct()));
-        stage.setScene(new Scene(root));
+        ((Button) actionEvent.getSource()).getScene().getWindow().hide();
     }
 
     public void similarProducts(MouseEvent actionEvent) throws IOException, ParseException {

@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -42,9 +43,12 @@ public class SimilarProduct {
     public void visitClicked(ActionEvent actionEvent) throws IOException {
         Audio.playClick7();
         MenuHandler.setProductID(productID);
+        MenuHandler.setBackProduct("nothing");
         Parent root = FXMLLoader.load(getClass().getResource("/GUI/ProductView/ProductViewLayout.fxml"));
-        Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root));
+        ((Button) actionEvent.getSource()).getScene().getWindow().hide();
+        Popup popup = new Popup();
+        popup.getContent().add(root);
+        popup.show(MenuHandler.getStage());
     }
 
     public void backClicked(ActionEvent actionEvent) {
